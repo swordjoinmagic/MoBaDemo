@@ -35,10 +35,10 @@ public class ShowCharacterUI : MonoBehaviour {
         Vector3 topWorldPosition = new Vector3(worldPoint.x,worldPoint.y+GetObjectYSize(),worldPoint.z);
 
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(topWorldPosition);
-        print(string.Format("根据该monmo的屏幕坐标{0}绘制ui坐标", screenPosition));
+        //print(string.Format("根据该monmo的屏幕坐标{0}绘制ui坐标", screenPosition));
         Vector2 UIPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas,screenPosition,UICamera,out UIPosition);
-        print("绘制出的UI坐标是:"+UIPosition);
+        //print("绘制出的UI坐标是:"+UIPosition);
 
         // 头顶UI
         return UIPosition;
@@ -49,12 +49,13 @@ public class ShowCharacterUI : MonoBehaviour {
     /// </summary>
     private void OnBecameVisible() {
         isVisible = true;
-        print("OnBecameVisible");
+        //print("OnBecameVisible");
         if (UI==null) {
             UI = Instantiate<SimpleCharacterView>(simpleCharacterView,Canvas);
             UI.transform.localPosition = WorldPointToUIPosition(transform.position);
             UI.BindingContext = new SimpleCharacterViewModel();
             UI.BindingContext.Modify(character.characterModel);
+            character.SimpleCharacterViewModel = UI.BindingContext;
         }
         UI.Reveal(true);
     }
@@ -64,7 +65,7 @@ public class ShowCharacterUI : MonoBehaviour {
     /// </summary>
     private void OnBecameInvisible() {
         isVisible = false;
-        print("OnBecameINVisible");
+        //print("OnBecameINVisible");
         if (UI != null) {
             UI.Hide(true);
         }

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class CharacterMono : MonoBehaviour{
+class CharacterMono : MonoBehaviour {
+
+    private SimpleCharacterViewModel simpleCharacterViewModel;
+
     public CharacterModel characterModel;
     public int Hp;
     public int Mp;
@@ -12,14 +15,27 @@ class CharacterMono : MonoBehaviour{
     public int maxMp;
     public string characterName;
 
-    private void Start() {
-        characterModel = new CharacterModel();
-        characterModel.Hp = Hp;
-        characterModel.maxHp = maxHp;
-        characterModel.Mp = Mp;
-        characterModel.maxMp = maxMp;
-        characterModel.name = characterName;
+    private bool isStart = false;
+
+    public SimpleCharacterViewModel SimpleCharacterViewModel {
+        get {
+            return simpleCharacterViewModel;
+        }
+
+        set {
+            simpleCharacterViewModel = value;
+        }
     }
 
+    private void Start() {
+        isStart = true;
+        characterModel = new CharacterModel {
+            Hp = Hp,
+            maxHp = maxHp,
+            Mp = Mp,
+            maxMp = maxMp,
+            name = characterName
+        };
+    }
 }
 
