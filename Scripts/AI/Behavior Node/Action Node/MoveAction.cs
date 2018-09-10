@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class MoveAction : Action {
 
     public SharedVector3 position;
+    public SharedBool isStartAttack;
 
     private NavMeshAgent agent;
     private Animator animator;

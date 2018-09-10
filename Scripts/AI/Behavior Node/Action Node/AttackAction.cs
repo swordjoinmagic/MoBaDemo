@@ -17,19 +17,20 @@ public class AttackAction : Action {
 
 
     public override void OnAwake() {
-        animator = GetComponent<Animator>();
     }
 
     public override void OnStart() {
         character = enemry.Value.GetComponent<CharacterMono>();
+        animator = GetComponent<Animator>();
+
     }
 
     public override TaskStatus OnUpdate() {
 
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
-        if (!currentAnimatorStateInfo.IsName("attack")) {
-            animator.SetTrigger("attack"); 
+        if (!currentAnimatorStateInfo.IsName("attack") && !isStartAttack.Value) {
+            animator.SetTrigger("attack");
             isStartAttack.Value = true;
             Debug.Log("将isStartAttack设置为true");
             return TaskStatus.Success;
