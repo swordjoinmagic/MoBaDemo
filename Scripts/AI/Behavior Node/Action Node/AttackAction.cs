@@ -29,6 +29,7 @@ public class AttackAction : Action {
 
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
+
         if (!currentAnimatorStateInfo.IsName("attack") && !isStartAttack.Value) {
             animator.SetTrigger("attack");
             isStartAttack.Value = true;

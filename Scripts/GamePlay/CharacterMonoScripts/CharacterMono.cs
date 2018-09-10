@@ -9,13 +9,17 @@ class CharacterMono : MonoBehaviour {
     private SimpleCharacterViewModel simpleCharacterViewModel;
 
     public CharacterModel characterModel;
+
     public int Hp;
     public int Mp;
     public int maxHp;
     public int maxMp;
     public string characterName;
 
-    private bool isStart = false;
+    // 当前准备释放的技能
+    public ActiveSkill prepareSkill = null;
+
+    //private bool isStart = false;
 
     public SimpleCharacterViewModel SimpleCharacterViewModel {
         get {
@@ -28,13 +32,25 @@ class CharacterMono : MonoBehaviour {
     }
 
     private void Start() {
-        isStart = true;
+        //isStart = true;
         characterModel = new CharacterModel {
             Hp = Hp,
             maxHp = maxHp,
             Mp = Mp,
             maxMp = maxMp,
-            name = characterName
+            name = characterName,
+            activeSkills = new List<ActiveSkill> {
+                new PointingSkill{
+                    BaseDamage = 10,
+                    KeyCode = KeyCode.E,
+                    Mp = 10,
+                    PlusDamage = 20,
+                    self = gameObject,
+                    selfEffect = null,
+                    target = null,
+                    targetEffect = null
+                }
+            }
         };
     }
 }

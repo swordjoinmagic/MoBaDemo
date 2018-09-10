@@ -32,7 +32,7 @@ class IsAttackFinisth : Conditional{
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
-        Debug.Log("此时的isStartAttack状态:"+isStartAttack.Value);
+        //Debug.Log("此时的isStartAttack状态:"+isStartAttack.Value);
 
         if (currentAnimatorStateInfo.IsName("attack") && 
             nextAnimatorStateInfo.IsName("Idle") &&
@@ -40,7 +40,7 @@ class IsAttackFinisth : Conditional{
             characterModel.Hp -= 50;
             character.SimpleCharacterViewModel.Modify(characterModel);
 
-            Debug.Log("攻击完成,设置isStartAttack为False,并进行减血操作");
+            //Debug.Log("攻击完成,设置isStartAttack为False,并进行减血操作");
             isStartAttack.Value = false;
             
 

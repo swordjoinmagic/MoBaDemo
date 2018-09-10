@@ -6,7 +6,7 @@ using System.Text;
 /// <summary>
 /// 伤害类,用于一切伤害的计算
 /// </summary>
-class Damage {
+public class Damage {
     int baseDamage;
     int plusDamge;
 

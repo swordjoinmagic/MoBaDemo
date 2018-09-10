@@ -20,12 +20,12 @@ public class IsMoveOver : Conditional {
 
     public override TaskStatus OnUpdate() {
 
-        Debug.Log("agent.remainingDistance:"+ agent.remainingDistance);
+        //Debug.Log("agent.remainingDistance:"+ agent.remainingDistance);
 
         if (agent.remainingDistance == 0)
             return TaskStatus.Failure;
         if (agent.remainingDistance <= agent.stoppingDistance) {
-            Debug.Log("运动就结束，设置animator为false");
+            //Debug.Log("运动就结束，设置animator为false");
 
             animator.SetBool("isRun", false);
             return TaskStatus.Success;
