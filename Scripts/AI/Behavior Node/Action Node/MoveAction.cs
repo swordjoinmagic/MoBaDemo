@@ -10,6 +10,8 @@ public class MoveAction : Action {
     public SharedVector3 position;
     public SharedBool isStartAttack;
 
+    public SharedBool isStartMove;
+
     private NavMeshAgent agent;
     private Animator animator;
 
@@ -24,6 +26,7 @@ public class MoveAction : Action {
         animator.SetBool("isRun", true);
         Debug.Log("设置animator为true");
 
+        isStartMove.Value = true;
         agent.SetDestination(position.Value);
         return TaskStatus.Success;
     }

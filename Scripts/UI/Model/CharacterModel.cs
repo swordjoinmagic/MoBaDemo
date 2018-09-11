@@ -9,6 +9,10 @@ public class CharacterModel {
     public int maxHp;
     public int maxMp;
     public string name;
+
+    // 该单位的普通攻击距离
+    public float attackDistance;
+
     // 当前角色的所有主动技能
     public List<ActiveSkill> activeSkills = new List<ActiveSkill>();
 }

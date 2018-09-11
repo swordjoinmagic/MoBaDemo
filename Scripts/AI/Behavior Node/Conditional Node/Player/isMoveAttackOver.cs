@@ -1,13 +1,14 @@
 ﻿using BehaviorDesigner.Runtime;
 using BehaviorDesigner.Runtime.Tasks;
-using System.Collections;
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UI;
 
-public class IsMoveOver : Conditional {
-
+class IsMoveAttackOver : Conditional{
     private NavMeshAgent agent;
     private Animator animator;
 
@@ -16,22 +17,9 @@ public class IsMoveOver : Conditional {
     // 用于判断是否移动的变量
     public SharedBool isStartMove;
 
-    private float stoppingDistance;
-    private CharacterMono characterMono;
-
-    public SharedBool isStartMoveAttack;
-    public SharedBool isStartSpellMove;
-
     public override void OnStart() {
         agent = GetComponent<NavMeshAgent>();
         animator = GetComponent<Animator>();
-        characterMono = GetComponent<CharacterMono>();
-        if (isStartMoveAttack.Value)
-            stoppingDistance = characterMono.characterModel.attackDistance;
-        else if (isStartSpellMove.Value)
-            stoppingDistance = characterMono.prepareSkill.SpellDistance;
-        else
-            stoppingDistance = agent.stoppingDistance;
     }
 
     public override TaskStatus OnUpdate() {
@@ -40,7 +28,7 @@ public class IsMoveOver : Conditional {
 
         if (agent.remainingDistance == 0)
             return TaskStatus.Failure;
-        if (agent.remainingDistance <= stoppingDistance) {
+        if (agent.remainingDistance <= agent.stoppingDistance) {
             //Debug.Log("运动就结束，设置animator为false");
 
             animator.SetBool("isRun", false);
@@ -55,3 +43,4 @@ public class IsMoveOver : Conditional {
         return TaskStatus.Failure;
     }
 }
+

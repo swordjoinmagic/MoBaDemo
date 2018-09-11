@@ -34,6 +34,10 @@ class IsAttackFinisth : Conditional{
 
         //Debug.Log("此时的isStartAttack状态:"+isStartAttack.Value);
 
+        //if (currentAnimatorStateInfo.IsName("attack")) {
+        //    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(enemry.Value.transform.position, transform.up), Time.deltaTime * 8);
+        //}
+
         if (currentAnimatorStateInfo.IsName("attack") && 
             nextAnimatorStateInfo.IsName("Idle") &&
             isStartAttack.Value) {

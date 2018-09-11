@@ -19,6 +19,12 @@ public class ActiveSkill : SkillBase{
     private int plusDamage;
     private KeyCode keyCode;
 
+    // 施法距离，等于0时是原地释放技能
+    private float spellDistance;
+
+    // 技能CD时间
+    private float cooldown;
+
     public int Mp {
         get {
             return mp;
@@ -56,6 +62,26 @@ public class ActiveSkill : SkillBase{
 
         set {
             keyCode = value;
+        }
+    }
+
+    public float SpellDistance {
+        get {
+            return spellDistance;
+        }
+
+        set {
+            spellDistance = value;
+        }
+    }
+
+    public float CD {
+        get {
+            return cooldown;
+        }
+
+        set {
+            cooldown = value;
         }
     }
 
