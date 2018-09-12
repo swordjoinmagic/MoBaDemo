@@ -21,14 +21,13 @@ public class IsPrepareUseSkills : Conditional{
 
     public override TaskStatus OnUpdate() {
         character = characterMono.characterModel;
+        characterMono.prepareSkill = null;
         foreach (ActiveSkill skill in character.activeSkills) {
             // 是否按下按键,如果按下,则令prepareSkill=skill
             if (Input.GetKeyDown(skill.KeyCode)) {
                 Debug.Log("按下技能的按键!");
                 characterMono.prepareSkill = skill;
                 return TaskStatus.Success;
-            } else {
-                characterMono.prepareSkill = null;
             }
         }
         return TaskStatus.Failure;

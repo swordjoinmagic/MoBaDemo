@@ -9,8 +9,12 @@ public class MoveAction : Action {
 
     public SharedVector3 position;
     public SharedBool isStartAttack;
-
+    public SharedBool isclickedEnemry;
     public SharedBool isStartMove;
+
+
+    // 移动特效
+    public GameObject moveEffect;
 
     private NavMeshAgent agent;
     private Animator animator;
@@ -28,6 +32,9 @@ public class MoveAction : Action {
 
         isStartMove.Value = true;
         agent.SetDestination(position.Value);
+        if(!isclickedEnemry.Value)
+            GameObject.Instantiate<GameObject>(moveEffect,position.Value,Quaternion.identity);
         return TaskStatus.Success;
+
     }
 }

@@ -12,6 +12,7 @@ public class IsMoveOver : Conditional {
     private Animator animator;
 
     public SharedBool isStartAttack;
+    public SharedBool isClieckEnermy;
 
     // 用于判断是否移动的变量
     public SharedBool isStartMove;

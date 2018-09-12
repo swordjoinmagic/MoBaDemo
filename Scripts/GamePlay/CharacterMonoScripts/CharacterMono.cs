@@ -19,6 +19,8 @@ class CharacterMono : MonoBehaviour {
     // 当前准备释放的技能
     public ActiveSkill prepareSkill = null;
 
+    // 表示是否准备释放法术
+    public bool isPrepareUseSkill = false;
     //private bool isStart = false;
 
     public SimpleCharacterViewModel SimpleCharacterViewModel {
@@ -48,7 +50,8 @@ class CharacterMono : MonoBehaviour {
                     self = gameObject,
                     selfEffect = null,
                     target = null,
-                    targetEffect = null
+                    targetEffect = null,
+                    SpellDistance = 10f
                 }
             }
         };

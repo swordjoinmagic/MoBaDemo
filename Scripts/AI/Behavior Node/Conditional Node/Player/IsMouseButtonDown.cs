@@ -26,6 +26,7 @@ public class IsMouseButtonDown : Conditional {
             Debug.Log("用户按下鼠标");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
+            isClickedEnermy.Value = false;
             if (Physics.Raycast(ray, out hit)) {
                 clickPosition.Value = hit.point;
                 if (hit.collider.CompareTag("Enermy")) {
