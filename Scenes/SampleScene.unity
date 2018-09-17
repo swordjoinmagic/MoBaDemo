@@ -357,7 +357,7 @@ GameObject:
   m_TagString: Enermy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 4294967295
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!65 &40357731
 BoxCollider:
@@ -1444,7 +1444,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4068784751897496, guid: f175bf3765e7e3745ac46a3fda2f4e67, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -6.41
       objectReference: {fileID: 0}
     - target: {fileID: 4068784751897496, guid: f175bf3765e7e3745ac46a3fda2f4e67, type: 2}
       propertyPath: m_LocalPosition.y
@@ -3388,7 +3388,7 @@ MonoBehaviour:
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 0
-  m_FillClockwise: 1
+  m_FillClockwise: 0
   m_FillOrigin: 2
 --- !u!222 &1196121752
 CanvasRenderer:
@@ -4166,7 +4166,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1669516765}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d7b55c7ecdb49a4a89fa5e6f9022861, type: 3}
   m_Name: 
@@ -4386,6 +4386,21 @@ CapsuleCollider:
   m_Height: 0.75
   m_Direction: 1
   m_Center: {x: 0, y: 0.1, z: 0}
+--- !u!114 &1669516775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1669516765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0e3d7f3d15ad384eb2f0835f52a132c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  animator: {fileID: 0}
+  agent: {fileID: 0}
+  MoveEffect: {fileID: 1735539866400392, guid: f175bf3765e7e3745ac46a3fda2f4e67, type: 2}
 --- !u!1 &1683105568
 GameObject:
   m_ObjectHideFlags: 0

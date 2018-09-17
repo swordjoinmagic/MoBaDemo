@@ -27,6 +27,7 @@ public class IsPrepareUseSkills : Conditional{
             if (Input.GetKeyDown(skill.KeyCode)) {
                 Debug.Log("按下技能的按键!");
                 characterMono.prepareSkill = skill;
+                characterMono.isPrepareUseSkill = true;
                 return TaskStatus.Success;
             }
         }

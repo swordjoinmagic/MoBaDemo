@@ -41,6 +41,7 @@ class CharacterMono : MonoBehaviour {
             Mp = Mp,
             maxMp = maxMp,
             name = characterName,
+            attackDistance = 1,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 10,
@@ -51,7 +52,7 @@ class CharacterMono : MonoBehaviour {
                     selfEffect = null,
                     target = null,
                     targetEffect = null,
-                    SpellDistance = 10f
+                    SpellDistance = 10f,
                 }
             }
         };
