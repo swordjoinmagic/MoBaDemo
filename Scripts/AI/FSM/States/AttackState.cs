@@ -53,7 +53,7 @@ public class AttackState : FSMState {
         // 当移动到小于攻击距离时，自动停止移动,
         // 否则继续移动,直到追上敌人,或者敌人消失在视野中
 
-
+        
         //if (Vector3.Distance(BlackBorad.GameObject.transform.position, EnemryTransform.position) < characterMono.characterModel.attackDistance) {
         if (!agent.pathPending && agent.remainingDistance < characterMono.characterModel.attackDistance) {
             //Debug.Log("运动就结束，设置animator为false");
@@ -66,9 +66,9 @@ public class AttackState : FSMState {
             agent.isStopped = false;
             agent.SetDestination(EnemryTransform.position);
         }
-        Debug.Log("remainingDistance:" + agent.remainingDistance);
+        //Debug.Log("remainingDistance:" + agent.remainingDistance);
 
-        Debug.Log("pathPending:" + agent.pathPending);
+        //Debug.Log("pathPending:" + agent.pathPending);
 
 
         //======================================

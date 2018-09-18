@@ -38,17 +38,8 @@ namespace FSM {
             //===================================
             // 更新Transition
 
-            // 遍历当前活动状态的所有转换条件,进行状态转换
-            foreach (var transition in activeState.transitions) {
-                if (transition.IsValid()) {
-                    activeState.OnExit();
-                    activeState = transition.GetNextState();
-                    activeState.OnEnter();
-                    return;
-                }
-            }
             // 更新anyState的Transition
-            if(anyState != null)
+            if (anyState != null)
                 foreach (var transition in anyState.transitions) {
                     if (transition.IsValid()) {
                         activeState.OnExit();
@@ -58,15 +49,27 @@ namespace FSM {
                     }
                 }
 
+            // 遍历当前活动状态的所有转换条件,进行状态转换
+            foreach (var transition in activeState.transitions) {
+                if (transition.IsValid()) {
+                    activeState.OnExit();
+                    activeState = transition.GetNextState();
+                    activeState.OnEnter();
+                    return;
+                }
+            }
+
+
             //===================================
             // 更新State
+
+            // 更新anyState
+            if (anyState != null)
+                anyState.OnUpdate();
 
             // 没有状态可以转换的时候,执行当前状态要进行的事件
             activeState.OnUpdate();
 
-            // 更新anyState
-            if(anyState != null)
-                anyState.OnUpdate();
         }
 
 

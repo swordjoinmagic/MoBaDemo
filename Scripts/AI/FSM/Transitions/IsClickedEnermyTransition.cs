@@ -34,6 +34,7 @@ public class IsClickedEnermyTransition : FSMTransition {
         BlackBorad.SetObject("EnemryTransform", null);
         BlackBorad.SetObject("Enemry",null);
 
+
         return false;
     }
 

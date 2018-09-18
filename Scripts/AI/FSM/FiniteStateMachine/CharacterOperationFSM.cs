@@ -16,12 +16,18 @@ class CharacterOperationFSM : FiniteStateMachine{
 
     // 移动特效
     public GameObject MoveEffect;
+    public GameObject ExplosionEffect;
 
     public void InitBlackBoard() {
         blackBorad.Animator = animator;
         blackBorad.Agent = agent;
         blackBorad.GameObject = gameObject;
         blackBorad.SetGameObject("MoveEffect",MoveEffect);
+        blackBorad.SetBool("isPrePareUseSkill", false);
+        blackBorad.SetBool("isImmediatelySpell", false);
+        blackBorad.SetBool("IsUseSkillFinish",false);
+        blackBorad.SetGameObject("targetEffect", ExplosionEffect);
+
         Debug.Log("初始化黑板:"+" 黑板的Aniamtor:"+blackBorad.Animator);
     }
 
@@ -31,6 +37,8 @@ class CharacterOperationFSM : FiniteStateMachine{
     public void SetState() {
         IsClickedEnermyTransition isClickedEnermyTransition = new IsClickedEnermyTransition();
         IsClickedMoveTransition isClickedMoveTransition = new IsClickedMoveTransition();
+        IsSpellFinishTransition isSpellFinishTransition = new IsSpellFinishTransition();
+        CharacterOperationStateToSpellTransition characterOperationStateToSpellTransition = new CharacterOperationStateToSpellTransition();
         AttackState attackState = new AttackState() {
             transitions = new List<FSMTransition>() {
                 isClickedEnermyTransition,
@@ -49,11 +57,23 @@ class CharacterOperationFSM : FiniteStateMachine{
                 isClickedMoveTransition
             }
         };
+        SpellState spellState = new SpellState() {
+            transitions = new List<FSMTransition>() {
+                isSpellFinishTransition
+            }
+        };
+        CharacterOperationExtraState anyExtraState = new CharacterOperationExtraState() {
+            transitions = new List<FSMTransition>() {
+                characterOperationStateToSpellTransition
+            }
+        };
 
         //===================================
         // 设置Transition的nextState
         isClickedMoveTransition.NextState = moveState;
         isClickedEnermyTransition.NextState = attackState;
+        characterOperationStateToSpellTransition.NextState = spellState;
+        isSpellFinishTransition.NextState = idleState;
 
         //=======================================
         // 设置初始状态
@@ -62,7 +82,7 @@ class CharacterOperationFSM : FiniteStateMachine{
 
         // 设置状态列表
         states = new List<FSMState> {
-            idleState,moveState,attackState
+            idleState,moveState,attackState,spellState,anyExtraState
         };
 
         //===========================
@@ -73,6 +93,9 @@ class CharacterOperationFSM : FiniteStateMachine{
                 transition.BlackBorad = blackBorad;
             }
         }
+
+        // 设置anyState
+        anyState = anyExtraState;
     }
 
 

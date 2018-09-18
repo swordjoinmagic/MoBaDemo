@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-class CharacterMono : MonoBehaviour {
+public class CharacterMono : MonoBehaviour {
 
     private SimpleCharacterViewModel simpleCharacterViewModel;
 
@@ -47,7 +47,7 @@ class CharacterMono : MonoBehaviour {
                     BaseDamage = 10,
                     KeyCode = KeyCode.E,
                     Mp = 10,
-                    PlusDamage = 20,
+                    PlusDamage = 200,
                     self = gameObject,
                     selfEffect = null,
                     target = null,
