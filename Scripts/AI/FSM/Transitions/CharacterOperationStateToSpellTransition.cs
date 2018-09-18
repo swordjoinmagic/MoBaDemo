@@ -17,6 +17,7 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
     public override bool IsValid() {
         if (!BlackBorad.GetBool("isPrePareUseSkill")) return false;
 
+        Debug.Log("判断是否要释放技能中~~");
         characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
         characterModel = characterMono.characterModel;
 
@@ -38,6 +39,8 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
         } else {
             // 指向型技能
             BlackBorad.SetBool("isImmediatelySpell", false);
+
+            Debug.Log("当前准备施放的是指向型技能");
 
             // 当为指向型技能时,更改主角的鼠标Icon,
             // 判断主角是否点击敌人,当点击敌人时,进入Spell状态

@@ -15,9 +15,10 @@ public class IsSpellFinishTransition : FSMTransition {
     public override bool IsValid() {
         bool IsUseSkillFinish = BlackBorad.GetBool("IsUseSkillFinish");
 
-        if (IsUseSkillFinish)
+        if (IsUseSkillFinish) {
+            BlackBorad.SetBool("IsUseSkillFinish",false);
             return true;
-        else
+        } else
             return false;
     }
 

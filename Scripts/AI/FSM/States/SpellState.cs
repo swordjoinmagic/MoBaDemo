@@ -40,7 +40,7 @@ public class SpellState : FSMState {
         isImmediatelySpell = BlackBorad.GetBool("isImmediatelySpell");
 
         // 如果是指向型技能,那么预先移动过去
-        if (isImmediatelySpell) {
+        if (!isImmediatelySpell) {
             agent.SetDestination(enermyTransform.position);
         }
 
@@ -72,7 +72,8 @@ public class SpellState : FSMState {
                 // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
                 // IsUseSkillFinish为true
                 BlackBorad.SetBool("IsUseSkillFinish",true);
-
+                BlackBorad.SetBool("isPrePareUseSkill", false);
+                spellerMono.isPrepareUseSkill = false;
             }
         } else {
             // 指向型技能
@@ -117,7 +118,8 @@ public class SpellState : FSMState {
                 // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
                 // IsUseSkillFinish为true
                 BlackBorad.SetBool("IsUseSkillFinish", true);
-
+                BlackBorad.SetBool("isPrePareUseSkill", false);
+                spellerMono.isPrepareUseSkill = false;
             }
         }
 

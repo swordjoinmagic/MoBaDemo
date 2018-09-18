@@ -52,7 +52,7 @@ public class CharacterMono : MonoBehaviour {
                     selfEffect = null,
                     target = null,
                     targetEffect = null,
-                    SpellDistance = 10f,
+                    SpellDistance = 4f,
                 }
             }
         };
