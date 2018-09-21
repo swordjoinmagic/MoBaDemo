@@ -69,6 +69,11 @@ public class SpellState : FSMState {
             if (currentAnimatorStateInfo.IsName("Spell") && 
                 nextAnimatorStateInfo.IsName("Idle")) {
 
+                // 计算伤害
+                Damage damage = spellerMono.prepareSkill.Execute();
+                enemryModel.Hp -= damage.TotalDamage;
+                enemryMono.SimpleCharacterViewModel.Modify(enemryModel);
+
                 // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
                 // IsUseSkillFinish为true
                 BlackBorad.SetBool("IsUseSkillFinish",true);
@@ -81,7 +86,8 @@ public class SpellState : FSMState {
             PointingSkill pointingSkill = spellerMono.prepareSkill as PointingSkill;
 
             // 当前距离敌人 > 施法距离,进行移动
-            if (!agent.pathPending && agent.remainingDistance < spellerMono.prepareSkill.SpellDistance) {
+            float distance = Vector2.Distance(new Vector2(BlackBorad.GameObject.transform.position.x, BlackBorad.GameObject.transform.position.z), new Vector2(enermyTransform.position.x, enermyTransform.position.z));
+            if (!agent.pathPending && distance < spellerMono.prepareSkill.SpellDistance) {
                 //Debug.Log("运动就结束，设置animator为false");
                 animator.SetBool("isRun", false);
                 agent.isStopped = true;

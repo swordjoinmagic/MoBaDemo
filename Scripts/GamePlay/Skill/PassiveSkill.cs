@@ -4,7 +4,6 @@ using System.Linq;
 using System.Text;
 
 
-public class SkillBase {
+public class PassiveSkill : BaseSkill{
 
 }
-

@@ -17,7 +17,7 @@ public class ShowCharacterUI : MonoBehaviour {
     private bool isVisible = false;
 
     private void Start() {
-        print("GameObjectName:"+gameObject.name);
+        //print("GameObjectName:"+gameObject.name);
         character = GetComponent<CharacterMono>();
     }
 
@@ -29,7 +29,7 @@ public class ShowCharacterUI : MonoBehaviour {
     }
 
     private float GetObjectYSize() {
-        print(gameObject.name+" : "+ GetComponent<MeshFilter>().mesh.bounds.size.y);
+        //print(gameObject.name+" : "+ GetComponent<MeshFilter>().mesh.bounds.size.y);
         return GetComponent<MeshFilter>().mesh.bounds.size.y;
     }
 
@@ -50,7 +50,7 @@ public class ShowCharacterUI : MonoBehaviour {
     /// 当物体在摄像机视野内时，显示UI
     /// </summary>
     private void OnBecameVisible() {
-        print(gameObject.name + "OnBecameVisible");
+        //print(gameObject.name + "OnBecameVisible");
         isVisible = true;
         if (UI==null) {
             UI = Instantiate<SimpleCharacterView>(simpleCharacterView,Canvas);

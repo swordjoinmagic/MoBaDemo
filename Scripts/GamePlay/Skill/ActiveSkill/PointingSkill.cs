@@ -11,13 +11,23 @@ using UnityEngine;
 ///     3.selfEffect:释放技能时自身的特效/动画
 ///     4.targetEffect:释放技能时敌人的特效/动画
 /// </summary>
+[System.Serializable]
 public class PointingSkill : ActiveSkill{
+
+    //=============================
+    // 在攻击时动态指定
     public GameObject target;
     public GameObject self;
+
+    //==============================================
+    // 攻击时己方和地方的特效，预制体，定义技能时输入
     public GameObject selfEffect;
     public GameObject targetEffect;
 
     public override Damage Execute() {
+
+        FinalSpellTime = Time.time;
+
         GameObject tempSelfEffect = null;
         GameObject tempTargetEffect = null;
         if (selfEffect!=null)

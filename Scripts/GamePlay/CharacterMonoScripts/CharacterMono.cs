@@ -21,7 +21,6 @@ public class CharacterMono : MonoBehaviour {
 
     // 表示是否准备释放法术
     public bool isPrepareUseSkill = false;
-    //private bool isStart = false;
 
     public SimpleCharacterViewModel SimpleCharacterViewModel {
         get {
@@ -34,14 +33,13 @@ public class CharacterMono : MonoBehaviour {
     }
 
     private void Start() {
-        //isStart = true;
         characterModel = new CharacterModel {
             Hp = Hp,
             maxHp = maxHp,
             Mp = Mp,
             maxMp = maxMp,
             name = characterName,
-            attackDistance = 1,
+            attackDistance = 1.5f,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 10,
@@ -53,6 +51,7 @@ public class CharacterMono : MonoBehaviour {
                     target = null,
                     targetEffect = null,
                     SpellDistance = 4f,
+                    CD = 2f
                 }
             }
         };

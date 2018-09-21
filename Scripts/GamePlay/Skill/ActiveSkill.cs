@@ -13,7 +13,8 @@ using UnityEngine;
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-public class ActiveSkill : SkillBase{
+[System.Serializable]
+public class ActiveSkill : BaseSkill{
     private int mp;
     private int baseDamage;
     private int plusDamage;
@@ -24,6 +25,9 @@ public class ActiveSkill : SkillBase{
 
     // 技能CD时间
     private float cooldown;
+
+    // 最后一次释放技能的时间
+    private float finalSpellTime;
 
     public int Mp {
         get {
@@ -82,6 +86,16 @@ public class ActiveSkill : SkillBase{
 
         set {
             cooldown = value;
+        }
+    }
+
+    public float FinalSpellTime {
+        get {
+            return finalSpellTime;
+        }
+
+        set {
+            finalSpellTime = value;
         }
     }
 
