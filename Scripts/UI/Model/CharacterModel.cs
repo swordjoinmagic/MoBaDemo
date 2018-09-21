@@ -15,10 +15,11 @@ public class CharacterModel {
     public float attackDistance;
 
     // 当前角色的所有技能
-    public List<BaseSkill> skillBases = new List<BaseSkill>();
+    public List<BaseSkill> baseSkills = new List<BaseSkill>();
     // 当前角色的所有主动技能
     public List<ActiveSkill> activeSkills = new List<ActiveSkill>();
-    
+    // 当前角色所有被动技能
+    public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
     
 }
 
