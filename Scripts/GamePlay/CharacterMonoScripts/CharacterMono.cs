@@ -52,10 +52,24 @@ public class CharacterMono : MonoBehaviour {
                     targetEffect = null,
                     SpellDistance = 4f,
                     CD = 2f,
-                    skillName = "q技能",
+                    skillName = "E技能",
                     iconPath = "00046",
                     description = "one skill Description",
-                    
+                },
+                new PointingSkill{
+                    BaseDamage = 10,
+                    KeyCode = KeyCode.W,
+                    Mp = 220,
+                    PlusDamage = 200,
+                    self = gameObject,
+                    selfEffect = null,
+                    target = null,
+                    targetEffect = null,
+                    SpellDistance = 4f,
+                    CD = 5f,
+                    skillName = "W技能",
+                    iconPath = "00041",
+                    description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                 }
             }
         };

@@ -33,17 +33,17 @@ public class SkillTipsMessageView : UnityGuiView<SkillTipsMessageViewModel>{
 
     // 消耗mp
     private void OnNeedMpChanged(string oldMp,string newMp) {
-        mpText.text = newMp;
+        mpText.text = "消耗MP："+newMp;
     }
 
     // 技能等级
     private void OnSkillLevelChanged(string oldSkillLevel,string newSkillLevel) {
-        LevelText.text = newSkillLevel;
+        LevelText.text = "Level  "+newSkillLevel;
     }
 
     // 技能描述
     private void OnDescriptinoChanged(string oldDescription,string newDescription) {
-        descriptionText.text = newDescription;
+        descriptionText.text = "技能描述：\n" + newDescription;
     }
 }
 
