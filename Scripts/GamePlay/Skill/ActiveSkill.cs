@@ -99,6 +99,14 @@ public class ActiveSkill : BaseSkill{
         }
     }
 
+    /// <summary>
+    /// 判断当前技能是否处于冷却中
+    /// </summary>
+    /// <returns></returns>
+    public bool IsCoolDown() {
+        Debug.Log("Time.time - finalSpellTime"+(Time.time - finalSpellTime).ToString()+"  CD:"+CD);
+        return Time.time - finalSpellTime <= CD;
+    }
 
     /// <summary>
     /// 用来计算伤害的虚方法,返回一个伤害类

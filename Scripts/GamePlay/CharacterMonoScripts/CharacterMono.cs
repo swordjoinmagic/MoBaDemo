@@ -32,7 +32,7 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    private void Awake() {
         characterModel = new CharacterModel {
             Hp = Hp,
             maxHp = maxHp,
@@ -51,7 +51,11 @@ public class CharacterMono : MonoBehaviour {
                     target = null,
                     targetEffect = null,
                     SpellDistance = 4f,
-                    CD = 2f
+                    CD = 2f,
+                    skillName = "q技能",
+                    iconPath = "00046",
+                    description = "one skill Description",
+                    
                 }
             }
         };

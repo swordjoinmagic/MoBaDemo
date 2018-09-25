@@ -40,7 +40,7 @@ public class CharacterOperationExtraState : FSMState {
 
         foreach (ActiveSkill skill in characterModel.activeSkills) {
             // 是否按下按键,如果按下,则令prepareSkill=skill
-            if (Input.GetKeyDown(skill.KeyCode)) {
+            if (Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
                 Debug.Log("在AnyState中按下技能的按键!");
                 characterMono.prepareSkill = skill;
                 Debug.Log("为CharacterMono设置prepareSkill技能");
