@@ -26,9 +26,18 @@ public class test1 : MonoBehaviour {
             //if (RectTransformUtility.ScreenPointToWorldPointInRectangle(rectTransform, screenPosition, UIcamera, out vector3)) {
             //    text.transform.position = vector3;
             //}
-            print("ScreenPosition:"+Input.mousePosition);
-            print(UIcamera.WorldToScreenPoint(text.rectTransform.position));
+            //print("ScreenPosition:"+Input.mousePosition);
+            //Vector3 vector3 = UIcamera.WorldToScreenPoint(text.rectTransform.position);
+            // 将text控件的世界坐标变为屏幕坐标
+            //print(UIcamera.WorldToScreenPoint(text.rectTransform.position));
 
+            Vector3 vector3 = UIcamera.ScreenToWorldPoint(Input.mousePosition);
+            vector3.z = 100;
+            print("vector3:"+vector3);
+            text.rectTransform.position = vector3;
+
+
+            //text.rectTransform.position = UIcamera.WorldToScreenPoint(text.rectTransform.position);
         }
 
     }

@@ -14,6 +14,9 @@ public class BaseSkill {
 
     public string description;
 
+    // 技能等级
+    public int skillLevel;
+
     // 执行伤害效果
     public virtual Damage Execute() {
         return null;
