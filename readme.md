@@ -1,4 +1,9 @@
 # GamePlay数据类 #
+## 技能设置描述 ##
+
+所有技能都在外处使用编辑器进行编辑，以（.json\\ .csv\\ .xml\\ .sqllit）的方式进行保存。
+所有技能都会有特效动画的产生，特效动画还可分为立即释放型特效，投射型特效等，特效动画由外部进行指定，类型为GameObject，暂定以JSON的形式保存一个技能，其动画特效（释放时敌方产生的特效及我方产生的特效）是一个字符串类型，该字符串指定了在Resource/Prefabs/文件夹下的粒子特效预制体的名称。
+
 ## 技能 ##
 ### ***基类 BaseSkill*** ###
 1. 属性
@@ -34,7 +39,67 @@
 	 1. pass
 2. 方法
 	1. pass	
-	 
+	
+## 单位 ##
+需要明确的是，每一个单位都在外部由编辑器提前设定。
+### 普通单位Character ###
+1. 属性
+	1. 血量 HP：int
+	2. 魔法值 Mp：int
+	3. 最大血量 maxHp：int
+	4. 最大魔法值 maxMp：int
+	5. 名称 name：string
+	6. 攻击距离 attackDistance：float 
+	7. 该单位拥有的所有技能 baseSkills：List<BaseSkill>
+	8. 该单位拥有的所有主动技能 activeSkills ： List< ActiveSkill >
+	9. 该单位拥有的所有被动技能 passiveSkills : List< PassiveSkill > 
+	10. 攻击力 attack ： int
+	11. 攻击类型 attackType ： AttackType
+	12. 防御力 defense ： int
+	13. 防御类型 defenseType ： DefenseType
+	14. 移动速度 movingSpeed ： int
+	15. 转身速度 turningSpeed ： int
+	16. 投射物 projectile ： Projectile
+	17. 等级 level ： int
+	18. 回血速度 restoreHpSpeed : float
+	19. 回魔速度 restoreMpSpeed : float
+	20. 是否可被攻击（无敌） canBeAttacked : boolean
+### 英雄单位 Hero < Character ###
+1. 属性
+	1. 力量 forcePower : int
+	2. 敏捷 agilePower : int
+	3. 智力 intelligencePower : int 
+	4. 技能点 skillPoint : int
+	5. 经验值 exp : int
+### 特殊单位 投射物Projectile < Characte[canBeAttacked=false] ###
+投射物是一个比较特殊的单位，在一些技能和单位的远程攻击里面出现，投射物一般有一个目标位置，目标位置有两种类型:
+
+1. 指定地点
+2. 指定敌人
+
+该投射物到达指定地点后会产生一个球形碰撞体造成伤害，当为指定敌人时，投射物与敌人碰撞时造成伤害。
+对于伤害的计算，有两种方法。
+
+一是将施法者的所有基本属性赋值给投射物，投射物根据这些属性与敌人的属性进行数值运算，得到伤害。
+
+二是在投射物的构造方法中设置Damage对象，在进行伤害计算时，根据Damage对象产生伤害。
+#### 投射物的生命周期 ####
+	创建  
+	↓  
+	初始化  
+	↓  → → → → → → → → → → → → → ↓
+	追踪敌人、计算伤害        存在时间超限
+    ↓                            ↓
+    → → → → → → →  ↓  ← ← ← ← ← ← ←
+	               ↓
+             准备销毁投射物
+				   ↓
+			   销毁投射物
+              
+#### 投射物属性 ####
+1. 目标位置 targetPosition : vector3
+2. 目标敌人 targetEnermy : Transform
+3. 移动速度（继承自characterModel）
 ## 战斗系统规则 ##
 ### 判定伤害 ###
 1. 对于普通攻击来说，只有当一个人物动作完整的播放完攻击动画时，才对对面给予伤害，最终伤害判定根据被攻击者和攻击者的距离来判定（这里针对近战攻击），距离每超过攻击者的攻击范围的10%，被攻击者的闪避率增加10%。
@@ -89,4 +154,4 @@
 
 #### 3.状态机图片 ####
 
-![Avater](/readmeImage/stateMachine.png)
+![Avater](/stateMachine.png)

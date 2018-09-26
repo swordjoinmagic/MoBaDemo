@@ -34,10 +34,11 @@ public class CharacterMono : MonoBehaviour {
 
     private void Awake() {
         characterModel = new CharacterModel {
-            Hp = Hp,
             maxHp = maxHp,
-            Mp = Mp,
+            Hp = Hp,
             maxMp = maxMp,
+            Mp = Mp,
+            
             name = characterName,
             attackDistance = 1.5f,
             activeSkills = new List<ActiveSkill> {
@@ -70,6 +71,7 @@ public class CharacterMono : MonoBehaviour {
                     skillName = "W技能",
                     iconPath = "00041",
                     description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    skillLevel = 6
                 }
             }
         };
