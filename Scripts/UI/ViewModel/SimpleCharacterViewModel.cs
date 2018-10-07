@@ -13,7 +13,6 @@ public class SimpleCharacterViewModel : ViewModelBase{
     public BindableProperty<int> Hp = new BindableProperty<int>();
     public BindableProperty<string> name = new BindableProperty<string>();
 
-
     /// <summary>
     /// 基于人物类来更改此ViewModel
     /// </summary>

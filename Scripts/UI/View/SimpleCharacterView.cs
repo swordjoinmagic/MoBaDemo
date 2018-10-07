@@ -36,5 +36,6 @@ public class SimpleCharacterView : UnityGuiView<SimpleCharacterViewModel>{
     private void OnNameValueChanged(string oldName,string newName) {
         nameText.text = newName;
     }
+
 }
 

@@ -30,7 +30,7 @@ public class ShowCharacterUI : MonoBehaviour {
 
     private float GetObjectYSize() {
         //print(gameObject.name+" : "+ GetComponent<MeshFilter>().mesh.bounds.size.y);
-        return GetComponent<MeshFilter>().mesh.bounds.size.y;
+        return GetComponent<Collider>().bounds.size.y;
     }
 
     private Vector2 WorldPointToUIPosition(Vector3 worldPoint) {

@@ -48,29 +48,15 @@ public class AttackState : FSMState {
 
         //======================================
         // 追击部分
-
-
         // 当移动到小于攻击距离时，自动停止移动,
         // 否则继续移动,直到追上敌人,或者敌人消失在视野中
-
-
-        //if (Vector3.Distance(BlackBorad.GameObject.transform.position, EnemryTransform.position) < characterMono.characterModel.attackDistance) {
-        float distance = Vector2.Distance(new Vector2(BlackBorad.GameObject.transform.position.x, BlackBorad.GameObject.transform.position.z),new Vector2(EnemryTransform.position.x, EnemryTransform.position.z));
-        if (!agent.pathPending && distance <= characterMono.characterModel.attackDistance) {
-            //Debug.Log("运动就结束，设置animator为false");
-            animator.SetBool("isRun", false);
-            agent.isStopped = true;
+        if (characterMono.Chasing(EnemryTransform)) {
+            // 追上敌人,准备开始攻击
             isStartAttack = true;
         } else {
+            // 还未追上敌人之前,不进行攻击
             isStartAttack = false;
-            animator.SetBool("isRun",true);
-            agent.isStopped = false;
-            agent.SetDestination(EnemryTransform.position);
         }
-        //Debug.Log("remainingDistance:" + agent.remainingDistance);
-
-        //Debug.Log("pathPending:" + agent.pathPending);
-
 
         //======================================
         // 播放攻击动画
@@ -84,11 +70,21 @@ public class AttackState : FSMState {
         //======================================
         // 伤害判断
         if (currentAnimatorStateInfo.IsName("attack") &&
-            nextAnimatorStateInfo.IsName("Idle") && 
+            nextAnimatorStateInfo.IsName("Idle") &&
             !isAttackFinish) {
-            enemryModel.Hp -= 50;
-            enemryMono.SimpleCharacterViewModel.Modify(enemryModel);
-            isAttackFinish = true;
+
+            if (characterMono.characterModel.projectileModel == null) {
+                enemryModel.Hp -= 50;
+                isAttackFinish = true;
+            } else {
+                Transform shotPosition = BlackBorad.GameObject.transform.Find("shootPosition");
+                ProjectileMono projectileMono = GameObject.Instantiate(characterMono.characterModel.projectile, shotPosition.position, Quaternion.identity);
+                projectileMono.targetPosition = EnemryTransform.position;
+                projectileMono.target = enemryMono;
+                projectileMono.damage = new Damage() { BaseDamage = 100};
+                projectileMono.projectileModel = characterMono.characterModel.projectileModel;
+                isAttackFinish = true;
+            }
         }
 
     }
