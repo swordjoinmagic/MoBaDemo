@@ -54,12 +54,12 @@ public class CharacterMono : MonoBehaviour {
             maxMp = maxMp,
             Mp = Mp,
             name = characterName,
-            attackDistance = 2f,
+            attackDistance = 5f,
             //projectileModel = new ProjectileModel {
             //    spherInfluence = 2.5f,
             //    targetPositionEffect = targetPositionEffect,
             //    tartgetEnemryEffect = targetEnemryEffect,
-            //    movingSpeed = 1,
+            //    movingSpeed = 7,
             //    turningSpeed = 1
             //},
             //projectile = projectile,
@@ -143,13 +143,154 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
-    /// 处理人物普通攻击的逻辑
+    /// 处理人物攻击的函数
     /// </summary>
-    public void Attack(CharacterModel target) {
+    /// <param name="isAttackFinish">本次攻击是否完成</param>
+    /// <param name="targetTransform">目标敌人的Transform</param>
+    /// <param name="target">目标敌人的Mono对象</param>
+    public void Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
+        AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
+        //======================================
+        // 播放攻击动画
+        // 如果准备开始攻击,那么播放动画
+        if (!currentAnimatorStateInfo.IsName("attack")) {
+            animator.SetTrigger("attack");
+            isAttackFinish = false;
+        }
+
+
+        //======================================
+        // 伤害判断
+        if (currentAnimatorStateInfo.IsName("attack") &&
+            nextAnimatorStateInfo.IsName("Idle") &&
+            !isAttackFinish) {
+
+            if (characterModel.projectileModel == null) {
+                target.characterModel.Hp -= 50;
+            } else {
+                Transform shotPosition = transform.Find("shootPosition");
+                ProjectileMono projectileMono = Instantiate(characterModel.projectile, shotPosition.position, Quaternion.identity);
+                projectileMono.targetPosition = targetTransform.position;
+                projectileMono.target = target;
+                projectileMono.damage = new Damage() { BaseDamage = 100 };
+                projectileMono.projectileModel = characterModel.projectileModel;
+            }
+            isAttackFinish = true;
+        }
     }
 
+    /// <summary>
+    /// 重置人物的攻击动画
+    /// </summary>
+    public void ResetAttackStateAnimator() {
+        animator.ResetTrigger("attack");
+    }
 
+    /// <summary>
+    /// 重置目前单位的所有动画,如攻击动画、移动动画、施法动画。
+    /// </summary>
+    public void ResetAllStateAnimator() {
+        animator.ResetTrigger("spell");
+        animator.ResetTrigger("attack");
+        animator.SetBool("isRun", false);
+    }
+
+    /// <summary>
+    /// 移动到指定地点,移动结束返回False,移动尚未结束返回True
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public bool Move(Vector3 position) {
+        ResetAttackStateAnimator();
+        animator.SetBool("isRun", true);
+        agent.isStopped = false;
+        agent.SetDestination(position);
+
+        if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
+            animator.SetBool("isRun", false);
+            return false;
+        }
+
+        return true;
+    }
+
+    /// <summary>
+    /// 判断人物当前准备释放的技能是不是立即释放技能,如果是,那么返回True,反之返回False
+    /// </summary>
+    /// <returns></returns>
+    public bool IsImmediatelySpell() {
+        return prepareSkill.SpellDistance == 0;
+    }
+
+    /// <summary>
+    /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
+    /// </summary>
+    public bool Spell(CharacterMono enemryMono,Transform enermyTransform) {
+        // 获得当前动画和下一个动画状态
+        AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
+        CharacterModel enemryModel = enemryMono.characterModel;
+
+        if (IsImmediatelySpell()) {
+            // 原地释放技能,此时直接释放技能
+
+            // 播放释放技能的动画
+            if (!currentAnimatorStateInfo.IsName("Spell"))
+                animator.SetTrigger("spell");
+
+            // 如果技能释放结束,那么产生特效,计算伤害
+            if (currentAnimatorStateInfo.IsName("Spell") &&
+                nextAnimatorStateInfo.IsName("Idle")) {
+
+                // 计算伤害
+                Damage damage = prepareSkill.Execute();
+                enemryModel.Damaged(damage);
+
+                // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
+                // IsUseSkillFinish为true
+                //BlackBorad.SetBool("IsUseSkillFinish", true);
+                //BlackBorad.SetBool("isPrePareUseSkill", false);
+                isPrepareUseSkill = false;
+                prepareSkill = null;
+                return true;
+            }
+        } else {
+            // 指向型技能
+
+            PointingSkill pointingSkill = prepareSkill as PointingSkill;
+
+            // 当前距离敌人 > 施法距离,进行移动
+            if (Chasing(enermyTransform)) {
+                //======================================
+                // 播放施法动画
+                // 如果准备开始施法,那么播放动画
+                if (!currentAnimatorStateInfo.IsName("Spell")) {
+                    animator.SetTrigger("spell");
+                }
+
+                // 如果技能释放结束,那么产生特效,计算伤害
+                if (currentAnimatorStateInfo.IsName("Spell") &&
+                    nextAnimatorStateInfo.IsName("Idle")) {
+
+                    pointingSkill.target = enemryMono.gameObject;
+
+                    Damage damage = pointingSkill.Execute();
+                    enemryModel.Hp -= damage.TotalDamage;
+
+                    Debug.Log("释放技能");
+
+                    // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
+                    // IsUseSkillFinish为true
+                    isPrepareUseSkill = false;
+                    prepareSkill = null;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
 
 

@@ -18,19 +18,18 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
         if (!BlackBorad.GetBool("isPrePareUseSkill")) return false;
 
         Debug.Log("判断是否要释放技能中~~");
-        characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
+        if(characterMono == null)
+            characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
         characterModel = characterMono.characterModel;
 
 
         // 获得当前要释放的技能
-
-        ActiveSkill activeSkill = characterMono.prepareSkill;
-        Debug.Log("当前要释放的技能时:"+activeSkill);
+        Debug.Log("当前要释放的技能时:"+ characterMono.prepareSkill);
 
         // 判断该技能是否是原地释放技能,
         // 即判断该主动技能的施法范围是否为0,为0时,
         // 为原地释放技能
-        if (activeSkill.SpellDistance == 0) {
+        if (characterMono.IsImmediatelySpell()) {
 
             // 原地释放技能,直接进入Spell状态
             BlackBorad.SetBool("isImmediatelySpell", true);

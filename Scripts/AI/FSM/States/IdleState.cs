@@ -7,15 +7,9 @@ using UnityEngine;
 
 public class IdleState : FSMState {
 
-    public Animator animator;
-
     public override void OnEnter() {
-        animator = BlackBorad.Animator;
-
         // 重置所有状态
-        animator.ResetTrigger("spell");
-        animator.ResetTrigger("attack");
-        animator.SetBool("isRun",false);
+        BlackBorad.GameObject.GetComponent<CharacterMono>().ResetAllStateAnimator();
     }
 
     public override void OnExit() {

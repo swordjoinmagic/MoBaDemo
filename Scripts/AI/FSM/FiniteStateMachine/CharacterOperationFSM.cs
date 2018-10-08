@@ -26,6 +26,7 @@ class CharacterOperationFSM : FiniteStateMachine{
         blackBorad.SetBool("isPrePareUseSkill", false);
         blackBorad.SetBool("isImmediatelySpell", false);
         blackBorad.SetBool("IsUseSkillFinish",false);
+        blackBorad.SetBool("IsMoveOver", true);
         blackBorad.SetGameObject("targetEffect", ExplosionEffect);
 
         Debug.Log("初始化黑板:"+" 黑板的Aniamtor:"+blackBorad.Animator);
@@ -35,10 +36,17 @@ class CharacterOperationFSM : FiniteStateMachine{
     /// 新建状态并设置Transition
     /// </summary>
     public void SetState() {
+
+        //=================================================================================
+        // 设置Transition
         IsClickedEnermyTransition isClickedEnermyTransition = new IsClickedEnermyTransition();
         IsClickedMoveTransition isClickedMoveTransition = new IsClickedMoveTransition();
         IsSpellFinishTransition isSpellFinishTransition = new IsSpellFinishTransition();
+        IsMoveOverTransition isMoveOverTransition = new IsMoveOverTransition();
         CharacterOperationStateToSpellTransition characterOperationStateToSpellTransition = new CharacterOperationStateToSpellTransition();
+
+        //=================================================================================
+        // 设置State
         AttackState attackState = new AttackState() {
             transitions = new List<FSMTransition>() {
                 isClickedEnermyTransition,
@@ -54,7 +62,7 @@ class CharacterOperationFSM : FiniteStateMachine{
         MoveState moveState = new MoveState() {
             transitions = new List<FSMTransition>() {
                 isClickedEnermyTransition,
-                isClickedMoveTransition
+                isClickedMoveTransition,
             }
         };
         SpellState spellState = new SpellState() {
@@ -74,6 +82,7 @@ class CharacterOperationFSM : FiniteStateMachine{
         isClickedEnermyTransition.NextState = attackState;
         characterOperationStateToSpellTransition.NextState = spellState;
         isSpellFinishTransition.NextState = idleState;
+        isMoveOverTransition.NextState = idleState;
 
         //=======================================
         // 设置初始状态

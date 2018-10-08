@@ -22,12 +22,14 @@ public class IsClickedEnermyTransition : FSMTransition {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit)) {
+
                 if (hit.collider.CompareTag("Enermy")) {
                     // 为黑板设置变量
                     BlackBorad.SetTransform("EnemryTransform", hit.collider.transform);
                     BlackBorad.SetGameObject("Enemry",hit.collider.gameObject);
                     return true;
                 }
+
             }
         }
         // 如果没有进行攻击,对黑板中的EnemryTransform和Enemry变量进行清空操作
