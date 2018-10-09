@@ -8,6 +8,7 @@ using uMVVM;
 /// <summary>
 /// 基本单位,所有单位的基类
 /// </summary>
+[Serializable]
 public class CharacterModel {
     // 生命值
     private BindableProperty<int> hp = new BindableProperty<int>();
@@ -54,6 +55,15 @@ public class CharacterModel {
     public float resotreMpSpeed;
     // 是否可被攻击(即是否无敌)
     public Boolean canBeAttacked;
+    // 单位的类型
+    public UnitType unitType;
+    // 单位所属阵营
+    public UnitFaction unitFaction;
+
+    //public CharacterModel() {
+    //    Hp = maxHp;
+    //    Mp = maxMp;
+    //}
 
     public BindableProperty<int>.OnValueChangeHandler HpValueChangedHandler {
         get {

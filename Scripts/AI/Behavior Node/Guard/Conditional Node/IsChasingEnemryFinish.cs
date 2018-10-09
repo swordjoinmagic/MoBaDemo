@@ -24,7 +24,7 @@ namespace Assets.Scripts.AI.Behavior_Node.Guard.Conditional_Node {
         }
 
         public override TaskStatus OnUpdate() {
-            if (characterMono.Chasing(targetCharacterMono.transform)) {
+            if (characterMono.Chasing(targetCharacterMono.transform,characterMono.characterModel.attackDistance)) {
                 return TaskStatus.Success;
             }
             return TaskStatus.Failure;

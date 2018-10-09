@@ -3,6 +3,7 @@ using BehaviorDesigner.Runtime.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 namespace Assets.Scripts.AI.Behavior_Node.Guard.Action_Node {
     [TaskCategory("guard Action")]
@@ -19,6 +20,7 @@ namespace Assets.Scripts.AI.Behavior_Node.Guard.Action_Node {
             if (!characterMono.Move(initalPosition.Value)) {
                 return TaskStatus.Success;
             }
+
             return TaskStatus.Running;
         }
     }

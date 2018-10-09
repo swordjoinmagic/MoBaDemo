@@ -36,7 +36,7 @@ public class AttackState : FSMState {
 
     public override void OnUpdate() {
         // 如果当前单位还未移动到目标敌人的位置,进行追击
-        if (characterMono.Chasing(EnemryTransform)) {
+        if (enemryMono!=null && characterMono.Chasing(EnemryTransform,characterMono.characterModel.attackDistance)) {
             // 追击完成后,对敌方进行攻击
             characterMono.Attack(ref isAttackFinish,EnemryTransform,enemryMono);
         }

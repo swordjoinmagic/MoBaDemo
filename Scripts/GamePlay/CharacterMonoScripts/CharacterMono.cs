@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BehaviorDesigner.Runtime;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +17,9 @@ public class CharacterMono : MonoBehaviour {
     // 当前人物的动画组件以及寻路组件
     private Animator animator;
     private NavMeshAgent agent;
+
+    // 表示当前单位是否垂死
+    public bool isDying = false;
 
     /// <summary>
     /// 表示当前单位的一些基本属性,如:hp,mp,攻击力等等
@@ -45,30 +50,25 @@ public class CharacterMono : MonoBehaviour {
     public GameObject targetPositionEffect;
     public GameObject targetEnemryEffect;
     public ProjectileMono projectile;
-    public int Hp;
-    public int Mp;
-    public int maxHp;
-    public int maxMp;
-    public string characterName;
     public void Install() {
         characterModel = new CharacterModel {
-            maxHp = maxHp,
-            Hp = Hp,
-            maxMp = maxMp,
-            Mp = Mp,
-            name = characterName,
-            attackDistance = 2f,
-            //projectileModel = new ProjectileModel {
-            //    spherInfluence = 2f,
-            //    targetPositionEffect = targetPositionEffect,
-            //    tartgetEnemryEffect = targetEnemryEffect,
-            //    movingSpeed = 7,
-            //    turningSpeed = 1
-            //},
-            //projectile = projectile,
+            maxHp = 1000,
+            Hp = 200,
+            maxMp = 1000,
+            Mp = 1000,
+            name = "sjm",
+            attackDistance = 5f,
+            projectileModel = new ProjectileModel {
+                spherInfluence = 2f,
+                targetPositionEffect = targetPositionEffect,
+                tartgetEnemryEffect = targetEnemryEffect,
+                movingSpeed = 7,
+                turningSpeed = 1
+            },
+            projectile = projectile,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
-                    BaseDamage = 10,
+                    BaseDamage = 300,
                     KeyCode = KeyCode.E,
                     Mp = 10,
                     PlusDamage = 200,
@@ -83,7 +83,7 @@ public class CharacterMono : MonoBehaviour {
                     description = "one skill Description",
                 },
                 new PointingSkill{
-                    BaseDamage = 10,
+                    BaseDamage = 1000,
                     KeyCode = KeyCode.W,
                     Mp = 220,
                     PlusDamage = 200,
@@ -104,8 +104,11 @@ public class CharacterMono : MonoBehaviour {
     //================================================
 
     private void Awake() {
-        Install();
+        if (CompareTag("Player"))
+            Install();
 
+        characterModel.Hp = characterModel.maxHp;
+        characterModel.Mp = characterModel.maxMp;
         //============================
         // 与ViewModel双向绑定
         Bind();
@@ -127,15 +130,16 @@ public class CharacterMono : MonoBehaviour {
     /// 否则继续移动,直到追上敌人,或者敌人消失在视野中
     /// </summary>
     /// <param name="targetTransform">要追击的单位的位置</param>
+    /// /// <param name="forwardDistance">跟目标的距离</param>
     /// <returns></returns>
-    public bool Chasing(Transform targetTransform) {
+    public bool Chasing(Transform targetTransform,float forwardDistance) {
         // 获得当前单位与目标单位的距离
         float distance = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
             new Vector2(targetTransform.position.x, targetTransform.position.z)
         );
 
-        if (!agent.pathPending && distance <= characterModel.attackDistance) {
+        if (!agent.pathPending && distance <= forwardDistance) {
             animator.SetBool("isRun", false);
             agent.isStopped = true;
 
@@ -268,7 +272,7 @@ public class CharacterMono : MonoBehaviour {
             PointingSkill pointingSkill = prepareSkill as PointingSkill;
 
             // 当前距离敌人 > 施法距离,进行追击
-            if (Chasing(enermyTransform)) {
+            if (Chasing(enermyTransform,pointingSkill.SpellDistance)) {
                 //======================================
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
@@ -296,17 +300,100 @@ public class CharacterMono : MonoBehaviour {
         return false;
     }
 
+    #region 单位的死亡逻辑 hp=0 -> OnDying -> Dying -> Died -> IsDied -> Destory(this)
+    /// <summary>
+    /// 单位进入垂死状态
+    /// </summary>
+    /// <returns></returns>
+    private void Dying() {
+        // 停止目前一切动作
+        ResetAllStateAnimator();
+
+        // 把人物的AI系统暂停
+        BehaviorTree behaviorTree = GetComponent<BehaviorTree>();
+        if(behaviorTree!=null)
+            behaviorTree.enabled = false;
+
+        CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>(); 
+        if(characterOperationFSM!=null)
+            characterOperationFSM.enabled = false;
 
 
+        // 播放死亡动画
+        animator.SetTrigger(AnimatorEnumeration.Died);
+        // 设置isDying为True
+        isDying = true;
+    }
+
+    /// <summary>
+    /// 判断单位是否确确实实死了
+    /// <para>确确实实死亡指的是目标单位的死亡动画已经播放完毕了</para>
+    /// </summary>
+    /// <returns></returns>
+    private bool IsDied() {
+        AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
+
+        // 当死亡动画播放完毕,单位确实死了
+        if (isDying && currentAnimatorStateInfo.IsName("Death") && nextAnimatorStateInfo.IsName("Idle")) {
+            return true;
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 与CharacterModel的Hp属性绑定的方法,当Hp为0时,宣告单位死亡
+    /// </summary>
+    /// <param name="oldHp"></param>
+    /// <param name="newHp"></param>
+    private void OnDying(int oldHp,int newHp) {
+        if (newHp == 0) {
+            Debug.Log("单位死亡");
+            Dying();
+
+            // 开启单位死后善后的协程
+            StartCoroutine(Died());
+        }
+    }
+    
+    /// <summary>
+    /// 人物死亡进行的操作,每帧判断一次,当人物死亡动画播放完毕时,摧毁该单位
+    /// </summary>
+    /// <returns></returns>
+    public IEnumerator Died() {
+
+        Debug.Log("死亡协程运行中");
+
+        while (isDying) {
+            if (IsDied()) {
+                Debug.Log("单位确实死了,摧毁该单位");
+                Destroy(gameObject);
+                isDying = false;
+            }
+
+            yield return new WaitForEndOfFrame();
+        }
+    }
+    #endregion
+
+    /// <summary>
+    /// 判断目标和自己是否同属一个阵营,当目标为中立单位时,同样返回True
+    /// </summary>
+    public bool CompareOwner(CharacterMono target) {
+        if (characterModel.unitFaction == target.characterModel.unitFaction || target.characterModel.unitFaction == UnitFaction.Neutral)
+            return true;
+        else
+            return false;
+    }
 
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
     public void Bind() {
         characterModel.HpValueChangedHandler += OnHpValueChanged;
+        characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
     }
     public void OnHpValueChanged(int oldHp,int newHp) {
         simpleCharacterViewModel.Hp.Value = newHp;
     }
-
 }
 
