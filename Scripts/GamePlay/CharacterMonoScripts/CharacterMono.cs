@@ -27,6 +27,9 @@ public class CharacterMono : MonoBehaviour {
     // 表示是否准备释放法术
     public bool isPrepareUseSkill = false;
 
+    // 周围的敌人
+    public List<CharacterMono> arroundEnemies;
+
     public SimpleCharacterViewModel SimpleCharacterViewModel {
         get {
             return simpleCharacterViewModel;
@@ -54,9 +57,9 @@ public class CharacterMono : MonoBehaviour {
             maxMp = maxMp,
             Mp = Mp,
             name = characterName,
-            attackDistance = 5f,
+            attackDistance = 2f,
             //projectileModel = new ProjectileModel {
-            //    spherInfluence = 2.5f,
+            //    spherInfluence = 2f,
             //    targetPositionEffect = targetPositionEffect,
             //    tartgetEnemryEffect = targetEnemryEffect,
             //    movingSpeed = 7,
@@ -107,8 +110,12 @@ public class CharacterMono : MonoBehaviour {
         // 与ViewModel双向绑定
         Bind();
 
+        // 获得该单位身上绑定的组件
         animator = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
+
+        // 获得该单位周围的敌人
+        arroundEnemies = transform.Find("SearchTrigger").GetComponent<SearchTrigger>().arroundEnemies;
     }
 
     /// <summary>
@@ -143,12 +150,12 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
-    /// 处理人物攻击的函数
+    /// 处理人物攻击的函数,完成一次攻击返回True，否则返回False
     /// </summary>
     /// <param name="isAttackFinish">本次攻击是否完成</param>
     /// <param name="targetTransform">目标敌人的Transform</param>
     /// <param name="target">目标敌人的Mono对象</param>
-    public void Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
+    public bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
@@ -178,7 +185,10 @@ public class CharacterMono : MonoBehaviour {
                 projectileMono.projectileModel = characterModel.projectileModel;
             }
             isAttackFinish = true;
+            return true;
         }
+
+        return false;
     }
 
     /// <summary>
@@ -223,7 +233,7 @@ public class CharacterMono : MonoBehaviour {
     public bool IsImmediatelySpell() {
         return prepareSkill.SpellDistance == 0;
     }
-
+     
     /// <summary>
     /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
     /// </summary>
@@ -248,10 +258,6 @@ public class CharacterMono : MonoBehaviour {
                 Damage damage = prepareSkill.Execute();
                 enemryModel.Damaged(damage);
 
-                // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
-                // IsUseSkillFinish为true
-                //BlackBorad.SetBool("IsUseSkillFinish", true);
-                //BlackBorad.SetBool("isPrePareUseSkill", false);
                 isPrepareUseSkill = false;
                 prepareSkill = null;
                 return true;
@@ -261,7 +267,7 @@ public class CharacterMono : MonoBehaviour {
 
             PointingSkill pointingSkill = prepareSkill as PointingSkill;
 
-            // 当前距离敌人 > 施法距离,进行移动
+            // 当前距离敌人 > 施法距离,进行追击
             if (Chasing(enermyTransform)) {
                 //======================================
                 // 播放施法动画
@@ -281,8 +287,6 @@ public class CharacterMono : MonoBehaviour {
 
                     Debug.Log("释放技能");
 
-                    // 施放技能状态结束,自动回到Idle状态,为黑板设置变量
-                    // IsUseSkillFinish为true
                     isPrepareUseSkill = false;
                     prepareSkill = null;
                     return true;
@@ -300,9 +304,9 @@ public class CharacterMono : MonoBehaviour {
     public void Bind() {
         characterModel.HpValueChangedHandler += OnHpValueChanged;
     }
-
     public void OnHpValueChanged(int oldHp,int newHp) {
         simpleCharacterViewModel.Hp.Value = newHp;
     }
+
 }
 

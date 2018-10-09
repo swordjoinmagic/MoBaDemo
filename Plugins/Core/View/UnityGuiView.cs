@@ -260,11 +260,13 @@ namespace uMVVM {
         public virtual void OnDestroy() {
 
             // 如果该View已经显示完毕,先隐藏,再进行销毁
-            if (BindingContext.IsRevealed) {
-                Hide(immediate:true);
-            }
+            if (BindingContext != null) {
+                if (BindingContext.IsRevealed) {
+                    Hide(immediate: true);
+                }
 
-            BindingContext.OnDestory();
+                BindingContext.OnDestory();
+            }
             // 清空该View绑定的ViewModel
             BindingContext = null;
             viewModelProperty.OnValueChange = null;
