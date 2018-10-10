@@ -20,6 +20,7 @@ public class IsFindEnemry : Conditional{
     // 选择一个敌人来进攻
     public CharacterMono ChooseOneEnemry() {
         try {
+            while (characterMono.arroundEnemies[0] == null) characterMono.arroundEnemies.RemoveAt(0);
             return characterMono.arroundEnemies[0];
         } catch (System.Exception e) {
             return null;
@@ -29,7 +30,11 @@ public class IsFindEnemry : Conditional{
     public override TaskStatus OnUpdate() {
         if (characterMono.arroundEnemies.Count > 0) {
 
-            target.Value = ChooseOneEnemry().gameObject;
+            CharacterMono enemry = ChooseOneEnemry();
+
+            if (enemry == null) return TaskStatus.Failure;
+
+            target.Value = enemry.gameObject;
 
             return TaskStatus.Success;
         }

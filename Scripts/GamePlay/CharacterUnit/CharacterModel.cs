@@ -54,7 +54,7 @@ public class CharacterModel {
     // 回魔速度，以秒为单位，即以秒回多少Mp
     public float resotreMpSpeed;
     // 是否可被攻击(即是否无敌)
-    public Boolean canBeAttacked;
+    public Boolean canBeAttacked = true;
     // 单位的类型
     public UnitType unitType;
     // 单位所属阵营

@@ -160,6 +160,9 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="targetTransform">目标敌人的Transform</param>
     /// <param name="target">目标敌人的Mono对象</param>
     public bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
+
+        //if (!IsTargetCanBeAttack(target)) return false;
+
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
@@ -306,23 +309,23 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private void Dying() {
+        // 把人物的AI系统暂停
+        BehaviorTree behaviorTree = GetComponent<BehaviorTree>();
+        if (behaviorTree != null)
+            behaviorTree.enabled = false;
+
+        CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>();
+        if (characterOperationFSM != null)
+            characterOperationFSM.enabled = false;
+
+        // 设置isDying为True
+        isDying = true;
+
         // 停止目前一切动作
         ResetAllStateAnimator();
 
-        // 把人物的AI系统暂停
-        BehaviorTree behaviorTree = GetComponent<BehaviorTree>();
-        if(behaviorTree!=null)
-            behaviorTree.enabled = false;
-
-        CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>(); 
-        if(characterOperationFSM!=null)
-            characterOperationFSM.enabled = false;
-
-
         // 播放死亡动画
         animator.SetTrigger(AnimatorEnumeration.Died);
-        // 设置isDying为True
-        isDying = true;
     }
 
     /// <summary>
@@ -374,6 +377,32 @@ public class CharacterMono : MonoBehaviour {
             yield return new WaitForEndOfFrame();
         }
     }
+
+    /// <summary>
+    /// 判断某个单位是否可以被攻击,
+    /// 不可以被攻击的单位可能:
+    ///     1.垂死的
+    ///     2.已被摧毁的
+    ///     3.已死亡的
+    ///     4.无敌的
+    ///     ...待续
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public bool IsTargetCanBeAttack(CharacterMono target) {
+        // 如果单位被摧毁,那么目标单位无法被攻击
+        if (target == null || !target.enabled) return false;
+
+
+        // 垂死单位不可被攻击
+        if (target.isDying) return false;
+
+        // 无敌的单位不可被攻击
+        if (!target.characterModel.canBeAttacked) return false;
+
+        return true;
+    }
+
     #endregion
 
     /// <summary>
@@ -389,8 +418,8 @@ public class CharacterMono : MonoBehaviour {
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
     public void Bind() {
-        characterModel.HpValueChangedHandler += OnHpValueChanged;
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
+        characterModel.HpValueChangedHandler += OnHpValueChanged;
     }
     public void OnHpValueChanged(int oldHp,int newHp) {
         simpleCharacterViewModel.Hp.Value = newHp;
