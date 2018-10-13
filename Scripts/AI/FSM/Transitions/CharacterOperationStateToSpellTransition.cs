@@ -57,9 +57,6 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
             }
         }
 
-        // 对黑板中的EnemryTransform和Enemry变量进行清空操作
-        BlackBorad.SetObject("EnemryTransform", null);
-        BlackBorad.SetObject("Enemry", null);
         return false;
         
     }

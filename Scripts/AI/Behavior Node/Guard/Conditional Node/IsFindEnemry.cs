@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 [TaskCategory("guard Action")]
 public class IsFindEnemry : Conditional{
@@ -28,6 +29,9 @@ public class IsFindEnemry : Conditional{
     }
 
     public override TaskStatus OnUpdate() {
+
+        Debug.Log("IsFindEnemry ConditonalNode Running");
+
         if (characterMono.arroundEnemies.Count > 0) {
 
             CharacterMono enemry = ChooseOneEnemry();
@@ -35,7 +39,7 @@ public class IsFindEnemry : Conditional{
             if (enemry == null) return TaskStatus.Failure;
 
             target.Value = enemry.gameObject;
-
+            Debug.Log(target.Value.name);
             return TaskStatus.Success;
         }
         return TaskStatus.Failure;

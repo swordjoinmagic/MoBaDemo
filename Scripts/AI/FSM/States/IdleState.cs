@@ -9,7 +9,8 @@ public class IdleState : FSMState {
 
     public override void OnEnter() {
         // 重置所有状态
-        BlackBorad.GameObject.GetComponent<CharacterMono>().ResetAllStateAnimator();
+        BlackBorad.GameObject.GetComponent<CharacterMono>().ResetIdle();
+        
     }
 
     public override void OnExit() {

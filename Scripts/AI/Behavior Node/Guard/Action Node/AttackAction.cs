@@ -32,8 +32,10 @@ namespace Assets.Scripts.AI.Behavior_Node.Guard.Action_Node {
             if (characterMono.Attack(ref isAttackFinish, target.Value.transform, targetCharacterMono)) {
                 return TaskStatus.Success;
             }
-            Debug.Log("Attack Action Running:"+target.Value.name);
-            return TaskStatus.Running;
+            if (targetCharacterMono.IsCanBeAttack())
+                return TaskStatus.Running;
+            else
+                return TaskStatus.Failure;
         }
     }
 }

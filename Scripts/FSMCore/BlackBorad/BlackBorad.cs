@@ -16,6 +16,7 @@ namespace FSM {
         private Animator animator;
         private NavMeshAgent agent;
         private GameObject gameObject;
+        private CharacterMono characterMono;
         public Dictionary<string, object> dictonary = new Dictionary<string, object>();
 
         public Animator Animator {
@@ -45,6 +46,14 @@ namespace FSM {
 
             set {
                 gameObject = value;
+            }
+        }
+
+        public CharacterMono CharacterMono {
+            get {
+                if (characterMono == null)
+                    characterMono = gameObject.GetComponent<CharacterMono>();
+                return characterMono;
             }
         }
 

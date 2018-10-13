@@ -57,15 +57,15 @@ public class CharacterMono : MonoBehaviour {
             maxMp = 1000,
             Mp = 1000,
             name = "sjm",
-            attackDistance = 5f,
-            projectileModel = new ProjectileModel {
-                spherInfluence = 2f,
-                targetPositionEffect = targetPositionEffect,
-                tartgetEnemryEffect = targetEnemryEffect,
-                movingSpeed = 7,
-                turningSpeed = 1
-            },
-            projectile = projectile,
+            attackDistance = 2f,
+            //projectileModel = new ProjectileModel {
+            //    spherInfluence = 2f,
+            //    targetPositionEffect = targetPositionEffect,
+            //    tartgetEnemryEffect = targetEnemryEffect,
+            //    movingSpeed = 2,
+            //    turningSpeed = 1
+            //},
+            //projectile = projectile,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -161,7 +161,12 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="target">目标敌人的Mono对象</param>
     public bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
 
-        //if (!IsTargetCanBeAttack(target)) return false;
+        if (!target.IsCanBeAttack()) {
+            ResetAttackStateAnimator();
+            arroundEnemies.Remove(target);
+            
+            return false;
+        }
 
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
@@ -206,12 +211,29 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
+    /// 重置人物的施法动画
+    /// </summary>
+    public void ResetSpeellStateAnimator() {
+        animator.ResetTrigger("spell");
+    }
+
+    /// <summary>
     /// 重置目前单位的所有动画,如攻击动画、移动动画、施法动画。
     /// </summary>
     public void ResetAllStateAnimator() {
         animator.ResetTrigger("spell");
         animator.ResetTrigger("attack");
         animator.SetBool("isRun", false);
+    }
+
+    /// <summary>
+    /// 单位回到Idle状态时进行的处理
+    /// </summary>
+    public void ResetIdle() {
+        // 清空动画状态
+        ResetAllStateAnimator();
+        // 设置agent为不可行动
+        agent.isStopped = true; 
     }
 
     /// <summary>
@@ -245,6 +267,15 @@ public class CharacterMono : MonoBehaviour {
     /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
     /// </summary>
     public bool Spell(CharacterMono enemryMono,Transform enermyTransform) {
+
+        // 如果目标已经不可攻击,那么返回False
+        if (!enemryMono.IsCanBeAttack()) {
+            ResetSpeellStateAnimator();
+            arroundEnemies.Remove(enemryMono);
+
+            return false;
+        }
+
         // 获得当前动画和下一个动画状态
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
@@ -379,7 +410,7 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
-    /// 判断某个单位是否可以被攻击,
+    /// 判断单位是否可以被攻击,
     /// 不可以被攻击的单位可能:
     ///     1.垂死的
     ///     2.已被摧毁的
@@ -389,7 +420,10 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <param name="target"></param>
     /// <returns></returns>
-    public bool IsTargetCanBeAttack(CharacterMono target) {
+    public bool IsCanBeAttack() {
+
+        CharacterMono target = this;
+
         // 如果单位被摧毁,那么目标单位无法被攻击
         if (target == null || !target.enabled) return false;
 

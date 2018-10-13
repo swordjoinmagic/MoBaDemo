@@ -64,7 +64,6 @@ public class CharacterModel {
     //    Hp = maxHp;
     //    Mp = maxMp;
     //}
-
     public BindableProperty<int>.OnValueChangeHandler HpValueChangedHandler {
         get {
             return hp.OnValueChange;
@@ -109,7 +108,6 @@ public class CharacterModel {
                 mp.Value = value;
         }
     }
-
     /// <summary>
     /// 受到伤害时执行的方法
     /// </summary>

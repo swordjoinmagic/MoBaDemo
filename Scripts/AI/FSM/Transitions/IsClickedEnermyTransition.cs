@@ -33,8 +33,8 @@ public class IsClickedEnermyTransition : FSMTransition {
             }
         }
         // 如果没有进行攻击,对黑板中的EnemryTransform和Enemry变量进行清空操作
-        BlackBorad.SetObject("EnemryTransform", null);
-        BlackBorad.SetObject("Enemry",null);
+        //BlackBorad.SetObject("EnemryTransform", null);
+        //BlackBorad.SetObject("Enemry",null);
 
 
         return false;

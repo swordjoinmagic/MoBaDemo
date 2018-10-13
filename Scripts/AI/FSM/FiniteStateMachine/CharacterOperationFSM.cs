@@ -44,30 +44,37 @@ class CharacterOperationFSM : FiniteStateMachine{
         IsSpellFinishTransition isSpellFinishTransition = new IsSpellFinishTransition();
         IsMoveOverTransition isMoveOverTransition = new IsMoveOverTransition();
         CharacterOperationStateToSpellTransition characterOperationStateToSpellTransition = new CharacterOperationStateToSpellTransition();
+        AttackToIdleTransition attackToIdleTransition = new AttackToIdleTransition();
+        SpellToIdleTransition spellToIdleTransition = new SpellToIdleTransition();
+        IdleToAttackTransition idleToAttackTransition = new IdleToAttackTransition();
 
         //=================================================================================
         // 设置State
         AttackState attackState = new AttackState() {
             transitions = new List<FSMTransition>() {
                 isClickedEnermyTransition,
-                isClickedMoveTransition
+                isClickedMoveTransition,
+                attackToIdleTransition
             }
         };
         IdleState idleState = new IdleState {
             transitions = new List<FSMTransition> {
                 isClickedEnermyTransition,
-                isClickedMoveTransition
+                isClickedMoveTransition,
+                idleToAttackTransition
             }
         };
         MoveState moveState = new MoveState() {
             transitions = new List<FSMTransition>() {
                 isClickedEnermyTransition,
                 isClickedMoveTransition,
+                isMoveOverTransition
             }
         };
         SpellState spellState = new SpellState() {
             transitions = new List<FSMTransition>() {
-                isSpellFinishTransition
+                isSpellFinishTransition,
+                spellToIdleTransition,
             }
         };
         CharacterOperationExtraState anyExtraState = new CharacterOperationExtraState() {
@@ -83,6 +90,9 @@ class CharacterOperationFSM : FiniteStateMachine{
         characterOperationStateToSpellTransition.NextState = spellState;
         isSpellFinishTransition.NextState = idleState;
         isMoveOverTransition.NextState = idleState;
+        attackToIdleTransition.NextState = idleState;
+        spellToIdleTransition.NextState = idleState;
+        idleToAttackTransition.NextState = attackState;
 
         //=======================================
         // 设置初始状态

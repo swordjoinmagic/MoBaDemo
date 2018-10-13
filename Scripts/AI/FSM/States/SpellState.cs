@@ -31,12 +31,18 @@ public class SpellState : FSMState {
     }
 
     public override void OnExit() {
-        
+        spllerMono.isPrepareUseSkill = false;
+
     }
 
     public override void OnUpdate() {
         // 如果施放技能状态结束,就自动回到Idle状态,为黑板设置变量
         if (enemryMono!=null && spllerMono.Spell(enemryMono, enermyTransform)) {
+            BlackBorad.SetBool("IsUseSkillFinish", true);
+            BlackBorad.SetBool("isPrePareUseSkill", false);
+        }
+        // 如果目标单位不能被攻击,回到Idle状态
+        if (!enemryMono.IsCanBeAttack()) {
             BlackBorad.SetBool("IsUseSkillFinish", true);
             BlackBorad.SetBool("isPrePareUseSkill", false);
         }

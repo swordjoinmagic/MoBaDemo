@@ -29,6 +29,7 @@ public class IsClickedMoveTransition : FSMTransition {
                 if (!hit.collider.CompareTag("Enermy")) {
                     // 为黑板设置变量
                     BlackBorad.SetVector3("ClickPosition",hit.point);
+                    BlackBorad.SetBool("IsMoveOver", false);
                     return true;
                 }
             }

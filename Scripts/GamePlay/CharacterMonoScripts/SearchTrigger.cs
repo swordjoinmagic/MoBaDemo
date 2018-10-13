@@ -19,7 +19,7 @@ public class SearchTrigger : MonoBehaviour{
     private void OnTriggerEnter(Collider other) {
         CharacterMono target = other.gameObject.GetComponent<CharacterMono>(); 
         // 当目标碰撞体是"普通单位"且与自己不属于同个阵营时,敌人数加1
-        if (target != null && !characterMono.CompareOwner(target)) {
+        if (target != null && !characterMono.CompareOwner(target) && target.IsCanBeAttack()) {
             arroundEnemies.Add(other.GetComponent<CharacterMono>());
         }
     }
