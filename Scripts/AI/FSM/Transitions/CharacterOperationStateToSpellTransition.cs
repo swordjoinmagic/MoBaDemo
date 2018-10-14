@@ -15,11 +15,10 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
     }
 
     public override bool IsValid() {
-        if (!BlackBorad.GetBool("isPrePareUseSkill")) return false;
+        characterMono = BlackBorad.CharacterMono;
+        if (!BlackBorad.GetBool("isPrePareUseSkill") || characterMono.prepareSkill==null) return false;
 
         Debug.Log("判断是否要释放技能中~~");
-        if(characterMono == null)
-            characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
         characterModel = characterMono.characterModel;
 
 
@@ -54,6 +53,13 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
                         return true;
                     }
                 }
+            }
+
+            // 如果此时玩家按下ESC键,结束这个准备施法的Transition
+            if (Input.GetKeyDown(KeyCode.Escape)) {
+                BlackBorad.SetBool("isPrePareUseSkill", false);
+                characterMono.isPrepareUseSkill = false;
+                return false;
             }
         }
 

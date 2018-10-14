@@ -32,6 +32,7 @@ public class SpellState : FSMState {
 
     public override void OnExit() {
         spllerMono.isPrepareUseSkill = false;
+        //spllerMono.prepareSkill = null;
 
     }
 

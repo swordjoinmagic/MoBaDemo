@@ -57,15 +57,15 @@ public class CharacterMono : MonoBehaviour {
             maxMp = 1000,
             Mp = 1000,
             name = "sjm",
-            attackDistance = 2f,
-            //projectileModel = new ProjectileModel {
-            //    spherInfluence = 2f,
-            //    targetPositionEffect = targetPositionEffect,
-            //    tartgetEnemryEffect = targetEnemryEffect,
-            //    movingSpeed = 2,
-            //    turningSpeed = 1
-            //},
-            //projectile = projectile,
+            attackDistance = 5f,
+            projectileModel = new ProjectileModel {
+                spherInfluence = 2f,
+                targetPositionEffect = targetPositionEffect,
+                tartgetEnemryEffect = targetEnemryEffect,
+                movingSpeed = 2,
+                turningSpeed = 1
+            },
+            projectile = projectile,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -133,6 +133,9 @@ public class CharacterMono : MonoBehaviour {
     /// /// <param name="forwardDistance">跟目标的距离</param>
     /// <returns></returns>
     public bool Chasing(Transform targetTransform,float forwardDistance) {
+        NavMeshHit navMeshHit;
+        agent.FindClosestEdge(out navMeshHit);
+        Debug.Log("Name:"+name+ " navMeshHit:" + navMeshHit.mask);
         // 获得当前单位与目标单位的距离
         float distance = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
@@ -142,7 +145,6 @@ public class CharacterMono : MonoBehaviour {
         if (!agent.pathPending && distance <= forwardDistance) {
             animator.SetBool("isRun", false);
             agent.isStopped = true;
-
             return true;
         } else {
             animator.SetBool("isRun", true);
@@ -340,6 +342,13 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private void Dying() {
+
+        // 设置isDying为True
+        isDying = true;
+
+        // 停止目前一切动作
+        ResetAllStateAnimator();
+
         // 把人物的AI系统暂停
         BehaviorTree behaviorTree = GetComponent<BehaviorTree>();
         if (behaviorTree != null)
@@ -348,12 +357,6 @@ public class CharacterMono : MonoBehaviour {
         CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>();
         if (characterOperationFSM != null)
             characterOperationFSM.enabled = false;
-
-        // 设置isDying为True
-        isDying = true;
-
-        // 停止目前一切动作
-        ResetAllStateAnimator();
 
         // 播放死亡动画
         animator.SetTrigger(AnimatorEnumeration.Died);
