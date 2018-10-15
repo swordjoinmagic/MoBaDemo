@@ -18,7 +18,7 @@ public class BaseSkill {
     public int skillLevel;
 
     // 执行伤害效果
-    public virtual Damage Execute() {
+    public virtual Damage CalculateDamage() {
         return null;
     }
 }

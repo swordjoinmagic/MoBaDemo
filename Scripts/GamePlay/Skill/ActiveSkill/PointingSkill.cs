@@ -4,37 +4,34 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+//=================================
+// ACTIVESKILL TYPE : 指向伤害技能类
+
 /// <summary>
-/// 所有指向型技能的基类,包含了指向型技能的基本特性:
-///     1.target:指向的单位
-///     2.self:自身
+/// 指向伤害技能类,此技能要求单击一个目标进行释放,对目标直接造成伤害
+/// 有以下特性:
 ///     3.selfEffect:释放技能时自身的特效/动画
 ///     4.targetEffect:释放技能时敌人的特效/动画
 /// </summary>
-[System.Serializable]
 public class PointingSkill : ActiveSkill{
-
-    //=============================
-    // 在攻击时动态指定
-    public GameObject target;
-    public GameObject self;
 
     //==============================================
     // 攻击时己方和地方的特效，预制体，定义技能时输入
     public GameObject selfEffect;
     public GameObject targetEffect;
 
-    public override Damage Execute() {
+    public override void Execute(CharacterMono spller, CharacterMono target) {
 
         FinalSpellTime = Time.time;
 
         GameObject tempSelfEffect = null;
         GameObject tempTargetEffect = null;
         if (selfEffect!=null)
-            tempSelfEffect = GameObject.Instantiate(selfEffect,self.transform);
+            tempSelfEffect = GameObject.Instantiate(selfEffect, spller.transform);
         if(targetEffect!=null)
             tempTargetEffect = GameObject.Instantiate(targetEffect, target.transform);
-        return base.Execute();
+
+        target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamge=PlusDamage });
     }
 }
 

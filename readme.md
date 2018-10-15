@@ -33,8 +33,7 @@
 	 2. 技能图标 ： Icon : string  :  <==
 	 3. 技能描述 ： description : string  :  <==
 2. 方法
-	1. Excute() : Damage 执行该技能效果伤害效果
-	2. pass
+	1. Excute(CharacterMono Speller,CharacterMono target) : void 执行该技能效果
 ### ***主动技能类 ActiveSkill < BaseSkill*** ###
 1. 属性
 	 1. 要消耗的魔法值 ： mp:int  :  <==
@@ -46,22 +45,57 @@
 	 7. 最后一次施法的时间 ： finalSpellTime:float
 2. 方法
 	1. Execute() : Damage 计算伤害
-### ***被动技能类 PassiveSkill < BaseSkill*** ###
-1. 属性
-	 1. pass
-2. 方法
-	1. pass
-### ***指向型技能类 PointingSkill < ActiveSkill*** ###
-1. 属性
-	 1. pass
-2. 方法
-	1. pass	
-### ***无指向型技能类 NoPointingSkill < ActiveSkill*** ###
-1. 属性
-	 1. pass
-2. 方法
-	1. pass	
-	
+### 技能分类 ###
+![Avater](readmeimage/SkillCategory.png)
+	 
+## 技能系统架构描述 ##
+对于技能系统的编写,有几个标准:
+
+1. 能不强转就不强转
+2. 能不判断类型就不判断类型 
+### 自然语言描述 ###
+先用直白的自然语言描述一下技能系统，对于一个技能，它有两个大的分类，分别是：
+
+1. 主动技能
+2. 被动技能
+
+可以将技能Skill类看成是Model和Mono类的结合类(实际上并不继承MonoBehavior,只是为了表示这个类封装了游戏逻辑),它即保存数据,又对战斗逻辑(释放技能后产生怎样的效果-这样的逻辑)进行计算.
+
+#### 主动技能 ####
+对于任何一个主动技能，它最重要的几个属性是：
+
+1. 造成的伤害 Damage
+2. 施法距离 SpellDistance
+3. 技能影响范围(以r为半斤的一个圆型区域) skillInfluence
+4. 释放技能后,施放单位产生的特效
+5. 释放技能后,目标地点/敌人产生的特效
+
+它最重要的方法以下几个:
+
+1. public virtual void Execute(CharacterMono Speller,CharacterMono target)
+2. public virtual void Execute(CharacterMono Speller,Vector3 Position)
+
+Execute方法表示应用此技能的特效,即 施法开始-产生特效-造成伤害这一系列操作.更准确的说,这个virtual方法使得技能类几乎可以实现所有效果,只要后面的子技能类重写就OK了.
+
+对于施法者来说,他不关心目前释放的技能是"主动技能类的哪个子类",他只要在释放技能的时候,执行Execute方法,就会自动执行不同的技能特效.
+
+#### 被动技能 ####
+对于一个被动技能,它最重要的几个属性是:
+
+1. 触发类型(说明了此被动技能在什么情况下被触发)
+2. 冷却时间(为0表示此被动技能不具有冷却时间)
+3. 耗魔(为0表示此被动技能不耗魔)
+
+重要的方法是:
+
+1. public void Execute(CharacterMono Speller)
+
+Execute方法的基本思路和主动技能类似,这里不再赘述.
+与主动技能相比,被动技能多了一个触发类型的属性,因为被动技能不能由单位主动释放,只能在某些特定条件触发的情况下,自动进行施法,与主动技能类的设计类似,被动技能类通过覆写多个子类,可以产生很多效果,而对于被动技能的施法者来说,它不需要知道这些效果的细节,只需调用Execute方法就OK了.
+
+### 技能类的子类 ###
+技能类的多个子类是实现多种多样技能效果的关键,对于技能类的每个子类来说,他都会实现父类的Execute方法,同时,会留下参数(接口)供外部调整,这些参数就是这些子类的一些属性,比如召唤类技能,则可以调整它召唤的单位等等.
+
 ## 单位 ##
 需要明确的是，每一个单位都在外部由编辑器提前设定。
 ### 普通单位Character ###
@@ -89,16 +123,34 @@
 	20. 是否可被攻击（无敌） canBeAttacked : boolean  :  <==
 	21. 单位类型 unitType : UnitType  :  <==
 	22. 单位阵营 unityFaction : UnitFaction  :  <==
+	23. 单位被杀死后将提供给英雄单位多少经验 supportExp : int  :  <== 
+	24. 单位被杀死后将提供给玩家单位多少金钱 supportMoney : int  :  <== 
 	
 ---
 ### 英雄单位 Hero < Character ###
 1. 属性
-	1. 力量 forcePower : int  :  <==
-	2. 敏捷 agilePower : int  :  <==
+	1. 力量 forcePower : float  :  <==
+	2. 力量成长 forcePowerGrowthPoint : float ：  <==
+	2. 敏捷 agilePower : float  :  <==
+	3. 敏捷成长 agilePowerGrowthPoint : float  ：  <==
 	3. 智力 intelligencePower : int  :  <==
+	4. 智力成长 intelligenceGrowthPoint : float  :  <==
 	4. 技能点 skillPoint : int  :  <==
-	5. 经验值 exp : int  :  <==
-	
+	5. 技能点成长 skillPointGrowthPoint : int  :  <==
+	5. 经验值 exp : int
+	6. 经验值因子（每次升级所需经验值关联系数） expfactor : float  :  <==
+	7. 升级所需经验值(指第0级升到第一级所需经验) needExp : int  :  <==
+
+### 英雄单位相比普通单位有什么区别 ###
+
+
+1. 更多的属性
+2. 杀死怪物后获得经验
+3. 当经验到达阈值，升级
+4. 升级后，获得技能点，同时智力、敏捷、力量等进行成长
+5. 拥有物品栏
+6. 使用技能点可以学习技能 
+
 ---
 ### 特殊单位 投射物Projectile < Characte[canBeAttacked=false] ###
 投射物是一个比较特殊的单位，在一些技能和单位的远程攻击里面出现，投射物一般有一个目标位置。
@@ -212,7 +264,7 @@
 
 #### 3.状态机图片 ####
 
-![Avater](readmeImage/stateMachine.png)
+![Avater](readmeimage/stateMachine.png)
 
 
 
@@ -254,6 +306,8 @@
 	3. hp为0并不会真正的死亡，而是等待一段时间后系统将其复活
 	4. 死亡后独特的英雄死亡动画
 	5. 可以使用物品并穿戴装备
-4. 制作物品（消耗品）系统，基本思路与技能系统类似。
+4. 制作物品（消耗品）系统及商店系统，基本思路与技能系统类似。
+5. 状态系统
 5. 制作装备系统，包括完整的装备合成树系统 
 6. 制作战争迷雾系统
+7. 网络对战系统,包含:网络大厅,加入房间,开始游戏等等操作

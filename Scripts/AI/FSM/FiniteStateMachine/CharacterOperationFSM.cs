@@ -61,7 +61,7 @@ class CharacterOperationFSM : FiniteStateMachine{
             transitions = new List<FSMTransition> {
                 isClickedEnermyTransition,
                 isClickedMoveTransition,
-                //idleToAttackTransition
+                idleToAttackTransition
             }
         };
         MoveState moveState = new MoveState() {

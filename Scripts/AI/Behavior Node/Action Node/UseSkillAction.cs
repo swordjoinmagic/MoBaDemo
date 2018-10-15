@@ -23,14 +23,14 @@ class UseSkillAction : Action{
             Debug.Log("prepareSkill:"+ characterMono.prepareSkill);
             pointingSkill = characterMono.prepareSkill as PointingSkill;
             Debug.Log("pointingSkill:"+pointingSkill);
-            pointingSkill.target = enermy.Value;
+            //pointingSkill.target = enermy.Value;
             pointingSkill.targetEffect = enermyParticleSystem;
         }
     }
 
     public override TaskStatus OnUpdate() {
         animator.SetTrigger("attack");
-        Damage damage = pointingSkill.Execute();
+        Damage damage = pointingSkill.CalculateDamage();
         CharacterModel enermyCharacter = enermyCharacterMono.characterModel;
         enermyCharacter.Hp -= damage.TotalDamage;
         enermyCharacterMono.SimpleCharacterViewModel.Modify(enermyCharacter);

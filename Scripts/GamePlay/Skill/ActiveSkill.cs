@@ -112,9 +112,32 @@ public class ActiveSkill : BaseSkill{
     /// 用来计算伤害的虚方法,返回一个伤害类
     /// </summary>
     /// <returns></returns>
-    public virtual Damage Execute() {
+    public override Damage CalculateDamage() {
         Damage damage = new Damage { BaseDamage = baseDamage, PlusDamge = plusDamage };
         return damage;
+    }
+
+    /// <summary>
+    /// Execute方法表示应用此技能的特效,
+    /// 即 施法开始-产生特效-造成伤害这一系列操作.
+    /// 更准确的说,这个virtual方法使得技能类几乎可以实现所有效果,
+    /// 只要后面的子技能类重写就OK了.
+    /// </summary>
+    /// <param name="speller">施法者</param>
+    /// <param name="target">受到法术伤害的目标</param>
+    public virtual void Execute(CharacterMono speller,CharacterMono target) {
+        Execute(speller,target.transform.position);
+    }
+
+    /// <summary>
+    /// Execute方法表示应用此技能的特效,
+    /// 即 施法开始-产生特效-造成伤害这一系列操作.
+    /// 更准确的说,这个virtual方法使得技能类几乎可以实现所有效果,
+    /// 只要后面的子技能类重写就OK了.
+    /// </summary>
+    /// <param name="speller">施法者</param>
+    /// <param name="target">受到法术伤害的目标</param>
+    public virtual void Execute(CharacterMono speller,Vector3 position) {
     }
 }
 

@@ -54,11 +54,16 @@ public class CharacterModel {
     // 回魔速度，以秒为单位，即以秒回多少Mp
     public float resotreMpSpeed;
     // 是否可被攻击(即是否无敌)
-    public Boolean canBeAttacked = true;
+    public bool canBeAttacked = true;
     // 单位的类型
     public UnitType unitType;
     // 单位所属阵营
     public UnitFaction unitFaction;
+    // 单位被杀死后将提供给英雄单位多少经验
+    public int supportExp;
+    // 单位被杀死后将提供给玩家单位多少金钱
+    public int supportMoney;
+
 
     //public CharacterModel() {
     //    Hp = maxHp;
@@ -78,6 +83,7 @@ public class CharacterModel {
         }
 
         set {
+            // 在bindproperty上再加一层封装,避免hp溢出
             if (value > maxHp)
                 hp.Value = maxHp;
             else if (value < 0)
@@ -118,6 +124,12 @@ public class CharacterModel {
 
         // 统计伤害
         Hp -= damage.TotalDamage;
+    }
+
+    // 获得当前CharacterModel对象的深拷贝对象
+    public virtual CharacterModel DeepCopy() {
+        CharacterModel deepCopyModel = new CharacterModel() { };
+        return deepCopyModel;
     }
 }
 

@@ -12,7 +12,7 @@ using UnityEngine.AI;
 /// </summary>
 [RequireComponent(typeof(Animator),typeof(NavMeshAgent))]
 public class CharacterMono : MonoBehaviour {
-    private SimpleCharacterViewModel simpleCharacterViewModel;
+    protected SimpleCharacterViewModel simpleCharacterViewModel;
 
     // 当前人物的动画组件以及寻路组件
     private Animator animator;
@@ -51,7 +51,7 @@ public class CharacterMono : MonoBehaviour {
     public GameObject targetEnemryEffect;
     public ProjectileMono projectile;
     public void Install() {
-        characterModel = new CharacterModel {
+        characterModel = new HeroModel {
             maxHp = 1000,
             Hp = 200,
             maxMp = 1000,
@@ -59,22 +59,22 @@ public class CharacterMono : MonoBehaviour {
             name = "sjm",
             attackDistance = 5f,
             projectileModel = new ProjectileModel {
-                spherInfluence = 2f,
+                spherInfluence = 3f,
                 targetPositionEffect = targetPositionEffect,
                 tartgetEnemryEffect = targetEnemryEffect,
-                movingSpeed = 2,
+                movingSpeed = 4,
                 turningSpeed = 1
             },
             projectile = projectile,
+            forcePower =100,
+            needExp = 1000,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
                     KeyCode = KeyCode.E,
                     Mp = 10,
                     PlusDamage = 200,
-                    self = gameObject,
                     selfEffect = null,
-                    target = null,
                     targetEffect = null,
                     SpellDistance = 4f,
                     CD = 2f,
@@ -87,9 +87,7 @@ public class CharacterMono : MonoBehaviour {
                     KeyCode = KeyCode.W,
                     Mp = 220,
                     PlusDamage = 200,
-                    self = gameObject,
                     selfEffect = null,
-                    target = null,
                     targetEffect = null,
                     SpellDistance = 4f,
                     CD = 5f,
@@ -103,7 +101,7 @@ public class CharacterMono : MonoBehaviour {
     }
     //================================================
 
-    private void Awake() {
+    public void Awake() {
         if (CompareTag("Player"))
             Install();
 
@@ -161,7 +159,7 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="isAttackFinish">本次攻击是否完成</param>
     /// <param name="targetTransform">目标敌人的Transform</param>
     /// <param name="target">目标敌人的Mono对象</param>
-    public bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
+    public virtual bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
 
         if (!target.IsCanBeAttack()) {
             ResetAttackStateAnimator();
@@ -195,7 +193,7 @@ public class CharacterMono : MonoBehaviour {
                 ProjectileMono projectileMono = Instantiate(characterModel.projectile, shotPosition.position, Quaternion.identity);
                 projectileMono.targetPosition = targetTransform.position;
                 projectileMono.target = target;
-                projectileMono.damage = new Damage() { BaseDamage = 100 };
+                projectileMono.damage = new Damage() { BaseDamage = 300,PlusDamge=300 };
                 projectileMono.projectileModel = characterModel.projectileModel;
             }
             isAttackFinish = true;
@@ -295,7 +293,7 @@ public class CharacterMono : MonoBehaviour {
                 nextAnimatorStateInfo.IsName("Idle")) {
 
                 // 计算伤害
-                Damage damage = prepareSkill.Execute();
+                Damage damage = prepareSkill.CalculateDamage();
                 enemryModel.Damaged(damage);
 
                 isPrepareUseSkill = false;
@@ -305,10 +303,8 @@ public class CharacterMono : MonoBehaviour {
         } else {
             // 指向型技能
 
-            PointingSkill pointingSkill = prepareSkill as PointingSkill;
-
             // 当前距离敌人 > 施法距离,进行追击
-            if (Chasing(enermyTransform,pointingSkill.SpellDistance)) {
+            if (Chasing(enermyTransform,prepareSkill.SpellDistance)) {
                 //======================================
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
@@ -320,10 +316,7 @@ public class CharacterMono : MonoBehaviour {
                 if (currentAnimatorStateInfo.IsName("Spell") &&
                     nextAnimatorStateInfo.IsName("Idle")) {
 
-                    pointingSkill.target = enemryMono.gameObject;
-
-                    Damage damage = pointingSkill.Execute();
-                    enemryModel.Hp -= damage.TotalDamage;
+                    prepareSkill.Execute(this,enemryMono);
 
                     Debug.Log("释放技能");
 
@@ -462,4 +455,3 @@ public class CharacterMono : MonoBehaviour {
         simpleCharacterViewModel.Hp.Value = newHp;
     }
 }
-
