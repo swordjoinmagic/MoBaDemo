@@ -113,7 +113,7 @@ public class ActiveSkill : BaseSkill{
     /// </summary>
     /// <returns></returns>
     public override Damage CalculateDamage() {
-        Damage damage = new Damage { BaseDamage = baseDamage, PlusDamge = plusDamage };
+        Damage damage = new Damage { BaseDamage = baseDamage, PlusDamage = plusDamage };
         return damage;
     }
 

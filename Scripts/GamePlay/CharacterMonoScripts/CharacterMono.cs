@@ -57,17 +57,18 @@ public class CharacterMono : MonoBehaviour {
             maxMp = 1000,
             Mp = 1000,
             name = "sjm",
-            attackDistance = 5f,
-            projectileModel = new ProjectileModel {
-                spherInfluence = 3f,
-                targetPositionEffect = targetPositionEffect,
-                tartgetEnemryEffect = targetEnemryEffect,
-                movingSpeed = 4,
-                turningSpeed = 1
-            },
-            projectile = projectile,
+            attackDistance = 2f,
+            //projectileModel = new ProjectileModel {
+            //    spherInfluence = 3f,
+            //    targetPositionEffect = targetPositionEffect,
+            //    tartgetEnemryEffect = targetEnemryEffect,
+            //    movingSpeed = 4,
+            //    turningSpeed = 1
+            //},
+            //projectile = projectile,
             forcePower =100,
             needExp = 1000,
+            attack = 100,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -95,6 +96,14 @@ public class CharacterMono : MonoBehaviour {
                     iconPath = "00041",
                     description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                     skillLevel = 6
+                }
+            },
+            passiveSkills = new List<PassiveSkill> {
+                new CritSkill{
+                    Effect = targetPositionEffect,
+                    CritRate = 0.3f,
+                    CritMultiple = 3f,
+                    triggerType = PassiveSkillTriggerType.WhenNormalAttack
                 }
             }
         };
@@ -187,13 +196,30 @@ public class CharacterMono : MonoBehaviour {
             !isAttackFinish) {
 
             if (characterModel.projectileModel == null) {
-                target.characterModel.Hp -= 50;
+                Damage damage = new Damage(characterModel.attack,0);
+
+                // 执行所有倍增伤害的被动技能
+                foreach (PassiveSkill passiveSkill in characterModel.passiveSkills) {
+                    if (passiveSkill.TiggerType == PassiveSkillTriggerType.WhenAttack || passiveSkill.TiggerType == PassiveSkillTriggerType.WhenNormalAttack) {
+                        passiveSkill.Execute(this,target,ref damage);
+                    }
+                }
+
+                target.characterModel.Damaged(damage);
             } else {
                 Transform shotPosition = transform.Find("shootPosition");
                 ProjectileMono projectileMono = Instantiate(characterModel.projectile, shotPosition.position, Quaternion.identity);
                 projectileMono.targetPosition = targetTransform.position;
                 projectileMono.target = target;
-                projectileMono.damage = new Damage() { BaseDamage = 300,PlusDamge=300 };
+                projectileMono.damage = new Damage() { BaseDamage = 300,PlusDamage=300 };
+
+                // 执行所有倍增伤害的被动技能
+                foreach (PassiveSkill passiveSkill in characterModel.passiveSkills) {
+                    if (passiveSkill.TiggerType == PassiveSkillTriggerType.WhenAttack || passiveSkill.TiggerType == PassiveSkillTriggerType.WhenNormalAttack) {
+                        passiveSkill.Execute(this, target, ref projectileMono.damage);
+                    }
+                }
+
                 projectileMono.projectileModel = characterModel.projectileModel;
             }
             isAttackFinish = true;

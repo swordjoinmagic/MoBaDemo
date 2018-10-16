@@ -31,7 +31,7 @@ public class PointingSkill : ActiveSkill{
         if(targetEffect!=null)
             tempTargetEffect = GameObject.Instantiate(targetEffect, target.transform);
 
-        target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamge=PlusDamage });
+        target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamage=PlusDamage });
     }
 }
 

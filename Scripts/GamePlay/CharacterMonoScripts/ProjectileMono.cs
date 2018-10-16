@@ -17,7 +17,7 @@ public class ProjectileMono : MonoBehaviour{
     public Vector3 targetPosition;
 
     // 该投射物造成的伤害
-    public Damage damage = null;
+    public Damage damage = Damage.Zero;
 
 
     /// <summary>

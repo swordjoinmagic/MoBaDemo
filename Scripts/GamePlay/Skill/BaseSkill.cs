@@ -19,6 +19,6 @@ public class BaseSkill {
 
     // 执行伤害效果
     public virtual Damage CalculateDamage() {
-        return null;
+        return Damage.Zero;
     }
 }

@@ -2,17 +2,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
 
 /// <summary>
-/// 伤害类,用于一切伤害的计算
+/// 伤害类,用于一切伤害的计算,
+/// 值类型
 /// </summary>
-public class Damage {
-    int baseDamage;
-    int plusDamge;
+public struct Damage {
+    float baseDamage;
+    float plusDamage;
+
+    public Damage(float baseDamage,float plusDamage ) {
+        this.baseDamage = baseDamage;
+        this.plusDamage = plusDamage;
+    }
 
     public int BaseDamage {
         get {
-            return baseDamage;
+            return Mathf.FloorToInt(baseDamage);
         }
 
         set {
@@ -20,13 +27,13 @@ public class Damage {
         }
     }
 
-    public int PlusDamge {
+    public int PlusDamage {
         get {
-            return plusDamge;
+            return Mathf.FloorToInt(plusDamage);
         }
 
         set {
-            plusDamge = value;
+            plusDamage = value;
         }
     }
 
@@ -35,8 +42,21 @@ public class Damage {
     /// </summary>
     public int TotalDamage {
         get {
-            return baseDamage + plusDamge;
+            return Mathf.FloorToInt(baseDamage + plusDamage);
         }
     }
+
+    public static Damage Zero {
+        get {
+            return new Damage(0, 0);
+        }
+    }
+
+    public static Damage operator *(Damage a, float d) {
+        a.baseDamage *= d;
+        a.plusDamage *= d;
+        return a;
+    }
+
 }
 
