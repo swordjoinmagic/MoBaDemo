@@ -24,8 +24,6 @@ public class CritSkill : PassiveSkill{
 
         if (Random.Range(0f,1f) <= CritRate) {
 
-            Debug.Log("执行被动技能---暴击！");
-
             // 执行暴击效果,将伤害*倍数对敌人进行计算
             damage *= CritMultiple;
 

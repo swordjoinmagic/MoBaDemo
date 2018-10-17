@@ -38,16 +38,33 @@ public class CharacterOperationExtraState : FSMState {
             isFirstEnter = false;
         }
 
+        // 判断单位是否按下它的主动技能
         foreach (ActiveSkill skill in characterModel.activeSkills) {
             // 是否按下按键,如果按下,则令prepareSkill=skill
             if (Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
                 characterMono.prepareSkill = skill;
-                Debug.Log("为CharacterMono设置prepareSkill技能,技能是:"+characterMono.prepareSkill.skillName);
+                Debug.Log("为CharacterMono设置prepareSkill技能,技能是:" + characterMono.prepareSkill.skillName);
                 characterMono.isPrepareUseSkill = true;
-                BlackBorad.SetBool("isPrePareUseSkill",true);
+                BlackBorad.SetBool("isPrePareUseSkill", true);
+                return;
             }
         }
 
+        // 判断单位是否按下它的物品技能
+        foreach (ItemGrid itemGrid in characterModel.itemGrids) {
+            if (itemGrid.item == null) return;
+            ActiveSkill activeSkill = itemGrid.item.itemActiveSkill;
+            if (Input.GetKeyDown(itemGrid.hotKey) && !activeSkill.IsCoolDown()) {
+                Debug.Log("按下了物品特技："+itemGrid.item.name);
+                characterMono.prepareSkill = activeSkill;
+                characterMono.isPrepareUseSkill = true;
+                BlackBorad.SetBool("isPrePareUseSkill", true);
+
+                characterMono.isPrepareUseItemSkill = true;
+                characterMono.prepareItemSkillItemGrid = itemGrid;
+                return;
+            }
+        }
     }
 }
 

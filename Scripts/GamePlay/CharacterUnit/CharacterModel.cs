@@ -28,6 +28,8 @@ public class CharacterModel {
     public List<ActiveSkill> activeSkills = new List<ActiveSkill>();
     // 当前角色所有被动技能
     public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
+    // 单位身上拥有的所有物品
+    public List<ItemGrid> itemGrids;
     // 单位攻击力
     public int attack;
     // 单位攻击类型

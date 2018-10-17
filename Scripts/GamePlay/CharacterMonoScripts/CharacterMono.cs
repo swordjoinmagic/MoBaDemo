@@ -10,7 +10,7 @@ using UnityEngine.AI;
 /// <summary>
 /// 用于管理一个单位在游戏中的逻辑,如播放动画,播放音效,进行攻击等等操作.
 /// </summary>
-[RequireComponent(typeof(Animator),typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class CharacterMono : MonoBehaviour {
     protected SimpleCharacterViewModel simpleCharacterViewModel;
 
@@ -31,6 +31,11 @@ public class CharacterMono : MonoBehaviour {
 
     // 表示是否准备释放法术
     public bool isPrepareUseSkill = false;
+
+    // 当前准备释放的技能是否是物品技能
+    public bool isPrepareUseItemSkill = false;
+    // 当前准备释放的物品技能的物品格子类
+    public ItemGrid prepareItemSkillItemGrid;
 
     // 周围的敌人
     public List<CharacterMono> arroundEnemies;
@@ -66,7 +71,7 @@ public class CharacterMono : MonoBehaviour {
             //    turningSpeed = 1
             //},
             //projectile = projectile,
-            forcePower =100,
+            forcePower = 100,
             needExp = 1000,
             attack = 100,
             activeSkills = new List<ActiveSkill> {
@@ -126,6 +131,32 @@ public class CharacterMono : MonoBehaviour {
 
         // 获得该单位周围的敌人
         arroundEnemies = transform.Find("SearchTrigger").GetComponent<SearchTrigger>().arroundEnemies;
+
+        // 初始化六个物品格子,六个物品格子在物品栏中的摆放顺序是
+        // 从上到下,从左到右,依次顺序,123456
+        characterModel.itemGrids = new List<ItemGrid> {
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha1 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha2 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha3 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha4 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha5 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha6 },
+        };
+
+        if (CompareTag("Player")) {
+            characterModel.itemGrids[0].item = new Item {
+                name = "测试物品",
+                itemActiveSkill = new PointingSkill {
+                    BaseDamage = 1000,
+                    selfEffect = targetPositionEffect,
+                    targetEffect = targetPositionEffect,
+                    SpellDistance = 10
+                },
+                itemType = ItemType.Consumed,
+                maxCount = 10,
+            };
+            characterModel.itemGrids[0].ItemCount = 3;
+        }
     }
 
     /// <summary>
@@ -342,7 +373,14 @@ public class CharacterMono : MonoBehaviour {
                 if (currentAnimatorStateInfo.IsName("Spell") &&
                     nextAnimatorStateInfo.IsName("Idle")) {
 
-                    prepareSkill.Execute(this,enemryMono);
+                    if (!isPrepareUseItemSkill)
+                        prepareSkill.Execute(this, enemryMono);
+                    else {
+
+                        prepareItemSkillItemGrid.ExecuteItemSkill(this,enemryMono);
+                        isPrepareUseItemSkill = false;
+                        prepareItemSkillItemGrid = null;
+                    }
 
                     Debug.Log("释放技能");
 

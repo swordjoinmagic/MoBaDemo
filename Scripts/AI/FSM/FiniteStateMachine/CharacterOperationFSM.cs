@@ -29,6 +29,7 @@ class CharacterOperationFSM : FiniteStateMachine{
         blackBorad.SetBool("IsMoveOver", true);
         blackBorad.SetGameObject("targetEffect", ExplosionEffect);
 
+
         Debug.Log("初始化黑板:"+" 黑板的Aniamtor:"+blackBorad.Animator);
     }
 
