@@ -108,11 +108,78 @@ Execute方法的基本思路和主动技能类似,这里不再赘述.
 
 ## 伤害系统的设计 ##
 
-
 1. 所有单位受到的伤害都必须由Damage类提供,在代码中不允许出现 HP -= xxxx 这样的字眼.
 2. Damage类是值类型
 3. 某些被动技能拥有提升伤害的特性，对于这些被动技能，在计算完攻击 or 法术伤害后，再依次计算各个被动技能对伤害的提升。
 4. Damage类本身用于计算伤害的属性皆为Float属性，但是，当要具体拿出来计算时，全部都使用Floor强转为int型。
+
+## 物品系统设计 ##
+### 功能描述 ###
+在MOBA游戏中，一个物品有多种功能。下面简单举例：
+
+1. 作为消耗品，为英雄进行补血等操作
+2. 作为装备，为英雄提供属性或特技
+3. 作为某些永久性使用物品，给英雄进行使用
+
+可以看出物品其实可以看成是拥有一堆主动、被动技能的物体，只要携带在英雄身上（物体未消耗完毕），英雄就可以使用这些主动、被动技能。
+
+### 物品类（Item）属性 ###
+1. 单个物品可持有最大数量  MaxCount : int  :  <==
+2. 物品类型（如：消耗品，装备等等） ItemType : ItemType  :  <==
+3. 拥有的主动技能 ItemActiveSkill : ActiveSkill  :  <==
+4. 拥有的被动技能 ItemPassiveSkills  : List<PassiveSkill>  :  <==
+5. 物品名  ItemName : string  :  <==
+6. 物品价格  ItemPrice : int  :  <==
+7. 物品购买间隔时间（多次购买同一物品需要等待的时间）  ItemPayInteral : float  :  <==
+
+### 物品格子类（ItemGrid）###
+物品格子类是物品的类的包装类型，它表示了在英雄物品栏中的一个个物品格子，其拥有当前物品持有数量等属性，用来处理具体的游戏逻辑。
+
+1. 物品 ： Item
+2. 持有该物品的数量 count : int
+3. 使用该物品的热键 hotKey : keycode 
+
+
+## 状态系统设计 ##
+### 功能描述 ###
+状态是一种持续影响某一物体的表现，最典型的状态比如：中毒、伤害加深。  
+当单位受到中毒状态时，他会每隔一段时间受到一定比例的伤害。  
+而当单位受到伤害加深状态时，他会在遭受攻击时，受到的伤害加深。  
+更为特殊的状态，当单位拥有某一种特殊状态时，它的攻击会带有某种特效之类的。
+
+从上面的描述中，可以看出状态有以下特点：
+
+1. 持续性的影响某一单位，当时间超过某一限度，此状态将会消失
+2. 除了持续性的影响外，还可能带有某些特殊效果，这些特殊效果可能会在状态持有者 攻击时、遭受伤害时等情况下触发
+
+### 实现思路 ###
+根据功能描述，可以把状态看成是一个在Update状态不停作用单位的一种Mono类。
+
+但是，对于状态拥有的某些特殊功能，仅仅是上面这些还不够。对于状态的特殊效果，可以看出它的描述特别像被动技能。
+
+在这里，可以将状态定义为：
+
+1. 在Update状态下不停作用物体
+2. 拥有一系列被动技能作用物体
+
+### 状态（BattleState）属性 ###
+1. 状态名 stateName : string  :  <==
+2. 状态描述 description : string  :  <==
+3. 状态持续时间（单位:秒）（为0表示状态永久存在） duration : float  :  <==
+4. 状态拥有的一系列被动技能 statePassiveSkills : List<PassiveSkill>  :  <==
+5. 状态持有者会产生怎样的特效 stateHolderEffect : GameObject  :  <==
+
+### 状态（BattleState）重要方法 ###
+1. public virtual OnEnter(CharacterMono stateHolder)
+2. public virtual OnUpdate(CharacterMono stateHolder)
+3. public virtual OnExit(CharacterMono stateHolder)
+
+状态的运行流程如下：
+
+1. 当某一单位被施加了某一状态，首先进入该状态的OnEnter方法
+2. 在每一帧更新时，进入状态的OnUpdate方法，同时，在OnUpdate方法中判断状态持续时间是否到头，如果持续时间已经过了，那么自动执行OnExit方法
+3.  状态消失时，自动执行OnExit方法
+   
 
 
 ## 单位 ##
@@ -125,7 +192,7 @@ Execute方法的基本思路和主动技能类似,这里不再赘述.
 	4. 最大魔法值 maxMp：int  :  <==
 	5. 名称 name：string  :  <==
 	6. 攻击距离 attackDistance：float  :  <== 
-	7. 该单位拥有的所有技能 baseSkills：List<BaseSkill>  :  <==
+	7. 该单位拥有的所有技能 baseSkills：List< BaseSkill >  :  <==
 	8. 该单位拥有的所有主动技能 activeSkills ： List< ActiveSkill >
 	9. 该单位拥有的所有被动技能 passiveSkills : List< PassiveSkill > 
 	10. 攻击力 attack ： int  :  <==
@@ -297,7 +364,8 @@ Execute方法的基本思路和主动技能类似,这里不再赘述.
 3. 带有视野的单位怎么更新贴图
 4. 多个带有视野的单位怎么互相作用
 5. 如何将生成好的贴图渲染到屏幕上
-
+## 解决方案 ##
+1. 
 # 开发日记 #
 ### 2018/10/7 ###
 #### Question ###
