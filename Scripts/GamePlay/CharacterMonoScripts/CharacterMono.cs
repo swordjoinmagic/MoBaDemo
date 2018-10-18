@@ -40,6 +40,9 @@ public class CharacterMono : MonoBehaviour {
     // 周围的敌人
     public List<CharacterMono> arroundEnemies;
 
+    // 当前角色拥有的所有状态
+    public List<BattleState> battleStates = new List<BattleState>();
+
     public SimpleCharacterViewModel SimpleCharacterViewModel {
         get {
             return simpleCharacterViewModel;
@@ -55,6 +58,7 @@ public class CharacterMono : MonoBehaviour {
     public GameObject targetPositionEffect;
     public GameObject targetEnemryEffect;
     public ProjectileMono projectile;
+    public GameObject stateHolderEffect;
     public void Install() {
         characterModel = new HeroModel {
             maxHp = 1000,
@@ -159,6 +163,27 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
+    public void Update() {
+
+        // 处理单位的状态
+        for (int i = 0; i < battleStates.Count;) {
+            BattleState battleState = battleStates[i];
+
+            // 更新状态
+            battleState.Update(this);
+
+            // 如果该状态没有消失，去更新下一个状态
+            // 如果该状态消失了，那么i不进行++
+            if (!battleState.IsStateDying) {
+                i++;
+            }
+
+        }
+
+    }
+
+
+
     /// <summary>
     /// 处理人物追击的逻辑
     /// 当人物追击完成(也就是移动到了目标单位面前)返回true,否则返回false 
@@ -237,6 +262,15 @@ public class CharacterMono : MonoBehaviour {
                 }
 
                 target.characterModel.Damaged(damage);
+
+                // 测试，使敌方进入中毒状态
+                target.battleStates.Add(new PoisoningState() {
+                    damage = new Damage(50, 10),
+                    duration = 5f,
+                    stateHolderEffect = stateHolderEffect,
+                    name = "PosioningState"
+                });
+
             } else {
                 Transform shotPosition = transform.Find("shootPosition");
                 ProjectileMono projectileMono = Instantiate(characterModel.projectile, shotPosition.position, Quaternion.identity);

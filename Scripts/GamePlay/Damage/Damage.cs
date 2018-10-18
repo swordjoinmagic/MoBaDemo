@@ -57,6 +57,23 @@ public struct Damage {
         a.plusDamage *= d;
         return a;
     }
+    public static Damage operator +(Damage a,float b) {
+        a.plusDamage += b;
+        return a;
+    }
+    public static Damage operator +(Damage a,Damage b) {
+        a.baseDamage += b.baseDamage;
+        a.plusDamage += b.plusDamage;
+        return a;
+    }
+    public static Damage operator /(Damage a, float b) {
+        a.baseDamage /= b;
+        a.plusDamage /= b;
+        return a;
+    }
 
+    public override string ToString() {
+        return string.Format("(baseDamage=%.2s ,plusDamage=%.2s)",baseDamage.ToString(),plusDamage.ToString());
+    }
 }
 
