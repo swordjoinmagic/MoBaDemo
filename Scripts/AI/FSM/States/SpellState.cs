@@ -22,9 +22,10 @@ public class SpellState : FSMState {
     public CharacterModel speller;
 
     public override void OnEnter() {
-        enemryMono = BlackBorad.GetGameObject("Enemry").GetComponent<CharacterMono>();
+        //enemryMono = BlackBorad.GetGameObject("Enemry").GetComponent<CharacterMono>();
+        enemryMono = BlackBorad.GetCharacterMono("Enemry");
         enermyTransform = BlackBorad.GetTransform("EnemryTransform");
-        spllerMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
+        spllerMono = BlackBorad.CharacterMono;
 
         // 重置攻击状态
         spllerMono.ResetAttackStateAnimator();

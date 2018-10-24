@@ -24,13 +24,13 @@ class IdleToAttackTransition : FSMTransition {
 
 
     public override bool IsValid() {
-        Debug.Log("正处于IdleToAttackTransition中,周围敌人的数量是:" + BlackBorad.CharacterMono.arroundEnemies.Count);
+        //Debug.Log("正处于IdleToAttackTransition中,周围敌人的数量是:" + BlackBorad.CharacterMono.arroundEnemies.Count);
 
         if (BlackBorad.CharacterMono.arroundEnemies.Count > 0) {
             CharacterMono target = ChooseOneEnemry();
             if (target == null) return false;
             BlackBorad.SetTransform("EnemryTransform", target.transform);
-            BlackBorad.SetGameObject("Enemry", target.gameObject);
+            BlackBorad.SetComponent("Enemry", target);
             return true;
         }
         return false;

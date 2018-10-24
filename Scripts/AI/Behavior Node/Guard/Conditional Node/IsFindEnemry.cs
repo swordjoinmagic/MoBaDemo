@@ -30,7 +30,7 @@ public class IsFindEnemry : Conditional{
 
     public override TaskStatus OnUpdate() {
 
-        Debug.Log("IsFindEnemry ConditonalNode Running");
+        //Debug.Log("IsFindEnemry ConditonalNode Running");
 
         if (characterMono.arroundEnemies.Count > 0) {
 
@@ -39,7 +39,7 @@ public class IsFindEnemry : Conditional{
             if (enemry == null) return TaskStatus.Failure;
 
             target.Value = enemry.gameObject;
-            Debug.Log(target.Value.name);
+            //Debug.Log(target.Value.name);
             return TaskStatus.Success;
         }
         return TaskStatus.Failure;

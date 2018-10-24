@@ -13,5 +13,6 @@ public class test : MonoBehaviour {
 	void Update () {
         float h = Input.GetAxis("Horizontal");
         Camera.main.transform.Rotate(new Vector3(0,h,0)*Time.deltaTime*5);
+        
 	}
 }

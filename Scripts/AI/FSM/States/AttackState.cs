@@ -21,9 +21,10 @@ public class AttackState : FSMState {
     private bool isAttackFinish = true;
 
     public void Init() {
-        characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
+        characterMono = BlackBorad.CharacterMono;
         EnemryTransform = BlackBorad.GetTransform("EnemryTransform");
-        enemryMono = BlackBorad.GetGameObject("Enemry").GetComponent<CharacterMono>();
+        //enemryMono = BlackBorad.GetGameObject("Enemry").GetComponent<CharacterMono>();
+        enemryMono = BlackBorad.GetCharacterMono("Enemry");
     }
 
     public override void OnEnter() {
@@ -37,7 +38,7 @@ public class AttackState : FSMState {
     public override void OnUpdate() {
         // 如果当前单位还未移动到目标敌人的位置,进行追击
         if (characterMono.Chasing(EnemryTransform, characterMono.characterModel.attackDistance)) {
-            Debug.Log("正在进行攻击");
+            //Debug.Log("正在进行攻击");
             // 追击完成后,对敌方进行攻击
             characterMono.Attack(ref isAttackFinish, EnemryTransform, enemryMono);
         }

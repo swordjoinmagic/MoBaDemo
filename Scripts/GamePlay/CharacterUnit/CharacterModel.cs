@@ -116,6 +116,8 @@ public class CharacterModel {
                 mp.Value = value;
         }
     }
+    
+    
     /// <summary>
     /// 受到伤害时执行的方法
     /// </summary>

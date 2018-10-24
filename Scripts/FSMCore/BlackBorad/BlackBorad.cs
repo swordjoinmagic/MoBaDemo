@@ -113,5 +113,19 @@ namespace FSM {
         public object GetObject(string key) {
             return dictonary[key];
         }
+
+        // 设置\获取Component组件对象
+        public void SetComponent(string key,Component value) {
+            dictonary[key] = value;   
+        }
+        public Component GetComponent(string key) {
+            return dictonary[key] as Component;
+        }
+
+        //============================
+        // 对获取组件对象这个方法的具体化
+        public CharacterMono GetCharacterMono(string key) {
+            return GetComponent(key) as CharacterMono;
+        }
     }
 }

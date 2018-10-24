@@ -10,6 +10,8 @@ public class Item {
     public int price;
     // 物品描述
     public string description;
+    // 物品图片地址
+    public string iconPath;
     // 单个物品可持有的最大数量
     public int maxCount;
     // 物品类型

@@ -11,7 +11,7 @@ class SpellToIdleTransition : FSMTransition {
     }
 
     public override bool IsValid() {
-        GameObject target = BlackBorad.GetGameObject("Enemry");
+        CharacterMono target = BlackBorad.GetCharacterMono("Enemry");
         CharacterMono characterMono = BlackBorad.CharacterMono;
         if (target == null || characterMono == null) return false;
         if (Input.GetKeyDown(KeyCode.Escape) &&

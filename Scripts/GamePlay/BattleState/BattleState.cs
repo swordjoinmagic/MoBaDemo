@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEditor;
 
 /// <summary>
 /// 所有战斗状态的基类，这里的状态指的不是FSM中的状态。
@@ -14,6 +15,7 @@ public class BattleState {
     public float duration;
     public List<PassiveSkill> statePassiveSkills;
     public GameObject stateHolderEffect;
+    public bool isStackable;      // 状态是否可叠加
 
     // 是否是第一次进入该状态
     private bool isFirstEnterState = true;
@@ -43,6 +45,7 @@ public class BattleState {
             isFirstEnterState = false;
             return;
         }
+
         OnUpdate(stateHolder);
 
         // 处理状态消失流程

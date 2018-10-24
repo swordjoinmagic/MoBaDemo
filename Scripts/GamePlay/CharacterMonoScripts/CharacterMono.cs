@@ -13,6 +13,7 @@ using UnityEngine.AI;
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class CharacterMono : MonoBehaviour {
     protected SimpleCharacterViewModel simpleCharacterViewModel;
+    private List<ItemViewModel> itemViewModels = new List<ItemViewModel>(6);
 
     // 当前人物的动画组件以及寻路组件
     private Animator animator;
@@ -53,6 +54,16 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
+    public List<ItemViewModel> ItemViewModels {
+        get {
+            return itemViewModels;
+        }
+
+        set {
+            itemViewModels = value;
+        }
+    }
+
     //================================================
     // ●测试用
     public GameObject targetPositionEffect;
@@ -66,15 +77,15 @@ public class CharacterMono : MonoBehaviour {
             maxMp = 1000,
             Mp = 1000,
             name = "sjm",
-            attackDistance = 2f,
-            //projectileModel = new ProjectileModel {
-            //    spherInfluence = 3f,
-            //    targetPositionEffect = targetPositionEffect,
-            //    tartgetEnemryEffect = targetEnemryEffect,
-            //    movingSpeed = 4,
-            //    turningSpeed = 1
-            //},
-            //projectile = projectile,
+            attackDistance = 10f,
+            projectileModel = new ProjectileModel {
+                spherInfluence = 3f,
+                targetPositionEffect = targetPositionEffect,
+                tartgetEnemryEffect = targetEnemryEffect,
+                movingSpeed = 4,
+                turningSpeed = 1
+            },
+            projectile = projectile,
             forcePower = 100,
             needExp = 1000,
             attack = 100,
@@ -125,9 +136,6 @@ public class CharacterMono : MonoBehaviour {
 
         characterModel.Hp = characterModel.maxHp;
         characterModel.Mp = characterModel.maxMp;
-        //============================
-        // 与ViewModel双向绑定
-        Bind();
 
         // 获得该单位身上绑定的组件
         animator = GetComponent<Animator>();
@@ -139,14 +147,20 @@ public class CharacterMono : MonoBehaviour {
         // 初始化六个物品格子,六个物品格子在物品栏中的摆放顺序是
         // 从上到下,从左到右,依次顺序,123456
         characterModel.itemGrids = new List<ItemGrid> {
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha1 },
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha2 },
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha3 },
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha4 },
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha5 },
-            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha6 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha1,index=1 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha2,index=2 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha3,index=3 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha4,index=4 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha5,index=5 },
+            new ItemGrid{ item=null,ItemCount=0,hotKey=KeyCode.Alpha6,index=6 },
         };
 
+        //============================
+        // 与ViewModel双向绑定
+        Bind();
+
+        //================================================
+        // 测试
         if (CompareTag("Player")) {
             characterModel.itemGrids[0].item = new Item {
                 name = "测试物品",
@@ -154,12 +168,15 @@ public class CharacterMono : MonoBehaviour {
                     BaseDamage = 1000,
                     selfEffect = targetPositionEffect,
                     targetEffect = targetPositionEffect,
-                    SpellDistance = 10
+                    SpellDistance = 10,
+                    CD = 3
                 },
                 itemType = ItemType.Consumed,
                 maxCount = 10,
+                iconPath = "00046"
             };
             characterModel.itemGrids[0].ItemCount = 3;
+
         }
     }
 
@@ -198,7 +215,7 @@ public class CharacterMono : MonoBehaviour {
     public bool Chasing(Transform targetTransform,float forwardDistance) {
         NavMeshHit navMeshHit;
         agent.FindClosestEdge(out navMeshHit);
-        Debug.Log("Name:"+name+ " navMeshHit:" + navMeshHit.mask);
+        //Debug.Log("Name:"+name+ " navMeshHit:" + navMeshHit.mask);
         // 获得当前单位与目标单位的距离
         float distance = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
@@ -548,8 +565,24 @@ public class CharacterMono : MonoBehaviour {
     public void Bind() {
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
         characterModel.HpValueChangedHandler += OnHpValueChanged;
+
+        //==========================
+        // 绑定
+        foreach (var itemGrid in characterModel.itemGrids) {
+            itemGrid.OnIconPathChanged += OnItemIconPathChanged;
+            itemGrid.OnItemCountChanged += OnItemCountChanged;
+        }
+
     }
     public void OnHpValueChanged(int oldHp,int newHp) {
         simpleCharacterViewModel.Hp.Value = newHp;
+    }
+    public void OnItemCountChanged(int oldItemCount,int newItemCount,int index) {
+        if(itemViewModels.Count>=index)
+            ItemViewModels[index - 1].itemCount.Value = newItemCount; 
+    }
+    public void OnItemIconPathChanged(string oldItemPath,string newItemPath,int index) {
+        if (itemViewModels.Count >= index)
+            ItemViewModels[index - 1].iconPath.Value = newItemPath;
     }
 }

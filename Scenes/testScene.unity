@@ -791,7 +791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   texture: {fileID: 0}
-  worldSize: 50
+  worldSize: 256
   textureSize: 256
   Plan: {fileID: 515789120}
   Fog: {fileID: 1370676208}

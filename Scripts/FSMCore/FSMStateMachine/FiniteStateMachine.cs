@@ -74,7 +74,7 @@ namespace FSM {
 
 
         public void DebugWithFSM() {
-            Debug.Log("当前State是:"+this.activeState);
+            //Debug.Log("当前State是:"+this.activeState);
         }
     }
 }

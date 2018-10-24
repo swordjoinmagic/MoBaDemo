@@ -10,12 +10,24 @@ using UnityEngine;
 /// 其拥有当前物品持有数量等属性，用来处理具体的游戏逻辑。
 /// </summary>
 public class ItemGrid {
+
+    public delegate void OnValueChangeHandler<T>(T oldValue,T newValue,int index);
+
+    //============================
+    // 用于监控itemCount和ItemPath的变化
+    public OnValueChangeHandler<int> OnItemCountChanged;
+    public OnValueChangeHandler<string> OnIconPathChanged;
+
     // 此格子存储的物品
     public Item item;
     // 当前持有该物品的数量
     private int itemCount;
+    
     // 使用该物品的热键
     public KeyCode hotKey;
+
+    // 当前各自标号
+    public int index;
 
     public int ItemCount {
         get {
@@ -23,12 +35,32 @@ public class ItemGrid {
         }
 
         set {
+            int oldItemCount = ItemCount;
             if (item == null) { itemCount = 0; return; }
             // 持有物品数量不能超过该物品的最大持有数量
             itemCount = Mathf.Clamp(value,0,item.maxCount) ;
             // 如果物品使用完毕,自动将该物品设置为null
             if (ItemCount == 0)
                 item = null;
+
+            if (oldItemCount == value)
+                return;
+            if(OnItemCountChanged!=null)
+                OnItemCountChanged(oldItemCount,ItemCount,index);
+            if(item!=null && OnIconPathChanged!=null)
+                OnIconPathChanged(item.iconPath,item.iconPath,index);
+            else
+                OnIconPathChanged(null, null,index);
+        }
+    }
+
+    // 当前物品的图片路径
+    public string ItemImagePath {
+        get {
+            if (item != null)
+                return item.iconPath;
+            else
+                return null;
         }
     }
 

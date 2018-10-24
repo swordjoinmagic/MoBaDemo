@@ -13,7 +13,7 @@ public class MoveState : FSMState {
 
     public void Init() {
         position = BlackBorad.GetVector3("ClickPosition");
-        characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
+        characterMono = BlackBorad.CharacterMono;
     }
 
     public override void OnEnter() {

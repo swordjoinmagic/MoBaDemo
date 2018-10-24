@@ -49,7 +49,7 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
                     if (hit.collider.CompareTag("Enermy")) {
                         // 为黑板设置变量
                         BlackBorad.SetTransform("EnemryTransform", hit.collider.transform);
-                        BlackBorad.SetGameObject("Enemry", hit.collider.gameObject);
+                        BlackBorad.SetComponent("Enemry", hit.collider.gameObject.GetComponent<CharacterMono>());
                         return true;
                     }
                 }

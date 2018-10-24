@@ -20,7 +20,7 @@ public class CharacterOperationExtraState : FSMState {
     public override void OnEnter() {
 
         // 初始化
-        characterMono = BlackBorad.GameObject.GetComponent<CharacterMono>();
+        characterMono = BlackBorad.CharacterMono;
         characterModel = characterMono.characterModel;
     }
 

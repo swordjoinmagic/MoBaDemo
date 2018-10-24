@@ -11,14 +11,14 @@ class AttackToIdleTransition : FSMTransition {
     } 
 
     public override bool IsValid() {
-        GameObject target = BlackBorad.GetGameObject("Enemry");
+        //GameObject target = BlackBorad.GetGameObject("Enemry");
 
         //Debug.Log("AttackToIdleTransition:"+target.name);
 
-        // 如果单位已被摧毁
-        if (target == null) return true;
+        //// 如果单位已被摧毁
+        //if (target == null) return true;
 
-        CharacterMono targetMono = target.GetComponent<CharacterMono>();
+        CharacterMono targetMono = BlackBorad.GetCharacterMono("Enemry");
 
         if (targetMono.isDying || targetMono==null || !targetMono.IsCanBeAttack()) return true;
 

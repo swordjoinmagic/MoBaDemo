@@ -23,7 +23,7 @@ class HeroMono : CharacterMono{
     }
 
     public void Update() {
-        Debug.Log("Hero exp:"+HeroModel.needExp);
+        //Debug.Log("Hero exp:"+HeroModel.needExp);
     }
 }
 
