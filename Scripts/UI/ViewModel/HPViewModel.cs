@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using uMVVM;
 
-class HPViewModel : ViewModelBase{
+public class HPViewModel : ViewModelBase{
     public BindableProperty<int> Hp = new BindableProperty<int>();
     public BindableProperty<int> Mp = new BindableProperty<int>();
     public BindableProperty<int> maxHp = new BindableProperty<int>();

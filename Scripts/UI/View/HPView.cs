@@ -66,7 +66,7 @@ class HPView : UnityGuiView<HPViewModel>{
 
     public void OnHpChanged(int oldValue,int newValue) {
         hpText.text = string.Format("{0}/{1}",newValue,BindingContext.maxHp.Value);
-
+        Debug.Log("新的HP是:"+newValue);
         // 计算当前血量和新血量的差值
         int different = Math.Abs(oldValue-newValue);
 

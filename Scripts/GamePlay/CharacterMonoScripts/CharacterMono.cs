@@ -78,14 +78,14 @@ public class CharacterMono : MonoBehaviour {
             Mp = 1000,
             name = "sjm",
             attackDistance = 10f,
-            projectileModel = new ProjectileModel {
-                spherInfluence = 3f,
-                targetPositionEffect = targetPositionEffect,
-                tartgetEnemryEffect = targetEnemryEffect,
-                movingSpeed = 4,
-                turningSpeed = 1
-            },
-            projectile = projectile,
+            //projectileModel = new ProjectileModel {
+            //    spherInfluence = 3f,
+            //    targetPositionEffect = targetPositionEffect,
+            //    tartgetEnemryEffect = targetEnemryEffect,
+            //    movingSpeed = 4,
+            //    turningSpeed = 1
+            //},
+            //projectile = projectile,
             forcePower = 100,
             needExp = 1000,
             attack = 100,
@@ -180,7 +180,7 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
-    public void Update() {
+    public virtual void Update() {
 
         // 处理单位的状态
         for (int i = 0; i < battleStates.Count;) {
@@ -198,7 +198,6 @@ public class CharacterMono : MonoBehaviour {
         }
 
     }
-
 
 
     /// <summary>
@@ -281,12 +280,12 @@ public class CharacterMono : MonoBehaviour {
                 target.characterModel.Damaged(damage);
 
                 // 测试，使敌方进入中毒状态
-                target.battleStates.Add(new PoisoningState() {
-                    damage = new Damage(50, 10),
-                    duration = 5f,
-                    stateHolderEffect = stateHolderEffect,
-                    name = "PosioningState"
-                });
+                //target.battleStates.Add(new PoisoningState() {
+                //    damage = new Damage(50, 10),
+                //    duration = 5f,
+                //    stateHolderEffect = stateHolderEffect,
+                //    name = "PosioningState"
+                //});
 
             } else {
                 Transform shotPosition = transform.Find("shootPosition");
@@ -562,7 +561,7 @@ public class CharacterMono : MonoBehaviour {
 
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
-    public void Bind() {
+    protected virtual void Bind() {
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
         characterModel.HpValueChangedHandler += OnHpValueChanged;
 

@@ -52,7 +52,7 @@ public class CrateFOGTexture : MonoBehaviour{
         texture.Apply();
         Fog.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
 
-        image.sprite = Sprite.Create(texture,new Rect(0,0,textureSize,textureSize),new Vector2(0,0));
+        //image.sprite = Sprite.Create(texture,new Rect(0,0,textureSize,textureSize),new Vector2(0,0));
     }
 
     public void Generate() {
@@ -69,7 +69,7 @@ public class CrateFOGTexture : MonoBehaviour{
         float worldToTex = (float)textureSize / worldSize;
         Vector3 pos = (transform.position - origin) * worldToTex;
         Debug.Log("TexPos:" + pos);
-        float radius = 10 * worldToTex;
+        float radius = 5 * worldToTex;
 
         // Coordinates we'll be dealing with
 

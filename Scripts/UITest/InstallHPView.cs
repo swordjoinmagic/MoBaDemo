@@ -8,11 +8,13 @@ using UnityEngine.UI;
 class InstallHPView : MonoBehaviour{
 
     public HPView HPView;
+    public HeroMono CharacterMono;
 
     private void Start() {
-        CharacterModel characterModel = new CharacterModel { Hp=600,maxHp=600,maxMp=100,Mp=100 };
         HPView.BindingContext = new HPViewModel();
-        HPView.BindingContext.Init(characterModel);
+        HPView.BindingContext.Init(CharacterMono.characterModel);
+        Debug.Log("初始化HPVIEW完成");
+        CharacterMono.HPViewModel = HPView.BindingContext;
     }
 
     private void Update() {

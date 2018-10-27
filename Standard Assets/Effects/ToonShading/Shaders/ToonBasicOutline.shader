@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 Shader "Toon/Basic Outline" {
 	Properties {
 		_Color ("Main Color", Color) = (.5,.5,.5,1)
@@ -31,11 +33,7 @@ Shader "Toon/Basic Outline" {
 		float3 norm   = normalize(mul ((float3x3)UNITY_MATRIX_IT_MV, v.normal));
 		float2 offset = TransformViewToProjection(norm.xy);
 
-		#ifdef UNITY_Z_0_FAR_FROM_CLIPSPACE //to handle recent standard asset package on older version of unity (before 5.5)
-			o.pos.xy += offset * UNITY_Z_0_FAR_FROM_CLIPSPACE(o.pos.z) * _Outline;
-		#else
-			o.pos.xy += offset * o.pos.z * _Outline;
-		#endif
+		o.pos.xy += offset * o.pos.z * _Outline;
 		o.color = _OutlineColor;
 		UNITY_TRANSFER_FOG(o,o.pos);
 		return o;

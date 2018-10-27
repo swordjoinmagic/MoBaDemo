@@ -30,6 +30,8 @@ public class HeroModel : CharacterModel{
     public float expfactor;
     // 升级所需经验值(指第0级升到第一级所需经验) 
     public float needExp;
+    // 英雄头像图片的地址
+    public string AvatarImagePath;
 
     public override void Damaged(Damage damage) {
         base.Damaged(damage);

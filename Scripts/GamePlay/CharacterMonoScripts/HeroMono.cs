@@ -8,6 +8,8 @@ using UnityEngine;
 /// 英雄单位的Mono类
 /// </summary>
 class HeroMono : CharacterMono{
+    public HPViewModel HPViewModel;
+
     public HeroModel HeroModel {
         get {
             return characterModel as HeroModel;
@@ -22,8 +24,16 @@ class HeroMono : CharacterMono{
         return result;
     }
 
-    public void Update() {
-        //Debug.Log("Hero exp:"+HeroModel.needExp);
+    public override void Update() {
+        base.Update();
+    }
+
+    protected override void Bind() {
+        base.Bind();
+        characterModel.HpValueChangedHandler += OnHpChanged;
+    }
+    public void OnHpChanged(int oldHp, int newHp) {
+        HPViewModel.Hp.Value = newHp;
     }
 }
 
