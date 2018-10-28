@@ -231,6 +231,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -763,7 +766,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -1090,6 +1093,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -2076,6 +2082,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -3395,6 +3404,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -3681,6 +3693,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4051,6 +4066,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4345,6 +4363,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4658,6 +4679,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -5021,6 +5045,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -5314,6 +5341,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -6337,7 +6367,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -6433,6 +6463,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -6729,7 +6762,6 @@ GameObject:
   m_Component:
   - component: {fileID: 346335472}
   - component: {fileID: 346335475}
-  - component: {fileID: 346335474}
   - component: {fileID: 346335473}
   m_Layer: 2
   m_Name: SearchTrigger
@@ -6763,20 +6795,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
---- !u!114 &346335474
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 346335471}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe838758f45b63542949a68af0d43e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  simpleCharacterView: {fileID: 0}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!135 &346335475
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -7182,6 +7200,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -7471,6 +7492,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -7765,6 +7789,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -8496,6 +8523,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -8887,6 +8917,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -9327,6 +9360,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -9703,6 +9739,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -10360,6 +10399,10 @@ Prefab:
       propertyPath: m_Name
       value: Tower Mage (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -10405,6 +10448,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -10617,6 +10663,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -10984,6 +11033,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -11230,7 +11282,6 @@ GameObject:
   m_Component:
   - component: {fileID: 504873412}
   - component: {fileID: 504873415}
-  - component: {fileID: 504873414}
   - component: {fileID: 504873413}
   m_Layer: 2
   m_Name: SearchTrigger
@@ -11264,20 +11315,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
---- !u!114 &504873414
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 504873411}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe838758f45b63542949a68af0d43e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  simpleCharacterView: {fileID: 0}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!135 &504873415
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -11503,6 +11540,106 @@ MonoBehaviour:
   originPosition: {x: 0, y: 0, z: 0}
   players:
   - {fileID: 235192371}
+  characterMonos:
+  - {fileID: 602586885}
+  - {fileID: 1902787947}
+  - {fileID: 1335141338}
+  - {fileID: 476327025}
+  - {fileID: 1180866076}
+  - {fileID: 1526503309}
+  - {fileID: 1786814976}
+  - {fileID: 1049369086}
+  - {fileID: 1242372717}
+  - {fileID: 133920310}
+  - {fileID: 643065010}
+  - {fileID: 2054725803}
+  - {fileID: 840048842}
+  - {fileID: 1985405465}
+  - {fileID: 1811380256}
+  - {fileID: 1395687449}
+  - {fileID: 1001262186}
+  - {fileID: 762273282}
+  - {fileID: 1956483644}
+  - {fileID: 2054047490}
+  - {fileID: 358501613}
+  - {fileID: 1611854385}
+  - {fileID: 240722891}
+  - {fileID: 2033391298}
+  - {fileID: 1009000219}
+  - {fileID: 1067479222}
+  - {fileID: 404492740}
+  - {fileID: 761721350}
+  - {fileID: 1122688046}
+  - {fileID: 367742254}
+  - {fileID: 1790058390}
+  - {fileID: 1799208913}
+  - {fileID: 948445392}
+  - {fileID: 204940025}
+  - {fileID: 429492787}
+  - {fileID: 67340113}
+  - {fileID: 623021387}
+  - {fileID: 1475966616}
+  - {fileID: 1787220756}
+  - {fileID: 633800485}
+  - {fileID: 450563230}
+  - {fileID: 1205913174}
+  - {fileID: 1262508648}
+  - {fileID: 1400823140}
+  - {fileID: 1474724337}
+  - {fileID: 1741068509}
+  - {fileID: 225302933}
+  - {fileID: 185899262}
+  - {fileID: 546433514}
+  - {fileID: 1888152095}
+  - {fileID: 1434575664}
+  - {fileID: 808828385}
+  - {fileID: 1137910262}
+  - {fileID: 1885175222}
+  - {fileID: 1302690617}
+  - {fileID: 2102876720}
+  - {fileID: 1863624343}
+  - {fileID: 1594411956}
+  - {fileID: 712445890}
+  - {fileID: 1974196326}
+  - {fileID: 1441433918}
+  - {fileID: 1583043885}
+  - {fileID: 1704337106}
+  - {fileID: 499434223}
+  - {fileID: 2142036312}
+  - {fileID: 848963843}
+  - {fileID: 832421904}
+  - {fileID: 327029327}
+  - {fileID: 220309002}
+  - {fileID: 478071357}
+  - {fileID: 257906443}
+  - {fileID: 2147271065}
+  - {fileID: 735491759}
+  - {fileID: 1125862937}
+  - {fileID: 949058790}
+  - {fileID: 1011023476}
+  - {fileID: 1138686305}
+  - {fileID: 1890036619}
+  - {fileID: 1123552216}
+  - {fileID: 1216955901}
+  - {fileID: 727503182}
+  - {fileID: 977983274}
+  - {fileID: 1671569317}
+  - {fileID: 424000484}
+  - {fileID: 752637610}
+  - {fileID: 618827083}
+  - {fileID: 755392994}
+  - {fileID: 793372926}
+  - {fileID: 790800408}
+  - {fileID: 2030652731}
+  - {fileID: 1457098713}
+  - {fileID: 2915426}
+  - {fileID: 1004319301}
+  - {fileID: 1158204993}
+  - {fileID: 372070254}
+  - {fileID: 1079837699}
+  - {fileID: 1952567039}
+  - {fileID: 183591906}
+  - {fileID: 324430192}
   fog: {fileID: 937315479}
   isthreadStart: 0
 --- !u!1 &520204155
@@ -11780,7 +11917,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4379091043536604, guid: 18cb0d25e7e42d04bb08eb9aff39ff69, type: 2}
       propertyPath: m_LocalPosition.x
-      value: -78.2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4379091043536604, guid: 18cb0d25e7e42d04bb08eb9aff39ff69, type: 2}
       propertyPath: m_LocalPosition.y
@@ -12108,6 +12245,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -12687,7 +12827,6 @@ GameObject:
   m_Component:
   - component: {fileID: 578103272}
   - component: {fileID: 578103275}
-  - component: {fileID: 578103274}
   - component: {fileID: 578103273}
   m_Layer: 2
   m_Name: SearchTrigger
@@ -12721,20 +12860,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
---- !u!114 &578103274
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 578103271}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe838758f45b63542949a68af0d43e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  simpleCharacterView: {fileID: 0}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!135 &578103275
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -13232,7 +13357,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
       propertyPath: m_TagString
-      value: Enermy
+      value: Fire
       objectReference: {fileID: 0}
     - target: {fileID: 458352, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
       propertyPath: m_LocalRotation.x
@@ -13294,6 +13419,10 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 2f226eebe9d1ea3429e74076e3ba7536, type: 2}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -13339,6 +13468,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -13677,6 +13809,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -13963,6 +14098,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -14239,6 +14377,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -14742,6 +14883,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -15725,6 +15869,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -16006,6 +16153,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -16545,6 +16695,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -16765,6 +16918,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17055,6 +17211,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17339,6 +17498,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17629,6 +17791,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -18256,6 +18421,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -18504,6 +18672,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -18899,6 +19070,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -19420,6 +19594,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -19975,6 +20152,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -20221,7 +20401,7 @@ Transform:
   m_PrefabInternal: {fileID: 543679464}
   m_GameObject: {fileID: 847727015}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -78.2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -20284,6 +20464,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -21519,6 +21702,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -21743,6 +21929,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -22703,6 +22892,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -23107,7 +23299,6 @@ GameObject:
   m_Component:
   - component: {fileID: 993978733}
   - component: {fileID: 993978736}
-  - component: {fileID: 993978735}
   - component: {fileID: 993978734}
   m_Layer: 2
   m_Name: SearchTrigger
@@ -23141,20 +23332,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
---- !u!114 &993978735
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 993978732}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe838758f45b63542949a68af0d43e5b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  simpleCharacterView: {fileID: 0}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!135 &993978736
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -23627,6 +23804,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -23851,6 +24031,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -24067,6 +24250,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -24291,6 +24477,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25025,6 +25214,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25566,6 +25758,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25879,6 +26074,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -26732,6 +26930,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -26956,6 +27157,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -27176,6 +27380,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -27392,6 +27599,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -27616,6 +27826,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -28099,6 +28312,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -28586,6 +28802,10 @@ Prefab:
       propertyPath: m_Name
       value: Tower Mage (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -28631,6 +28851,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29048,6 +29271,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29272,6 +29498,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29708,6 +29937,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -30080,6 +30312,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -30307,7 +30542,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -30840,6 +31075,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -31068,7 +31306,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -31474,6 +31712,10 @@ Prefab:
       propertyPath: m_Name
       value: Tower Mage (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -31519,6 +31761,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -32269,6 +32514,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -32628,6 +32876,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -33334,6 +33585,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -33565,6 +33819,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -34094,6 +34351,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -34310,6 +34570,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -34530,6 +34793,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -35359,7 +35625,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -35511,6 +35777,10 @@ Prefab:
       propertyPath: m_Name
       value: Tower Mage (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -35556,6 +35826,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -36641,6 +36914,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -37097,6 +37373,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -37678,6 +37957,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -38662,7 +38944,8 @@ Prefab:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114796528978086326, guid: ff332da03782f0549a37cdead37357ad, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: ff332da03782f0549a37cdead37357ad, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1661254848
@@ -38956,6 +39239,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -39565,6 +39851,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -40296,6 +40585,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -40896,6 +41188,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -41116,6 +41411,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -41475,6 +41773,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -41834,6 +42135,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -42054,6 +42358,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -42860,6 +43167,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -43534,6 +43844,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -43880,6 +44193,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -44202,6 +44518,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -44491,6 +44810,10 @@ Prefab:
       propertyPath: m_Name
       value: Tower Mage (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
   m_IsPrefabParent: 0
@@ -44536,6 +44859,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -44983,6 +45309,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -45199,6 +45528,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -45561,6 +45893,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -45989,6 +46324,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47105,6 +47443,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47391,6 +47732,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47840,6 +48184,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -48060,6 +48407,9 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -48834,6 +49184,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -49511,6 +49864,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -49874,6 +50230,9 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
+    position: {x: 0, y: 0, z: 0}
+    radius: 0
+    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 

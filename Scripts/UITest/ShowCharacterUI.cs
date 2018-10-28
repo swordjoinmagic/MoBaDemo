@@ -14,22 +14,35 @@ public class ShowCharacterUI : MonoBehaviour {
 
     private SimpleCharacterView UI;
 
-    private bool isVisible = false;
+    private enum VisibleStatus {
+        VisibleChanged,     // 当单位变得可见时，产生的枚举状态
+        VisibleInChanged,   // 当单位变得不可见时，产生的枚举状态
+        NoneStatus,         // 空状态
+    };
+    private VisibleStatus visibleStatus = VisibleStatus.NoneStatus;
 
     private void Start() {
-        //print("GameObjectName:"+gameObject.name);
         character = GetComponent<CharacterMono>();
+    }
+
+    private void OnDestroy() {
+        if(UI!=null)
+            Destroy(UI.gameObject);
     }
 
     // Update is called once per frame
     void Update () {
-        if (UI!=null && isVisible) {
+        if (character.characterModel.isVisible && (UI == null || !UI.isActiveAndEnabled)) {
+            OnVisible();
+        } else if(character.characterModel.isVisible==false && UI != null && UI.isActiveAndEnabled) {
+            OnInvisible();
+        }
+        if (UI!=null && UI.enabled!=false) {
             UI.transform.localPosition = WorldPointToUIPosition(transform.position);
         }
     }
 
     private float GetObjectYSize() {
-        //print(gameObject.name+" : "+ GetComponent<MeshFilter>().mesh.bounds.size.y);
         return GetComponent<Collider>().bounds.size.y;
     }
 
@@ -37,10 +50,10 @@ public class ShowCharacterUI : MonoBehaviour {
         Vector3 topWorldPosition = new Vector3(worldPoint.x,worldPoint.y+GetObjectYSize(),worldPoint.z);
 
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(topWorldPosition);
-        //print(string.Format("根据该monmo的屏幕坐标{0}绘制ui坐标", screenPosition));
+
         Vector2 UIPosition;
+
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas,screenPosition,UICamera,out UIPosition);
-        //print("绘制出的UI坐标是:"+UIPosition);
 
         // 头顶UI
         return UIPosition;
@@ -49,9 +62,7 @@ public class ShowCharacterUI : MonoBehaviour {
     /// <summary>
     /// 当物体在摄像机视野内时，显示UI
     /// </summary>
-    private void OnBecameVisible() {
-        //print(gameObject.name + "OnBecameVisible");
-        isVisible = true;
+    private void OnVisible() {
         if (UI==null) {
             UI = Instantiate<SimpleCharacterView>(simpleCharacterView,Canvas);
             UI.transform.localPosition = WorldPointToUIPosition(transform.position);
@@ -65,9 +76,7 @@ public class ShowCharacterUI : MonoBehaviour {
     /// <summary>
     /// 当物体消失在摄像机视野内时,UI消失
     /// </summary>
-    private void OnBecameInvisible() {
-        isVisible = false;
-        //print("OnBecameINVisible");
+    private void OnInvisible() {
         if (UI != null) {
             UI.Hide(true);
         }

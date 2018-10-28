@@ -23,8 +23,11 @@ public class FogSystem : MonoBehaviour{
     private Color32[] buffer0;
 
     // 用于测试的视野单位
-    public Transform[] players;
-    private Vector3[] playersPositions;
+    public List<Transform> players;
+    public List<CharacterMono> characterMonos;
+    private List<Vector3> playersPositions;
+    private List<IFOVUnit> fOVUnits;
+
 
     // 战争迷雾
     public GameObject fog;
@@ -32,6 +35,7 @@ public class FogSystem : MonoBehaviour{
     // 线程是否开始
     public bool isthreadStart = false;
     private Thread thread;
+    private Thread thread2;
 
     public enum FogBlendingThreadStatus {
         Update,
@@ -40,10 +44,17 @@ public class FogSystem : MonoBehaviour{
 
     private FogBlendingThreadStatus threadStatus = FogBlendingThreadStatus.Update;
 
+    private void RemoveListData<T>(int index,List<T> list) {
+        lock (list) {
+            list.RemoveAt(index);
+        }
+    }
+
     private void Start() {
 
         textureSizeSqr = textureSize * textureSize;
-        playersPositions = new Vector3[players.Count()];
+        playersPositions = new List<Vector3>(players.Count());
+        playersPositions.AddRange(new Vector3[players.Count()]);
         // 初始化战争迷雾贴图
         texture = new Texture2D(textureSize, textureSize, TextureFormat.ARGB32, false) {
             wrapMode = TextureWrapMode.Clamp
@@ -61,15 +72,38 @@ public class FogSystem : MonoBehaviour{
         // 为战争迷雾设置贴图
         fog.GetComponent<MeshRenderer>().material.SetTexture("_MainTex",texture);
 
+        fOVUnits = new List<IFOVUnit>();
+        for (int i= 0;i < characterMonos.Count();i++) {
+            fOVUnits.Add(characterMonos[i].characterModel);
+        }
+
         isthreadStart = true;
-        thread = new Thread(new ThreadStart(OnUpdate));
+        thread = new Thread(OnUpdate);
         thread.Start();
+        //thread2 = new Thread(UpdateUnitVisibleStatus);
+        //thread2.Start();
         
     }
 
     private void Update() {
-        for(int i=0;i<players.Count();i++) {
-            playersPositions[i] = players[i].position; 
+        for(int i=0;i<players.Count();) {
+            if (players[i] != null) {
+                playersPositions[i] = players[i].position;
+                i++;
+            } else {
+                RemoveListData<Transform>(i,players);
+                RemoveListData<Vector3>(i, playersPositions);
+            }
+        }
+        for (int i = 0; i < characterMonos.Count();) {
+            if (characterMonos[i] != null) {
+                fOVUnits[i].Position = characterMonos[i].transform.position;
+                i++;
+            } else {
+                RemoveListData<CharacterMono>(i, characterMonos);
+                RemoveListData<IFOVUnit>(i,fOVUnits);
+            }
+
         }
         if (threadStatus == FogBlendingThreadStatus.Finished) {
             texture.SetPixels32(buffer0);
@@ -81,17 +115,64 @@ public class FogSystem : MonoBehaviour{
     private void OnDestroy() {
         isthreadStart = false;
         // 等待线程结束
-        
+        if(thread!=null)
+            thread.Join();
+        if(thread2 != null)
+            thread2.Join();
+    }
+
+    /// <summary>
+    /// 更新每个单位在战争迷雾的逻辑可见状态
+    /// </summary>
+    private void UpdateUnitVisibleStatus() {
+        for (int i = 0; i < fOVUnits.Count();) {
+            if (fOVUnits[i] != null) {
+                if (IsUnitVisible(fOVUnits[i])) {
+                    fOVUnits[i].IsVisible = true;
+                } else {
+                    fOVUnits[i].IsVisible = false;
+                }
+                i++;
+            } else {
+                RemoveListData<IFOVUnit>(i,fOVUnits);
+            }
+        }
+    }
+
+    /// <summary>
+    /// 判断一个单位是否处于可见范围
+    /// </summary>
+    /// <param name="unit"></param>
+    /// <returns></returns>
+    private bool IsUnitVisible(IFOVUnit unit) {
+        // 获得当前单位位置
+        Vector3 position = unit.Position;
+
+        // 将单位坐标转换到贴图坐标中
+        position *= textureSize / worldSize;
+
+        // 判断当前贴图坐标的r通道是否大于等于255,如果大于，那么当前单位是可见
+        int z = Mathf.Clamp(Mathf.FloorToInt(position.z),0,textureSize);
+        int x = Mathf.Clamp(Mathf.FloorToInt(position.x), 0, textureSize);
+        if (buffer0[z*textureSize+x].r >= 255) {
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     private void OnUpdate() {
+        Thread.Sleep(200);
         while (isthreadStart) {
             if (threadStatus == FogBlendingThreadStatus.Update) {
                 ClearVisibledRegion();
                 RevalMap();
                 GeneratePassedRegion();
+                UpdateUnitVisibleStatus();
                 threadStatus = FogBlendingThreadStatus.Finished;
             }
+            Thread.Sleep(100);
         }
     }
 
@@ -120,7 +201,7 @@ public class FogSystem : MonoBehaviour{
 
         //===================================
         // 第二步,根据视野单位的视野,设置可见范围,y轴表现在贴图坐标上是从下到上的
-        float radius = 5*WorldToTex;
+        float radius = 4*WorldToTex;
 
         // 探查视野的范围
         int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - radius), 0, textureSize-1);

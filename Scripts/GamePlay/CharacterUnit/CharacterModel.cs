@@ -9,7 +9,7 @@ using uMVVM;
 /// 基本单位,所有单位的基类
 /// </summary>
 [Serializable]
-public class CharacterModel {
+public class CharacterModel : IFOVUnit{
     // 生命值
     private BindableProperty<int> hp = new BindableProperty<int>();
     // 魔力值
@@ -66,6 +66,11 @@ public class CharacterModel {
     // 单位被杀死后将提供给玩家单位多少金钱
     public int supportMoney;
 
+    //=====================================
+    // 用于战争迷雾
+    public Vector3 position;
+    public float radius;
+    public bool isVisible = false;
 
     //public CharacterModel() {
     //    Hp = maxHp;
@@ -116,8 +121,36 @@ public class CharacterModel {
                 mp.Value = value;
         }
     }
-    
-    
+
+    public Vector3 Position {
+        get {
+            return position;
+        }
+        set {
+            position = value;
+        }
+    }
+
+    public float Radius {
+        get {
+            return radius;
+        }
+        set {
+            radius = value;
+        }
+    }
+
+
+    public bool IsVisible {
+        get {
+            return isVisible;
+        }
+        set {
+            isVisible = value;
+        }
+    }
+
+
     /// <summary>
     /// 受到伤害时执行的方法
     /// </summary>

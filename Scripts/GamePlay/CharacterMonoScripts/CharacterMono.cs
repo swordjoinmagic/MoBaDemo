@@ -199,6 +199,9 @@ public class CharacterMono : MonoBehaviour {
 
     }
 
+    #region 人物的逻辑操作,包括 追逐敌人、攻击敌人、施法、移动等操作
+    //=====================================================
+    // 人物的逻辑操作,包括 追逐敌人、攻击敌人、施法、移动等操作
 
     /// <summary>
     /// 处理人物追击的逻辑
@@ -559,6 +562,8 @@ public class CharacterMono : MonoBehaviour {
             return false;
     }
 
+    #endregion
+
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
     protected virtual void Bind() {
@@ -574,7 +579,8 @@ public class CharacterMono : MonoBehaviour {
 
     }
     public void OnHpValueChanged(int oldHp,int newHp) {
-        simpleCharacterViewModel.Hp.Value = newHp;
+        if(simpleCharacterViewModel!=null)
+            simpleCharacterViewModel.Hp.Value = newHp;
     }
     public void OnItemCountChanged(int oldItemCount,int newItemCount,int index) {
         if(itemViewModels.Count>=index)
