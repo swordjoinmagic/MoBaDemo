@@ -89,6 +89,11 @@ public class CharacterMono : MonoBehaviour {
             forcePower = 100,
             needExp = 1000,
             attack = 100,
+            Exp=0,
+            expfactor = 2,
+            AvatarImagePath = "PlayerAvatarImage",
+            agilePower = 20,
+            intelligencePower = 10,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,

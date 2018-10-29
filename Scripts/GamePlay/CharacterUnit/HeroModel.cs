@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using UnityEngine;
+using uMVVM;
 
 /// <summary>
 /// 英雄单位,特殊的Character单位
@@ -25,7 +27,7 @@ public class HeroModel : CharacterModel{
     // 技能点成长
     public int skillPointGrowthPoint;
     // 经验值
-    public int exp;
+    private BindableProperty<int> exp = new BindableProperty<int>();
     // 经验值因子（每次升级所需经验值关联系数）
     public float expfactor;
     // 升级所需经验值(指第0级升到第一级所需经验) 
@@ -33,12 +35,31 @@ public class HeroModel : CharacterModel{
     // 英雄头像图片的地址
     public string AvatarImagePath;
 
+    public int Exp {
+        get {
+            return exp.Value;
+        }
+        set {
+            exp.Value = value;
+        }
+    }
+    public BindableProperty<int>.OnValueChangeHandler ExpChangedHandler {
+        get { return exp.OnValueChange; }
+        set { exp.OnValueChange = value; }
+    }
+
+    public int NextLevelNeedExp {
+        get {
+            return Mathf.FloorToInt(needExp * expfactor * (level+1));
+        }
+    }
+
     public override void Damaged(Damage damage) {
         base.Damaged(damage);
     }
 
     public override string ToString() {
-        return "Name:" + name + " hp:" + Hp + " exp:" + exp;
+        return "Name:" + name + " hp:" + Hp + " exp:" + Exp;
     }
 }
 

@@ -20,6 +20,13 @@ public class AvatarViewModel : ViewModelBase{
     public BindableProperty<string> AvatarImagePath = new BindableProperty<string>();
     // 英雄等级
     public BindableProperty<int> Level = new BindableProperty<int>();
+    // 当前经验值百分比
+    public BindableProperty<int> ExpRate = new BindableProperty<int>();
+
+    public AvatarViewModel() {
+        Level.Value = -1;
+        ExpRate.Value = -1;
+    }
 
     public void Modify(HeroModel hero) {
         Name.Value = hero.name;
@@ -31,6 +38,7 @@ public class AvatarViewModel : ViewModelBase{
         IntelligencePower.Value = Mathf.FloorToInt(hero.intelligencePower);
         AvatarImagePath.Value = hero.AvatarImagePath;
         Level.Value = hero.level;
+        ExpRate.Value = hero.Exp / hero.NextLevelNeedExp;
     }
 }
 

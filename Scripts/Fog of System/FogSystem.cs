@@ -201,7 +201,7 @@ public class FogSystem : MonoBehaviour{
 
         //===================================
         // 第二步,根据视野单位的视野,设置可见范围,y轴表现在贴图坐标上是从下到上的
-        float radius = 4*WorldToTex;
+        float radius = 6*WorldToTex;
 
         // 探查视野的范围
         int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - radius), 0, textureSize-1);

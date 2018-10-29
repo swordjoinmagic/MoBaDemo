@@ -7,8 +7,9 @@ using UnityEngine;
 /// <summary>
 /// 英雄单位的Mono类
 /// </summary>
-class HeroMono : CharacterMono{
+public class HeroMono : CharacterMono{
     public HPViewModel HPViewModel;
+    public AvatarViewModel avatarViewModel;
 
     public HeroModel HeroModel {
         get {
@@ -19,7 +20,7 @@ class HeroMono : CharacterMono{
     public override bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
         bool result = base.Attack(ref isAttackFinish, targetTransform, target);
         if (target.isDying || target == null) {
-            HeroModel.exp += target.characterModel.supportExp;
+            HeroModel.Exp += target.characterModel.supportExp;
         }
         return result;
     }
@@ -31,9 +32,15 @@ class HeroMono : CharacterMono{
     protected override void Bind() {
         base.Bind();
         characterModel.HpValueChangedHandler += OnHpChanged;
+        HeroModel.ExpChangedHandler += OnExpChanged;
     }
     public void OnHpChanged(int oldHp, int newHp) {
         HPViewModel.Hp.Value = newHp;
+    }
+    public void OnExpChanged(int oldExp,int newExp) {
+        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / HeroModel.NextLevelNeedExp) * 100),0,100);
+        Debug.Log(" newExp:"+newExp+"NextLevelExp:"+ HeroModel.NextLevelNeedExp+" ExpRate:"+expRate);
+        avatarViewModel.ExpRate.Value = expRate;
     }
 }
 
