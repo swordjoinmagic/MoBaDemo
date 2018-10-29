@@ -47,12 +47,16 @@ public class ShowCharacterUI : MonoBehaviour {
     }
 
     private Vector2 WorldPointToUIPosition(Vector3 worldPoint) {
+
+        // 得到单位的头顶的世界坐标
         Vector3 topWorldPosition = new Vector3(worldPoint.x,worldPoint.y+GetObjectYSize(),worldPoint.z);
 
+        // 将单位头顶转换为屏幕坐标
         Vector3 screenPosition = Camera.main.WorldToScreenPoint(topWorldPosition);
 
         Vector2 UIPosition;
 
+        //  将屏幕坐标转换为UICamera下的坐标
         RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas,screenPosition,UICamera,out UIPosition);
 
         // 头顶UI
