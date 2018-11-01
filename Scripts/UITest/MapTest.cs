@@ -22,7 +22,6 @@ public class MapTest : MonoBehaviour, IPointerClickHandler {
         for (int i = 0; i < results.Count; i++) {
             if (current != results[i].gameObject) {
                 ExecuteEvents.Execute(results[i].gameObject, data, function);
-                //RaycastAll后ugui会自己排序，如果你只想响应透下去的最近的一个响应，这里ExecuteEvents.Execute后直接break就行。
             }
         }
     }

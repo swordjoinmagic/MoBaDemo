@@ -4,15 +4,18 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(EventTrigger))]
 public class MapView : MonoBehaviour {
 
+    public RectTransform Canvas;
     private EventTrigger eventTrigger;
     private Vector2 position;
     public RectTransform rectTransform;
+    public Image CameraPositionTipsImage;
     public Camera UICamera;
-    public RenderTexture renderTexture;
+    //public RenderTexture renderTexture;
 
     private Vector2 UIToTex;
     private Vector2 TexToWorld;
@@ -30,11 +33,18 @@ public class MapView : MonoBehaviour {
         clickEntry.eventID = EventTriggerType.PointerClick;
         clickEntry.callback.AddListener(eventdata => {
             RectTransformUtility.ScreenPointToLocalPointInRectangle(rectTransform,Input.mousePosition,UICamera,out position);
+            //Debug.Log("In Map Position:"+position);
             Vector2 cameraWorldPosition = TexToWorld * (UIToTex * position);
             Camera.main.transform.position = new Vector3(cameraWorldPosition.x-cameraOffset.x,Camera.main.transform.position.y,cameraWorldPosition.y-cameraOffset.y);
-            Debug.Log("cameraWorldPosition:"+cameraWorldPosition);
+
+            Vector2 cameraPosition;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(Canvas,Input.mousePosition,UICamera,out cameraPosition);
+            //Debug.Log("CameraPosition:"+cameraPosition);
+            CameraPositionTipsImage.rectTransform.anchoredPosition = position+rectTransform.anchoredPosition;
+                   
         });
         eventTrigger.triggers.Add(clickEntry);
 
     }
+
 }

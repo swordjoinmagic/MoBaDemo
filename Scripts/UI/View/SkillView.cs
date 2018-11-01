@@ -71,6 +71,7 @@ class SkillView : UnityGuiView<SkillViewModel>{
             };
             exitViewEntry.callback.AddListener(eventData => {
                 skillTipsMessageView.Hide(immediate:true);
+                Debug.Log("鼠标离开"+ skillPanelView.name + "号技能");
             });
 
 
