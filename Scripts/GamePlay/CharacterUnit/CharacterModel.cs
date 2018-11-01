@@ -68,9 +68,9 @@ public class CharacterModel : IFOVUnit{
 
     //=====================================
     // 用于战争迷雾
-    public Vector3 position;
-    public float radius;
-    public bool isVisible = false;
+    private Vector3 position;
+    private float radius;
+    private bool isVisible = false;
 
     //public CharacterModel() {
     //    Hp = maxHp;

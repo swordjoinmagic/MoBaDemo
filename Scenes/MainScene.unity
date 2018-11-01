@@ -231,9 +231,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -1033,9 +1030,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -1555,7 +1549,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 105.600006, y: 0.8999953}
+  m_AnchoredPosition: {x: 105.600006, y: 0.8999958}
   m_SizeDelta: {x: 12, y: 12}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &85456658
@@ -2362,9 +2356,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -3455,7 +3446,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.42, y: 0.42}
+  m_AnchoredPosition: {x: 0.41999817, y: 0.42000008}
   m_SizeDelta: {x: -8.44, y: -6.75}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &180449118
@@ -3657,9 +3648,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -3950,9 +3938,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4251,9 +4236,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4478,9 +4460,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -4798,9 +4777,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -5172,9 +5148,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -5495,9 +5468,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -6601,9 +6571,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -7346,9 +7313,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -7638,9 +7602,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -7935,9 +7896,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -8607,9 +8565,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -9063,9 +9018,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -9604,9 +9556,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -10163,9 +10112,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -10882,9 +10828,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -11097,9 +11040,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -11540,9 +11480,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -12775,9 +12712,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -13932,9 +13866,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -14273,9 +14204,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -14732,9 +14660,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -15011,9 +14936,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -15525,9 +15447,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -16455,9 +16374,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -16739,9 +16655,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17300,9 +17213,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17569,9 +17479,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -17862,9 +17769,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -18192,7 +18096,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 115.600006, y: 1.4000268}
+  m_AnchoredPosition: {x: 115.600006, y: 1.4000263}
   m_SizeDelta: {x: 26.83, y: 13.2}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &760017786
@@ -18362,9 +18266,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -18659,9 +18560,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -19289,9 +19187,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -19540,9 +19435,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -19943,9 +19835,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -20476,9 +20365,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -20968,9 +20854,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -21280,9 +21163,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -22619,9 +22499,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -22846,9 +22723,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -23770,9 +23644,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -23988,7 +23859,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -9.739994}
+  m_AnchoredPosition: {x: 0, y: -9.73999}
   m_SizeDelta: {x: 0, y: -19.48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &985798069
@@ -24807,9 +24678,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25034,9 +24902,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25253,9 +25118,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -25480,9 +25342,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -26143,9 +26002,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -26637,7 +26493,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -0.0000076293945, y: 27.88}
+  m_AnchoredPosition: {x: -0.0000076293945, y: 27.880005}
   m_SizeDelta: {x: 178, y: -136.61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1060432581
@@ -26787,9 +26643,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -27108,9 +26961,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -27882,7 +27732,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 4.1, y: 0.8999953}
+  m_AnchoredPosition: {x: 4.0999985, y: 0.8999958}
   m_SizeDelta: {x: 62.59, y: 13.2}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1108627571
@@ -28150,9 +28000,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -28377,9 +28224,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -28600,9 +28444,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -28819,9 +28660,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29046,9 +28884,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29610,9 +29445,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -29977,9 +29809,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -30496,9 +30325,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -30797,9 +30623,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -31276,9 +31099,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -31689,9 +31509,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -32363,9 +32180,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -33053,9 +32867,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -33812,9 +33623,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -34174,9 +33982,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -34961,9 +34766,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -35127,9 +34929,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -35664,9 +35463,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -35969,9 +35765,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -36192,9 +35985,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -36583,6 +36373,7 @@ Transform:
   - {fileID: 1732176447}
   - {fileID: 950538956}
   - {fileID: 1108272584}
+  - {fileID: 1563668326}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -36908,7 +36699,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 5.8, y: -56.64}
+  m_AnchoredPosition: {x: 5.800003, y: -56.64}
   m_SizeDelta: {x: -39.15, y: -182.79}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1502418729
@@ -37307,9 +37098,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -38078,6 +37866,46 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1563668325
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1563668326}
+  - component: {fileID: 1563668327}
+  m_Layer: 0
+  m_Name: ProgrammerTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1563668326
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1563668325}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1486247654}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1563668327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1563668325}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b91bd65a140e249b3b3ca528992ff7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1564458312
 GameObject:
   m_ObjectHideFlags: 0
@@ -38481,9 +38309,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -38940,9 +38765,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -39533,9 +39355,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -40763,9 +40582,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -41379,9 +41195,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -42165,9 +41978,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -42806,9 +42616,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -43029,9 +42836,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -43391,9 +43195,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -43753,9 +43554,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -44030,9 +43828,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -44752,9 +44547,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -45335,9 +45127,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -45684,9 +45473,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -46079,9 +45865,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -46424,9 +46207,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -46806,9 +46586,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47025,9 +46802,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47394,9 +47168,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -47834,9 +47605,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -48799,9 +48567,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -49088,9 +48853,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -49546,9 +49308,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -49769,9 +49528,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -50546,9 +50302,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -51235,9 +50988,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 
@@ -51606,9 +51356,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
-    radius: 0
-    isVisible: 0
   prepareSkill:
     skillName: 
     iconPath: 

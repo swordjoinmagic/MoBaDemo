@@ -32,9 +32,9 @@ public class ShowCharacterUI : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-        if (character.characterModel.isVisible && (UI == null || !UI.isActiveAndEnabled)) {
+        if (character.characterModel.IsVisible && (UI == null || !UI.isActiveAndEnabled)) {
             OnVisible();
-        } else if(character.characterModel.isVisible==false && UI != null && UI.isActiveAndEnabled) {
+        } else if(character.characterModel.IsVisible==false && UI != null && UI.isActiveAndEnabled) {
             OnInvisible();
         }
         if (UI!=null && UI.enabled!=false) {
