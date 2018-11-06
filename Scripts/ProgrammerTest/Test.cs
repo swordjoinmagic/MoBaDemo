@@ -2,18 +2,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using UnityEngine.UI;
+using LitJson;
+
+class JSONTest {
+    public string name;
+    public int level;
+}
 
 public class Test : MonoBehaviour {
 
+    public Text text;
+
 	// Use this for initialization
 	void Start () {
-        Type type = Type.GetType("PointingSkill");
-        PointingSkill pointingSkill = type.Assembly.CreateInstance("PointingSkill") as PointingSkill;
-        Debug.Log("反射测试："+pointingSkill.GetType());
-        pointingSkill.Mp = 100;
-        pointingSkill.BaseDamage = 100;
-        Debug.Log("反射测试：SkillMP:"+pointingSkill.Mp);
-	}
+        string content = (Resources.Load("Data\\data") as TextAsset).text;
+        text.text = content;
+        Debug.Log(content);
+        string s = JsonMapper.ToJson(new JSONTest { name="test",level=1});
+        Debug.Log(s);
+    }
 	
 	// Update is called once per frame
 	void Update () {
