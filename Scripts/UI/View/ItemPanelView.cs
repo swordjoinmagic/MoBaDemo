@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using uMVVM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
 /// 用于显示在物品栏的物品视图
 /// </summary>
-public class ItemView : UnityGuiView<ItemViewModel>{
+[RequireComponent(typeof(EventTrigger))]
+public class ItemPanelView : UnityGuiView<ItemViewModel>{
     //===============================
     // 此视图管理的UI元素
     public Image iconImage;

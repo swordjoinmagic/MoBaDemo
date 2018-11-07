@@ -8,8 +8,14 @@ public class Item {
     public string name;
     // 物品价格
     public int price;
-    // 物品描述
-    public string description;
+    // 物品被动效果描述
+    public string passiveDescription;
+    // 物品使用方式说明
+    public string useMethodDescription;
+    // 物品主动效果描述
+    public string activeDescription;
+    // 物品背景描述
+    public string backgroundDescription;
     // 物品图片地址
     public string iconPath;
     // 单个物品可持有的最大数量

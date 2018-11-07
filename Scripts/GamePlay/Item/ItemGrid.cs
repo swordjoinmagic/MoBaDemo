@@ -80,5 +80,9 @@ public class ItemGrid {
         if (item.itemType == ItemType.Consumed)
             ItemCount -= 1;
     }
+
+    public override string ToString() {
+        return item == null ? "空物品格子" : item.name;
+    }
 }
 
