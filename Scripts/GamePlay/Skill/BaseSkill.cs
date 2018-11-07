@@ -12,10 +12,18 @@ public class BaseSkill {
     // 图标地址，用地址保存，当要使用时进行加载
     public string iconPath;
 
-    public string description;
+    // 技能长描述
+    public string longDescription;
+    // 技能短描述
+    public string shortDescription;
+    // 技能背景描述
+    public string backgroundDescription;
 
     // 技能等级
     public int skillLevel;
+
+    // 对于英雄来说的,该技能下一级需要的英雄等级
+    private int nextLevelNeedHeroLevel;
 
     public SkillType skillType;
 
@@ -39,13 +47,13 @@ public class BaseSkill {
         }
     }
 
-    public string Description {
+    public string LongDescription {
         get {
-            return description;
+            return longDescription;
         }
 
         set {
-            description = value;
+            longDescription = value;
         }
     }
 
@@ -66,6 +74,45 @@ public class BaseSkill {
 
         set {
             skillName = value;
+        }
+    }
+
+    public string ShortDescription {
+        get {
+            return shortDescription;
+        }
+
+        set {
+            shortDescription = value;
+        }
+    }
+
+    public string BackgroundDescription {
+        get {
+            return backgroundDescription;
+        }
+
+        set {
+            backgroundDescription = value;
+        }
+    }
+
+    /// <summary>
+    /// 对技能的目标,附加的状态,造成的伤害等进行描述,由子类进行重写
+    /// </summary>
+    public virtual string TargetDescription {
+        get {
+            return "";
+        }
+    }
+
+    public int NextLevelNeedHeroLevel {
+        get {
+            return nextLevelNeedHeroLevel;
+        }
+
+        set {
+            nextLevelNeedHeroLevel = value;
         }
     }
 

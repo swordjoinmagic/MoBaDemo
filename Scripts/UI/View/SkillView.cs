@@ -10,7 +10,7 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 用于管理一个连续多个技能的技能面板
 /// </summary>
-class SkillView : UnityGuiView<SkillViewModel>{
+class SkillView : MonoBehaviour{
     public CharacterMono characterMono;
     private CharacterModel character;
     private List<ActiveSkill> activeSkills;
@@ -50,9 +50,10 @@ class SkillView : UnityGuiView<SkillViewModel>{
                 eventID = EventTriggerType.PointerEnter,
             };
             enterViewEntry.callback.AddListener(eventData => {
+                Debug.Log("鼠标进入" + skillPanelView.name + "号技能");
                 if (skillTipsMessageView == null) {
                     skillTipsMessageView = GameObject.Instantiate<SkillTipsMessageView>(skillTipsMessageViewPrefab, canvas.transform);
-                    skillTipsMessageView.BindingContext = new SkillTipsMessageViewModel();
+                    skillTipsMessageView.BindingContext = new SkillPanelViewModel();
                 }
 
                 // 获得当前鼠标所在位置在UICamera摄像机下的世界坐标

@@ -8,41 +8,8 @@ using UnityEngine;
 /// 被动技能基类
 /// </summary>
 public class PassiveSkill : BaseSkill {
-    private int mp;
-    private int baseDamage;
-    private int plusDamage;
     private float cooldown;     // 技能CD时间
     private float finalSpellTime; // 最后一次释放技能的时间
-
-    public int Mp {
-        get {
-            return mp;
-        }
-
-        set {
-            mp = value;
-        }
-    }
-
-    public int BaseDamage {
-        get {
-            return baseDamage;
-        }
-
-        set {
-            baseDamage = value;
-        }
-    }
-
-    public int PlusDamage {
-        get {
-            return plusDamage;
-        }
-
-        set {
-            plusDamage = value;
-        }
-    }
 
     public float CD {
         get {

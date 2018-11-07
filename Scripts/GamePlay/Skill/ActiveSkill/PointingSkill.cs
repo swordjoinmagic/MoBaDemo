@@ -20,6 +20,16 @@ public class PointingSkill : ActiveSkill{
     public GameObject selfEffect;
     public GameObject targetEffect;
 
+    public override string TargetDescription {
+        get {
+            string s = "";
+            s += "技能目标:点目标\n";
+            s += "技能伤害:"+(BaseDamage+PlusDamage)+"\n";
+            s += "附加状态：中毒\n";
+            s += "持续时间：10s";
+            return s;
+        }
+    }
     public GameObject SelfEffect {
         get {
             return selfEffect;

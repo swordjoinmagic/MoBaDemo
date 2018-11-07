@@ -106,7 +106,7 @@ public class CharacterMono : MonoBehaviour {
                     CD = 2f,
                     SkillName = "E技能",
                     IconPath = "00046",
-                    Description = "one skill Description",
+                    LongDescription = "one skill Description",
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
@@ -119,7 +119,10 @@ public class CharacterMono : MonoBehaviour {
                     CD = 5f,
                     SkillName = "W技能",
                     IconPath = "00041",
-                    Description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                     SkillLevel = 6
                 }
             },

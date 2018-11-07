@@ -18,6 +18,12 @@ public class CritSkill : PassiveSkill{
     private float critRate;          // 暴击几率(Range(0,1))
     private float critMultiple;      // 暴击倍数
 
+    public override string TargetDescription {
+        get {
+            return "技能目标:点目标\n暴击几率:"+(critRate*100)+"%\n暴击倍数:"+critMultiple+"倍";
+        }
+    }
+
     public GameObject Effect {
         get {
             return effect;
