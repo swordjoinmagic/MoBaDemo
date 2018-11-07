@@ -14,9 +14,39 @@ public class CritSkill : PassiveSkill{
     //==============================
     // 可供外界调整的参数(一律以大写字母开头)
 
-    public GameObject Effect;       // 暴击后,敌人身上产生的特效
-    public float CritRate;          // 暴击几率(Range(0,1))
-    public float CritMultiple;      // 暴击倍数
+    private GameObject effect;       // 暴击后,敌人身上产生的特效
+    private float critRate;          // 暴击几率(Range(0,1))
+    private float critMultiple;      // 暴击倍数
+
+    public GameObject Effect {
+        get {
+            return effect;
+        }
+
+        set {
+            effect = value;
+        }
+    }
+
+    public float CritRate {
+        get {
+            return critRate;
+        }
+
+        set {
+            critRate = value;
+        }
+    }
+
+    public float CritMultiple {
+        get {
+            return critMultiple;
+        }
+
+        set {
+            critMultiple = value;
+        }
+    }
 
     public override void Execute(CharacterMono speller,CharacterMono target,ref Damage damage) {
         // 约束暴击几率

@@ -7,7 +7,7 @@ using System.Text;
 /// 用于技能编辑器中对技能类型进行编辑
 /// </summary>
 public enum SkillType {
-    PointingSkill,
+    PointingSkill = 0,
     CritSkill
 }
 

@@ -72,12 +72,15 @@ public class PassiveSkill : BaseSkill {
         return Time.time - FinalSpellTime <= CD;
     }
 
-    // 被动技能触发类型,它的set方法对外界隐藏
+    // 被动技能触发类型
     public PassiveSkillTriggerType triggerType;
 
     public virtual PassiveSkillTriggerType TiggerType {
         get {
             return triggerType;
+        }
+        set {
+            triggerType = value;
         }
     }
     

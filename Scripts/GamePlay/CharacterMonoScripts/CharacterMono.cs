@@ -100,36 +100,30 @@ public class CharacterMono : MonoBehaviour {
                     KeyCode = KeyCode.E,
                     Mp = 10,
                     PlusDamage = 200,
-                    selfEffect = null,
-                    targetEffect = null,
+                    SelfEffect = null,
+                    TargetEffect = null,
                     SpellDistance = 4f,
                     CD = 2f,
-                    skillName = "E技能",
-                    iconPath = "00046",
-                    description = "one skill Description",
+                    SkillName = "E技能",
+                    IconPath = "00046",
+                    Description = "one skill Description",
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
                     KeyCode = KeyCode.W,
                     Mp = 220,
                     PlusDamage = 200,
-                    selfEffect = null,
-                    targetEffect = null,
+                    SelfEffect = null,
+                    TargetEffect = null,
                     SpellDistance = 4f,
                     CD = 5f,
-                    skillName = "W技能",
-                    iconPath = "00041",
-                    description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    skillLevel = 6
+                    SkillName = "W技能",
+                    IconPath = "00041",
+                    Description = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    SkillLevel = 6
                 }
             },
             passiveSkills = new List<PassiveSkill> {
-                new CritSkill{
-                    Effect = targetPositionEffect,
-                    CritRate = 0.3f,
-                    CritMultiple = 3f,
-                    triggerType = PassiveSkillTriggerType.WhenNormalAttack
-                }
             }
         };
     }
@@ -171,8 +165,8 @@ public class CharacterMono : MonoBehaviour {
                 name = "测试物品",
                 itemActiveSkill = new PointingSkill {
                     BaseDamage = 1000,
-                    selfEffect = targetPositionEffect,
-                    targetEffect = targetPositionEffect,
+                    SelfEffect = targetPositionEffect,
+                    TargetEffect = targetPositionEffect,
                     SpellDistance = 10,
                     CD = 3
                 },

@@ -20,16 +20,36 @@ public class PointingSkill : ActiveSkill{
     public GameObject selfEffect;
     public GameObject targetEffect;
 
+    public GameObject SelfEffect {
+        get {
+            return selfEffect;
+        }
+
+        set {
+            selfEffect = value;
+        }
+    }
+
+    public GameObject TargetEffect {
+        get {
+            return targetEffect;
+        }
+
+        set {
+            targetEffect = value;
+        }
+    }
+
     public override void Execute(CharacterMono spller, CharacterMono target) {
 
         FinalSpellTime = Time.time;
 
         GameObject tempSelfEffect = null;
         GameObject tempTargetEffect = null;
-        if (selfEffect!=null)
-            tempSelfEffect = GameObject.Instantiate(selfEffect, spller.transform);
-        if(targetEffect!=null)
-            tempTargetEffect = GameObject.Instantiate(targetEffect, target.transform);
+        if (SelfEffect!=null)
+            tempSelfEffect = GameObject.Instantiate(SelfEffect, spller.transform);
+        if(TargetEffect!=null)
+            tempTargetEffect = GameObject.Instantiate(TargetEffect, target.transform);
 
         target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamage=PlusDamage });
     }

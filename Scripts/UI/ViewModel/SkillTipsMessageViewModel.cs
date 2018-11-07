@@ -11,9 +11,9 @@ public class SkillTipsMessageViewModel : ViewModelBase{
     public BindableProperty<string> description = new BindableProperty<string>();
 
     public void Modify(BaseSkill baseSkill) {
-        skillName.Value = baseSkill.skillName;
-        skillLevel.Value = baseSkill.skillLevel.ToString() ;
-        description.Value = baseSkill.description;
+        skillName.Value = baseSkill.SkillName;
+        skillLevel.Value = baseSkill.SkillLevel.ToString() ;
+        description.Value = baseSkill.Description;
         if (baseSkill is ActiveSkill)
             needMp.Value = ((ActiveSkill)baseSkill).Mp.ToString();
         else

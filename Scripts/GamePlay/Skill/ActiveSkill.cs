@@ -13,21 +13,21 @@ using UnityEngine;
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-[System.Serializable]
+//[System.Serializable]
 public class ActiveSkill : BaseSkill{
-    private int mp;
-    private int baseDamage;
-    private int plusDamage;
-    private KeyCode keyCode;
+    public int mp;
+    protected int baseDamage;
+    protected int plusDamage;
+    protected KeyCode keyCode;
 
     // 施法距离，等于0时是原地释放技能
-    private float spellDistance;
+    protected float spellDistance;
 
     // 技能CD时间
-    private float cooldown;
+    protected float cooldown;
 
     // 最后一次释放技能的时间
-    private float finalSpellTime;
+    protected float finalSpellTime;
 
     public int Mp {
         get {

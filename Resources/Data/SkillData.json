@@ -1,0 +1,27 @@
+{
+    "SkillList":[
+        {
+            "SkillType":0,
+            "SkillName":"伤害技能",
+            "IconPath":"default-itemIconImage",
+            "SkillLevel":1,
+            "Mp":100,
+            "BaseDamage":100,
+            "KeyCode":113,
+            "SpellDistance":3.3,
+            "CD":5.5,
+            "SelfEffect":"001"
+        },
+        {
+            "SkillType":1,
+            "SkillName":"被动技能",
+            "IconPath":"001",
+            "SkillLevel":1,
+            "CritMultiple":5.5,
+            "CritRate":100.0,
+            "Effect":"001",
+            "TiggerType":1
+        }                                                                                                                       
+    ],
+    "SkillCount":2
+}

@@ -43,7 +43,7 @@ public class CharacterOperationExtraState : FSMState {
             // 是否按下按键,如果按下,则令prepareSkill=skill
             if (Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
                 characterMono.prepareSkill = skill;
-                Debug.Log("为CharacterMono设置prepareSkill技能,技能是:" + characterMono.prepareSkill.skillName);
+                Debug.Log("为CharacterMono设置prepareSkill技能,技能是:" + characterMono.prepareSkill.SkillName);
                 characterMono.isPrepareUseSkill = true;
                 BlackBorad.SetBool("isPrePareUseSkill", true);
                 return;

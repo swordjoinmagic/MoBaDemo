@@ -21,15 +21,15 @@ public class SkillPanelViewModel : ViewModelBase{
             ActiveSkill activeSkill = skill as ActiveSkill;
 
             hotKey.Value = activeSkill.KeyCode.ToString();
-            skillName.Value = activeSkill.skillName;
+            skillName.Value = activeSkill.SkillName;
             mp.Value = activeSkill.Mp.ToString();
-            imagePath.Value = activeSkill.iconPath;
+            imagePath.Value = activeSkill.IconPath;
         } else {
             // 被动技能的情况下
             hotKey.Value = "";
-            skillName.Value = skill.skillName;
+            skillName.Value = skill.SkillName;
             mp.Value = "";
-            imagePath.Value = skill.iconPath;
+            imagePath.Value = skill.IconPath;
         }
     }
 }

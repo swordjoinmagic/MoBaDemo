@@ -214,7 +214,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -231,11 +230,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -1121,7 +1115,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -1138,11 +1131,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -2489,7 +2477,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -2506,11 +2493,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -3796,7 +3778,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -3813,11 +3794,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -4086,7 +4062,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -4103,11 +4078,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -4455,7 +4425,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -4472,11 +4441,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -4679,7 +4643,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -4696,11 +4659,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -4996,7 +4954,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -5013,11 +4970,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -5367,7 +5319,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -5384,11 +5335,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -5645,7 +5591,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -5662,11 +5607,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -6748,7 +6688,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -6765,11 +6704,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -7598,7 +7532,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -7615,11 +7548,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -7887,7 +7815,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -7904,11 +7831,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -8181,7 +8103,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -8198,11 +8119,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -8691,6 +8607,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 401259297}
+  - component: {fileID: 401259298}
   m_Layer: 0
   m_Name: DataBaseTest
   m_TagString: Untagged
@@ -8711,6 +8628,17 @@ Transform:
   m_Father: {fileID: 1486247654}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &401259298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 401259296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb8143e82a4a4ef4d95a72643d9a8247, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &402279177
 Prefab:
   m_ObjectHideFlags: 0
@@ -8952,7 +8880,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -8969,11 +8896,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -9405,7 +9327,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -9422,11 +9343,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -9854,7 +9770,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -9871,11 +9786,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -10482,7 +10392,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -10499,11 +10408,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -11198,7 +11102,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -11215,11 +11118,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -11410,7 +11308,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -11427,11 +11324,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -11855,7 +11747,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -11872,11 +11763,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -13087,7 +12973,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -13104,11 +12989,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -14241,7 +14121,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -14258,11 +14137,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -14683,7 +14557,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -14700,11 +14573,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -15050,7 +14918,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -15067,11 +14934,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -15326,7 +15188,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -15343,11 +15204,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -15837,7 +15693,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -15854,11 +15709,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -16927,7 +16777,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -16944,11 +16793,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -17305,7 +17149,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -17322,11 +17165,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -17863,7 +17701,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -17880,11 +17717,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -18203,7 +18035,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -18220,11 +18051,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -18493,7 +18319,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -18510,11 +18335,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -18901,7 +18721,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -18918,11 +18737,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -19195,7 +19009,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -19212,11 +19025,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -19966,7 +19774,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -19983,11 +19790,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -20214,7 +20016,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -20231,11 +20032,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -20614,7 +20410,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -20631,11 +20426,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -21218,7 +21008,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -21235,11 +21024,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -21707,7 +21491,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -21724,11 +21507,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -22016,7 +21794,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -22033,11 +21810,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -23587,7 +23359,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -23604,11 +23375,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -23811,7 +23577,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -23828,11 +23593,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -24732,7 +24492,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -24749,11 +24508,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -25697,7 +25451,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -25714,11 +25467,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -25921,7 +25669,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -25938,11 +25685,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -26137,7 +25879,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -26154,11 +25895,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -26361,7 +26097,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -26378,11 +26113,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -27021,7 +26751,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -27038,11 +26767,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -27495,6 +27219,47 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
+--- !u!1 &1064683030
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1064683031}
+  - component: {fileID: 1064683032}
+  m_Layer: 0
+  m_Name: DataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1064683031
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1064683030}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1644196990}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1064683032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1064683030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0dfcdcef3438984b9479bc7af959372, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterModelDataSet: []
 --- !u!1 &1067479219 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -27592,7 +27357,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -27609,11 +27373,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -28007,7 +27766,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -28024,11 +27782,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -28878,7 +28631,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -28895,11 +28647,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -29102,7 +28849,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -29119,11 +28865,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -29322,7 +29063,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -29339,11 +29079,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -29538,7 +29273,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -29555,11 +29289,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -29762,7 +29491,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -29779,11 +29507,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -30253,7 +29976,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -30270,11 +29992,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -30765,7 +30482,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -30782,11 +30498,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -31281,7 +30992,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -31298,11 +31008,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -31649,7 +31354,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -31666,11 +31370,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -32125,7 +31824,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -32142,11 +31840,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -32535,7 +32228,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -32552,11 +32244,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -33274,7 +32961,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -33291,11 +32977,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -34035,7 +33716,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -34052,11 +33732,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -34865,7 +34540,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -34882,11 +34556,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -35224,7 +34893,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -35241,11 +34909,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -36013,7 +35676,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -36030,11 +35692,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -36176,7 +35833,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -36193,11 +35849,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -36710,7 +36361,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -36727,11 +36377,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -37084,7 +36729,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -37101,11 +36745,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -37304,7 +36943,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -37321,11 +36959,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -38660,7 +38293,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -38677,11 +38309,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -40181,7 +39808,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -40198,11 +39824,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -40637,7 +40258,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -40654,11 +40274,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -41227,7 +40842,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -41244,11 +40858,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -41859,6 +41468,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1423739221}
+  - {fileID: 1064683031}
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -42074,6 +41684,16 @@ Prefab:
     - target: {fileID: 4292761784624462, guid: ff332da03782f0549a37cdead37357ad, type: 2}
       propertyPath: m_LocalScale.z
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 20845839833696384, guid: ff332da03782f0549a37cdead37357ad,
+        type: 2}
+      propertyPath: m_RenderingPath
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 20845839833696384, guid: ff332da03782f0549a37cdead37357ad,
+        type: 2}
+      propertyPath: m_OcclusionCulling
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff332da03782f0549a37cdead37357ad, type: 2}
@@ -42537,6 +42157,11 @@ Prefab:
       propertyPath: m_Color.b
       value: 0.6478729
       objectReference: {fileID: 0}
+    - target: {fileID: 224123449250576762, guid: 7cadaa8da17797249b3f07398758c6b1,
+        type: 2}
+      propertyPath: m_SizeDelta.y
+      value: 13.74
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7cadaa8da17797249b3f07398758c6b1, type: 2}
   m_IsPrefabParent: 0
@@ -42641,7 +42266,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -42658,11 +42282,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -43254,7 +42873,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -43271,11 +42889,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -44134,7 +43747,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -44151,11 +43763,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -44914,7 +44521,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -44931,11 +44537,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -45134,7 +44735,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -45151,11 +44751,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -45493,7 +45088,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -45510,11 +45104,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -45852,7 +45441,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -45869,11 +45457,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -46126,7 +45709,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -46143,11 +45725,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -46845,7 +46422,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -46862,11 +46438,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -47425,7 +46996,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -47442,11 +47012,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -47771,7 +47336,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -47788,11 +47352,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -48163,7 +47722,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -48180,11 +47738,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -48579,7 +48132,6 @@ MonoBehaviour:
     maxMp: 1000
     name: sjm
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -48596,11 +48148,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -49030,7 +48577,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -49047,11 +48593,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -49246,7 +48787,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -49263,11 +48803,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -49612,7 +49147,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -49629,11 +49163,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -50049,7 +49578,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -50066,11 +49594,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -51011,7 +50534,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 50
     attackType: 0
     attackSpeed: 0
@@ -51028,11 +50550,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -51297,7 +50814,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -51314,11 +50830,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -51752,7 +51263,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -51769,11 +51279,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -51972,7 +51477,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -51989,11 +51493,6 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -52765,7 +52264,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -52782,11 +52280,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -53614,7 +53107,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -53631,11 +53123,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
@@ -53982,7 +53469,6 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    activeSkills: []
     attack: 0
     attackType: 0
     attackSpeed: 0
@@ -53999,11 +53485,6 @@ MonoBehaviour:
     unitFaction: 1
     supportExp: 0
     supportMoney: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []

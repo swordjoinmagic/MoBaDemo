@@ -24,7 +24,7 @@ class UseSkillAction : Action{
             pointingSkill = characterMono.prepareSkill as PointingSkill;
             Debug.Log("pointingSkill:"+pointingSkill);
             //pointingSkill.target = enermy.Value;
-            pointingSkill.targetEffect = enermyParticleSystem;
+            pointingSkill.TargetEffect = enermyParticleSystem;
         }
     }
 

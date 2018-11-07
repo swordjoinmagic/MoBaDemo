@@ -42,7 +42,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
         AvatarImage.texture = Resources.Load<Texture>("UIImage/" + newImagePath);
     }
     public void OnNameChanged(string oldName, string newName) {
-        Debug.Log("姓名改版");
+        //Debug.Log("姓名改版");
         heroNameText.text = newName;
     }
     public void OnLevelChanged(int oldLevel, int newLevel) {
@@ -68,7 +68,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     }
     public void OnExpTextChanged(int oldExpRate,int newExpRate) {
         expText.text = "EXP:"+newExpRate + "%";
-        Debug.Log("newExpRate:"+newExpRate);
+        //Debug.Log("newExpRate:"+newExpRate);
         expImage.sizeDelta = new Vector2(expImage.sizeDelta.x,newExpRate);
     }
 }
