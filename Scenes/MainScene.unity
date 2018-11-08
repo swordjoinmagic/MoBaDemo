@@ -1603,12 +1603,12 @@ Prefab:
     - target: {fileID: 224991711599346572, guid: 5f2e04f2cd37f5e45adca39116e5cee1,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -65.145
+      value: 33.055016
       objectReference: {fileID: 0}
     - target: {fileID: 224991711599346572, guid: 5f2e04f2cd37f5e45adca39116e5cee1,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -728
+      value: -1094.2802
       objectReference: {fileID: 0}
     - target: {fileID: 224991711599346572, guid: 5f2e04f2cd37f5e45adca39116e5cee1,
         type: 2}
@@ -9196,12 +9196,12 @@ Prefab:
     - target: {fileID: 224547392976075946, guid: 3048b219032fedc47b5e8b497e13b4c7,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 722.8
+      value: 821
       objectReference: {fileID: 0}
     - target: {fileID: 224547392976075946, guid: 3048b219032fedc47b5e8b497e13b4c7,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -231.71985
+      value: -598
       objectReference: {fileID: 0}
     - target: {fileID: 224547392976075946, guid: 3048b219032fedc47b5e8b497e13b4c7,
         type: 2}
@@ -37469,12 +37469,12 @@ Prefab:
     - target: {fileID: 224112206134645040, guid: d60f9ea764c1b0b4ea85b7d3e08a03ce,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 50
+      value: 148.20001
       objectReference: {fileID: 0}
     - target: {fileID: 224112206134645040, guid: d60f9ea764c1b0b4ea85b7d3e08a03ce,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -397
+      value: -763.2803
       objectReference: {fileID: 0}
     - target: {fileID: 224112206134645040, guid: d60f9ea764c1b0b4ea85b7d3e08a03ce,
         type: 2}
@@ -40082,6 +40082,16 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114625482230823200, guid: 7cadaa8da17797249b3f07398758c6b1,
+        type: 2}
+      propertyPath: m_RaycastTarget
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114625482230823200, guid: 7cadaa8da17797249b3f07398758c6b1,
+        type: 2}
+      propertyPath: m_PreserveAspect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 7cadaa8da17797249b3f07398758c6b1, type: 2}

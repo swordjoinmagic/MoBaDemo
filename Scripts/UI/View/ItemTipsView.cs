@@ -67,8 +67,7 @@ public class ItemTipsView : UnityGuiView<ItemViewModel> {
         // 当技能描述为空时，说明此物品不具有主动技能，
         // 将主动技能面板的高度设为0
         if (newDescription!=null && newDescription != "") {
-            int cows = newDescription.FindAnyCharCount('\n') + newDescription.Length / 14;
-            Debug.Log("ActiveDescription cows:"+cows);
+            int cows = newDescription.FindAnyCharCount('\n') + newDescription.Length / 14 + 1;
             ActiveEffectDescriptionPanel.sizeDelta = new Vector2(
                 ActiveEffectDescriptionPanel.sizeDelta.x,
                 cows * 12.5f + UseMethodAndCDPanel.sizeDelta.y + 7

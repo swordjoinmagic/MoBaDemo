@@ -94,7 +94,7 @@ public class CharacterMono : MonoBehaviour {
             AvatarImagePath = "PlayerAvatarImage",
             agilePower = 20,
             intelligencePower = 10,
-            mainAttribute = HeroMainAttribute.INT,
+            mainAttribute = HeroMainAttribute.AGI,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
