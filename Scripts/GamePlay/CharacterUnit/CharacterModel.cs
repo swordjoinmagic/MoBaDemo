@@ -65,6 +65,12 @@ public class CharacterModel : IFOVUnit{
     public int supportExp;
     // 单位被杀死后将提供给玩家单位多少金钱
     public int supportMoney;
+    // 物理抗性
+    public float physicalResistance;
+    // 魔法抗性
+    public float magicalResistance;
+    // 闪避率
+    public float dodgeRate;
 
     //=====================================
     // 用于战争迷雾

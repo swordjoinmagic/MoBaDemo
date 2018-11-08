@@ -34,6 +34,8 @@ public class HeroModel : CharacterModel{
     public float needExp;
     // 英雄头像图片的地址
     public string AvatarImagePath;
+    // 英雄主属性
+    public HeroMainAttribute mainAttribute;
 
     public int Exp {
         get {

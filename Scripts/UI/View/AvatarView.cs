@@ -1,6 +1,9 @@
 ﻿using uMVVM;
 using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.EventSystems;
+
+[RequireComponent(typeof(EventTrigger))]
 public class AvatarView : UnityGuiView<AvatarViewModel> {
 
     //==========================
@@ -24,8 +27,28 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     // 经验值图片
     public RectTransform expImage;
 
+    // 人物属性信息提示窗口prefab
+    public CharacterAttributeTipsView characterAttributeTipsViewPrefab;
+
+    private EventTrigger eventTrigger;
+    private CharacterAttributeTipsView TipsViewInstance;        // 提示信息窗口实例
+    private GameObject canvas;
+    private RectTransform rectTransform;
+    private Camera UICamera;
+    public HeroMono characterMono;
+
+    private void Start() {
+        canvas = GameObject.Find("Canvas");
+        rectTransform = transform as RectTransform;
+        UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
+        eventTrigger = GetComponent<EventTrigger>();
+    }
+
     protected override void OnInitialize() {
         base.OnInitialize();
+
+        //==============================================================
+        // 属性绑定
         binder.Add<string>("Name",OnNameChanged);
         binder.Add<int>("Attack",OnAttackChanged);
         binder.Add<int>("Defense",OnDefenseTextChanged);
@@ -35,7 +58,44 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
         binder.Add<int>("IntelligencePower", OnIntelligencePowerChanged);
         binder.Add<int>("Level",OnLevelChanged);
         binder.Add<int>("ExpRate",OnExpTextChanged);
-        binder.Add<string>("AvatarImagePath",OnAvatarImageChanged);
+        binder.Add<string>("AvatarImagePath", OnAvatarImageChanged);
+
+
+        //===============================================================
+        // 设置鼠标进入、离开事件
+        //if (eventTrigger==null) eventTrigger = GetComponent<EventTrigger>();
+        //if (canvas == null) canvas = GameObject.Find("Canvas");
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry();
+        enterEvent.eventID = EventTriggerType.PointerEnter;
+        enterEvent.callback.AddListener(eventData=> {
+            if (TipsViewInstance == null) {
+                TipsViewInstance = Instantiate<CharacterAttributeTipsView>(characterAttributeTipsViewPrefab, canvas.transform);
+                TipsViewInstance.BindingContext = new CharacterAttributeViewModel();
+                TipsViewInstance.BindingContext.Modify(characterMono.HeroModel);
+            }
+            // 获得AvaterView视图的屏幕坐标
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(UICamera, rectTransform.position);
+            // 获得AvaterView视图锚点在Canvas中心的Anchors坐标
+            Vector2 anchorsPos;
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas.transform as RectTransform, screenPos, UICamera, out anchorsPos);
+
+            // 设置该视图的RectTransform
+            RectTransform tipsViewRectTransform = TipsViewInstance.transform as RectTransform;
+            tipsViewRectTransform.anchoredPosition = new Vector2(
+                anchorsPos.x + rectTransform.sizeDelta.x/2,
+                anchorsPos.y
+            );
+
+            TipsViewInstance.Reveal(true);
+        });
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
+        exitEvent.eventID = EventTriggerType.PointerExit;
+        exitEvent.callback.AddListener(eventData => {
+            TipsViewInstance.Hide(true);
+        });
+
+        eventTrigger.triggers.Add(enterEvent);
+        eventTrigger.triggers.Add(exitEvent);
     }
     
     public void OnAvatarImageChanged(string oldImagePath,string newImagePath) {
