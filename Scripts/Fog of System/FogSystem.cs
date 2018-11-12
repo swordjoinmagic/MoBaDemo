@@ -8,6 +8,16 @@ using UnityEngine.UI;
 
 public class FogSystem : MonoBehaviour {
 
+    // 单例类
+    public static FogSystem instace;
+    public static FogSystem Instace {
+        get {
+            if (instace == null)
+                instace = FindObjectOfType<FogSystem>();
+            return instace;
+        }
+    }
+
     // 地图大小
     public float worldSize = 128;
 
@@ -53,9 +63,14 @@ public class FogSystem : MonoBehaviour {
 
     private FogBlendingThreadStatus threadStatus = FogBlendingThreadStatus.Update;
 
-    private void RemoveListData<T>(int index, List<T> list) {
+    public void RemoveListData<T>(int index, List<T> list) {
         lock (list) {
             list.RemoveAt(index);
+        }
+    }
+    public void AddListData<T>(T value,List<T>list) {
+        lock (list) {
+            list.Add(value);
         }
     }
 
@@ -311,4 +326,5 @@ public class FogSystem : MonoBehaviour {
         }
     }
 }
+
 

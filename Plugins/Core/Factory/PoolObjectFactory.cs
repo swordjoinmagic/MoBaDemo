@@ -14,22 +14,22 @@ namespace uMVVM {
     /// </summary>
     public class PoolObjectFactory : IObjectFactory{
 
-        private class PoolData {
+        protected class PoolData {
             public bool InUse { get; set; }
             public object Obj { get; set; }
         }
 
-        private readonly List<PoolData> _pool;
+        protected readonly List<PoolData> _pool;
         /// <summary>
         /// 对象池中对象最大存放数量
         /// </summary>
-        private readonly int _max;
+        protected readonly int _max;
 
         /// <summary>
         /// limit表示,如果对象池中的对象超过了最大限制
         /// max,是否限制再有新对象加入对象池
         /// </summary>
-        private readonly bool _limit;
+        protected readonly bool _limit;
 
         public PoolObjectFactory(int max,bool limit) {
             _max = max;
@@ -48,7 +48,7 @@ namespace uMVVM {
         /// </summary>
         /// <param name="obj"></param>
         /// <returns></returns>
-        private PoolData GetPoolData(object obj) {
+        protected PoolData GetPoolData(object obj) {
             lock (_pool) {
                 foreach (PoolData p in _pool) {
                     if (p.Obj == obj) {
@@ -64,7 +64,7 @@ namespace uMVVM {
         /// </summary>
         /// <param name="type">对象的Type</param>
         /// <returns></returns>
-        private object GetObject(Type type) {
+        protected object GetObject(Type type) {
             lock (_pool) {
                 // 判断要获取的对象的类型在池中是否有,
                 // 需要注意的一点是,某一个对象池只保持
@@ -98,7 +98,7 @@ namespace uMVVM {
             }
         }
 
-        private void PutObject(object obj) {
+        protected void PutObject(object obj) {
             // 获得这个obj对象在池中的PoolData
             PoolData p = GetPoolData(obj);
             // 将该PoolData设为未使用状态
