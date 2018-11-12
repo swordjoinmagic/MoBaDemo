@@ -10,6 +10,8 @@ using uMVVM;
 /// </summary>
 [Serializable]
 public class CharacterModel : IFOVUnit{
+
+    #region 单位的基本属性
     // 生命值
     private BindableProperty<int> hp = new BindableProperty<int>();
     // 魔力值
@@ -72,24 +74,7 @@ public class CharacterModel : IFOVUnit{
     // 闪避率
     public float dodgeRate;
 
-    //=====================================
-    // 用于战争迷雾
-    private Vector3 position;
-    private float radius;
-    private bool isVisible = false;
 
-    //public CharacterModel() {
-    //    Hp = maxHp;
-    //    Mp = maxMp;
-    //}
-    public BindableProperty<int>.OnValueChangeHandler HpValueChangedHandler {
-        get {
-            return hp.OnValueChange;
-        }
-        set {
-            hp.OnValueChange = value;
-        }
-    }
     public int Hp {
         get {
             return hp.Value;
@@ -105,14 +90,7 @@ public class CharacterModel : IFOVUnit{
                 hp.Value = value;
         }
     }
-    public BindableProperty<int>.OnValueChangeHandler MpValueChangedHandler {
-        get {
-            return mp.OnValueChange;
-        }
-        set {
-            mp.OnValueChange = value;
-        }
-    }
+
     public int Mp {
         get {
             return mp.Value;
@@ -127,7 +105,15 @@ public class CharacterModel : IFOVUnit{
                 mp.Value = value;
         }
     }
+    #endregion
 
+
+    #region 单位用于战争迷雾的属性
+    //=====================================
+    // 用于战争迷雾
+    private Vector3 position;
+    private float radius;
+    private bool isVisible = false;
     public Vector3 Position {
         get {
             return position;
@@ -136,7 +122,6 @@ public class CharacterModel : IFOVUnit{
             position = value;
         }
     }
-
     public float Radius {
         get {
             return radius;
@@ -145,8 +130,6 @@ public class CharacterModel : IFOVUnit{
             radius = value;
         }
     }
-
-
     public bool IsVisible {
         get {
             return isVisible;
@@ -155,6 +138,79 @@ public class CharacterModel : IFOVUnit{
             isVisible = value;
         }
     }
+    #endregion
+
+
+    #region 属性与ViewModel双向绑定 用于向订阅属性改变事件的UI发送消息
+    public BindableProperty<int>.OnValueChangeHandler HpValueChangedHandler {
+        get {
+            return hp.OnValueChange;
+        }
+        set {
+            hp.OnValueChange = value;
+        }
+    }
+    public BindableProperty<int>.OnValueChangeHandler MpValueChangedHandler {
+        get {
+            return mp.OnValueChange;
+        }
+        set {
+            mp.OnValueChange = value;
+        }
+    }
+    #endregion
+
+
+    #region 属性 Plus 设置
+    //================================================================
+    // ● Plus 设置处
+    //===============================================================
+
+    /// <summary>
+    ///  单位附加攻击力,此处所指的附加攻击力指的是 
+    ///  1. 被动技能
+    ///  2. 装备 
+    ///  等等
+    ///  所带来的附加攻击力
+    /// </summary>
+    public int AttackPlus {
+        get {
+            int newAttackPlus = 0;
+            int plus;
+            // 根据 单位身上的 被动技能 和 装备 来计算攻击附加值
+
+            foreach (var passiveSkill in passiveSkills) {
+                if (passiveSkill.TiggerType == PassiveSkillTriggerType.GainAttribute) {
+                    passiveSkill.Execute(this,out plus,CharacterAttribute.Attack,attack);
+                    newAttackPlus += plus;
+                }
+            }
+
+            foreach (var itemGrid in itemGrids) {
+                if (itemGrid!=null && itemGrid.item != null) {
+                    foreach (var passiveSkill in itemGrid.item.itemPassiveSkills) {
+                        if (passiveSkill.TiggerType == PassiveSkillTriggerType.GainAttribute) {
+                            passiveSkill.Execute(this, out plus, CharacterAttribute.Attack, attack);
+                            newAttackPlus += plus;
+                        }
+                    }
+                }
+            }
+            return newAttackPlus;
+        }
+    }
+    #endregion
+
+
+    #region 属性 Total 设置
+
+    public int TotalAttack {
+        get {
+            return attack + AttackPlus;
+        }
+    }
+
+    #endregion
 
 
     /// <summary>
@@ -168,6 +224,7 @@ public class CharacterModel : IFOVUnit{
         // 统计伤害
         Hp -= damage.TotalDamage;
     }
+
 
     // 获得当前CharacterModel对象的深拷贝对象
     public virtual CharacterModel DeepCopy() {

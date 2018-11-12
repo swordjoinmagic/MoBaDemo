@@ -296,7 +296,7 @@ public class CharacterMono : MonoBehaviour {
             !isAttackFinish) {
 
             if (characterModel.projectileModel == null) {
-                Damage damage = new Damage(characterModel.attack,0);
+                Damage damage = new Damage(characterModel.TotalAttack,0);
 
                 // 执行所有倍增伤害的被动技能
                 foreach (PassiveSkill passiveSkill in characterModel.passiveSkills) {

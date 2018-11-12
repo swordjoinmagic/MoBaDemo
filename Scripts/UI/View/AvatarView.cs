@@ -70,9 +70,9 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
         enterEvent.callback.AddListener(eventData=> {
             if (TipsViewInstance == null) {
                 TipsViewInstance = Instantiate<CharacterAttributeTipsView>(characterAttributeTipsViewPrefab, canvas.transform);
-                TipsViewInstance.BindingContext = new CharacterAttributeViewModel();
-                TipsViewInstance.BindingContext.Modify(characterMono.HeroModel);
             }
+            TipsViewInstance.Modify(characterMono.HeroModel);
+
             // 获得AvaterView视图的屏幕坐标
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(UICamera, rectTransform.position);
             // 获得AvaterView视图锚点在Canvas中心的Anchors坐标
@@ -86,12 +86,12 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
                 anchorsPos.y
             );
 
-            TipsViewInstance.Reveal(true);
+            TipsViewInstance.Reveal();
         });
         EventTrigger.Entry exitEvent = new EventTrigger.Entry();
         exitEvent.eventID = EventTriggerType.PointerExit;
         exitEvent.callback.AddListener(eventData => {
-            TipsViewInstance.Hide(true);
+            TipsViewInstance.Hide();
         });
 
         eventTrigger.triggers.Add(enterEvent);

@@ -27,6 +27,6 @@ public class Item {
     // 物品特技
     public ActiveSkill itemActiveSkill;
     // 物品被动特技(可用于增益属性,增加特效等等)
-    public List<PassiveSkill> itemPassiveSkills;
+    public List<PassiveSkill> itemPassiveSkills = new List<PassiveSkill>();
 }
 

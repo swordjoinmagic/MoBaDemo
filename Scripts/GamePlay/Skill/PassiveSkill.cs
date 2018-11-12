@@ -65,22 +65,25 @@ public class PassiveSkill : BaseSkill {
         Execute(speller,null);
     }
     /// <summary>
-    /// 执行该被动技能效果,此方法一般用于对传输进来的伤害进行一个倍数操作
+    /// 执行该被动技能效果,此方法一般用于对传输进来的伤害进行一个倍数或增加操作
     /// </summary>
     /// <param name="speller"></param>
     /// <param name="result"></param>
     public virtual void Execute(CharacterMono speller, CharacterMono target,ref Damage damage) { }
 
     /// <summary>
-    /// 执行该被动技能效果,并将计算得到的一个值输出至result变量
+    /// 执行该被动技能效果,并将计算得到的附加值输出至result变量(注意是附加值)
     /// 此被动技能主要是用于属性增益型被动技能
     /// </summary>
-    /// <param name="speller"></param>
-    /// <param name="result"></param>
-    public virtual void Execute(CharacterMono speller,out int result) {
+    /// <param name="speller">被动技能施法者</param>
+    /// <param name="result">输出此增益型技能增加的值</param>
+    /// <param name="characterAttribute">输入的属性参数，某些增益型技能只增加某些固定属性</param>
+    /// <param name="attributeValue">该属性原先的值</param>
+    public virtual void Execute(CharacterModel speller,out int result,CharacterAttribute characterAttribute,int attributeValue) {
         result = 0;
     }
-    public virtual void Execute(CharacterMono speller, out float result) {
+    public virtual void Execute(CharacterModel speller, out float result,CharacterAttribute characterAttribute, float attributeValue) {
         result = 0f;
     }
+    
 }
