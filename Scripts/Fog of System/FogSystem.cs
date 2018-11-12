@@ -127,7 +127,9 @@ public class FogSystem : MonoBehaviour {
     }
 
     private void Update() {
+
         for (int i = 0; i < players.Count();) {
+            Debug.Log("i:"+i+" plylaersCount:"+players.Count);
             if (players[i] != null) {
                 playersPositions[i] = players[i].position;
                 i++;

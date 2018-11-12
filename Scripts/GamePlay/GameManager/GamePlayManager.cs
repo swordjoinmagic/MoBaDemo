@@ -56,7 +56,7 @@ public class GamePlayManager : MonoBehaviour{
                 foreach (var solider in solidersPrefabs) {
                     Vector3 position = (p.position + UnityEngine.Random.insideUnitSphere * 3);
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position,templateObject:solider);
-                    FogSystem.Instace.AddListData<Transform>(soliderObject.transform,FogSystem.Instace.players);
+                    //FogSystem.Instace.AddListData<Transform>(soliderObject.transform,FogSystem.Instace.players);
                     //soliderObject.GetComponent<NavMeshAgent>().enabled = true;
                 }
             }
