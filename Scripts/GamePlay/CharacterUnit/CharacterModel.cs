@@ -52,7 +52,7 @@ public class CharacterModel : IFOVUnit{
     // 投射物Mono类
     public ProjectileMono projectile;
     // 等级
-    public int level;
+    private BindableProperty<int> level = new BindableProperty<int>();
     // 回血速度，以秒为单位，即以秒回多少血
     public float restoreHpSpeed;
     // 回魔速度，以秒为单位，即以秒回多少Mp
@@ -105,6 +105,17 @@ public class CharacterModel : IFOVUnit{
                 mp.Value = value;
         }
     }
+
+    public int Level {
+        get {
+            return level.Value;
+        }
+
+        set {
+            level.Value = value;
+        }
+    }
+
     #endregion
 
 
@@ -158,6 +169,14 @@ public class CharacterModel : IFOVUnit{
             mp.OnValueChange = value;
         }
     }
+    public BindableProperty<int>.OnValueChangeHandler LevelChangedHandler {
+        get {
+            return level.OnValueChange;
+        }
+        set {
+            level.OnValueChange = value;
+        }
+    }
     #endregion
 
 
@@ -209,7 +228,6 @@ public class CharacterModel : IFOVUnit{
             return attack + AttackPlus;
         }
     }
-
     #endregion
 
 
@@ -219,11 +237,26 @@ public class CharacterModel : IFOVUnit{
     /// <param name="damage"></param>
     public virtual void Damaged(Damage damage) {
         // 进行一系列计算
-        // pass
+        // toDo
 
         // 统计伤害
         Hp -= damage.TotalDamage;
     }
+
+    public delegate void OnDamageHandler(Damage damage,CharacterMono attacker,int nowHp);
+    public event OnDamageHandler OnDamaged;
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="attacker">袭击这个单位的人</param>
+    public virtual void Damaged(Damage damage,CharacterMono attacker) {
+        Damaged(damage);
+
+        if (OnDamaged != null)
+            OnDamaged(damage,attacker,Hp);
+    }
+
 
 
     // 获得当前CharacterModel对象的深拷贝对象

@@ -64,6 +64,7 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
+    #region 测试
     //================================================
     // ●测试用
     public GameObject targetPositionEffect;
@@ -95,6 +96,7 @@ public class CharacterMono : MonoBehaviour {
             agilePower = 20,
             intelligencePower = 10,
             mainAttribute = HeroMainAttribute.AGI,
+            skillPointGrowthPoint=1,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -125,6 +127,40 @@ public class CharacterMono : MonoBehaviour {
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                     SkillLevel = 6
+                },
+                new PointingSkill{
+                    BaseDamage = 1000,
+                    KeyCode = KeyCode.W,
+                    Mp = 220,
+                    PlusDamage = 200,
+                    SelfEffect = null,
+                    TargetEffect = null,
+                    SpellDistance = 4f,
+                    CD = 5f,
+                    SkillName = "W技能",
+                    IconPath = "00041",
+                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    SkillLevel = 6
+                },
+                new PointingSkill{
+                    BaseDamage = 1000,
+                    KeyCode = KeyCode.W,
+                    Mp = 220,
+                    PlusDamage = 200,
+                    SelfEffect = null,
+                    TargetEffect = null,
+                    SpellDistance = 4f,
+                    CD = 5f,
+                    SkillName = "W技能",
+                    IconPath = "00041",
+                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    SkillLevel = 6
                 }
             },
             passiveSkills = new List<PassiveSkill> {
@@ -132,6 +168,7 @@ public class CharacterMono : MonoBehaviour {
         };
     }
     //================================================
+    #endregion
 
     public void Awake() {
         if (CompareTag("Player"))
@@ -305,7 +342,7 @@ public class CharacterMono : MonoBehaviour {
                     }
                 }
 
-                target.characterModel.Damaged(damage);
+                target.characterModel.Damaged(damage,this);
 
                 // 测试，使敌方进入中毒状态
                 //target.battleStates.Add(new PoisoningState() {
@@ -460,7 +497,6 @@ public class CharacterMono : MonoBehaviour {
                         prepareItemSkillItemGrid = null;
                     }
 
-                    Debug.Log("释放技能");
 
                     isPrepareUseSkill = false;
                     prepareSkill = null;
@@ -469,6 +505,28 @@ public class CharacterMono : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 当单位受到伤害时执行的事件
+    /// </summary>
+    /// <param name="damage"></param>
+    /// <param name="attacker"></param>
+    private void OnDamged(Damage damage, CharacterMono attacker, int nowHp) {
+
+        //=======================================================
+        // 处理单位死亡时,敌对单位获得经验的行为
+        if (attacker!=null && !this.isDying && !attacker.CompareOwner(this) && nowHp==0) {
+            // 在攻击者的目标位置以r为半径的区域内,所有跟攻击者一个阵营的单位获得经验
+            Collider[] colliders = Physics.OverlapSphere(attacker.transform.position,5);
+            foreach (var collider in colliders) {
+                HeroMono characterMono = collider.GetComponent<HeroMono>();
+                if (characterMono != null && characterMono.CompareOwner(attacker)) {
+                    characterMono.HeroModel.Exp += this.characterModel.supportExp;
+                    Debug.Log("单位："+characterMono.name+"的经验目前是："+characterMono.HeroModel.Exp);
+                }
+            }
+        }
     }
 
     #region 单位的死亡逻辑 hp=0 -> OnDying -> Dying -> Died -> IsDied -> Destory(this)
@@ -520,7 +578,7 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="newHp"></param>
     private void OnDying(int oldHp,int newHp) {
         if (newHp == 0) {
-            Debug.Log("单位死亡");
+            // 单位进入垂死状态,执行相关操作,如暂停行为树的执行
             Dying();
 
             // 开启单位死后善后的协程
@@ -594,13 +652,15 @@ public class CharacterMono : MonoBehaviour {
     protected virtual void Bind() {
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
         characterModel.HpValueChangedHandler += OnHpValueChanged;
+        characterModel.OnDamaged += OnDamged; 
 
         //==========================
-        // 绑定
+        // 绑定物品
         foreach (var itemGrid in characterModel.itemGrids) {
             itemGrid.OnIconPathChanged += OnItemIconPathChanged;
             itemGrid.OnItemCountChanged += OnItemCountChanged;
         }
+
 
     }
     public void OnHpValueChanged(int oldHp,int newHp) {

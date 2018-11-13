@@ -11,8 +11,8 @@ using UnityEngine.EventSystems;
 /// 用于管理一个连续多个技能的技能面板
 /// </summary>
 class SkillView : MonoBehaviour{
-    public CharacterMono characterMono;
-    private CharacterModel character;
+    public HeroMono characterMono;
+    private HeroModel character;
     private List<ActiveSkill> activeSkills;
 
     public List<SkillPanelView> skillPanelViews;
@@ -26,14 +26,43 @@ class SkillView : MonoBehaviour{
     //===============================
     // UI控件
     public List<Image> images;
+    public CanvasGroup skillLevelUpPanel;
+    public List<Button> skillLevelButtons;
+
 
     private Camera UICamera;
     private Canvas canvas;
+
+    #region 绑定SkillPoint改变的事件
+    private void ChangedSkillLevelUpPanelActive(bool isShow) {
+        if (isShow) {
+            skillLevelUpPanel.alpha = 1;
+            skillLevelUpPanel.transform.localScale = Vector3.one;
+        } else {
+            skillLevelUpPanel.alpha = 0;
+            skillLevelUpPanel.transform.localScale = Vector3.zero;
+        }
+    }
+
+    private void OnSkillPointChanged(int oldSkillPoint, int newSkillPoint) {
+        if (newSkillPoint > 0) {
+            ChangedSkillLevelUpPanelActive(true);
+        } else if (newSkillPoint == 0) {
+            ChangedSkillLevelUpPanelActive(false);
+        }
+    }
+
+    private void Bind() {
+        characterMono.HeroModel.SkillPointChangedHandler += OnSkillPointChanged;
+    }
+    #endregion
 
     private void Start() {
 
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
+
+        Bind();
 
         for (int i=0;i<skillPanelViews.Count;i++) {
 
@@ -79,17 +108,28 @@ class SkillView : MonoBehaviour{
             eventTrigger.triggers.Add(enterViewEntry);
             eventTrigger.triggers.Add(exitViewEntry);
         }
+
+        for (int i=0;i<skillLevelButtons.Count;i++) {
+            Button levelUpButtonn = skillLevelButtons[i];
+            BaseSkill skill = characterMono.characterModel.activeSkills[i];
+            levelUpButtonn.onClick.AddListener(() => {
+                if (skill.NextLevelNeedHeroLevel <= character.Level && character.SkillPoint > 0) {
+                    skill.SkillLevel += 1;
+                    character.SkillPoint -= 1;
+                }
+            });
+        }
     }
 
     private void Update() {
 
-        character = characterMono.characterModel;
+        character = characterMono.HeroModel;
         activeSkills = character.activeSkills;
 
         for (int i=0;i<activeSkills.Count;i++) {
 
             ActiveSkill activeSkill = activeSkills[i];
-
+            if (activeSkill.SkillLevel == 0) continue;
             float coolDown = activeSkill.CD;
             float finalSpellTime = activeSkill.FinalSpellTime;
 

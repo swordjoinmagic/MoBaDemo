@@ -2,9 +2,10 @@
 using System.Linq;
 using System.Text;
 using UnityEngine;
-using BehaviorDesigner;
 using System.Collections;
 using UnityEngine.AI;
+using BehaviorDesigner.Runtime;
+using System.Collections.Generic;
 
 /// <summary>
 /// 用于管理游戏逻辑的Manager类
@@ -28,13 +29,24 @@ public class GamePlayManager : MonoBehaviour{
     }
 
     // 出兵地点
-    public Transform[] placesOfDispatch;
+    public Vector3[] placesOfDispatchRed;
+    public Vector3[] placesOfDispatchBlue;
+    // 塔集合
+    public List<GameObject> towersRedUp;
+    public List<GameObject> towersRedMiddle;
+    public List<GameObject> towersRedDown;
+    public List<GameObject> towersBlueUp;
+    public List<GameObject> towersBlueMiddle;
+    public List<GameObject> towersBlueDown;
+
     // 小兵的对象池
     private GameObjectPool poolObjectFactory;
     // 小兵的预设集合，即每一次出兵会出现的那一群单位
     public GameObject[] solidersPrefabs;
     // 出兵频率
     public float deltaTime;
+    // 玩家队伍集合
+    public UnitFaction[] playerTeams;
 
     // 游戏是否结束
     public bool isGameOver;
@@ -49,20 +61,51 @@ public class GamePlayManager : MonoBehaviour{
     // 出兵
     IEnumerator DispatchSoliders() {
         while (!isGameOver) {
-
             // 遍历每个出兵点，进行出兵
-            foreach (var p in placesOfDispatch) {
+            foreach (var p in placesOfDispatchRed) {
                 // 对每个出兵点产生一群单位
                 foreach (var solider in solidersPrefabs) {
-                    Vector3 position = (p.position + UnityEngine.Random.insideUnitSphere * 3);
-                    GameObject soliderObject = poolObjectFactory.AcquireObject(position,templateObject:solider);
-                    //FogSystem.Instace.AddListData<Transform>(soliderObject.transform,FogSystem.Instace.players);
-                    //soliderObject.GetComponent<NavMeshAgent>().enabled = true;
+                    Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
+                    GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
+                    // 设置该单位的阵营
+                    soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
+
+                    // 设置敌人
+                    //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersBlue);
+
+                    // 设置战争迷雾
+                    //FogSystem.Instace.players.Add(soliderObject.transform);
+                }
+            }
+            foreach (var p in placesOfDispatchBlue) {
+                // 对每个出兵点产生一群单位
+                foreach (var solider in solidersPrefabs) {
+                    Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
+                    GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
+                    // 设置该单位的阵营
+                    soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Blue;
+
+                    // 设置敌人
+                    //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersRed);
+
+                    // 设置战争迷雾
+                    //FogSystem.Instace.players.Add(soliderObject.transform);
                 }
             }
 
             // 等待一段时间重新出兵
             yield return new WaitForSeconds(deltaTime);
+        }
+    }
+
+    private void OnDrawGizmosSelected() {
+        Gizmos.color = Color.red;
+        foreach (var position in placesOfDispatchRed) {
+            Gizmos.DrawSphere(position,1f);
+        }
+        Gizmos.color = Color.blue;
+        foreach (var position in placesOfDispatchBlue) {
+            Gizmos.DrawSphere(position, 1f);
         }
     }
 }

@@ -23,7 +23,7 @@ public class HeroModel : CharacterModel{
     // 智力成长
     public float intelligenceGrowthPoint;
     // 技能点
-    public int skillPoint;
+    private BindableProperty<int> skillPoint = new BindableProperty<int>();
     // 技能点成长
     public int skillPointGrowthPoint;
     // 经验值
@@ -52,8 +52,22 @@ public class HeroModel : CharacterModel{
 
     public int NextLevelNeedExp {
         get {
-            return Mathf.FloorToInt(needExp * expfactor * (level+1));
+            return Mathf.FloorToInt(needExp * expfactor * (Level+1));
         }
+    }
+
+    public int SkillPoint {
+        get {
+            return skillPoint.Value;
+        }
+
+        set {
+            skillPoint.Value = value;
+        }
+    }
+    public BindableProperty<int>.OnValueChangeHandler SkillPointChangedHandler {
+        get { return skillPoint.OnValueChange; }
+        set { skillPoint.OnValueChange = value; }
     }
 
     public override void Damaged(Damage damage) {

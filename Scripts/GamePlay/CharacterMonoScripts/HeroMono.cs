@@ -29,18 +29,36 @@ public class HeroMono : CharacterMono{
         base.Update();
     }
 
+    #region UI和Model之间的绑定
     protected override void Bind() {
         base.Bind();
         characterModel.HpValueChangedHandler += OnHpChanged;
         HeroModel.ExpChangedHandler += OnExpChanged;
+        HeroModel.LevelChangedHandler += OnLevelChanged;
     }
     public void OnHpChanged(int oldHp, int newHp) {
         HPViewModel.Hp.Value = newHp;
     }
     public void OnExpChanged(int oldExp,int newExp) {
-        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / HeroModel.NextLevelNeedExp) * 100),0,100);
-        Debug.Log(" newExp:"+newExp+"NextLevelExp:"+ HeroModel.NextLevelNeedExp+" ExpRate:"+expRate);
+
+        //==========================================================================
+        // 修改UI
+        int expRate = Mathf.Clamp(Mathf.FloorToInt( ( (float)newExp / HeroModel.NextLevelNeedExp ) * 100 ),0,100);
         avatarViewModel.ExpRate.Value = expRate;
+
+        //==============================
+        // 当经验值满值时,修改等级
+        if (expRate == 100) {
+            HeroModel.Level += 1;
+        }
     }
+    public void OnLevelChanged(int oldLevel, int newLevel) {
+        if (newLevel > oldLevel) {
+            HeroModel.SkillPoint += HeroModel.skillPointGrowthPoint * (newLevel - oldLevel);
+        }
+        HeroModel.Exp = 0;
+        avatarViewModel.Level.Value = newLevel;
+    }
+    #endregion
 }
 

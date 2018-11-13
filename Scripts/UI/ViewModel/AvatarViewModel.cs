@@ -37,7 +37,7 @@ public class AvatarViewModel : ViewModelBase{
         AgilePower.Value = Mathf.FloorToInt(hero.agilePower);
         IntelligencePower.Value = Mathf.FloorToInt(hero.intelligencePower);
         AvatarImagePath.Value = hero.AvatarImagePath;
-        Level.Value = hero.level;
+        Level.Value = hero.Level;
         ExpRate.Value = hero.Exp / hero.NextLevelNeedExp;
     }
 }

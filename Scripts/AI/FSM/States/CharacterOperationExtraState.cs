@@ -41,7 +41,7 @@ public class CharacterOperationExtraState : FSMState {
         // 判断单位是否按下它的主动技能
         foreach (ActiveSkill skill in characterModel.activeSkills) {
             // 是否按下按键,如果按下,则令prepareSkill=skill
-            if (Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
+            if (skill.SkillLevel != 0 && Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
                 characterMono.prepareSkill = skill;
                 Debug.Log("为CharacterMono设置prepareSkill技能,技能是:" + characterMono.prepareSkill.SkillName);
                 characterMono.isPrepareUseSkill = true;
