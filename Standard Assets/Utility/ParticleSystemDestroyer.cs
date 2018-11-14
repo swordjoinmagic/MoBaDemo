@@ -32,7 +32,7 @@ namespace UnityStandardAssets.Utility
 
             float stopTime = Time.time + Random.Range(minDuration, maxDuration);
 
-            while (Time.time < stopTime || m_EarlyStop)
+            while (Time.time < stopTime && !m_EarlyStop)
             {
                 yield return null;
             }

@@ -21,12 +21,13 @@ public class MapView : MonoBehaviour {
     private Vector2 TexToWorld;
     // 用于修正因为相机视角带来的摄像机距离理想位置的偏移
     public Vector2 cameraOffset = new Vector2(7f,15f);
+    public float worldSize = 200;
 
     private void Start() {
         // 从UI坐标到贴图坐标的转换
         UIToTex = new Vector2(256 / rectTransform.sizeDelta.x, 256 / rectTransform.sizeDelta.y);
         // 从贴图坐标到世界坐标的转换
-        TexToWorld = new Vector2((300f) / 256f, (300f )/ 256f);
+        TexToWorld = new Vector2((worldSize) / 256f, (worldSize) / 256f);
 
         eventTrigger = GetComponent<EventTrigger>();
         var clickEntry = new EventTrigger.Entry();

@@ -26,6 +26,8 @@ public class CharacterMono : MonoBehaviour {
     /// 表示当前单位的一些基本属性,如:hp,mp,攻击力等等
     /// </summary>
     public CharacterModel characterModel;
+    // 此单位的所有者
+    public Player Owner;
 
     // 当前准备释放的技能
     public ActiveSkill prepareSkill = null;
@@ -87,6 +89,7 @@ public class CharacterMono : MonoBehaviour {
             //    turningSpeed = 1
             //},
             //projectile = projectile,
+            Level=0,
             forcePower = 100,
             needExp = 1000,
             attack = 100,
