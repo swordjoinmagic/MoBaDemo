@@ -60,7 +60,11 @@ public class GamePlayManager : MonoBehaviour{
     //===========================
     // 出兵
     IEnumerator DispatchSoliders() {
+        yield return new WaitForSeconds(2);
         while (!isGameOver) {
+
+            int a = 0;
+
             // 遍历每个出兵点，进行出兵
             foreach (var p in placesOfDispatchRed) {
                 // 对每个出兵点产生一群单位
@@ -69,14 +73,25 @@ public class GamePlayManager : MonoBehaviour{
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
                     // 设置该单位的阵营
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
+                    if (a == 0) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Red);
 
+                    } else if (a == 1) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.MiddleRoad, UnitFaction.Red);
+                    } else if (a == 2) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.DownRoad, UnitFaction.Red);
+                    }
                     // 设置敌人
                     //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersBlue);
 
                     // 设置战争迷雾
-                    //FogSystem.Instace.players.Add(soliderObject.transform);
+                    FogSystem.Instace.AddListData<Transform>(soliderObject.transform, FogSystem.Instace.players);
+                    FogSystem.Instace.AddListData<Vector3>(soliderObject.transform.position,FogSystem.Instace.playersPositions);
                 }
+                a++;
             }
+
+            int b = 0;
             foreach (var p in placesOfDispatchBlue) {
                 // 对每个出兵点产生一群单位
                 foreach (var solider in solidersPrefabs) {
@@ -85,12 +100,23 @@ public class GamePlayManager : MonoBehaviour{
                     // 设置该单位的阵营
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Blue;
 
+                    if (b == 0) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Blue);
+
+                    } else if (b == 1) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.MiddleRoad, UnitFaction.Blue);
+                    } else if (b == 2) {
+                        soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.DownRoad, UnitFaction.Blue);
+                    }
+
                     // 设置敌人
                     //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersRed);
 
                     // 设置战争迷雾
-                    //FogSystem.Instace.players.Add(soliderObject.transform);
+                    FogSystem.Instace.AddListData<Transform>(soliderObject.transform,FogSystem.Instace.players);
+                    FogSystem.Instace.AddListData<Vector3>(soliderObject.transform.position, FogSystem.Instace.playersPositions);
                 }
+                b++;
             }
 
             // 等待一段时间重新出兵

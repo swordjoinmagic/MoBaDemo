@@ -14,6 +14,9 @@ public class IsFindEnemry : Conditional{
     // 要攻击的敌人
     public SharedGameObject target;
 
+    public SharedBool isFindEnermy;
+
+
     public override void OnAwake() {
         characterMono = GetComponent<CharacterMono>();
     }
@@ -39,7 +42,8 @@ public class IsFindEnemry : Conditional{
             if (enemry == null) return TaskStatus.Failure;
 
             target.Value = enemry.gameObject;
-            //Debug.Log(target.Value.name);
+            isFindEnermy.Value = true;
+            
             return TaskStatus.Success;
         }
         return TaskStatus.Failure;

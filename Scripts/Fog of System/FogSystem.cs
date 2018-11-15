@@ -35,10 +35,10 @@ public class FogSystem : MonoBehaviour {
     private Color32[] buffer0;
 
     // 用于测试的视野单位
-    public List<Transform> players;
-    public List<CharacterMono> characterMonos;
-    private List<Vector3> playersPositions;
-    private List<IFOVUnit> fOVUnits;
+    public List<Transform> players = new List<Transform>();
+    public List<CharacterMono> characterMonos = new List<CharacterMono>();
+    public List<Vector3> playersPositions = new List<Vector3>();
+    private List<IFOVUnit> fOVUnits = new List<IFOVUnit>();
 
     public Image image;
     
@@ -129,7 +129,6 @@ public class FogSystem : MonoBehaviour {
     private void Update() {
 
         for (int i = 0; i < players.Count();) {
-            Debug.Log("i:"+i+" plylaersCount:"+players.Count);
             if (players[i] != null) {
                 playersPositions[i] = players[i].position;
                 i++;
@@ -313,10 +312,10 @@ public class FogSystem : MonoBehaviour {
                 position *= textureSize / worldSize;
 
                 // 在当前贴图坐标下绘制一个小的绿色矩形
-                int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - 4),0,textureSize) ;
-                int minZ = Mathf.Clamp(Mathf.FloorToInt(position.z - 4),0,textureSize) ;
-                int maxX = Mathf.Clamp(Mathf.FloorToInt(position.x + 4),0,textureSize) ;
-                int maxZ = Mathf.Clamp(Mathf.FloorToInt(position.z + 4),0,textureSize) ;
+                int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - 3),0,textureSize) ;
+                int minZ = Mathf.Clamp(Mathf.FloorToInt(position.z - 3),0,textureSize) ;
+                int maxX = Mathf.Clamp(Mathf.FloorToInt(position.x + 3),0,textureSize) ;
+                int maxZ = Mathf.Clamp(Mathf.FloorToInt(position.z + 3),0,textureSize) ;
 
                 for (int z=minZ;z<=maxZ;z++) {
                     int zw = z * textureSize;

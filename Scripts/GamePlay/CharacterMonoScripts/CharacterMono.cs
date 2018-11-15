@@ -15,12 +15,14 @@ public class CharacterMono : MonoBehaviour {
     protected SimpleCharacterViewModel simpleCharacterViewModel;
     private List<ItemViewModel> itemViewModels = new List<ItemViewModel>(6);
 
+    #region 小兵的WayPointUnit属性
+    public WayPointsUnit wayPointsUnit = null;
+    #endregion
+
+
     // 当前人物的动画组件以及寻路组件
     private Animator animator;
     private NavMeshAgent agent;
-
-    // 表示当前单位是否垂死
-    public bool isDying = false;
 
     /// <summary>
     /// 表示当前单位的一些基本属性,如:hp,mp,攻击力等等
@@ -28,6 +30,11 @@ public class CharacterMono : MonoBehaviour {
     public CharacterModel characterModel;
     // 此单位的所有者
     public Player Owner;
+
+    #region GamePlay相关 包含一些用于战斗时的变量
+
+    // 表示当前单位是否垂死
+    public bool isDying = false;
 
     // 当前准备释放的技能
     public ActiveSkill prepareSkill = null;
@@ -45,6 +52,8 @@ public class CharacterMono : MonoBehaviour {
 
     // 当前角色拥有的所有状态
     public List<BattleState> battleStates = new List<BattleState>();
+
+    #endregion
 
     public SimpleCharacterViewModel SimpleCharacterViewModel {
         get {
@@ -176,6 +185,8 @@ public class CharacterMono : MonoBehaviour {
     public void Awake() {
         if (CompareTag("Player"))
             Install();
+        //if (CompareTag("Enermy"))
+        //    wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad,UnitFaction.Red);
 
         characterModel.Hp = characterModel.maxHp;
         characterModel.Mp = characterModel.maxMp;
@@ -595,16 +606,12 @@ public class CharacterMono : MonoBehaviour {
     /// <returns></returns>
     public IEnumerator Died() {
 
-        Debug.Log("死亡协程运行中");
-
         while (isDying) {
             if (IsDied()) {
-                Debug.Log("单位确实死了,摧毁该单位");
                 Destroy(gameObject);
                 isDying = false;
             }
-
-            yield return new WaitForEndOfFrame();
+            yield return new WaitForFixedUpdate();
         }
     }
 
