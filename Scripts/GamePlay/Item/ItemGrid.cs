@@ -15,18 +15,21 @@ public class ItemGrid {
 
     //============================
     // 用于监控itemCount和ItemPath的变化
-    public OnValueChangeHandler<int> OnItemCountChanged;
-    public OnValueChangeHandler<string> OnIconPathChanged;
+    public event OnValueChangeHandler<int> OnItemCountChanged;
+    public event OnValueChangeHandler<string> OnIconPathChanged;
+    public event OnValueChangeHandler<bool> OnCanBuyChanged;
 
     // 此格子存储的物品
     public Item item;
     // 当前持有该物品的数量
     private int itemCount;
-    
+    // 玩家是否买得起此物品
+    private bool canBuy;
+
     // 使用该物品的热键
     public KeyCode hotKey;
 
-    // 当前各自标号
+    // 当前格子标号
     public int index;
 
     public int ItemCount {
@@ -47,10 +50,11 @@ public class ItemGrid {
                 return;
             if(OnItemCountChanged!=null)
                 OnItemCountChanged(oldItemCount,ItemCount,index);
-            if(item!=null && OnIconPathChanged!=null)
-                OnIconPathChanged(item.iconPath,item.iconPath,index);
-            else
-                OnIconPathChanged(null, null,index);
+            if(OnIconPathChanged != null)
+                if(item!=null)
+                    OnIconPathChanged(item.iconPath,item.iconPath,index);
+                else
+                    OnIconPathChanged(null, null,index);
         }
     }
 
@@ -61,6 +65,20 @@ public class ItemGrid {
                 return item.iconPath;
             else
                 return null;
+        }
+    }
+
+    public bool CanBuy {
+        get {
+            return canBuy;
+        }
+
+        set {
+            bool oldCanBuy = canBuy;
+            canBuy = value;
+            if (OnCanBuyChanged!=null) {
+                OnCanBuyChanged(oldCanBuy,value,index);
+            }
         }
     }
 

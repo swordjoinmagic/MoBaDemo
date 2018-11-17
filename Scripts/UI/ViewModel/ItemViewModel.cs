@@ -21,9 +21,12 @@ public class ItemViewModel : ViewModelBase{
     public BindableProperty<string> backgroundDescription = new BindableProperty<string>();
     // 物品主动技能的冷却时间
     public BindableProperty<string> itemCD = new BindableProperty<string>();
+    // 物品边框颜色
+    public BindableProperty<bool> outlineColor = new BindableProperty<bool>();
 
     // 根据ItemGrid类来修改ViewModel
     public void Modify(ItemGrid itemGrid) {
+        outlineColor.Value = itemGrid.CanBuy;
         Item item = itemGrid.item;
         if (item != null) {
             iconPath.Value = item.iconPath;

@@ -98,17 +98,17 @@ public class CharacterMono : MonoBehaviour {
             //    turningSpeed = 1
             //},
             //projectile = projectile,
-            Level=0,
+            Level = 0,
             forcePower = 100,
             needExp = 1000,
             attack = 100,
-            Exp=0,
+            Exp = 0,
             expfactor = 2,
             AvatarImagePath = "PlayerAvatarImage",
             agilePower = 20,
             intelligencePower = 10,
             mainAttribute = HeroMainAttribute.AGI,
-            skillPointGrowthPoint=1,
+            skillPointGrowthPoint = 1,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -177,6 +177,9 @@ public class CharacterMono : MonoBehaviour {
             },
             passiveSkills = new List<PassiveSkill> {
             }
+        };
+        Owner = new Player() {
+            Money = 1000
         };
     }
     //================================================

@@ -22,6 +22,8 @@ public class Item {
     public int maxCount;
     // 物品类型
     public ItemType itemType;
+    // 物品在商店里的类型
+    public CommditType commditType;
     // 物品购买间隔
     public float itemPayInteral;
     // 物品特技
