@@ -14,11 +14,43 @@ using UnityEngine.AI;
 public class CharacterMono : MonoBehaviour {
     protected SimpleCharacterViewModel simpleCharacterViewModel;
     private List<ItemViewModel> itemViewModels = new List<ItemViewModel>(6);
+    public SimpleCharacterViewModel SimpleCharacterViewModel {
+        get {
+            return simpleCharacterViewModel;
+        }
+
+        set {
+            simpleCharacterViewModel = value;
+        }
+    }
+    public List<ItemViewModel> ItemViewModels {
+        get {
+            return itemViewModels;
+        }
+
+        set {
+            itemViewModels = value;
+        }
+    }
+
 
     #region 小兵的WayPointUnit属性
     public WayPointsUnit wayPointsUnit = null;
     #endregion
 
+    #region 单位身上的事件及隐藏的委托
+
+    //======================================
+    // 委托集合
+    public delegate void BattleStatusChangedHandler(BattleState battleState);
+
+    //=====================================
+    // 事件集合
+
+    // 当单位身上增加新的状态(如中毒状态)时,触发的事件
+    public event BattleStatusChangedHandler OnAddNewBattleStatus;
+    public event BattleStatusChangedHandler OnRemoveBattleStatus;
+    #endregion
 
     // 当前人物的动画组件以及寻路组件
     private Animator animator;
@@ -51,29 +83,40 @@ public class CharacterMono : MonoBehaviour {
     public List<CharacterMono> arroundEnemies;
 
     // 当前角色拥有的所有状态
-    public List<BattleState> battleStates = new List<BattleState>();
+    private List<BattleState> battleStates = new List<BattleState>();
 
     #endregion
 
-    public SimpleCharacterViewModel SimpleCharacterViewModel {
-        get {
-            return simpleCharacterViewModel;
-        }
+    #region 用于处理单位身上的状态集合
 
-        set {
-            simpleCharacterViewModel = value;
+    /// <summary>
+    /// 为单位增加新状态
+    /// </summary>
+    /// <param name="newBattleState"></param>
+    public void AddBattleState(BattleState newBattleState) {
+        // 判断单位身上已经是否有这个状态了,并且判断状态是否可以叠加
+        if (battleStates.Find((battleState) => { return battleState.GetType() == newBattleState.GetType(); }) == null ||
+            newBattleState.isStackable) {
+            battleStates.Add(newBattleState);
+
+
+            // 触发单位状态附加事件,向所有订阅该事件的观察者发送消息
+            if (OnAddNewBattleStatus != null)
+                OnAddNewBattleStatus(newBattleState);
         }
     }
 
-    public List<ItemViewModel> ItemViewModels {
-        get {
-            return itemViewModels;
-        }
+    /// <summary>
+    /// 去除单位身上某一个状态
+    /// </summary>
+    /// <param name="battleState"></param>
+    public void RemoveBattleState(BattleState battleState) {
+        battleStates.Remove(battleState);
 
-        set {
-            itemViewModels = value;
-        }
+        if (OnRemoveBattleStatus != null)
+            OnRemoveBattleStatus(battleState);
     }
+    #endregion
 
     #region 测试
     //================================================
@@ -327,7 +370,6 @@ public class CharacterMono : MonoBehaviour {
         if (!target.IsCanBeAttack()) {
             ResetAttackStateAnimator();
             arroundEnemies.Remove(target);
-            
             return false;
         }
 
@@ -362,12 +404,14 @@ public class CharacterMono : MonoBehaviour {
                 target.characterModel.Damaged(damage,this);
 
                 // 测试，使敌方进入中毒状态
-                //target.battleStates.Add(new PoisoningState() {
-                //    damage = new Damage(50, 10),
-                //    duration = 5f,
-                //    stateHolderEffect = stateHolderEffect,
-                //    name = "PosioningState"
-                //});
+                target.AddBattleState(new PoisoningState{
+                    damage = new Damage(40, 10),
+                    duration = 15f,
+                    stateHolderEffect = stateHolderEffect,
+                    name = "PosioningState",
+                    iconPath = "00046",
+                    description = "中毒技能,每秒中减少20点生命值",
+                });
 
             } else {
                 Transform shotPosition = transform.Find("shootPosition");

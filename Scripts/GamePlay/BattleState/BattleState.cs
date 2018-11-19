@@ -12,10 +12,11 @@ using UnityEditor;
 public class BattleState {
     public string name;
     public string description;
+    public string iconPath;
     public float duration;
     public List<PassiveSkill> statePassiveSkills;
     public GameObject stateHolderEffect;
-    public bool isStackable;      // 状态是否可叠加
+    public bool isStackable = false;      // 状态是否可叠加
 
     // 是否是第一次进入该状态
     private bool isFirstEnterState = true;
@@ -29,6 +30,12 @@ public class BattleState {
     public bool IsStateDying {
         get {
             return isStateDying;
+        }
+    }
+
+    public float FirsstEnterTime {
+        get {
+            return firsstEnterTime;
         }
     }
 
@@ -49,7 +56,7 @@ public class BattleState {
         OnUpdate(stateHolder);
 
         // 处理状态消失流程
-        if (Time.time - firsstEnterTime >= duration) {
+        if (Time.time - FirsstEnterTime >= duration) {
             OnExit(stateHolder);
         }
     }
@@ -66,7 +73,7 @@ public class BattleState {
     protected virtual void OnExit(CharacterMono stateHolder) {
         isStateDying = true;
         // 状态消失时，自动将当前状态从单位的状态列表中去除
-        stateHolder.battleStates.Remove(this);
+        stateHolder.RemoveBattleState(this);
     }
 }
 
