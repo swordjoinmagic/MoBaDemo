@@ -5,6 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
 
 class StoreView : MonoBehaviour{
 
@@ -35,6 +36,8 @@ class StoreView : MonoBehaviour{
 
     // 用于分类的按钮,0:all,1:weaponButton，顺序和Commditype的枚举值一致
     public Button[] categoryButtons;
+    public Button OnOrOffButton;
+    public Text OnOrOffButtonText;
 
     /// <summary>
     /// 用于初始化
@@ -45,6 +48,7 @@ class StoreView : MonoBehaviour{
         canvasGroup = GetComponent<CanvasGroup>();
         storeLogic = new StoreLogic();
         BindButtonEvent();
+        BindCanBuyButtonEvent();
         Reveal();
     }
 
@@ -53,15 +57,16 @@ class StoreView : MonoBehaviour{
     /// 在显示的同时，根据当前的分类category来显示所有物品
     /// </summary>
     public void Reveal() {
-        canvasGroup.alpha = 1;
-        transform.localScale = Vector3.one;
+        (transform as RectTransform).DOSizeDelta(new Vector2(305.6f, (transform as RectTransform).sizeDelta.y),1f);
+        canvasGroup.DOFade(1,1f);
+        //transform.localScale = Vector3.one;
 
         UpdateShowCommdities(showCommidtyType);
     }
 
     public void Hide() {
-        canvasGroup.alpha = 0;
-        transform.localScale = Vector3.zero;
+        (transform as RectTransform).DOSizeDelta(new Vector2(0, (transform as RectTransform).sizeDelta.y), 1f);
+        canvasGroup.DOFade(0, 1f);
     }
 
     /// <summary>
@@ -69,8 +74,9 @@ class StoreView : MonoBehaviour{
     /// </summary>
     public void UpdateShowCommdities(CommditType commidtyType) {
         showItemGrids = storeLogic.FindItemsWithCommidtyType(commidtyType);
-        Debug.Log("showItemGrids.Count:"+ showItemGrids.Count);
-        for (int i=0;i<showItemGrids.Count;i++) {
+
+        int i = 0;
+        for (;i<showItemGrids.Count;i++) {
             ItemGrid itemGrid = showItemGrids[i];
             itemGrid.index = i;
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid,heroMono);
@@ -80,21 +86,16 @@ class StoreView : MonoBehaviour{
                 CreateItemPanel(itemGrid);
                 itemGridsView[i].BindingContext = new ItemViewModel();
             }
-
+            itemGridsView[i].Reveal();
             itemGridsView[i].BindingContext.Modify(itemGrid);
+            SetItemPanelMouseEvent(itemGrid,itemGridsView[i]);
+        }
+        for (;i<itemGridsView.Count;i++) {
+            itemGridsView[i].Hide();
         }
     }
 
-    /// <summary>
-    /// 新建ItemPanel的方法，在创建的同时，为其增加绑定方法
-    /// </summary>
-    /// <param name="itemGrid">要进行绑定的实体类对象(Model),当实体类对象,View会自动改变,实质上是View订阅了实体类改变的事件</param>
-    public void CreateItemPanel(ItemGrid itemGrid) {
-        StoreItemPanelView itemPanel = GameObject.Instantiate<StoreItemPanelView>(itemPanelViewPrefab ,parent: contentRectTransform,worldPositionStays:false);
-        itemGridsView.Add(itemPanel);
-        itemGrid.OnIconPathChanged += OnIconPathValueChanged;
-        itemGrid.OnItemCountChanged += OnItemCountChanged;
-
+    private void SetItemPanelMouseEvent(ItemGrid itemGrid,StoreItemPanelView itemPanel) {
         EventTrigger.Entry onMouseEnter = new EventTrigger.Entry();
         onMouseEnter.eventID = EventTriggerType.PointerEnter;
         onMouseEnter.callback.AddListener(eventData => {
@@ -122,9 +123,31 @@ class StoreView : MonoBehaviour{
             itemTipsView.Hide(immediate: true);
         });
 
+        // 右键单击购买物品的事件
+        EventTrigger.Entry onMouseClick = new EventTrigger.Entry();
+        onMouseClick.eventID = EventTriggerType.PointerClick;
+        onMouseClick.callback.AddListener(eventData => {
+            if (Input.GetMouseButtonUp(1)) {
+                storeLogic.Sell(heroMono, showItemGrids[itemGrid.index]);
+            }
+        });
+
         EventTrigger eventTrigger = itemPanel.GetComponent<EventTrigger>();
+        eventTrigger.triggers.Clear();
         eventTrigger.triggers.Add(onMouseEnter);
         eventTrigger.triggers.Add(onMouseExit);
+        eventTrigger.triggers.Add(onMouseClick);
+    }
+
+    /// <summary>
+    /// 新建ItemPanel的方法，在创建的同时，为其增加绑定方法
+    /// </summary>
+    /// <param name="itemGrid">要进行绑定的实体类对象(Model),当实体类对象,View会自动改变,实质上是View订阅了实体类改变的事件</param>
+    public void CreateItemPanel(ItemGrid itemGrid) {
+        StoreItemPanelView itemPanel = GameObject.Instantiate<StoreItemPanelView>(itemPanelViewPrefab ,parent: contentRectTransform,worldPositionStays:false);
+        itemGridsView.Add(itemPanel);
+        itemGrid.OnIconPathChanged += OnIconPathValueChanged;
+        itemGrid.OnItemCountChanged += OnItemCountChanged;
     }
 
     private void OnIconPathValueChanged(string oldIconPathValue,string newIconPathValue,int index) {
@@ -138,6 +161,7 @@ class StoreView : MonoBehaviour{
     /// 绑定按钮的事件
     /// </summary>
     private void BindButtonEvent() {
+        // 绑定分类按钮的Click事件
         for (int i=0;i<categoryButtons.Count();i++) {
             CommditType type = (CommditType)i;
             Button button = categoryButtons[i];
@@ -147,6 +171,18 @@ class StoreView : MonoBehaviour{
             });
         }
 
+        // 绑定展开/收起商店按钮事件
+        OnOrOffButton.onClick.AddListener(()=> {
+            if (canvasGroup.alpha == 1) {
+                // 商店处于开启状态,点击按钮进行收缩
+                Hide();
+                OnOrOffButtonText.text = "<<< 展开";
+            } else if (canvasGroup.alpha == 0) {
+                // 商店处于关闭状态,点击按钮进行展开
+                Reveal();
+                OnOrOffButtonText.text = "收起 >>>";
+            }
+        });
     }
 
     /// <summary>
@@ -162,6 +198,22 @@ class StoreView : MonoBehaviour{
                 button.image.color = new Color32(64,72,91,200);
             }
         }
+    }
+
+    /// <summary>
+    /// 更新商品的购买边框
+    /// </summary>
+    private void UpdateCanBuyButton() {
+        Debug.Log("showItemGrids.Count:"+showItemGrids.Count);
+        for (int i=0;i<showItemGrids.Count;i++) {
+            ItemGrid itemGrid = showItemGrids[i];
+            itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid, heroMono);
+            itemGridsView[i].BindingContext.Modify(itemGrid);
+        }
+    }
+
+    private void BindCanBuyButtonEvent() {
+        heroMono.Owner.OnMoneyChanged += UpdateCanBuyButton;
     }
 }
 

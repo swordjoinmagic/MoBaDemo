@@ -76,7 +76,7 @@ class StoreLogic {
     public ItemGrid TestItemGrids() {
         ItemGrid itemGrid = new ItemGrid {
             item = new Item {
-                name = "测试物品",
+                name = "测试物品"+Random.Range(0,1000),
                 itemActiveSkill = new PointingSkill {
                     BaseDamage = 1000,
                     SpellDistance = 10,
@@ -89,7 +89,8 @@ class StoreLogic {
                 activeDescription = "对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害",
                 passiveDescription = "+100攻击力\n+100防御力\n+10力量",
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品",
-                price = Random.Range(100,10000)
+                price = Random.Range(100, 10000),
+                commditType = (CommditType)(Random.Range(0,6))
             }
         };
         soldProps.Add(itemGrid);

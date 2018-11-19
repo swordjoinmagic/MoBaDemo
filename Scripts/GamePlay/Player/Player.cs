@@ -8,6 +8,10 @@ using System.Text;
 /// </summary>
 public class Player {
 
+    public delegate void OnValueChangedHandler();
+
+    public event OnValueChangedHandler OnMoneyChanged;
+
     /// <summary>
     /// 玩家所持金钱
     /// </summary>
@@ -19,7 +23,11 @@ public class Player {
         }
 
         set {
+            int oldMoney = money;
             money = value;
+            if (OnMoneyChanged!=null && oldMoney!=money) {
+                OnMoneyChanged();
+            }
         }
     }
 }
