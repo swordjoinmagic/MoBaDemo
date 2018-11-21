@@ -23,6 +23,9 @@ public class ActiveSkill : BaseSkill{
     // 施法距离，等于0时是原地释放技能
     protected float spellDistance;
 
+    // 技能影响范围，是一个以r为半径的圆
+    protected float skillInfluenceRadius;
+
     // 技能CD时间
     protected float cooldown;
 
@@ -96,6 +99,16 @@ public class ActiveSkill : BaseSkill{
 
         set {
             finalSpellTime = value;
+        }
+    }
+
+    public float SkillInfluenceRadius {
+        get {
+            return skillInfluenceRadius;
+        }
+
+        set {
+            skillInfluenceRadius = value;
         }
     }
 

@@ -39,6 +39,8 @@ GameObject:
   - component: {fileID: 222488724226351296}
   - component: {fileID: 114697491779792938}
   - component: {fileID: 114278632740531810}
+  - component: {fileID: 114887634811231624}
+  - component: {fileID: 225674706717989508}
   m_Layer: 5
   m_Name: BattleStatusPanel
   m_TagString: Untagged
@@ -133,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   icon: {fileID: 114499304049855074}
   coolDownBar: {fileID: 114697491779792938}
+  eventTrigger: {fileID: 0}
 --- !u!114 &114499304049855074
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -214,6 +217,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114887634811231624
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590912089231350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1862395651, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+  delegates: []
 --- !u!222 &222283745528273016
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -313,3 +329,14 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -10, y: -10}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &225674706717989508
+CanvasGroup:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1590912089231350}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0

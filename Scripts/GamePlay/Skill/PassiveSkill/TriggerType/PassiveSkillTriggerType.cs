@@ -9,5 +9,6 @@ public enum PassiveSkillTriggerType {
     WhenBeAttacked,         // 被攻击时,会进行触发
     WhenNormalAttack,       // 当进行普通攻击时,会进行触发
     WhenSpellAttack,        // 当进行施法攻击时,会进行触发
+    Halo,                   // 光环技能,学习时自动触发
 }
 

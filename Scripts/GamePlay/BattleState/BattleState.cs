@@ -56,7 +56,7 @@ public class BattleState {
         OnUpdate(stateHolder);
 
         // 处理状态消失流程
-        if (Time.time - FirsstEnterTime >= duration) {
+        if ( duration!=-1 && Time.time - FirsstEnterTime >= duration) {
             OnExit(stateHolder);
         }
     }

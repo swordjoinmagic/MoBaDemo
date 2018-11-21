@@ -14,7 +14,7 @@ class SpellToIdleTransition : FSMTransition {
         CharacterMono target = BlackBorad.GetCharacterMono("Enemry");
         CharacterMono characterMono = BlackBorad.CharacterMono;
         if (target == null || characterMono == null) return false;
-        if (Input.GetKeyDown(KeyCode.Escape) &&
+        if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetMouseButtonDown(1)) &&
             Vector2.Distance(
                 new Vector2(target.transform.position.x, target.transform.position.z),
                 new Vector2(characterMono.transform.position.x, characterMono.transform.position.z)

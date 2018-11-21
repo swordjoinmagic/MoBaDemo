@@ -1,7 +1,7 @@
 Shader "Unity Shaders Book/Chapter 14/ToonShading" {
     Properties {
         // 用于控制整体色调
-        _Color("Color Tint",Color) = (1, 1, 1, 1)
+        _Color("Main Color",Color) = (1, 1, 1, 1)
         // 主纹理
         _MainTex("Main Tex",2D) = "white" {}
         // 用于控制漫反射色调的渐变纹理

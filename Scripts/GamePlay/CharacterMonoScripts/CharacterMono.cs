@@ -42,14 +42,43 @@ public class CharacterMono : MonoBehaviour {
 
     //======================================
     // 委托集合
+
+    /// <summary>
+    /// 当单位身上的状态改变时，触发的事件
+    /// </summary>
+    /// <param name="battleState">新状态</param>
     public delegate void BattleStatusChangedHandler(BattleState battleState);
 
+    /// <summary>
+    /// 当单位进行攻击时，或者遭受伤害时，触发的事件
+    /// </summary>
+    /// <param name="Attacker">攻击者</param>
+    /// <param name="Suffered">遭受伤害者</param>
+    /// <param name="Damage">此次攻击造成的伤害</param>
+    public delegate void AttackHanlder(CharacterMono Attacker,CharacterMono Suffered,Damage damage);
+
+    /// <summary>
+    /// 当单位进行施法时，或者遭受某个施法的单位指向时，触发的事件
+    /// </summary>
+    /// <param name="Spller">施法者</param>
+    /// <param name="Target">法术指定目标</param>
+    /// <param name="damage">此次造成的伤害（为负则为治疗）</param>
+    /// <param name="activeSkill">此次施法释放的主动技能（被动技能不算把？）</param>
+    public delegate void SpellHanlder(CharacterMono Spller, CharacterMono Target, Damage damage,ActiveSkill activeSkill);
     //=====================================
     // 事件集合
 
     // 当单位身上增加新的状态(如中毒状态)时,触发的事件
     public event BattleStatusChangedHandler OnAddNewBattleStatus;
     public event BattleStatusChangedHandler OnRemoveBattleStatus;
+
+    // 当单位攻击、遭受伤害时，触发的事件
+    public event AttackHanlder OnAttack;        // 当攻击时
+    public event AttackHanlder OnSuffered;      // 当单位遭受攻击时
+
+    // 当单位施法时，触发的事件
+    public event SpellHanlder OnSpell;
+
     #endregion
 
     // 当前人物的动画组件以及寻路组件
@@ -152,6 +181,7 @@ public class CharacterMono : MonoBehaviour {
             intelligencePower = 10,
             mainAttribute = HeroMainAttribute.AGI,
             skillPointGrowthPoint = 1,
+            turningSpeed = 5,
             activeSkills = new List<ActiveSkill> {
                 new PointingSkill{
                     BaseDamage = 300,
@@ -174,14 +204,15 @@ public class CharacterMono : MonoBehaviour {
                     SelfEffect = null,
                     TargetEffect = null,
                     SpellDistance = 4f,
-                    CD = 5f,
+                    CD = 0.5f,
                     SkillName = "W技能",
                     IconPath = "00041",
                     LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    SkillLevel = 6
+                    SkillLevel = 6,
+                    SkillInfluenceRadius = 10
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
@@ -224,6 +255,8 @@ public class CharacterMono : MonoBehaviour {
         Owner = new Player() {
             Money = 1000
         };
+        //HaloSkill haloSkill = new HaloSkill() {SkillLevel = 1,inflenceRadius = 10,targetFaction=UnitFaction.Red };
+        //haloSkill.Execute(this);
     }
     //================================================
     #endregion
@@ -337,9 +370,7 @@ public class CharacterMono : MonoBehaviour {
     /// /// <param name="forwardDistance">跟目标的距离</param>
     /// <returns></returns>
     public bool Chasing(Transform targetTransform,float forwardDistance) {
-        NavMeshHit navMeshHit;
-        agent.FindClosestEdge(out navMeshHit);
-        //Debug.Log("Name:"+name+ " navMeshHit:" + navMeshHit.mask);
+
         // 获得当前单位与目标单位的距离
         float distance = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
@@ -354,9 +385,23 @@ public class CharacterMono : MonoBehaviour {
             animator.SetBool("isRun", true);
             agent.isStopped = false;
             agent.SetDestination(targetTransform.position);
-
             return false;
         }
+
+    }
+
+    /// <summary>
+    /// 判断目标是否处于当前单位的正面
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public bool IsTargetFront(CharacterMono target) {
+        // 获得从当前单位到目标单位的方向向量
+        Vector3 direction = target.transform.position - transform.position;
+        if (Vector3.Angle(transform.forward, direction) <= 30f)
+            return true;
+        else
+            return false;
     }
 
     /// <summary>
@@ -370,6 +415,14 @@ public class CharacterMono : MonoBehaviour {
         if (!target.IsCanBeAttack()) {
             ResetAttackStateAnimator();
             arroundEnemies.Remove(target);
+            return false;
+        }
+
+        // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击
+        if (!IsTargetFront(target)) {
+
+            transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.LookRotation(target.transform.position - transform.position),characterModel.turningSpeed*Time.deltaTime);
+
             return false;
         }
 
@@ -403,6 +456,7 @@ public class CharacterMono : MonoBehaviour {
 
                 target.characterModel.Damaged(damage,this);
 
+                #region 测试，使敌方进入中毒状态
                 // 测试，使敌方进入中毒状态
                 target.AddBattleState(new PoisoningState{
                     damage = new Damage(40, 10),
@@ -412,6 +466,10 @@ public class CharacterMono : MonoBehaviour {
                     iconPath = "00046",
                     description = "中毒技能,每秒中减少20点生命值",
                 });
+                #endregion
+
+                // 近战攻击事件，向所有订阅近战攻击的观察者发送消息
+                if (OnAttack != null) OnAttack(this,target,damage);
 
             } else {
                 Transform shotPosition = transform.Find("shootPosition");
@@ -704,6 +762,7 @@ public class CharacterMono : MonoBehaviour {
 
     #endregion
 
+    #region 绑定UI，这份代码需要重构，因为UI和人物耦合了
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
     protected virtual void Bind() {
@@ -732,4 +791,5 @@ public class CharacterMono : MonoBehaviour {
         if (itemViewModels.Count >= index)
             ItemViewModels[index - 1].iconPath.Value = newItemPath;
     }
+    #endregion
 }

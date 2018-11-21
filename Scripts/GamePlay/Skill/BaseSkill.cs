@@ -37,7 +37,7 @@ public class BaseSkill {
         }
     }
 
-    public int SkillLevel {
+    public virtual int SkillLevel {
         get {
             return skillLevel;
         }

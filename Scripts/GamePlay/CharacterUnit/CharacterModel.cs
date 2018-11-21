@@ -118,6 +118,9 @@ public class CharacterModel : IFOVUnit{
 
     #endregion
 
+    #region 单位音频属性
+    public string attackAudioClip;
+    #endregion
 
     #region 单位用于战争迷雾的属性
     //=====================================

@@ -57,7 +57,7 @@ class StoreView : MonoBehaviour{
     /// 在显示的同时，根据当前的分类category来显示所有物品
     /// </summary>
     public void Reveal() {
-        (transform as RectTransform).DOSizeDelta(new Vector2(305.6f, (transform as RectTransform).sizeDelta.y),1f);
+        (transform as RectTransform).DOSizeDelta(new Vector2(250f, (transform as RectTransform).sizeDelta.y),1f);
         canvasGroup.DOFade(1,1f);
         //transform.localScale = Vector3.one;
 
@@ -176,7 +176,7 @@ class StoreView : MonoBehaviour{
             if (canvasGroup.alpha == 1) {
                 // 商店处于开启状态,点击按钮进行收缩
                 Hide();
-                OnOrOffButtonText.text = "<<< 展开";
+                OnOrOffButtonText.text = "<<< 展开商店";
             } else if (canvasGroup.alpha == 0) {
                 // 商店处于关闭状态,点击按钮进行展开
                 Reveal();
