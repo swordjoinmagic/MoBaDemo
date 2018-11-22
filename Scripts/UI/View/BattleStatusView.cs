@@ -32,7 +32,6 @@ public class BattleStatusView : MonoBehaviour{
         // -1表示此状态的持续时间为永久
         if(battleState != null && battleState.duration != -1)
             coolDownBar.fillAmount = 1f - ((Time.time - battleState.FirsstEnterTime) / battleState.duration);
-        if (battleState!=null && battleState.IsStateDying) Destroy(this.gameObject);
     }
 
 }

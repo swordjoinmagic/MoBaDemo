@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
+using UnityEngine.UI;
 
 class Util {
     /// <summary>
@@ -40,5 +38,34 @@ class Util {
 
             yield return new WaitForFixedUpdate();
         }
+    }
+
+    /// <summary>
+    /// 将一个UI控件的宽度缓慢变化到另一个值（另一个UI控件的宽度）
+    /// </summary>
+    /// <param name="hpImageRectTransform">阈值，当dataTransform的宽度下降\增加到此值后，协程停止</param>
+    /// <param name="dataRectTransform">宽度要下降的UI控件</param>
+    /// <param name="maxImageHeight">UI控件的最大高度</param>
+    /// <param name="maxImageWidth">UI控件的最大宽度</param>
+    /// <param name="maxData">最大变化量</param>
+    /// <returns></returns>
+    public static IEnumerator SlowDown(RectTransform hpImageRectTransform, 
+        RectTransform dataRectTransform, float maxImageHeight) {
+
+        // 当dataRectTransform的宽度小于hpImageRectTransform时，协程停止
+        while (Mathf.Abs(dataRectTransform.sizeDelta.x - hpImageRectTransform.sizeDelta.x)>0.1f) {
+
+            Debug.Log("扣血协程迭代中:"+ Mathf.Abs(dataRectTransform.sizeDelta.x - hpImageRectTransform.sizeDelta.x) );
+
+            // 每次变化的量，每次按变化的2%来递减\增(最小变化量为0.1)
+            float step = (hpImageRectTransform.sizeDelta.x - dataRectTransform.sizeDelta.x)*0.02f;
+
+            // 血条变化
+            dataRectTransform.sizeDelta = new Vector2(dataRectTransform.sizeDelta.x+step, maxImageHeight);
+
+            yield return new WaitForFixedUpdate();
+        }
+
+        Debug.Log("协程结束");
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class BattleStatusListView : MonoBehaviour{
+public class BattleStatusListView : MonoBehaviour {
     public HeroMono heroMono;
 
     //=======================================
@@ -19,24 +19,23 @@ public class BattleStatusListView : MonoBehaviour{
     private BattleStatusTipsView battleStatusTipsView = null;
     private Camera UICamera;
     private Canvas canvas;
+    private Dictionary<BattleState, BattleStatusView> battleStatusViewDict = new Dictionary<BattleState, BattleStatusView>();
 
     /// <summary>
     /// 当单位的状态增加时,使用的函数
     /// </summary>
     private void OnAddBattleStatus(BattleState battleState) {
-
-        // 因为战斗状态视图的生命周期由它所表示的状态决定(也就是说状态出现,视图出现,状态消失,视图销毁)
-        // 所以这里不将状态视图添加进列表进行管理
-        BattleStatusView statusView = GameObject.Instantiate<BattleStatusView>(battleStatusPrefab,this.transform);
+        BattleStatusView statusView = GameObject.Instantiate<BattleStatusView>(battleStatusPrefab, this.transform);
+        battleStatusViewDict[battleState] = statusView;
         statusView.BattleState = battleState;
 
         // 鼠标进入事件
         EventTrigger.Entry onMouseEnter = new EventTrigger.Entry();
         onMouseEnter.eventID = EventTriggerType.PointerEnter;
-        onMouseEnter.callback.AddListener((eventData)=> {
+        onMouseEnter.callback.AddListener((eventData) => {
             // 显示状态视图
-            if (battleStatusTipsView==null) {
-                battleStatusTipsView = GameObject.Instantiate<BattleStatusTipsView>(battleStatusTipsViewPrefab,canvas.transform);
+            if (battleStatusTipsView == null) {
+                battleStatusTipsView = GameObject.Instantiate<BattleStatusTipsView>(battleStatusTipsViewPrefab, canvas.transform);
             }
             Vector3 vector3 = UICamera.ScreenToWorldPoint(Input.mousePosition);
             vector3.z = 100;
@@ -61,8 +60,33 @@ public class BattleStatusListView : MonoBehaviour{
         eventTrigger.triggers.Add(onMouseExit);
     }
 
+    /// <summary>
+    /// 移除某个状态时，触发的函数
+    /// </summary>
+    /// <param name="battleState"></param>
+    private void OnRemoveBattleStatus(BattleState battleState) {
+        // 第一步，判断状态提示视图是否不为空，且目前显示的状态是否是要移除的状态
+        if (battleStatusTipsView != null) {
+            if (battleState == battleStatusTipsView.BattleState) {
+                // 将状态提示视图隐藏
+                battleStatusTipsView.Hide();
+            }
+        }
+
+        // 第二步，找到要被移除的状态的状态视图，从Dictionary中移除他，并Destroy他
+        BattleStatusView view;
+        battleStatusViewDict.TryGetValue(battleState,out view);
+        if (view != null) {
+            // 从dict中移除他
+            battleStatusViewDict.Remove(battleState);
+            // 销毁视图
+            Destroy(view.gameObject);
+        }
+    }
+
     private void Bind() {
         heroMono.OnAddNewBattleStatus += OnAddBattleStatus;
+        heroMono.OnRemoveBattleStatus += OnRemoveBattleStatus;
     }
 
     private void Start() {

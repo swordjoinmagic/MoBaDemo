@@ -211,6 +211,8 @@ public class CharacterMono : MonoBehaviour {
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    BackgroundDescription = "aaaaaaaaaaaaaaa",
+                    ShortDescription = "bbbbbbbbbbbbbbbbbbbbbbbbbb",
                     SkillLevel = 6,
                     SkillInfluenceRadius = 10
                 },
@@ -255,8 +257,7 @@ public class CharacterMono : MonoBehaviour {
         Owner = new Player() {
             Money = 1000
         };
-        //HaloSkill haloSkill = new HaloSkill() {SkillLevel = 1,inflenceRadius = 10,targetFaction=UnitFaction.Red };
-        //haloSkill.Execute(this);
+        
     }
     //================================================
     #endregion
@@ -292,6 +293,7 @@ public class CharacterMono : MonoBehaviour {
         // 与ViewModel双向绑定
         Bind();
 
+        #region 对所有单位的测试
         //================================================
         // 测试
         if (CompareTag("Player")) {
@@ -333,6 +335,10 @@ public class CharacterMono : MonoBehaviour {
             };
             characterModel.itemGrids[1].ItemCount = 5;
         }
+
+        //HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red };
+        //haloSkill.Execute(this);
+        #endregion
     }
 
     public virtual void Update() {

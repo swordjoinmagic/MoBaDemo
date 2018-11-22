@@ -11,6 +11,9 @@ public class HaloSkill : PassiveSkill{
     public float inflenceRadius;
     public UnitFaction targetFaction;
 
+    // 给单位附加的状态
+    private BattleState additiveState;
+
     public override PassiveSkillTriggerType TiggerType {
         get {
             return PassiveSkillTriggerType.Halo;
@@ -32,11 +35,21 @@ public class HaloSkill : PassiveSkill{
         haloTrigger.transform.localPosition = Vector3.zero;
         HaloTrigger Trigger = haloTrigger.AddComponent<HaloTrigger>();
         SphereCollider sphereCollider = haloTrigger.AddComponent<SphereCollider>();
+        sphereCollider.isTrigger = true;
         Trigger.TiggerRadius = inflenceRadius;
         Trigger.UnitType = targetFaction;
         sphereCollider.radius = inflenceRadius;
         Trigger.HaloSkillExecute += Execute;
+        Trigger.HaloSkillCancelExecute += CancelExecute;
 
+        additiveState = (new PoisoningState {
+            damage = new Damage(30, 0),
+            description = "中毒光环,每秒-30生命值",
+            duration = -1,
+            iconPath = "0046",
+            name = "中毒光环",
+            isStackable = false
+        });
         Debug.Log("Finish");
     }
 
@@ -51,17 +64,11 @@ public class HaloSkill : PassiveSkill{
         Debug.Log("Enter  Execute(CharacterMono speller, CharacterMono target)");
 
         // 给目标附加一个持续时间为永久的中毒状态
-        target.AddBattleState(new PoisoningState {
-            damage = new Damage(30,0),
-            description = "中毒光环,每秒-30生命值",
-            duration = -1,
-            iconPath = "0042",
-            name = "中毒光环",
-            isStackable = false
-        });
+        target.AddBattleState(additiveState);
+
     }
     public void CancelExecute(CharacterMono speller, CharacterMono target) {
-
+        target.RemoveBattleState(additiveState);
     }
 }
 

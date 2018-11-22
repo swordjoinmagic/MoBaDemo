@@ -21,6 +21,7 @@ class HPView : UnityGuiView<HPViewModel>{
     public int hpImageHeight;
     public int mpImageHeight;
 
+
     protected override void OnInitialize() {
         base.OnInitialize();
 
@@ -66,20 +67,23 @@ class HPView : UnityGuiView<HPViewModel>{
 
     public void OnHpChanged(int oldValue,int newValue) {
         hpText.text = string.Format("{0}/{1}",newValue,BindingContext.maxHp.Value);
-        //Debug.Log("新的HP是:"+newValue);
-        // 计算当前血量和新血量的差值
-        int different = Math.Abs(oldValue-newValue);
+
+        //// 计算当前血量和新血量的差值
+        //int different = Math.Abs(oldValue-newValue);
+        float width = ((float)newValue / (float)BindingContext.maxHp.Value) * hpImageMaxWidth;
+        hpImage.sizeDelta = new Vector2(width, hpImage.sizeDelta.y);
+
 
         // 播放扣血动画
-        StartCoroutine(
-            SlowDown(different:different,
-                     nowData:oldValue,
-                     newData:newValue,
-                     maxData:BindingContext.maxHp.Value,
-                     dataRectTransform:hpImage,
-                     maxImageHeight:hpImageHeight,
-                     maxImageWidth:hpImageMaxWidth)
-       );
+       // StartCoroutine(
+       //     SlowDown(different:different,
+       //              nowData:oldValue,
+       //              newData:newValue,
+       //              maxData:BindingContext.maxHp.Value,
+       //              dataRectTransform:hpImage,
+       //              maxImageHeight:hpImageHeight,
+       //              maxImageWidth:hpImageMaxWidth)
+       //);
     }
 
     public void OnMpValueChanged(int oldValue,int newValue) {

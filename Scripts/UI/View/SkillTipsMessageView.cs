@@ -63,42 +63,60 @@ public class SkillTipsMessageView : UnityGuiView<SkillPanelViewModel> {
 
     // 技能描述
     private void OnDescriptinoChanged(string oldDescription, string newDescription) {
-        int cows = 0;
+        //int cows = 0;
         longDescriptionText.text = "技能描述：\n" + newDescription;
 
-        if (newDescription == null || newDescription == "")
-            cows = 0;
-        else
-            cows = newDescription.Length / 15 + 2;
+        //Canvas.ForceUpdateCanvases();
 
-        SkillDescriptionPanel.sizeDelta = new Vector2(
-            SkillDescriptionPanel.sizeDelta.x,
-            12.5f * cows
-        );
-        HeightAdaptive();
+        //SkillDescriptionPanel.sizeDelta = new Vector2(
+        //    SkillDescriptionPanel.sizeDelta.x,
+        //    (longDescriptionText.transform as RectTransform).sizeDelta.y+10);
+
+        //if (newDescription == null || newDescription == "")
+        //    cows = 0;
+        //else
+        //    cows = newDescription.Length / 15 + 2;
+
+        //SkillDescriptionPanel.sizeDelta = new Vector2(
+        //    SkillDescriptionPanel.sizeDelta.x,
+        //    12.5f * cows
+        //);
+        //HeightAdaptive();
     }
 
     // 短技能描述
     private void OnShortDescriptionChanged(string oldDescription,string newDescription) {
         shortDescriptionText.text = newDescription;
 
-        int cows = newDescription.Length / 15 + 1;
-        SkillShortDescriptionPanel.sizeDelta = new Vector2(
-            SkillShortDescriptionPanel.sizeDelta.x,
-            12.5f * cows
-        );
-        HeightAdaptive();
+        //Canvas.ForceUpdateCanvases();
+
+        //SkillShortDescriptionPanel.sizeDelta = new Vector2(
+        //    SkillShortDescriptionPanel.sizeDelta.x,
+        //    (shortDescriptionText.transform as RectTransform).sizeDelta.y+10);
+
+        //int cows = newDescription.Length / 15 + 1;
+        //SkillShortDescriptionPanel.sizeDelta = new Vector2(
+        //    SkillShortDescriptionPanel.sizeDelta.x,
+        //    12.5f * cows
+        //);
+        //HeightAdaptive();
     }
 
     // 技能伤害,施加状态,作用目标等描述
     private void OnTargetDescriptionChanged(string oldDescription, string newDescription) {
         targetDescriptionText.text = newDescription;
 
-        // 进行高度自适应，根据text的\n的数量计算Panel的高度
-        int cows = newDescription.FindAnyCharCount('\n')+1;
-        SkillTargetDescriptionPanel.sizeDelta = new Vector2(SkillTargetDescriptionPanel.sizeDelta.x,12.5f*cows);
+        //Canvas.ForceUpdateCanvases();
 
-        HeightAdaptive();
+        //SkillTargetDescriptionPanel.sizeDelta = new Vector2(
+        //    SkillTargetDescriptionPanel.sizeDelta.x,
+        //    (targetDescriptionText.transform as RectTransform).sizeDelta.y+10);
+
+        //// 进行高度自适应，根据text的\n的数量计算Panel的高度
+        //int cows = newDescription.FindAnyCharCount('\n')+1;
+        //SkillTargetDescriptionPanel.sizeDelta = new Vector2(SkillTargetDescriptionPanel.sizeDelta.x,12.5f*cows);
+
+        //HeightAdaptive();
     }
 
     // 技能施法范围描述

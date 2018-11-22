@@ -44,6 +44,7 @@ public class HaloTrigger : MonoBehaviour{
 
     public delegate void HaloSkillExecuteHandler(CharacterMono speller, CharacterMono target);
     public event HaloSkillExecuteHandler HaloSkillExecute;
+    public event HaloSkillExecuteHandler HaloSkillCancelExecute;
 
     private void OnTriggerEnter(Collider other) {
         Debug.Log("单位进入了触发器");
@@ -60,6 +61,7 @@ public class HaloTrigger : MonoBehaviour{
         CharacterMono target = other.GetComponent<CharacterMono>();
         if (target != null && target.characterModel.unitFaction == UnitType) {
             TargetList.Remove(target);
+            if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(null,target);
         }
     }
 }

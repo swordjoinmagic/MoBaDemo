@@ -18,6 +18,13 @@ public class BattleStatusTipsView : MonoBehaviour{
     public Text statusDescriptionText;
     private CanvasGroup canvasGroup;
     private EventTrigger eventTrigger;
+    private BattleState battleState;
+
+    public BattleState BattleState {
+        get {
+            return battleState;
+        }
+    }
 
     private void Awake() {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -28,6 +35,8 @@ public class BattleStatusTipsView : MonoBehaviour{
     /// 显示该窗口的方法
     /// </summary>
     public void Reveal(BattleState battleState) {
+        this.battleState = battleState;
+
         transform.localScale = Vector3.one;
         canvasGroup.alpha = 1;
 

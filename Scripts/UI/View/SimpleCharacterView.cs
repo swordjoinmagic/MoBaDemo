@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using System.Text;
 using UnityEngine;
@@ -14,9 +14,12 @@ public class SimpleCharacterView : UnityGuiView<SimpleCharacterViewModel>{
     //=============================
     // 此View管理的控件
     public RectTransform hpImage;
+    public RectTransform slowDownHpImage;
     public RectTransform maxRectTransform;
     public Text nameText;
 
+
+    private Coroutine slowDownHp = null;
 
     protected override void OnInitialize() {
         base.OnInitialize();
@@ -28,9 +31,14 @@ public class SimpleCharacterView : UnityGuiView<SimpleCharacterViewModel>{
 
 
     private void OnHpValueChanged(int oldHp,int newHp) {
-        StartCoroutine(
-            Util.SlowDown(Math.Abs(oldHp-newHp),oldHp,newHp,
-            BindingContext.maxHp.Value,hpImage, (int)(maxRectTransform.sizeDelta.y), (int)(maxRectTransform.sizeDelta.x))
+        float width = ((float)newHp / (float)BindingContext.maxHp.Value) * maxRectTransform.sizeDelta.x;
+        hpImage.sizeDelta = new Vector2(width, hpImage.sizeDelta.y);
+
+        if (slowDownHp != null) {
+            StopCoroutine(slowDownHp);
+        }
+        slowDownHp = StartCoroutine(
+            Util.SlowDown(hpImage, slowDownHpImage, maxRectTransform.sizeDelta.y)
         );
     }
     private void OnNameValueChanged(string oldName,string newName) {
