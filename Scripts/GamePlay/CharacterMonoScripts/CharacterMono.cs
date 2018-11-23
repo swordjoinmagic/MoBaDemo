@@ -257,7 +257,6 @@ public class CharacterMono : MonoBehaviour {
         Owner = new Player() {
             Money = 1000
         };
-        
     }
     //================================================
     #endregion
@@ -336,8 +335,8 @@ public class CharacterMono : MonoBehaviour {
             characterModel.itemGrids[1].ItemCount = 5;
         }
 
-        //HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red };
-        //haloSkill.Execute(this);
+        HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red };
+        haloSkill.Execute(this);
         #endregion
     }
 

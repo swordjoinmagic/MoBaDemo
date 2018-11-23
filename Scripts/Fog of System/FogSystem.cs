@@ -38,7 +38,7 @@ public class FogSystem : MonoBehaviour {
     public List<Transform> players = new List<Transform>();
     public List<CharacterMono> characterMonos = new List<CharacterMono>();
     public List<Vector3> playersPositions = new List<Vector3>();
-    private List<IFOVUnit> fOVUnits = new List<IFOVUnit>();
+    public List<IFOVUnit> fOVUnits = new List<IFOVUnit>();
 
     public Image image;
     

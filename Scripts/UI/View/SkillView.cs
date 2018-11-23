@@ -84,11 +84,10 @@ class SkillView : MonoBehaviour{
                     skillTipsMessageView.BindingContext = new SkillPanelViewModel();
                 }
 
-                // 获得当前鼠标所在位置在UICamera摄像机下的世界坐标
-                Vector3 vector3 = UICamera.ScreenToWorldPoint(Input.mousePosition);
-                vector3.z = 100;
                 // 设置提示窗口出现位置
-                skillTipsMessageView.transform.position = vector3;
+                skillTipsMessageView.transform.SetParent(skillPanelView.transform);
+                (skillTipsMessageView.transform as RectTransform).anchoredPosition = new Vector2((skillPanelView.transform as RectTransform).sizeDelta.x/2, (skillPanelView.transform as RectTransform).sizeDelta.y/2);
+                skillTipsMessageView.transform.SetParent(canvas.transform);
 
                 skillTipsMessageView.BindingContext.Modify(baseSkill);
                 skillTipsMessageView.Reveal();

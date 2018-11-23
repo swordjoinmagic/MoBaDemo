@@ -55,7 +55,7 @@ class Util {
         // 当dataRectTransform的宽度小于hpImageRectTransform时，协程停止
         while (Mathf.Abs(dataRectTransform.sizeDelta.x - hpImageRectTransform.sizeDelta.x)>0.1f) {
 
-            Debug.Log("扣血协程迭代中:"+ Mathf.Abs(dataRectTransform.sizeDelta.x - hpImageRectTransform.sizeDelta.x) );
+            //Debug.Log("扣血协程迭代中:"+ Mathf.Abs(dataRectTransform.sizeDelta.x - hpImageRectTransform.sizeDelta.x) );
 
             // 每次变化的量，每次按变化的2%来递减\增(最小变化量为0.1)
             float step = (hpImageRectTransform.sizeDelta.x - dataRectTransform.sizeDelta.x)*0.02f;
@@ -66,6 +66,6 @@ class Util {
             yield return new WaitForFixedUpdate();
         }
 
-        Debug.Log("协程结束");
+        //Debug.Log("协程结束");
     }
 }

@@ -87,7 +87,11 @@ public class GamePlayManager : MonoBehaviour{
                     // 设置战争迷雾
                     FogSystem.Instace.AddListData<Transform>(soliderObject.transform, FogSystem.Instace.players);
                     FogSystem.Instace.AddListData<Vector3>(soliderObject.transform.position,FogSystem.Instace.playersPositions);
+                    FogSystem.Instace.AddListData<IFOVUnit>(soliderObject.GetComponent<CharacterMono>().characterModel, FogSystem.Instace.fOVUnits);
+                    FogSystem.Instace.AddListData<CharacterMono>(soliderObject.GetComponent<CharacterMono>(), FogSystem.Instace.characterMonos);
+
                 }
+
                 a++;
             }
 
@@ -113,8 +117,11 @@ public class GamePlayManager : MonoBehaviour{
                     //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersRed);
 
                     // 设置战争迷雾
-                    FogSystem.Instace.AddListData<Transform>(soliderObject.transform,FogSystem.Instace.players);
+                    // 设置战争迷雾
+                    FogSystem.Instace.AddListData<Transform>(soliderObject.transform, FogSystem.Instace.players);
                     FogSystem.Instace.AddListData<Vector3>(soliderObject.transform.position, FogSystem.Instace.playersPositions);
+                    FogSystem.Instace.AddListData<IFOVUnit>(soliderObject.GetComponent<CharacterMono>().characterModel, FogSystem.Instace.fOVUnits);
+                    FogSystem.Instace.AddListData<CharacterMono>(soliderObject.GetComponent<CharacterMono>(), FogSystem.Instace.characterMonos);
                 }
                 b++;
             }

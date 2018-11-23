@@ -54,12 +54,10 @@ public class ItemListView : MonoBehaviour{
                     itemTipsView.BindingContext = new ItemViewModel();
                 }
 
-                // 获得当前鼠标所在位置在UICamera摄像机下的世界坐标
-                Vector3 vector3 = UICamera.ScreenToWorldPoint(Input.mousePosition);
-                vector3.z = 100;
                 // 设置提示窗口出现位置
-                itemTipsView.transform.position = vector3;
-
+                itemTipsView.transform.SetParent(itemPanelView.transform);
+                (itemTipsView.transform as RectTransform).anchoredPosition = new Vector2((itemPanelView.transform as RectTransform).sizeDelta.x / 2, (itemPanelView.transform as RectTransform).sizeDelta.y / 2);
+                itemTipsView.transform.SetParent(canvas.transform);
 
                 itemTipsView.BindingContext.Modify(itemGrid);
                 itemTipsView.Reveal();

@@ -23,6 +23,8 @@ public class ShowCharacterUI : MonoBehaviour {
 
     private void Start() {
         character = GetComponent<CharacterMono>();
+        Canvas = GameObject.FindObjectOfType<Canvas>().transform as RectTransform;
+        UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
     }
 
     private void OnDestroy() {
