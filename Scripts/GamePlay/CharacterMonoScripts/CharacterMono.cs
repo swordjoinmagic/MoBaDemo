@@ -215,7 +215,7 @@ public class CharacterMono : MonoBehaviour {
                     BackgroundDescription = "aaaaaaaaaaaaaaa",
                     ShortDescription = "bbbbbbbbbbbbbbbbbbbbbbbbbb",
                     SkillLevel = 6,
-                    SkillInfluenceRadius = 3,
+                    SkillInfluenceRadius = 5,
                     IsMustDesignation = true
                 },
                 new PointingSkill{

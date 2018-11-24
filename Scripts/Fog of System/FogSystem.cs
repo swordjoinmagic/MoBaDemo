@@ -135,7 +135,7 @@ public class FogSystem : MonoBehaviour {
         }
         #endregion
 
-        Debug.Log("添加完成 逻辑层物体有："+LogicalLayerObjects.Count()+" 表示层物体有："+PresentationLayerObjects.Count());
+        //Debug.Log("添加完成 逻辑层物体有："+LogicalLayerObjects.Count()+" 表示层物体有："+PresentationLayerObjects.Count());
         
 
         textureSizeSqr = textureSize * textureSize;
@@ -176,7 +176,7 @@ public class FogSystem : MonoBehaviour {
         thread = new Thread(OnUpdate);
         thread.Start();
 
-        Debug.Log("战争迷雾初始化完成");
+        //Debug.Log("战争迷雾初始化完成");
     }
 
     private void Update() {
@@ -266,17 +266,17 @@ public class FogSystem : MonoBehaviour {
         //}
         #endregion
 
-        Debug.Log("更新逻辑层中，逻辑层Count:"+LogicalLayerObjects.Count());
+        //Debug.Log("更新逻辑层中，逻辑层Count:"+LogicalLayerObjects.Count());
         for (int i = 0; i < LogicalLayerObjects.Count();) {
-            Debug.Log("更新第"+i+"个单位：");
+            //Debug.Log("更新第"+i+"个单位：");
             if (LogicalLayerObjects[i] != null) {
-                Debug.Log("判断第"+i+"个单位是否可见");
+                //Debug.Log("判断第"+i+"个单位是否可见");
                 if (IsUnitVisible(LogicalLayerObjects[i].characterModel)) {
                     LogicalLayerObjects[i].characterModel.IsVisible = true;
                 } else {
                     LogicalLayerObjects[i].characterModel.IsVisible = false;
                 }
-                Debug.Log("第"+i+"个单位判断完成");
+                //Debug.Log("第"+i+"个单位判断完成");
                 i++;
             } else {
                 RemoveFOVUnit(i);
@@ -311,27 +311,27 @@ public class FogSystem : MonoBehaviour {
         Thread.Sleep(1000);
         while (isthreadStart) {
             if (threadStatus == FogBlendingThreadStatus.Update) {
-                Debug.Log("正在更新战争迷雾");
+                //Debug.Log("正在更新战争迷雾");
 
                 // 战争迷雾表示层
                 ClearVisibledRegion();
                 RevalMap();
                 GeneratePassedRegion();
-                Debug.Log("更新表示层完成");
+                //Debug.Log("更新表示层完成");
 
                 // 战争迷雾逻辑层
                 UpdateUnitVisibleStatus();
-                Debug.Log("更新逻辑层");
+                //Debug.Log("更新逻辑层");
 
                 // 更新人物在小地图上的点
                 ClearMinMap();
                 DrawMinMap();
-                Debug.Log("更新小地图");
+                //Debug.Log("更新小地图");
 
                 threadStatus = FogBlendingThreadStatus.Finished;
             }
             Thread.Sleep(100);
-            Debug.Log("战争迷雾休眠中");
+            //Debug.Log("战争迷雾休眠中");
         }
     }
 

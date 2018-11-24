@@ -36,11 +36,12 @@ public class MouseCursorChanged : MonoBehaviour {
                     position.y = 3f;
                     if (skillCircleInflence == null) {
                         skillCircleInflence = GameObject.Instantiate<Projector>(skillCircleInflencePrefabs, position, skillCircleInflencePrefabs.transform.rotation);
-                        skillCircleInflence.orthographicSize = activeSkill.SkillInfluenceRadius;
                     } else {
                         skillCircleInflence.gameObject.SetActive(true);
                         skillCircleInflence.transform.position = position;
                     }
+                    skillCircleInflence.orthographicSize = activeSkill.SkillInfluenceRadius;
+
                 }
             }
         } else {
