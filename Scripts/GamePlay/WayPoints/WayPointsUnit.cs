@@ -80,14 +80,14 @@ public class WayPointsUnit {
         int nearestPointIndex = nowIndex;
         for (int i = 0; i < wayPoints.Count; i++) {
             float tempDistance = Vector3.Distance(position,wayPoints[i]);
-            Debug.Log("TempDistance:"+tempDistance+" i:"+i);
+            //Debug.Log("TempDistance:"+tempDistance+" i:"+i);
             if (tempDistance<distance) {
                 distance = tempDistance;
                 nearestPointIndex = i;
             }
             
         }
-        Debug.Log("最近的点是："+nearestPointIndex+" 距离是："+distance);
+        //Debug.Log("最近的点是："+nearestPointIndex+" 距离是："+distance);
 
         // 设置当前路径点
         nowIndex = nearestPointIndex;

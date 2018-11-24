@@ -96,7 +96,7 @@ public class MouseIconManager : MonoBehaviour {
                 Cursor.SetCursor(attackCursorTexture, hotSpot, cursorMode);
                 break;
             case MouseState.Spell:
-                Cursor.SetCursor(spellCursorTexture, hotSpot, cursorMode);
+                Cursor.SetCursor(spellCursorTexture, new Vector2(spellCursorTexture.height/2,spellCursorTexture.width/2), cursorMode);
                 break;
             case MouseState.Up:
                 Cursor.SetCursor(RotateArrow(90), hotSpot, cursorMode);

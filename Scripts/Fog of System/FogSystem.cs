@@ -34,27 +34,43 @@ public class FogSystem : MonoBehaviour {
     private Texture2D texture;
     private Color32[] buffer0;
 
-    // 用于测试的视野单位
-    public List<Transform> players = new List<Transform>();
-    public List<CharacterMono> characterMonos = new List<CharacterMono>();
-    public List<Vector3> playersPositions = new List<Vector3>();
-    public List<IFOVUnit> fOVUnits = new List<IFOVUnit>();
+    #region 待重构~ TODO~
+    //// 用于测试的视野单位
+    //public List<Transform> players = new List<Transform>();
+    //public List<CharacterMono> characterMonos = new List<CharacterMono>();
 
-    public Image image;
-    
+    //// 用于更新战争迷雾的显示层
+    //public List<Vector3> playersPositions = new List<Vector3>();
+
+    //// 用于更新战争迷雾的逻辑层，这个数组
+    //public List<IFOVUnit> fOVUnits = new List<IFOVUnit>();
+    #endregion
+
+    /// <summary>
+    /// 逻辑层物体
+    /// </summary>
+    private List<CharacterMono> LogicalLayerObjects = new List<CharacterMono>();
+
+    /// <summary>
+    /// 表示层物体
+    /// </summary>
+    private List<IFOVUnit> PresentationLayerObjects = new List<IFOVUnit>();
+
     // 战争迷雾
     public GameObject fog;
 
     // 线程是否开始
     public bool isthreadStart = false;
     private Thread thread;
-    private Thread thread2;
 
+    #region 小地图属性
     //=====================================
     // 小地图部分
     private Color32[] minMapBuffer;
     private Texture2D minMapTexture;
-    public Image minMapMask;
+    public Image minMapCharacterMask;
+    public Image minMap;
+    #endregion
 
     public enum FogBlendingThreadStatus {
         Update,
@@ -63,22 +79,67 @@ public class FogSystem : MonoBehaviour {
 
     private FogBlendingThreadStatus threadStatus = FogBlendingThreadStatus.Update;
 
-    public void RemoveListData<T>(int index, List<T> list) {
-        lock (list) {
-            list.RemoveAt(index);
+    #region 待重构
+    //public void RemoveListData<T>(int index, List<T> list) {
+    //    lock (list) {
+    //        list.RemoveAt(index);
+    //    }
+    //}
+    //public void AddListData<T>(T value, List<T> list) {
+    //    lock (list) {
+    //        list.Add(value);
+    //    }
+    //}
+    #endregion
+
+    #region 视野体的增加和移除
+    /// <summary>
+    /// 移除视野体
+    /// </summary>
+    /// <param name="i"></param>
+    public void RemoveFOVUnit(int i) {
+        lock(LogicalLayerObjects){
+            IFOVUnit fOVUnit = LogicalLayerObjects[i].characterModel;
+            // 删除逻辑层物体
+            LogicalLayerObjects.RemoveAt(i);
+            // 同步删除表示层物体
+            lock (PresentationLayerObjects) {
+                PresentationLayerObjects.Remove(fOVUnit);
+            }
         }
     }
-    public void AddListData<T>(T value,List<T>list) {
-        lock (list) {
-            list.Add(value);
+
+    /// <summary>
+    /// 增加视野体
+    /// </summary>
+    /// <param name="characterMono"></param>
+    public void AddFOVUnit(CharacterMono characterMono) {
+        lock (LogicalLayerObjects) {
+            LogicalLayerObjects.Add(characterMono);
+            lock(PresentationLayerObjects){
+                PresentationLayerObjects.Add(characterMono.characterModel);
+            }
         }
     }
+    #endregion
+
+    #region 测试
+    public List<CharacterMono> TestCharacterMonos = new List<CharacterMono>();
+    #endregion
 
     private void Start() {
 
+        #region 根据测试数组，将物体加入战争迷雾
+        foreach (var character in TestCharacterMonos) {
+            AddFOVUnit(character);
+        }
+        #endregion
+
+        Debug.Log("添加完成 逻辑层物体有："+LogicalLayerObjects.Count()+" 表示层物体有："+PresentationLayerObjects.Count());
+        
+
         textureSizeSqr = textureSize * textureSize;
-        playersPositions = new List<Vector3>(players.Count());
-        playersPositions.AddRange(new Vector3[players.Count()]);
+
         // 初始化战争迷雾贴图
         texture = new Texture2D(textureSize, textureSize, TextureFormat.ARGB32, false) {
             wrapMode = TextureWrapMode.Clamp
@@ -89,19 +150,11 @@ public class FogSystem : MonoBehaviour {
         for (int i = 0; i < textureSizeSqr; i++) {
             buffer0[i] = new Color32(0, 0, 0, 255);
         }
-
         texture.SetPixels32(buffer0);
         texture.Apply();
 
         // 为战争迷雾设置贴图
         fog.GetComponent<MeshRenderer>().material.SetTexture("_MainTex", texture);
-        if (image != null)
-            image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), Vector2.zero);
-
-        fOVUnits = new List<IFOVUnit>();
-        for (int i = 0; i < characterMonos.Count(); i++) {
-            fOVUnits.Add(characterMonos[i].characterModel);
-        }
 
         //======================================
         // 小地图
@@ -116,37 +169,65 @@ public class FogSystem : MonoBehaviour {
         };
         minMapTexture.SetPixels32(minMapBuffer);
         minMapTexture.Apply();
-        minMapMask.material.SetTexture("_MainTex",minMapTexture);
+        minMapCharacterMask.material.SetTexture("_MainTex",minMapTexture);
+        minMap.material.SetTexture("_MainTex",texture);
 
         isthreadStart = true;
         thread = new Thread(OnUpdate);
         thread.Start();
-        //thread2 = new Thread(UpdateUnitVisibleStatus);
-        //thread2.Start();
 
+        Debug.Log("战争迷雾初始化完成");
     }
 
     private void Update() {
 
-        for (int i = 0; i < players.Count();) {
-            if (players[i] != null) {
-                playersPositions[i] = players[i].position;
-                i++;
-            } else {
-                RemoveListData<Transform>(i, players);
-                RemoveListData<Vector3>(i, playersPositions);
-            }
-        }
-        for (int i = 0; i < characterMonos.Count();) {
-            if (characterMonos[i] != null) {
-                fOVUnits[i].Position = characterMonos[i].transform.position;
-                i++;
-            } else {
-                RemoveListData<CharacterMono>(i, characterMonos);
-                RemoveListData<IFOVUnit>(i, fOVUnits);
-            }
+        #region 待重构~TODO~
+        ///* 
+        // * 更新每个逻辑层物体的坐标
+        // * 同时，每个单位在更新时都可能会被Remove，
+        // * 所以为了保证安全性，多了一个对null的判断
+        //*/
+        //for (int i = 0; i < players.Count();) {
+        //    if (players[i] != null) {
+        //        playersPositions[i] = players[i].position;
+        //        i++;
+        //    } else {
+        //        RemoveListData<Transform>(i, players);
+        //        RemoveListData<Vector3>(i, playersPositions);
+        //    }
+        //}
+        //for (int i = 0; i < characterMonos.Count();) {
+        //    if (characterMonos[i] != null) {
+        //        fOVUnits[i].Position = characterMonos[i].transform.position;
+        //        i++;
+        //    } else {
+        //        RemoveListData<CharacterMono>(i, characterMonos);
+        //        RemoveListData<IFOVUnit>(i, fOVUnits);
+        //    }
 
+        //}
+        #endregion
+
+        #region 重构完成
+        /* 
+             * 更新每个逻辑层物体的坐标
+             * 同时，每个单位在更新时都可能会被Remove，
+             * 所以为了保证安全性，多了一个对null的判断
+         */
+        for (int i = 0; i < LogicalLayerObjects.Count();) {
+            if (LogicalLayerObjects[i] != null) {
+                LogicalLayerObjects[i].characterModel.Position = LogicalLayerObjects[i].transform.position;
+                i++;
+            } else {
+                RemoveFOVUnit(i);
+            }
         }
+        #endregion
+
+        /*
+         * 如果线程已经画好了战争迷雾当前帧的贴图，
+         * 那么更新贴图，并通知线程继续更新
+         */ 
         if (threadStatus == FogBlendingThreadStatus.Finished) {
             texture.SetPixels32(buffer0);
             texture.Apply();
@@ -156,29 +237,49 @@ public class FogSystem : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 负责在游戏结束时，销毁线程
+    /// </summary>
     private void OnDestroy() {
         isthreadStart = false;
         // 等待线程结束
         if (thread != null)
             thread.Join();
-        if (thread2 != null)
-            thread2.Join();
     }
 
     /// <summary>
-    /// 更新每个单位在战争迷雾的逻辑可见状态
+    /// 更新每个逻辑层单位在战争迷雾的逻辑可见状态，即战争迷雾的逻辑层
     /// </summary>
     private void UpdateUnitVisibleStatus() {
-        for (int i = 0; i < fOVUnits.Count();) {
-            if (fOVUnits[i] != null) {
-                if (IsUnitVisible(fOVUnits[i])) {
-                    fOVUnits[i].IsVisible = true;
+        #region 待重构
+        //for (int i = 0; i < fOVUnits.Count();) {
+        //    if (fOVUnits[i] != null) {
+        //        if (IsUnitVisible(fOVUnits[i])) {
+        //            fOVUnits[i].IsVisible = true;
+        //        } else {
+        //            fOVUnits[i].IsVisible = false;
+        //        }
+        //        i++;
+        //    } else {
+        //        RemoveListData<IFOVUnit>(i, fOVUnits);
+        //    }
+        //}
+        #endregion
+
+        Debug.Log("更新逻辑层中，逻辑层Count:"+LogicalLayerObjects.Count());
+        for (int i = 0; i < LogicalLayerObjects.Count();) {
+            Debug.Log("更新第"+i+"个单位：");
+            if (LogicalLayerObjects[i] != null) {
+                Debug.Log("判断第"+i+"个单位是否可见");
+                if (IsUnitVisible(LogicalLayerObjects[i].characterModel)) {
+                    LogicalLayerObjects[i].characterModel.IsVisible = true;
                 } else {
-                    fOVUnits[i].IsVisible = false;
+                    LogicalLayerObjects[i].characterModel.IsVisible = false;
                 }
+                Debug.Log("第"+i+"个单位判断完成");
                 i++;
             } else {
-                RemoveListData<IFOVUnit>(i, fOVUnits);
+                RemoveFOVUnit(i);
             }
         }
     }
@@ -207,32 +308,51 @@ public class FogSystem : MonoBehaviour {
     }
 
     private void OnUpdate() {
-        Thread.Sleep(200);
+        Thread.Sleep(1000);
         while (isthreadStart) {
             if (threadStatus == FogBlendingThreadStatus.Update) {
+                Debug.Log("正在更新战争迷雾");
+
+                // 战争迷雾表示层
                 ClearVisibledRegion();
                 RevalMap();
                 GeneratePassedRegion();
+                Debug.Log("更新表示层完成");
+
+                // 战争迷雾逻辑层
                 UpdateUnitVisibleStatus();
+                Debug.Log("更新逻辑层");
 
                 // 更新人物在小地图上的点
                 ClearMinMap();
                 DrawMinMap();
+                Debug.Log("更新小地图");
 
                 threadStatus = FogBlendingThreadStatus.Finished;
             }
             Thread.Sleep(100);
+            Debug.Log("战争迷雾休眠中");
         }
     }
 
+    /// <summary>
+    /// 每一个表示层物体都将对战争迷雾的显示层进行更新
+    /// </summary>
     public void RevalMap() {
-        for (int i = 0; i < playersPositions.Count(); i++) {
-            lock (playersPositions) {
-                Vector3 vector3 = playersPositions[i];
+        #region 待重构
+        //for (int i = 0; i < playersPositions.Count(); i++) {
+        //    lock (playersPositions) {
+        //        Vector3 vector3 = playersPositions[i];
+        //        RevealUsingVision(vector3);
+        //    }
+        //}
+        #endregion
+
+        for (int i = 0; i < PresentationLayerObjects.Count(); i++) {
+            lock (PresentationLayerObjects) {
+                Vector3 vector3 = PresentationLayerObjects[i].Position;
                 RevealUsingVision(vector3);
             }
-            //Vector3 position = transform.position;
-
         }
     }
 
@@ -299,14 +419,17 @@ public class FogSystem : MonoBehaviour {
     public void ClearMinMap() {
         for (int i=0;i<textureSizeSqr;i++) {
             minMapBuffer[i].g = 0;
+            minMapBuffer[i].r = 0;
         }
     }
 
+    //=======================================
     // 绘制小地图上单位的点
+    // 此处使用的是逻辑层单位，因为地图上的点要绘制的是所有单位的
     public void DrawMinMap() {
-        for (int i = 0; i < playersPositions.Count(); i++) {
-            lock (playersPositions) {
-                Vector3 position = playersPositions[i];
+        for (int i = 0; i < LogicalLayerObjects.Count(); i++) {
+            lock (LogicalLayerObjects) {
+                Vector3 position = LogicalLayerObjects[i].characterModel.Position;
 
                 // 世界坐标转贴图坐标
                 position *= textureSize / worldSize;
@@ -320,7 +443,13 @@ public class FogSystem : MonoBehaviour {
                 for (int z=minZ;z<=maxZ;z++) {
                     int zw = z * textureSize;
                     for (int x=minX;x<=maxX;x++) {
-                        minMapBuffer[zw + x].g = 255;
+                        if (LogicalLayerObjects[i].characterModel.unitFaction == UnitFaction.Red || LogicalLayerObjects[i].characterModel.unitFaction == UnitFaction.Neutral) {
+                            minMapBuffer[zw + x].g = 255;
+                            minMapBuffer[zw + x].r = 0;
+                        } else if ((LogicalLayerObjects[i].characterModel.unitFaction == UnitFaction.Blue) || (LogicalLayerObjects[i].characterModel.unitFaction == UnitFaction.Hostility)) {
+                            minMapBuffer[zw + x].r = 255;
+                            minMapBuffer[zw + x].g = 0;
+                        }
                     }
                 }
             }

@@ -156,7 +156,7 @@ public class CharacterMono : MonoBehaviour {
     public GameObject stateHolderEffect;
     public void Install() {
         characterModel = new HeroModel {
-            maxHp = 1000,
+            maxHp = 10000,
             Hp = 200,
             maxMp = 1000,
             Mp = 1000,
@@ -183,18 +183,19 @@ public class CharacterMono : MonoBehaviour {
             skillPointGrowthPoint = 1,
             turningSpeed = 5,
             activeSkills = new List<ActiveSkill> {
-                new PointingSkill{
-                    BaseDamage = 300,
+                new RangeDamageSkill{
+                    damage = new Damage(){ BaseDamage=500,PlusDamage=100 },
                     KeyCode = KeyCode.E,
                     Mp = 10,
                     PlusDamage = 200,
-                    SelfEffect = null,
-                    TargetEffect = null,
-                    SpellDistance = 4f,
+                    SpellDistance = 7f,
                     CD = 2f,
                     SkillName = "E技能",
                     IconPath = "00046",
                     LongDescription = "one skill Description",
+                    SkillLevel = 1,
+                    SkillInfluenceRadius = 1,
+                    IsMustDesignation = false
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
@@ -214,11 +215,12 @@ public class CharacterMono : MonoBehaviour {
                     BackgroundDescription = "aaaaaaaaaaaaaaa",
                     ShortDescription = "bbbbbbbbbbbbbbbbbbbbbbbbbb",
                     SkillLevel = 6,
-                    SkillInfluenceRadius = 10
+                    SkillInfluenceRadius = 3,
+                    IsMustDesignation = true
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
-                    KeyCode = KeyCode.W,
+                    KeyCode = KeyCode.Z,
                     Mp = 220,
                     PlusDamage = 200,
                     SelfEffect = null,
@@ -235,7 +237,7 @@ public class CharacterMono : MonoBehaviour {
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
-                    KeyCode = KeyCode.W,
+                    KeyCode = KeyCode.R,
                     Mp = 220,
                     PlusDamage = 200,
                     SelfEffect = null,
@@ -374,12 +376,12 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="targetTransform">要追击的单位的位置</param>
     /// /// <param name="forwardDistance">跟目标的距离</param>
     /// <returns></returns>
-    public bool Chasing(Transform targetTransform,float forwardDistance) {
+    public bool Chasing(Vector3 position,float forwardDistance) {
 
         // 获得当前单位与目标单位的距离
         float distance = Vector2.Distance(
             new Vector2(transform.position.x, transform.position.z),
-            new Vector2(targetTransform.position.x, targetTransform.position.z)
+            new Vector2(position.x, position.z)
         );
 
         if (!agent.pathPending && distance <= forwardDistance) {
@@ -389,7 +391,7 @@ public class CharacterMono : MonoBehaviour {
         } else {
             animator.SetBool("isRun", true);
             agent.isStopped = false;
-            agent.SetDestination(targetTransform.position);
+            agent.SetDestination(position);
             return false;
         }
 
@@ -423,16 +425,16 @@ public class CharacterMono : MonoBehaviour {
             return false;
         }
 
-        // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击
-        if (!IsTargetFront(target)) {
+        AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
-            transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.LookRotation(target.transform.position - transform.position),characterModel.turningSpeed*Time.deltaTime);
+        // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击(注意必须是在单位没有攻击时，才转向敌人)
+        if (!IsTargetFront(target) && !currentAnimatorStateInfo.IsName("attack")) {
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), characterModel.turningSpeed * Time.deltaTime);
 
             return false;
         }
-
-        AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
-        AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
         //======================================
         // 播放攻击动画
@@ -560,12 +562,13 @@ public class CharacterMono : MonoBehaviour {
     }
      
     /// <summary>
+    /// 适用于指定敌人的施法技能
     /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
     /// </summary>
-    public bool Spell(CharacterMono enemryMono,Transform enermyTransform) {
+    public bool Spell(CharacterMono enemryMono,Vector3 position) {
 
         // 如果目标已经不可攻击,那么返回False
-        if (!enemryMono.IsCanBeAttack()) {
+        if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
             ResetSpeellStateAnimator();
             arroundEnemies.Remove(enemryMono);
 
@@ -575,7 +578,6 @@ public class CharacterMono : MonoBehaviour {
         // 获得当前动画和下一个动画状态
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
-        CharacterModel enemryModel = enemryMono.characterModel;
 
         if (IsImmediatelySpell()) {
             // 原地释放技能,此时直接释放技能
@@ -588,9 +590,13 @@ public class CharacterMono : MonoBehaviour {
             if (currentAnimatorStateInfo.IsName("Spell") &&
                 nextAnimatorStateInfo.IsName("Idle")) {
 
-                // 计算伤害
-                Damage damage = prepareSkill.CalculateDamage();
-                enemryModel.Damaged(damage);
+                if (!isPrepareUseItemSkill)
+                    prepareSkill.Execute(this, enemryMono);
+                else {
+                    prepareItemSkillItemGrid.ExecuteItemSkill(this, enemryMono);
+                    isPrepareUseItemSkill = false;
+                    prepareItemSkillItemGrid = null;
+                }
 
                 isPrepareUseSkill = false;
                 prepareSkill = null;
@@ -600,7 +606,7 @@ public class CharacterMono : MonoBehaviour {
             // 指向型技能
 
             // 当前距离敌人 > 施法距离,进行追击
-            if (Chasing(enermyTransform,prepareSkill.SpellDistance)) {
+            if (Chasing(position,prepareSkill.SpellDistance)) {
                 //======================================
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
@@ -613,9 +619,11 @@ public class CharacterMono : MonoBehaviour {
                     nextAnimatorStateInfo.IsName("Idle")) {
 
                     if (!isPrepareUseItemSkill)
-                        prepareSkill.Execute(this, enemryMono);
+                        if(prepareSkill.IsMustDesignation)
+                            prepareSkill.Execute(this, enemryMono);
+                        else
+                            prepareSkill.Execute(this, position);
                     else {
-
                         prepareItemSkillItemGrid.ExecuteItemSkill(this,enemryMono);
                         isPrepareUseItemSkill = false;
                         prepareItemSkillItemGrid = null;
@@ -629,6 +637,16 @@ public class CharacterMono : MonoBehaviour {
             }
         }
         return false;
+    }
+
+    /// <summary>
+    /// 适用于指定地点的施法技能
+    /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
+    /// </summary>
+    /// <param name="position"></param>
+    /// <returns></returns>
+    public bool Spell(Vector3 position) {
+        return Spell(null,position);
     }
 
     /// <summary>

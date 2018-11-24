@@ -36,8 +36,8 @@
 				}
 				fixed4 frag(v2f i) : SV_TARGET{
 					fixed4 color = tex2D(_MainTex,i.uv);
-					color.a = color.g;
-					color.rb = fixed2(0,0);
+					color.a = color.r+color.g;
+					color.b = 0;
 					return color;  
 				}
 

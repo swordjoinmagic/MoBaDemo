@@ -37,10 +37,11 @@ public class BattleStatusListView : MonoBehaviour {
             if (battleStatusTipsView == null) {
                 battleStatusTipsView = GameObject.Instantiate<BattleStatusTipsView>(battleStatusTipsViewPrefab, canvas.transform);
             }
-            Vector3 vector3 = UICamera.ScreenToWorldPoint(Input.mousePosition);
-            vector3.z = 100;
+
             // 设置提示窗口出现位置
-            battleStatusTipsView.transform.position = vector3;
+            battleStatusTipsView.transform.SetParent(statusView.transform);
+            (battleStatusTipsView.transform as RectTransform).anchoredPosition = new Vector2((statusView.transform as RectTransform).sizeDelta.x / 2, (statusView.transform as RectTransform).sizeDelta.y / 2);
+            battleStatusTipsView.transform.SetParent(canvas.transform);
 
             battleStatusTipsView.Reveal(battleState);
         });

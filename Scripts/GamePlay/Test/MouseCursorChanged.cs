@@ -5,9 +5,9 @@ using UnityEngine;
 public class MouseCursorChanged : MonoBehaviour {
 
     private CharacterMono characterMono;
-    private GameObject skillCircleInflence;
+    private Projector skillCircleInflence;
 
-    public GameObject skillCircleInflencePrefabs;
+    public Projector skillCircleInflencePrefabs;
 
 
     public void Start() {
@@ -32,19 +32,20 @@ public class MouseCursorChanged : MonoBehaviour {
             if (activeSkill.SkillInfluenceRadius > 0) {
                 if (Physics.Raycast(ray, out hit2, 100,layerMask:1<<11)) {
                     Vector3 position = hit2.point;
-                    position.y = 0.01f;
+                    Debug.Log(position);
+                    position.y = 3f;
                     if (skillCircleInflence == null) {
-                        skillCircleInflence = GameObject.Instantiate<GameObject>(skillCircleInflencePrefabs, position, skillCircleInflencePrefabs.transform.rotation);
-                        skillCircleInflence.transform.localScale = new Vector3(activeSkill.SkillInfluenceRadius, activeSkill.SkillInfluenceRadius, 1);
+                        skillCircleInflence = GameObject.Instantiate<Projector>(skillCircleInflencePrefabs, position, skillCircleInflencePrefabs.transform.rotation);
+                        skillCircleInflence.orthographicSize = activeSkill.SkillInfluenceRadius;
                     } else {
-                        skillCircleInflence.SetActive(true);
+                        skillCircleInflence.gameObject.SetActive(true);
                         skillCircleInflence.transform.position = position;
                     }
                 }
             }
         } else {
             if (skillCircleInflence != null) {
-                skillCircleInflence.SetActive(false);
+                skillCircleInflence.gameObject.SetActive(false);
             }
         }
     }

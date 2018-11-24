@@ -223,7 +223,7 @@ namespace uMVVM {
         /// </summary>
         protected virtual void StartAnimatedHide() {
             canvasGroup.interactable = false;
-            canvasGroup.DOFade(0,0.2f).SetDelay(0.2f).OnComplete(()=> {
+            canvasGroup.DOFade(0,0.5f).SetDelay(0.5f).OnComplete(()=> {
                 transform.localScale = Vector3.zero;
                 canvasGroup.interactable = true;
             });

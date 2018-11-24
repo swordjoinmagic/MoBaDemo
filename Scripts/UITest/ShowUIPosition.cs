@@ -15,15 +15,15 @@ public class ShowUIPosition : MonoBehaviour{
 
         canvas = GameObject.Find("Canvas").transform as RectTransform;
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
-        Debug.Log("Canvas:"+canvas.anchoredPosition);
-        Debug.Log("anchoredPosition:"+rectTransform.anchoredPosition);
-        Debug.Log("localPosition:" + rectTransform.localPosition);
-        Debug.Log("position:" + rectTransform.position);
+        //Debug.Log("Canvas:"+canvas.anchoredPosition);
+        //Debug.Log("anchoredPosition:"+rectTransform.anchoredPosition);
+        //Debug.Log("localPosition:" + rectTransform.localPosition);
+        //Debug.Log("position:" + rectTransform.position);
         Vector2 vector2 = RectTransformUtility.WorldToScreenPoint(UICamera,rectTransform.position);
-        Debug.Log("ScreenPosition:"+vector2);
+        //Debug.Log("ScreenPosition:"+vector2);
         Vector2 locationPosition;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(canvas,vector2,UICamera,out locationPosition);
-        Debug.Log("locationPosition:"+ locationPosition);
+        //Debug.Log("locationPosition:"+ locationPosition);
     }
 }
 

@@ -19,9 +19,9 @@ public class Test : MonoBehaviour {
 	void Start () {
         string content = (Resources.Load("Data\\data") as TextAsset).text;
         text.text = content;
-        Debug.Log(content);
+        //Debug.Log(content);
         string s = JsonMapper.ToJson(new JSONTest { name="test",level=1});
-        Debug.Log(s);
+        //Debug.Log(s);
     }
 	
 	// Update is called once per frame

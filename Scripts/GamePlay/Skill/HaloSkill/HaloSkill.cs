@@ -27,7 +27,7 @@ public class HaloSkill : PassiveSkill{
     public override void Execute(CharacterMono speller) {
         //base.Execute(speller);
 
-        Debug.Log("Enter");
+        //Debug.Log("Enter");
 
         // 给单位增加光环触发器
         GameObject haloTrigger = new GameObject(SkillName+"HaloTrigger");
@@ -41,6 +41,7 @@ public class HaloSkill : PassiveSkill{
         sphereCollider.radius = inflenceRadius;
         Trigger.HaloSkillExecute += Execute;
         Trigger.HaloSkillCancelExecute += CancelExecute;
+        Trigger.gameObject.layer = 2;
 
         additiveState = (new PoisoningState {
             damage = new Damage(30, 0),
@@ -50,7 +51,7 @@ public class HaloSkill : PassiveSkill{
             name = "中毒光环",
             isStackable = false
         });
-        Debug.Log("Finish");
+        //Debug.Log("Finish");
     }
 
     /// <summary>

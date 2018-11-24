@@ -126,6 +126,10 @@ class StoreView : MonoBehaviour{
         onMouseClick.eventID = EventTriggerType.PointerClick;
         onMouseClick.callback.AddListener(eventData => {
             if (Input.GetMouseButtonUp(1)) {
+                if (showItemGrids[itemGrid.index]==itemGrid) {
+                    itemTipsView.Hide();
+                }
+
                 storeLogic.Sell(heroMono, showItemGrids[itemGrid.index]);
             }
         });

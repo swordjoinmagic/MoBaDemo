@@ -47,13 +47,13 @@ public class HaloTrigger : MonoBehaviour{
     public event HaloSkillExecuteHandler HaloSkillCancelExecute;
 
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("单位进入了触发器");
+        //Debug.Log("单位进入了触发器");
 
         CharacterMono target = other.GetComponent<CharacterMono>();
         if (target != null && target.characterModel.unitFaction == UnitType) {
             TargetList.Add(target);
 
-            Debug.Log("单位进入了触发器");
+            //Debug.Log("单位进入了触发器");
             if (HaloSkillExecute != null) HaloSkillExecute(null,target);
         }
     }

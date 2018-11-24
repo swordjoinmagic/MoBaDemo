@@ -32,6 +32,9 @@ public class ActiveSkill : BaseSkill{
     // 最后一次释放技能的时间
     protected float finalSpellTime;
 
+    // 判断此技能的释放是否必须指定敌人对象，true为必须指定
+    protected bool isMustDesignation;
+
     public int Mp {
         get {
             return mp;
@@ -112,12 +115,22 @@ public class ActiveSkill : BaseSkill{
         }
     }
 
+    public bool IsMustDesignation {
+        get {
+            return isMustDesignation;
+        }
+
+        set {
+            isMustDesignation = value;
+        }
+    }
+
     /// <summary>
     /// 判断当前技能是否处于冷却中
     /// </summary>
     /// <returns></returns>
     public bool IsCoolDown() {
-        Debug.Log("Time.time - finalSpellTime"+(Time.time - finalSpellTime).ToString()+"  CD:"+CD);
+        //Debug.Log("Time.time - finalSpellTime"+(Time.time - finalSpellTime).ToString()+"  CD:"+CD);
         return Time.time - finalSpellTime <= CD;
     }
 

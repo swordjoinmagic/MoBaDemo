@@ -18,14 +18,18 @@ public class SpellState : FSMState {
 
     public CharacterMono enemryMono;    
     public Transform enermyTransform;
+    public Vector3 enermyPosition;
     public CharacterMono spllerMono;       // 施放技能者
     public CharacterModel speller;
 
     public override void OnEnter() {
-        //enemryMono = BlackBorad.GetGameObject("Enemry").GetComponent<CharacterMono>();
-        enemryMono = BlackBorad.GetCharacterMono("Enemry");
-        enermyTransform = BlackBorad.GetTransform("EnemryTransform");
         spllerMono = BlackBorad.CharacterMono;
+        if (spllerMono.prepareSkill.IsMustDesignation) {
+            enemryMono = BlackBorad.GetCharacterMono("Enemry");
+            enermyTransform = BlackBorad.GetTransform("EnemryTransform");
+        } else {
+            enermyPosition = BlackBorad.GetVector3("EnemryPosition");
+        }
 
         // 重置攻击状态
         spllerMono.ResetAttackStateAnimator();
@@ -38,15 +42,24 @@ public class SpellState : FSMState {
     }
 
     public override void OnUpdate() {
+        bool result = false;
         // 如果施放技能状态结束,就自动回到Idle状态,为黑板设置变量
-        if (enemryMono != null && spllerMono.Spell(enemryMono, enermyTransform)) {
-            BlackBorad.SetBool("IsUseSkillFinish", true);
-            BlackBorad.SetBool("isPrePareUseSkill", false);
-        }
-        // 如果目标单位不能被攻击,回到Idle状态
-        if (!enemryMono.IsCanBeAttack()) {
-            BlackBorad.SetBool("IsUseSkillFinish", true);
-            BlackBorad.SetBool("isPrePareUseSkill", false);
+        if (spllerMono != null) {
+            if (spllerMono.prepareSkill.IsMustDesignation && enemryMono != null) {
+                result = spllerMono.Spell(enemryMono, enermyTransform.position);
+            } else {
+                result = spllerMono.Spell(enermyPosition);
+            }
+            if (result) {
+                BlackBorad.SetBool("IsUseSkillFinish", true);
+                BlackBorad.SetBool("isPrePareUseSkill", false);
+            }
+
+            // 如果目标单位不能被攻击,回到Idle状态
+            if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
+                BlackBorad.SetBool("IsUseSkillFinish", true);
+                BlackBorad.SetBool("isPrePareUseSkill", false);
+            }
         }
     }
 }

@@ -27,7 +27,7 @@ namespace Assets.Scripts.AI.Behavior_Node.Guard.Conditional_Node {
 
             if (target.Value == null) return TaskStatus.Failure;
 
-            if (characterMono.Chasing(targetCharacterMono.transform,characterMono.characterModel.attackDistance)) {
+            if (characterMono.Chasing(targetCharacterMono.transform.position,characterMono.characterModel.attackDistance)) {
                 return TaskStatus.Success;
             }
             return TaskStatus.Failure;
