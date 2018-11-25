@@ -1043,6 +1043,17 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1459852180}
   m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+--- !u!4 &115211523 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 380592693}
+--- !u!114 &115211530 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 380592693}
+  m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
 --- !u!1 &134269319 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
@@ -1077,6 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 2000
     maxMp: 0
@@ -1100,15 +1112,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!195 &134269323
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1260,6 +1273,92 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1001 &168122988
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 759266748}
+    m_Modifications:
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 92.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.5229998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 131.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: UICamera
+      value: 
+      objectReference: {fileID: 847727016}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: Canvas
+      value: 
+      objectReference: {fileID: 1140354113}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_Name
+      value: Skeleton@Skin (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: characterModel.maxHp
+      value: 40000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758858141685120, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259561236270838, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413309457635358, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259148114538692, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333848465584728, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &170076733
 GameObject:
   m_ObjectHideFlags: 0
@@ -1399,6 +1498,60 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 191863624}
+--- !u!1001 &233995998
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 430986, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: m_RootOrder
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 11413728, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: StartObject
+      value: 
+      objectReference: {fileID: 941491773}
+    - target: {fileID: 11413728, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: EndObject
+      value: 
+      objectReference: {fileID: 1567588451}
+    - target: {fileID: 11413728, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+      propertyPath: ManualMode
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: a84cb58ef7faa67488076810242453b9, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &235192371 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4292761784624462, guid: ff332da03782f0549a37cdead37357ad,
@@ -1651,6 +1804,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &346335475
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1749,6 +1903,92 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
   m_IsPrefabParent: 0
+--- !u!1001 &380592693
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 759266748}
+    m_Modifications:
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 96.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.5229998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 131.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: UICamera
+      value: 
+      objectReference: {fileID: 847727016}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: Canvas
+      value: 
+      objectReference: {fileID: 1140354113}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_Name
+      value: Skeleton@Skin (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: characterModel.maxHp
+      value: 40000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758858141685120, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259561236270838, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413309457635358, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259148114538692, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333848465584728, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &391741244 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
@@ -1783,6 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -1806,15 +2047,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!136 &391741248
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1924,6 +2166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &393186834
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1982,6 +2225,17 @@ RectTransform:
   m_PrefabParentObject: {fileID: 224387218640933716, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
     type: 2}
   m_PrefabInternal: {fileID: 1459852180}
+--- !u!4 &434837872 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 168122988}
+--- !u!114 &434837879 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 168122988}
+  m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
 --- !u!1 &441758408
 GameObject:
   m_ObjectHideFlags: 0
@@ -2098,6 +2352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &454627624
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2147,7 +2402,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_Name
@@ -2222,6 +2477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &504873415
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -2291,6 +2547,9 @@ MonoBehaviour:
   - {fileID: 1602132720}
   - {fileID: 2072983473}
   - {fileID: 1705845392}
+  - {fileID: 434837879}
+  - {fileID: 115211530}
+  - {fileID: 1567588452}
 --- !u!1001 &543679464
 Prefab:
   m_ObjectHideFlags: 0
@@ -2700,6 +2959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -2723,15 +2983,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!114 &602586886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2982,6 +3243,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &730582603
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -3020,8 +3282,11 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1786814982}
+  - {fileID: 434837872}
   - {fileID: 793372923}
   - {fileID: 134269320}
+  - {fileID: 115211523}
+  - {fileID: 1567588459}
   m_Father: {fileID: 1290495611}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3116,6 +3381,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 2000
     maxMp: 0
@@ -3139,15 +3405,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!114 &793372927
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3530,6 +3797,11 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 937315479}
   m_Mesh: {fileID: 10210, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &941491773 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 370161519}
 --- !u!1 &950538954
 GameObject:
   m_ObjectHideFlags: 0
@@ -4121,7 +4393,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.00000019092492
+      value: -0.000021782731
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -4434,6 +4706,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &1341743691
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4672,6 +4945,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -4695,15 +4969,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!136 &1430867708
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4928,6 +5203,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &1462434671
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -5351,6 +5627,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1875765176}
+--- !u!1 &1567588451 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1887444567}
+--- !u!114 &1567588452 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1887444567}
+  m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
+--- !u!4 &1567588459 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+    type: 2}
+  m_PrefabInternal: {fileID: 1887444567}
 --- !u!1 &1602132717 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 187918, guid: 77a599bd67f72e24999e1d5d60f433d0, type: 2}
@@ -5385,6 +5677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -5408,15 +5701,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!136 &1602132721
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5734,6 +6028,16 @@ Prefab:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 5fb70b7e700363b4d843f0dc7a91e1bf, type: 2}
+    - target: {fileID: 114231663357843512, guid: ff332da03782f0549a37cdead37357ad,
+        type: 2}
+      propertyPath: lightningBoltScriptPrefab
+      value: 
+      objectReference: {fileID: 1911187612}
+    - target: {fileID: 114231663357843512, guid: ff332da03782f0549a37cdead37357ad,
+        type: 2}
+      propertyPath: audioSource
+      value: 
+      objectReference: {fileID: 839615996}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff332da03782f0549a37cdead37357ad, type: 2}
   m_IsPrefabParent: 0
@@ -5776,6 +6080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -5799,15 +6104,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!136 &1705845393
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6046,6 +6352,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!135 &1735378906
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -6422,6 +6729,92 @@ Transform:
   m_Father: {fileID: 1240025338}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1887444567
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 759266748}
+    m_Modifications:
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 88.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 2.5229998
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 135.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: UICamera
+      value: 
+      objectReference: {fileID: 847727016}
+    - target: {fileID: 114066240354145216, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: Canvas
+      value: 
+      objectReference: {fileID: 1140354113}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_Name
+      value: Skeleton@Skin (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: characterModel.maxHp
+      value: 40000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4758858141685120, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259561236270838, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4413309457635358, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4259148114538692, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114333848465584728, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1001 &1895093743
 Prefab:
   m_ObjectHideFlags: 0
@@ -7491,7 +7884,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 100078, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
       propertyPath: m_Name
@@ -7524,6 +7917,12 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5a35c5f0a89b9654d897ccd7c8f81bd0, type: 3}
   m_IsPrefabParent: 0
+--- !u!114 &1911187612 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11413728, guid: a84cb58ef7faa67488076810242453b9,
+    type: 2}
+  m_PrefabInternal: {fileID: 233995998}
+  m_Script: {fileID: 11500000, guid: cfb4d413de9f1d541915329635c9f2bc, type: 3}
 --- !u!1 &1988479432
 GameObject:
   m_ObjectHideFlags: 0
@@ -7759,6 +8158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -7782,15 +8182,16 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!136 &2072983474
 CapsuleCollider:
   m_ObjectHideFlags: 0

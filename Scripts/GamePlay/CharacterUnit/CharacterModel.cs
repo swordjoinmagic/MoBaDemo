@@ -9,7 +9,7 @@ using uMVVM;
 /// 基本单位,所有单位的基类
 /// </summary>
 [Serializable]
-public class CharacterModel : IFOVUnit{
+public class CharacterModel : IFOVUnit,IAudioUnit{
 
     #region 单位的基本属性
     // 生命值
@@ -119,7 +119,24 @@ public class CharacterModel : IFOVUnit{
     #endregion
 
     #region 单位音频属性
-    public string attackAudioClip;
+    private string attackAudioPath;
+    private string moveAudioPath;
+    public string AttackAudioPath {
+        get {
+            return attackAudioPath;
+        }
+        set {
+            attackAudioPath = value;
+        }
+    }
+    public string MoveAudioPath {
+        get {
+            return moveAudioPath;
+        }
+        set {
+            moveAudioPath = value;
+        }
+    }
     #endregion
 
     #region 单位用于战争迷雾的属性

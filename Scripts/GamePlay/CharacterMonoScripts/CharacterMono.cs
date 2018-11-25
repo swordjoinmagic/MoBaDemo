@@ -1,4 +1,5 @@
 ﻿using BehaviorDesigner.Runtime;
+using DigitalRuby.LightningBolt;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -32,6 +33,11 @@ public class CharacterMono : MonoBehaviour {
             itemViewModels = value;
         }
     }
+
+    #region 单位的声音模块
+    public AudioSource audioSource;     // 声音模块的发声者
+    CharacterAudio characterAudio = null;
+    #endregion
 
 
     #region 小兵的WayPointUnit属性
@@ -110,6 +116,8 @@ public class CharacterMono : MonoBehaviour {
 
     // 周围的敌人
     public List<CharacterMono> arroundEnemies;
+    // 周围的友军
+    public List<CharacterMono> arroundFriends;
 
     // 当前角色拥有的所有状态
     private List<BattleState> battleStates = new List<BattleState>();
@@ -154,6 +162,7 @@ public class CharacterMono : MonoBehaviour {
     public GameObject targetEnemryEffect;
     public ProjectileMono projectile;
     public GameObject stateHolderEffect;
+    public LightningBoltScript lightningBoltScriptPrefab;     // 用于控制闪电链的LineRender对象
     public void Install() {
         characterModel = new HeroModel {
             maxHp = 10000,
@@ -235,15 +244,17 @@ public class CharacterMono : MonoBehaviour {
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                     SkillLevel = 6
                 },
-                new PointingSkill{
+                new ChainSkill{
                     BaseDamage = 1000,
                     KeyCode = KeyCode.R,
                     Mp = 220,
                     PlusDamage = 200,
-                    SelfEffect = null,
-                    TargetEffect = null,
                     SpellDistance = 4f,
                     CD = 5f,
+                    IsMustDesignation = true,
+                    count = 4,
+                    damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
+                    lightningBoltScriptPrefab = lightningBoltScriptPrefab,
                     SkillName = "W技能",
                     IconPath = "00041",
                     LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
@@ -253,8 +264,8 @@ public class CharacterMono : MonoBehaviour {
                     SkillLevel = 6
                 }
             },
-            passiveSkills = new List<PassiveSkill> {
-            }
+            passiveSkills = new List<PassiveSkill> {},
+            AttackAudioPath = "attackAudio"
         };
         Owner = new Player() {
             Money = 1000
@@ -262,6 +273,14 @@ public class CharacterMono : MonoBehaviour {
     }
     //================================================
     #endregion
+
+    // 单位初始化身上所有状态的方法
+    public void Init() {
+        //============================
+        // ·初始化声音模块
+        characterAudio = new CharacterAudio(characterModel);
+        characterAudio.Bind(this, audioSource);
+    }
 
     public void Awake() {
         if (CompareTag("Player"))
@@ -278,6 +297,8 @@ public class CharacterMono : MonoBehaviour {
 
         // 获得该单位周围的敌人
         arroundEnemies = transform.Find("SearchTrigger").GetComponent<SearchTrigger>().arroundEnemies;
+        // 该单位周围友军
+        arroundFriends = transform.Find("SearchTrigger").GetComponent<SearchTrigger>().arroundFriends;
 
         // 初始化六个物品格子,六个物品格子在物品栏中的摆放顺序是
         // 从上到下,从左到右,依次顺序,123456
@@ -340,6 +361,10 @@ public class CharacterMono : MonoBehaviour {
         HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red };
         haloSkill.Execute(this);
         #endregion
+    }
+
+    private void Start() {
+        Init();
     }
 
     public virtual void Update() {
