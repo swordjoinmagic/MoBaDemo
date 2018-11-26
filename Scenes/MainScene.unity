@@ -1088,7 +1088,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 2000
     maxMp: 0
@@ -1354,6 +1353,10 @@ Prefab:
     - target: {fileID: 114333848465584728, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1873,7 +1876,7 @@ Prefab:
     - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: characterModel.maxHp
-      value: 40000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_RootOrder
@@ -1900,6 +1903,22 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: characterModel.name
+      value: "\u8840\u5C11\u7684"
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: isDying
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: stateHolderEffect
+      value: 
+      objectReference: {fileID: 1062023356135850, guid: bfa9f17681e1c82489fc5f75e5c07d60,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
   m_IsPrefabParent: 0
@@ -1986,6 +2005,10 @@ Prefab:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
   m_IsPrefabParent: 0
@@ -2023,7 +2046,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -2959,7 +2981,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -3381,7 +3402,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 2000
     maxMp: 0
@@ -4393,7 +4413,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: -0.000021782731
+      value: -0.000010318073
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -4945,7 +4965,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -5677,7 +5696,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -6080,7 +6098,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000
@@ -6810,6 +6827,10 @@ Prefab:
     - target: {fileID: 114333848465584728, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -8158,7 +8179,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  audioSource: {fileID: 0}
   characterModel:
     maxHp: 1000
     maxMp: 1000

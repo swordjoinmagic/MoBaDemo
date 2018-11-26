@@ -35,7 +35,7 @@ public class CharacterMono : MonoBehaviour {
     }
 
     #region 单位的声音模块
-    public AudioSource audioSource;     // 声音模块的发声者
+    private AudioSource audioSource;     // 声音模块的发声者
     CharacterAudio characterAudio = null;
     #endregion
 
@@ -61,7 +61,7 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="Attacker">攻击者</param>
     /// <param name="Suffered">遭受伤害者</param>
     /// <param name="Damage">此次攻击造成的伤害</param>
-    public delegate void AttackHanlder(CharacterMono Attacker,CharacterMono Suffered,Damage damage);
+    public delegate void AttackHandler(CharacterMono Attacker,CharacterMono Suffered,Damage damage);
 
     /// <summary>
     /// 当单位进行施法时，或者遭受某个施法的单位指向时，触发的事件
@@ -70,7 +70,13 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="Target">法术指定目标</param>
     /// <param name="damage">此次造成的伤害（为负则为治疗）</param>
     /// <param name="activeSkill">此次施法释放的主动技能（被动技能不算把？）</param>
-    public delegate void SpellHanlder(CharacterMono Spller, CharacterMono Target, Damage damage,ActiveSkill activeSkill);
+    public delegate void SpellHandler(CharacterMono Spller, CharacterMono Target, Damage damage,ActiveSkill activeSkill);
+
+    /// <summary>
+    /// 当单位死亡时，进行调用
+    /// </summary>
+    /// <param name="dead">死者</param>
+    public delegate void DiedHandler(CharacterMono dead);
     //=====================================
     // 事件集合
 
@@ -79,12 +85,14 @@ public class CharacterMono : MonoBehaviour {
     public event BattleStatusChangedHandler OnRemoveBattleStatus;
 
     // 当单位攻击、遭受伤害时，触发的事件
-    public event AttackHanlder OnAttack;        // 当攻击时
-    public event AttackHanlder OnSuffered;      // 当单位遭受攻击时
+    public event AttackHandler OnAttack;        // 当攻击时
+    public event AttackHandler OnSuffered;      // 当单位遭受攻击时
 
     // 当单位施法时，触发的事件
-    public event SpellHanlder OnSpell;
+    public event SpellHandler OnSpell;
 
+    // 当单位死亡时，触发的事件
+    public event DiedHandler OnUnitDied;
     #endregion
 
     // 当前人物的动画组件以及寻路组件
@@ -135,7 +143,6 @@ public class CharacterMono : MonoBehaviour {
         if (battleStates.Find((battleState) => { return battleState.GetType() == newBattleState.GetType(); }) == null ||
             newBattleState.isStackable) {
             battleStates.Add(newBattleState);
-
 
             // 触发单位状态附加事件,向所有订阅该事件的观察者发送消息
             if (OnAddNewBattleStatus != null)
@@ -278,6 +285,7 @@ public class CharacterMono : MonoBehaviour {
     public void Init() {
         //============================
         // ·初始化声音模块
+        audioSource = GetComponent<AudioSource>();
         characterAudio = new CharacterAudio(characterModel);
         characterAudio.Bind(this, audioSource);
     }
@@ -358,7 +366,7 @@ public class CharacterMono : MonoBehaviour {
             characterModel.itemGrids[1].ItemCount = 5;
         }
 
-        HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red };
+        HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red, HaloEffect= stateHolderEffect };
         haloSkill.Execute(this);
         #endregion
     }
@@ -706,6 +714,9 @@ public class CharacterMono : MonoBehaviour {
         // 设置isDying为True
         isDying = true;
 
+        // 触发死亡事件
+        if (OnUnitDied != null) OnUnitDied(this);
+
         // 停止目前一切动作
         ResetAllStateAnimator();
 
@@ -761,7 +772,8 @@ public class CharacterMono : MonoBehaviour {
 
         while (isDying) {
             if (IsDied()) {
-                Destroy(gameObject);
+                //Destroy(gameObject);
+                gameObject.SetActive(false);
                 isDying = false;
             }
             yield return new WaitForFixedUpdate();

@@ -64,5 +64,11 @@ public class HaloTrigger : MonoBehaviour{
             if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(null,target);
         }
     }
+
+    private void OnDisable() {
+        foreach (var target in targetList) {
+            if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(null, target);
+        }
+    }
 }
 

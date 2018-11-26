@@ -10,6 +10,7 @@ public class HaloSkill : PassiveSkill{
 
     public float inflenceRadius;
     public UnitFaction targetFaction;
+    public GameObject HaloEffect;
 
     // 给单位附加的状态
     private BattleState additiveState;
@@ -43,14 +44,15 @@ public class HaloSkill : PassiveSkill{
         Trigger.HaloSkillCancelExecute += CancelExecute;
         Trigger.gameObject.layer = 2;
 
-        additiveState = (new PoisoningState {
+        additiveState = new PoisoningState {
             damage = new Damage(30, 0),
             description = "中毒光环,每秒-30生命值,增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述",
             duration = -1,
             iconPath = "0046",
             name = "中毒光环",
-            isStackable = false
-        });
+            isStackable = false,
+            effect = HaloEffect
+        };
         //Debug.Log("Finish");
     }
 
@@ -64,6 +66,7 @@ public class HaloSkill : PassiveSkill{
 
         Debug.Log("Enter  Execute(CharacterMono speller, CharacterMono target)");
 
+        additiveState.isFirstEnterState = true;
         // 给目标附加一个持续时间为永久的中毒状态
         target.AddBattleState(additiveState);
 

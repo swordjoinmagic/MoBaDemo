@@ -17,9 +17,9 @@ public class BattleState {
     public List<PassiveSkill> statePassiveSkills;
     public GameObject stateHolderEffect;
     public bool isStackable = false;      // 状态是否可叠加
-
+    
     // 是否是第一次进入该状态
-    private bool isFirstEnterState = true;
+    public bool isFirstEnterState = true;
 
     // 第一次进入该状态时的时间
     private float firsstEnterTime;
@@ -75,5 +75,24 @@ public class BattleState {
         // 状态消失时，自动将当前状态从单位的状态列表中去除
         stateHolder.RemoveBattleState(this);
     }
+
+    //public override bool Equals(object obj) {
+    //    if (obj == null) return false;
+    //    try {
+    //        BattleState another = obj as BattleState;
+    //        if (name == another.name)
+    //            return true;
+    //        else if (obj.GetHashCode()==GetHashCode()) {
+    //            return true;
+    //        }
+    //    } catch (Exception e) {
+    //        Debug.Log(e.Message);
+    //    }
+    //    return false;
+    //}
+
+    //public override int GetHashCode() {
+    //    return base.GetHashCode();
+    //}
 }
 

@@ -31,10 +31,14 @@ public class ShowCharacterUI : MonoBehaviour {
         if(UI!=null)
             Destroy(UI.gameObject);
     }
+    private void OnDisable() {
+        if (UI != null)
+            OnInvisible();
+    }
 
     // Update is called once per frame
     void Update () {
-        if (character.characterModel.IsVisible && (UI == null || !UI.isActiveAndEnabled)) {
+        if (character.characterModel.IsVisible && (UI == null || !UI.isActiveAndEnabled) && character.isActiveAndEnabled) {
             OnVisible();
         } else if(character.characterModel.IsVisible==false && UI != null && UI.isActiveAndEnabled) {
             OnInvisible();
