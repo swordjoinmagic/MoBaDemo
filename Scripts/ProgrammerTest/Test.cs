@@ -17,11 +17,7 @@ public class Test : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        string content = (Resources.Load("Data\\data") as TextAsset).text;
-        text.text = content;
-        //Debug.Log(content);
-        string s = JsonMapper.ToJson(new JSONTest { name="test",level=1});
-        //Debug.Log(s);
+        Debug.Log("(typeof(PoisoningState)==typeof(BattleState)):" + (typeof(PointingSkill).BaseType));
     }
 	
 	// Update is called once per frame

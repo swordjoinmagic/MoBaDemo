@@ -22,6 +22,7 @@ public class JSONTools {
     public static T JSONToObject<T>(JsonData jsonData) where T:new() {
         T newIntance = Activator.CreateInstance<T>();
         foreach (var key in jsonData.Keys) {
+            Debug.Log("Key:"+key);
             PropertyInfo property = typeof(T).GetProperty(key);
 
             JsonData jsonValue = jsonData[key];
@@ -38,18 +39,31 @@ public class JSONTools {
                 value = (float)(double)jsonValue;
             } else if (jsonValue.IsBoolean) {
                 value = (bool)jsonValue;
+            } else if (jsonValue.IsArray) {
+                Type arrayType = property.PropertyType.GetElementType();
+                if (arrayType == typeof(int)) {
+                    int[] list = new int[jsonValue.Count];
+                    for (int i=0;i<jsonValue.Count;i++) {
+                        list[i] = (int)jsonValue[i];
+                    }
+                    value = list;
+                }
             } else if (jsonValue.IsObject) {
                 value = (object)jsonValue;
             }
 
-            // 对GameObject和Texture2D和Audiosource进行特殊处理
-            if (property.PropertyType==typeof(GameObject)) {
+            // 对GameObject、Texture2D和Audiosource进行特殊处理
+            if (property.PropertyType == typeof(GameObject)) {
                 string loadPath = (string)jsonValue;
                 // 判断是否是技能特效类别的GameObject
                 if (key.Contains("Effect"))
                     loadPath = "SkillEffect/" + loadPath;
 
                 value = Resources.Load<GameObject>(loadPath);
+            } else if (property.PropertyType == typeof(BattleState)) {
+                Debug.Log("该对象是BattleState对象:"+jsonValue);
+                // 该对象是一个BattlState对象，说明此处获得的JSONValue也是一个字典
+                value = JSONToObject<BattleState>(jsonValue);
             }
 
             property.SetValue(newIntance, value, null);

@@ -19,6 +19,7 @@ public class PointingSkill : ActiveSkill{
     // 攻击时己方和地方的特效，预制体，定义技能时输入
     public GameObject selfEffect;
     public GameObject targetEffect;
+    private BattleState additionalState;
 
     public override string TargetDescription {
         get {
@@ -50,6 +51,16 @@ public class PointingSkill : ActiveSkill{
         }
     }
 
+    public BattleState AdditionalState {
+        get {
+            return additionalState;
+        }
+
+        set {
+            additionalState = value;
+        }
+    }
+
     public override void Execute(CharacterMono spller, CharacterMono target) {
 
         FinalSpellTime = Time.time;
@@ -58,8 +69,14 @@ public class PointingSkill : ActiveSkill{
         GameObject tempTargetEffect = null;
         if (SelfEffect!=null)
             tempSelfEffect = GameObject.Instantiate(SelfEffect, spller.transform);
-        if(TargetEffect!=null)
-            tempTargetEffect = GameObject.Instantiate(TargetEffect, target.transform);
+        if (TargetEffect != null) {
+            tempTargetEffect = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During,templateObject:targetEffect,during:5f);
+            tempTargetEffect.transform.SetParent(target.transform);
+            tempTargetEffect.transform.localPosition = Vector3.zero;
+        }
+        if (additionalState!=null) {
+            target.AddBattleState(additionalState);
+        }
 
         target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamage=PlusDamage });
     }

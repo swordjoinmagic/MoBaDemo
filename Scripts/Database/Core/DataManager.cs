@@ -21,13 +21,13 @@ using System.Reflection;
 ///     到使用的时候进行强转,这会带来一定的危险性.
 /// </para>
 /// </summary>
-class DataManager{
+class DataManager {
 
     private static DataManager instance;
 
     public static DataManager Instance {
         get {
-            if (instance==null) {
+            if (instance == null) {
                 instance = new DataManager();
             }
             return instance;
@@ -85,7 +85,7 @@ class DataManager{
 
         //============================================
         // 读取技能数据
-        LoadSkillData();
+        TestLoadSkillData();
 
 
     }
@@ -104,6 +104,30 @@ class DataManager{
 
             // 根据skilltype获取对应技能类
             Type SkillClass = Type.GetType(skillType.ToString());
+
+            // 根据skillType技能类型与泛型方法进行合并，生成最终的方法
+            MethodInfo methodInfo = GenericMethod.MakeGenericMethod(SkillClass);
+
+            // 执行该泛型函数
+            BaseSkill skill = methodInfo.Invoke(null, new object[] { skillData }) as BaseSkill;
+
+            baseSkillDataSet.Add(skill);
+        }
+    }
+
+    public void TestLoadSkillData() {
+        string skillJson = Resources.Load<TextAsset>("Data/TestData").text;
+        skillJson = Regex.Replace(skillJson, " |\n|\t", "");
+        Debug.Log(skillJson);
+        // 获得在JSON数据中的技能列表数据
+        JsonData skillJsonList = JsonMapper.ToObject(skillJson);
+        Debug.Log("skillData:" + skillJsonList.ToJson());
+        foreach (JsonData skillData in skillJsonList) {
+            
+            // 根据skilltype获取对应技能类
+            Type SkillClass = Type.GetType(skillData["SkillType"].ToString());
+
+            Debug.Log(skillData["SkillType"].ToString());
 
             // 根据skillType技能类型与泛型方法进行合并，生成最终的方法
             MethodInfo methodInfo = GenericMethod.MakeGenericMethod(SkillClass);

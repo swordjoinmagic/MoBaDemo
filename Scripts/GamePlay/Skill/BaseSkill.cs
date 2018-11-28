@@ -25,9 +25,9 @@ public class BaseSkill {
     // 对于英雄来说的,该技能下一级需要的英雄等级
     private int nextLevelNeedHeroLevel;
 
-    public SkillType skillType;
+    public string skillType;
 
-    public SkillType SkillType {
+    public string SkillType {
         get {
             return skillType;
         }

@@ -40,7 +40,7 @@ public class BattleStatusListView : MonoBehaviour {
 
             // 设置提示窗口出现位置
             battleStatusTipsView.transform.SetParent(statusView.transform);
-            (battleStatusTipsView.transform as RectTransform).anchoredPosition = new Vector2((statusView.transform as RectTransform).sizeDelta.x / 2, (statusView.transform as RectTransform).sizeDelta.y / 2);
+            (battleStatusTipsView.transform as RectTransform).anchoredPosition = new Vector2((statusView.transform as RectTransform).sizeDelta.x / 2, (statusView.transform as RectTransform).sizeDelta.y);
             battleStatusTipsView.transform.SetParent(canvas.transform);
 
             battleStatusTipsView.Reveal(battleState);

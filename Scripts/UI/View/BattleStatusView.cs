@@ -24,14 +24,14 @@ public class BattleStatusView : MonoBehaviour{
 
         set {
             battleState = value;
-            icon.sprite = Resources.Load("UIImage/" + battleState.iconPath, typeof(Sprite)) as Sprite;
+            icon.sprite = Resources.Load("UIImage/" + battleState.IconPath, typeof(Sprite)) as Sprite;
         }
     }
 
     private void Update() {
         // -1表示此状态的持续时间为永久
-        if(battleState != null && battleState.duration != -1)
-            coolDownBar.fillAmount = 1f - ((Time.time - battleState.FirsstEnterTime) / battleState.duration);
+        if(battleState != null && battleState.Duration != -1)
+            coolDownBar.fillAmount = 1f - ((Time.time - battleState.FirsstEnterTime) / battleState.Duration);
     }
 
 }

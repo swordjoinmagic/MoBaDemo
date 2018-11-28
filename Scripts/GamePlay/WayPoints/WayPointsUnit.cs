@@ -84,13 +84,18 @@ public class WayPointsUnit {
             if (tempDistance<distance) {
                 distance = tempDistance;
                 nearestPointIndex = i;
-            }
-            
+            }            
         }
         //Debug.Log("最近的点是："+nearestPointIndex+" 距离是："+distance);
 
         // 设置当前路径点
-        nowIndex = nearestPointIndex;
+        nowIndex = nearestPointIndex + (unitFaction==UnitFaction.Red?1:-1);
+
+        if (nowIndex >= wayPoints.Count())
+            nowIndex = wayPoints.Count() - 1;
+        else if (nowIndex < 0) {
+            nowIndex = 0;
+        }
     }
 }
 

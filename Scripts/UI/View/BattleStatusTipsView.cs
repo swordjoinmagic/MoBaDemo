@@ -52,8 +52,8 @@ public class BattleStatusTipsView : MonoBehaviour{
     /// 根据指定状态来改变状态窗口的UI信息
     /// </summary>
     private void Init(BattleState battleState) {
-        statusNameText.text = battleState.name;
-        statusDescriptionText.text = battleState.description;
+        statusNameText.text = battleState.Name;
+        statusDescriptionText.text = battleState.Description;
     }
 }
 

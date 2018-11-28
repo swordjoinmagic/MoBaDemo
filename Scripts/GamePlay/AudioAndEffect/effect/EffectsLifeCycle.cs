@@ -20,7 +20,7 @@ public class EffectsLifeCycle : MonoBehaviour{
                 conditional = new StateConditional(target,battleState);
                 break;
             case EffectConditonalType.During:
-                Assert.AreEqual<float>(-1,during, "生成了一个During型生命周期的特效对象,但是没有为该对象赋值 during 属性");
+                Assert.AreNotEqual<float>(-1,during, "生成了一个During型生命周期的特效对象,但是没有为该对象赋值 during 属性");
                 conditional = new DuringConditional(during);
                 break;
         }

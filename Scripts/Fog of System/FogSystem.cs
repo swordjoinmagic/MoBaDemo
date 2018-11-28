@@ -427,18 +427,29 @@ public class FogSystem : MonoBehaviour {
     // 绘制小地图上单位的点
     // 此处使用的是逻辑层单位，因为地图上的点要绘制的是所有单位的
     public void DrawMinMap() {
+        int width = 3;
+        int height = 3;
         for (int i = 0; i < LogicalLayerObjects.Count(); i++) {
             lock (LogicalLayerObjects) {
+                if (LogicalLayerObjects[i].isDying) continue;
                 Vector3 position = LogicalLayerObjects[i].characterModel.Position;
 
                 // 世界坐标转贴图坐标
                 position *= textureSize / worldSize;
 
+                if (LogicalLayerObjects[i] is HeroMono) {
+                    width = 5;
+                    height = 5;
+                } else {
+                    width = 3;
+                    height = 3;
+                }
+
                 // 在当前贴图坐标下绘制一个小的绿色矩形
-                int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - 3),0,textureSize) ;
-                int minZ = Mathf.Clamp(Mathf.FloorToInt(position.z - 3),0,textureSize) ;
-                int maxX = Mathf.Clamp(Mathf.FloorToInt(position.x + 3),0,textureSize) ;
-                int maxZ = Mathf.Clamp(Mathf.FloorToInt(position.z + 3),0,textureSize) ;
+                int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - width),0,textureSize) ;
+                int minZ = Mathf.Clamp(Mathf.FloorToInt(position.z - height),0,textureSize) ;
+                int maxX = Mathf.Clamp(Mathf.FloorToInt(position.x + width),0,textureSize) ;
+                int maxZ = Mathf.Clamp(Mathf.FloorToInt(position.z + height),0,textureSize) ;
 
                 for (int z=minZ;z<=maxZ;z++) {
                     int zw = z * textureSize;

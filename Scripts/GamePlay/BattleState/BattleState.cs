@@ -10,14 +10,14 @@ using UnityEditor;
 /// <para>这里的状态指的是战斗中被敌人施加的，持续性影响某一单位的状态，如：中毒状态</para>
 /// </summary>
 public class BattleState {
-    public string name;
-    public string description;
-    public string iconPath;
-    public float duration;
+    private string name;
+    private string description;
+    private string iconPath;
+    private float duration;
     public List<PassiveSkill> statePassiveSkills;
     public GameObject stateHolderEffect;
-    public bool isStackable = false;      // 状态是否可叠加
-    
+    private bool isStackable = false;      // 状态是否可叠加
+
     // 是否是第一次进入该状态
     public bool isFirstEnterState = true;
 
@@ -39,6 +39,56 @@ public class BattleState {
         }
     }
 
+    public string Name {
+        get {
+            return name;
+        }
+
+        set {
+            name = value;
+        }
+    }
+
+    public string Description {
+        get {
+            return description;
+        }
+
+        set {
+            description = value;
+        }
+    }
+
+    public string IconPath {
+        get {
+            return iconPath;
+        }
+
+        set {
+            iconPath = value;
+        }
+    }
+
+    public float Duration {
+        get {
+            return duration;
+        }
+
+        set {
+            duration = value;
+        }
+    }
+
+    public bool IsStackable {
+        get {
+            return isStackable;
+        }
+
+        set {
+            isStackable = value;
+        }
+    }
+
     /// <summary>
     /// 战斗状态类总更新方法，自动更新状态的OnEnter、OnUpdate、OnExit状态，
     /// 自动处理状态的一系列流程
@@ -56,7 +106,7 @@ public class BattleState {
         OnUpdate(stateHolder);
 
         // 处理状态消失流程
-        if ( duration!=-1 && Time.time - FirsstEnterTime >= duration) {
+        if ( Duration!=-1 && Time.time - FirsstEnterTime >= Duration) {
             OnExit(stateHolder);
         }
     }

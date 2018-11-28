@@ -46,11 +46,11 @@ public class HaloSkill : PassiveSkill{
 
         additiveState = new PoisoningState {
             damage = new Damage(30, 0),
-            description = "中毒光环,每秒-30生命值,增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述",
-            duration = -1,
-            iconPath = "0046",
-            name = "中毒光环",
-            isStackable = false,
+            Description = "中毒光环,每秒-30生命值,增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述",
+            Duration = -1,
+            IconPath = "0046",
+            Name = "中毒光环",
+            IsStackable = false,
             effect = HaloEffect
         };
         //Debug.Log("Finish");

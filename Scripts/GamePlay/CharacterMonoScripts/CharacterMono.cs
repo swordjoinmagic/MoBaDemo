@@ -141,7 +141,7 @@ public class CharacterMono : MonoBehaviour {
     public void AddBattleState(BattleState newBattleState) {
         // 判断单位身上已经是否有这个状态了,并且判断状态是否可以叠加
         if (battleStates.Find((battleState) => { return battleState.GetType() == newBattleState.GetType(); }) == null ||
-            newBattleState.isStackable) {
+            newBattleState.IsStackable) {
             battleStates.Add(newBattleState);
 
             // 触发单位状态附加事件,向所有订阅该事件的观察者发送消息
@@ -219,7 +219,7 @@ public class CharacterMono : MonoBehaviour {
                     Mp = 220,
                     PlusDamage = 200,
                     SelfEffect = null,
-                    TargetEffect = null,
+                    TargetEffect = targetPositionEffect,
                     SpellDistance = 4f,
                     CD = 0.5f,
                     SkillName = "W技能",
@@ -260,7 +260,26 @@ public class CharacterMono : MonoBehaviour {
                     CD = 5f,
                     IsMustDesignation = true,
                     count = 4,
-                    damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
+                    Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
+                    lightningBoltScriptPrefab = lightningBoltScriptPrefab,
+                    SkillName = "W技能",
+                    IconPath = "00041",
+                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                    SkillLevel = 6
+                },
+                new ChainSkill{
+                    BaseDamage = 1000,
+                    KeyCode = KeyCode.R,
+                    Mp = 220,
+                    PlusDamage = 200,
+                    SpellDistance = 4f,
+                    CD = 5f,
+                    IsMustDesignation = true,
+                    count = 4,
+                    Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
                     lightningBoltScriptPrefab = lightningBoltScriptPrefab,
                     SkillName = "W技能",
                     IconPath = "00041",
@@ -500,11 +519,11 @@ public class CharacterMono : MonoBehaviour {
                 // 测试，使敌方进入中毒状态
                 target.AddBattleState(new PoisoningState{
                     damage = new Damage(40, 10),
-                    duration = 15f,
+                    Duration = 15f,
                     stateHolderEffect = stateHolderEffect,
-                    name = "PosioningState",
-                    iconPath = "00046",
-                    description = "中毒技能,每秒中减少20点生命值",
+                    Name = "PosioningState",
+                    IconPath = "00046",
+                    Description = "中毒技能,每秒中减少20点生命值",
                 });
                 #endregion
 
@@ -691,14 +710,13 @@ public class CharacterMono : MonoBehaviour {
 
         //=======================================================
         // 处理单位死亡时,敌对单位获得经验的行为
-        if (attacker!=null && !this.isDying && !attacker.CompareOwner(this) && nowHp==0) {
+        if (attacker!=null && this.isDying && !attacker.CompareOwner(this) && nowHp==0) {
             // 在攻击者的目标位置以r为半径的区域内,所有跟攻击者一个阵营的单位获得经验
             Collider[] colliders = Physics.OverlapSphere(attacker.transform.position,5);
             foreach (var collider in colliders) {
                 HeroMono characterMono = collider.GetComponent<HeroMono>();
                 if (characterMono != null && characterMono.CompareOwner(attacker)) {
                     characterMono.HeroModel.Exp += this.characterModel.supportExp;
-                    Debug.Log("单位："+characterMono.name+"的经验目前是："+characterMono.HeroModel.Exp);
                 }
             }
         }
@@ -774,7 +792,7 @@ public class CharacterMono : MonoBehaviour {
             if (IsDied()) {
                 //Destroy(gameObject);
                 gameObject.SetActive(false);
-                isDying = false;
+                break;
             }
             yield return new WaitForFixedUpdate();
         }

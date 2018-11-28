@@ -1304,6 +1304,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!114 &114333848465584728
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1382,20 +1383,21 @@ MonoBehaviour:
     canBeAttacked: 1
     unitType: 0
     unitFaction: 0
-    supportExp: 0
+    supportExp: 500
     supportMoney: 0
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    attackAudioClip: 
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!135 &135250519810072792
 SphereCollider:
   m_ObjectHideFlags: 1

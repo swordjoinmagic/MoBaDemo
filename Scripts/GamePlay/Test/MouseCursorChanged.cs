@@ -32,7 +32,7 @@ public class MouseCursorChanged : MonoBehaviour {
             if (activeSkill.SkillInfluenceRadius > 0) {
                 if (Physics.Raycast(ray, out hit2, 100,layerMask:1<<11)) {
                     Vector3 position = hit2.point;
-                    Debug.Log(position);
+                    //Debug.Log(position);
                     position.y = 3f;
                     if (skillCircleInflence == null) {
                         skillCircleInflence = GameObject.Instantiate<Projector>(skillCircleInflencePrefabs, position, skillCircleInflencePrefabs.transform.rotation);

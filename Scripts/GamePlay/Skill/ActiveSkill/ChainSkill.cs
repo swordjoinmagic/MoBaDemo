@@ -12,19 +12,29 @@ class ChainSkill : ActiveSkill{
     //================================
     // 此技能开放的接口
     public int count;       // 闪电链跳转次数
-    public Damage damage;   // 闪电链的伤害
+    private Damage damage;   // 闪电链的伤害
     public float attenuationFactor; // 闪电链伤害衰减因子
     public LightningBoltScript lightningBoltScriptPrefab;     // 用于控制闪电链的LineRender对象
     
     // 存储生成的闪电链条，在固定时刻销毁单位
     private List<LightningBoltScript> lightningBolts = new List<LightningBoltScript>();
 
+    public Damage Damage {
+        get {
+            return damage;
+        }
+
+        set {
+            damage = value;
+        }
+    }
+
     public override void Execute(CharacterMono speller, CharacterMono target) {
         // 结束递归
         if (count == 0) return;
 
         CreateChainEffect(speller,target);
-        target.characterModel.Damaged(damage);
+        target.characterModel.Damaged(Damage);
         // 找到目标单位周围随机的单位
         if (target.arroundFriends.Count > 0) {
             CharacterMono nextTarget = target.arroundFriends[Random.Range(0, target.arroundFriends.Count)];

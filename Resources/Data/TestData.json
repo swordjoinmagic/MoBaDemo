@@ -1,0 +1,22 @@
+[
+	{
+		"SkillType":"PointingSkill",
+		"SkillName":"伤害技能",
+		"IconPath":"default-itemIconImage",
+		"SkillLevel":1,
+		"Mp":100,
+		"BaseDamage":100,
+		"KeyCode":113,
+		"SpellDistance":3.3,
+		"CD":5.5,
+		"SelfEffect":"001",
+		"AdditionalState" : { 
+			"Name" : "中毒状态",      
+			"Description" : "该单位受到中毒状态，生命值持续减少",
+			"IconPath" : "0046",  
+			"IsStackable" : false,
+			"IntList":[1,2,3,4,5]
+		}
+	}
+]
+
