@@ -5,11 +5,12 @@ using LitJson;
 using System.Collections.Generic;
 using System;
 using System.Reflection;
+using System.Text;
 
 public class SkillEditor : EditorWindow {
 
     // 技能对象列表
-    private JsonData SkillObjectList = new JsonData();
+    private static JsonData SkillObjectList;
 
     // 程序集对象
     private static Assembly assembly;
@@ -34,22 +35,40 @@ public class SkillEditor : EditorWindow {
     /// <summary>
     /// 读取技能数据
     /// </summary>
-    private void Load() {
+    private static JsonData Load() {
+        string jsonText = Resources.Load<TextAsset>("Data/TestData").text;
 
+        return JsonMapper.ToObject(jsonText);
+    }
+
+    /// <summary>
+    /// 保存技能数据至JSON文件中
+    /// </summary>
+    private static void Save() {
+        string path = Application.dataPath+ "/Resources/Data/TestData.json";
+        File.WriteAllText(path, SkillObjectList.ToJson(), Encoding.UTF8);
+        AssetDatabase.Refresh();
     }
 
     [MenuItem("Data Editor/Skill Editor")]
     public static void CreateWindows() {
+        SkillObjectList = Load();
         // 创建窗口
         Rect rect = new Rect(0,0,500,500);
         SkillEditor skillEditor = GetWindowWithRect<SkillEditor>(rect,true,"技能编辑器");
         skillEditor.Show();
 
         s = new List<string>();
-        for (int i=0;i<100;i++) {
+        for (int i = 0; i < SkillObjectList.Count; i++) {
             s.Add(i.ToString());
         }
 
+    }
+
+    private void OnDestroy() {
+        bool isSave = EditorUtility.DisplayDialog("警告！","是否要保存数据","Y","N");
+        if(isSave)
+            Save();
     }
 
     private void OnGUI() {
@@ -63,6 +82,10 @@ public class SkillEditor : EditorWindow {
         GUILayout.EndScrollView();
         if (GUILayout.Button("创建新的技能")) {
             s.Add(s.Count.ToString());
+            SkillObjectList.Add(new JsonData());
+        }
+        if (GUILayout.Button("Save")) {
+            Save();
         }
         GUILayout.EndArea();
 
@@ -83,6 +106,8 @@ public class SkillEditor : EditorWindow {
     }
 
     private JsonData SkillPanel() {
+
+        ObjectJsonData = SkillObjectList[selectedIndex];
 
         //===========================================================
         // 用于保存当前设计的对象的字段的字典，键是字段名，值是字段值
