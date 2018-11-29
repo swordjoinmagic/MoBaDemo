@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System;
 using System.Reflection;
 using System.Text;
+using System.Collections;
 
 public class SkillEditor : EditorWindow {
 
@@ -29,7 +30,8 @@ public class SkillEditor : EditorWindow {
 
     //===================================
     // 对一个对象的编辑选项
-    private SkillType skillType = SkillType.CritSkill;    // 当前选中的技能的类型
+    private SkillType skillType = SkillType.ChainSkill;    // 当前选中的技能的类型
+    private BattleStateType battleStateType = BattleStateType.PoisoningState;       // 当前选中的技能所附加的状态的类型
     private Vector2 objectSlider = Vector2.zero;        // 对一个对象编辑区域的下滑块
 
     /// <summary>
@@ -48,6 +50,20 @@ public class SkillEditor : EditorWindow {
         string path = Application.dataPath+ "/Resources/Data/TestData.json";
         File.WriteAllText(path, SkillObjectList.ToJson(), Encoding.UTF8);
         AssetDatabase.Refresh();
+    }
+
+    /// <summary>
+    /// 删除当前指定的技能对象
+    /// </summary>
+    private void Delete() {
+        int oldIndex = selectedIndex;
+        s.RemoveAt(oldIndex);
+        selectedIndex = oldIndex == s.Count ? oldIndex-1:oldIndex+1;
+        Debug.Log(SkillObjectList.ToJson());
+        Debug.Log(SkillObjectList.Count);
+        ((IList)SkillObjectList).RemoveAt((int)oldIndex);
+        Debug.Log(SkillObjectList.ToJson());
+        Debug.Log(SkillObjectList.Count);
     }
 
     [MenuItem("Data Editor/Skill Editor")]
@@ -87,6 +103,9 @@ public class SkillEditor : EditorWindow {
         if (GUILayout.Button("Save")) {
             Save();
         }
+        if (GUILayout.Button("Delete")) {
+            Delete();
+        }
         GUILayout.EndArea();
 
         //===============================================
@@ -94,15 +113,22 @@ public class SkillEditor : EditorWindow {
         GUILayout.BeginArea(new Rect(125, 0, 375, 400));
         objectSlider = GUILayout.BeginScrollView(objectSlider, false, true);
         JsonData value = SkillPanel();
-        if (GUILayout.Button("Save")) {
-            Debug.Log(value.ToJson());
-        }
         GUILayout.EndScrollView();
         GUILayout.EndArea();
     }
 
     private void OnInspectorUpdate() {
         this.Repaint();
+    }
+
+    private Type GetTypeWithAnotherAsm(string type) {
+        Type typeClass = null;
+        // 遍历程序集
+        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
+            Type t = asm.GetType(type);
+            if (t != null) typeClass = t;
+        }
+        return typeClass;
     }
 
     private JsonData SkillPanel() {
@@ -114,19 +140,16 @@ public class SkillEditor : EditorWindow {
         skillType = (SkillType)EditorGUILayout.EnumPopup("技能类型",skillType);
         if (skillType.ToString() == "None" || skillType.ToString()== "Everything") return ObjectJsonData;
 
-        string skillClassName = skillType.ToString();
         // 获得对应技能类
-        Type skillClass = null;
-        // 遍历程序集
-        foreach (var asm in AppDomain.CurrentDomain.GetAssemblies()) {
-            Type t = asm.GetType(skillClassName);
-            if (t != null) skillClass = t;
-        }
+        Type skillClass = GetTypeWithAnotherAsm(skillType.ToString());
+
 
         // 反射获得其所有属性
         ObjectJsonData["SkillType"] = skillType.ToString();
         PropertyInfo[] propertyInfos = skillClass.GetProperties();
         foreach (var propertyInfo in propertyInfos) {
+            if (propertyInfo.GetSetMethod() == null) continue;
+
             if (propertyInfo.PropertyType == typeof(string)) {
                 if (!propertyInfo.Name.Contains("Description"))
                     ObjectJsonData[propertyInfo.Name] = EditorGUILayout.TextField(propertyInfo.Name, ObjectJsonData.Get(propertyInfo.Name).ToString());
@@ -141,15 +164,32 @@ public class SkillEditor : EditorWindow {
             if (propertyInfo.PropertyType == typeof(int)) {
                 ObjectJsonData[propertyInfo.Name] = EditorGUILayout.IntField(propertyInfo.Name, (int)ObjectJsonData.Get(propertyInfo.Name, typeof(int)));
             }
+
+            // 对整形数组的处理
+            if (propertyInfo.PropertyType.IsArray && propertyInfo.PropertyType.GetElementType() == typeof(int)) {
+
+            }
+
             if (propertyInfo.PropertyType == typeof(BattleState)) {
-                EditorGUILayout.LabelField("============================================");
-                ObjectJsonData[propertyInfo.Name] = CreateFiledPanel(propertyInfo.PropertyType, ObjectJsonData.Get(propertyInfo.Name));
+                EditorGUILayout.LabelField("========BattleState=========================");
+                battleStateType = (BattleStateType)EditorGUILayout.EnumPopup("状态类型", battleStateType);
+                Type tempType = GetTypeWithAnotherAsm(battleStateType.ToString());
+                ObjectJsonData[propertyInfo.Name] = CreateFiledPanel(tempType, ObjectJsonData.Get(propertyInfo.Name));
                 EditorGUILayout.LabelField("============================================");
             }
             if (propertyInfo.PropertyType == typeof(Damage)) {
-                EditorGUILayout.LabelField("============================================");
+                EditorGUILayout.LabelField("========Damage==============================");
                 ObjectJsonData[propertyInfo.Name] = CreateFiledPanel(propertyInfo.PropertyType, ObjectJsonData.Get(propertyInfo.Name));
                 EditorGUILayout.LabelField("============================================");
+            }
+            if (propertyInfo.PropertyType.BaseType == typeof(Enum)) {
+                if (propertyInfo.Name.Contains("TargetType")) {
+                    // 多重枚举
+                    ObjectJsonData[propertyInfo.Name] = (int)(UnitType)EditorGUILayout.EnumFlagsField(propertyInfo.Name, (UnitType)(int)ObjectJsonData.Get(propertyInfo.Name, typeof(int)));
+                } else {
+                    // 普通枚举
+                    ObjectJsonData[propertyInfo.Name] = (int)(Enum.ToObject(propertyInfo.PropertyType, EditorGUILayout.EnumPopup(propertyInfo.Name, (Enum)Enum.ToObject(propertyInfo.PropertyType, (int)ObjectJsonData.Get(propertyInfo.Name, typeof(int))))));
+                }
             }
         }
         return ObjectJsonData;
@@ -166,12 +206,15 @@ public class SkillEditor : EditorWindow {
     /// <returns></returns>
     public JsonData CreateFiledPanel(Type type,JsonData preData) {
         JsonData result = new JsonData();
+        result["Type"] = type.Name;
 
         // 反射获得其所有属性
         PropertyInfo[] propertyInfos = type.GetProperties();
 
         EditorGUILayout.LabelField(type.Name + "属性：");
         foreach (var propertyInfo in propertyInfos) {
+            if (propertyInfo.GetSetMethod() == null) continue;
+
             if (propertyInfo.PropertyType == typeof(string)) {
                 if (!propertyInfo.Name.Contains("Description"))
                     result[propertyInfo.Name] = EditorGUILayout.TextField(propertyInfo.Name, preData.Get(propertyInfo.Name).ToString());

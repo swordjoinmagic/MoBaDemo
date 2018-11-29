@@ -63,7 +63,7 @@ public class PointingSkill : ActiveSkill{
 
     public override void Execute(CharacterMono spller, CharacterMono target) {
 
-        FinalSpellTime = Time.time;
+        base.Execute(spller,target);
 
         GameObject tempSelfEffect = null;
         GameObject tempTargetEffect = null;

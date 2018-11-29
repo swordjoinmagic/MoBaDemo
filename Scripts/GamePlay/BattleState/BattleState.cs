@@ -126,23 +126,5 @@ public class BattleState {
         stateHolder.RemoveBattleState(this);
     }
 
-    //public override bool Equals(object obj) {
-    //    if (obj == null) return false;
-    //    try {
-    //        BattleState another = obj as BattleState;
-    //        if (name == another.name)
-    //            return true;
-    //        else if (obj.GetHashCode()==GetHashCode()) {
-    //            return true;
-    //        }
-    //    } catch (Exception e) {
-    //        Debug.Log(e.Message);
-    //    }
-    //    return false;
-    //}
-
-    //public override int GetHashCode() {
-    //    return base.GetHashCode();
-    //}
 }
 

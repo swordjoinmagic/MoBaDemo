@@ -11,11 +11,21 @@ public class PoisoningState : BattleState{
 
     //============================================
     // 提供给外部调用的接口
-    public Damage damage = Damage.Zero;     // 中毒时每间隔1秒受到的伤害
+    private Damage damage = Damage.Zero;     // 中毒时每间隔1秒受到的伤害
     public GameObject effect = null;        // 中毒时的特效
 
     private Damage nowDamage = Damage.Zero;
     private GameObject effectObject = null;
+
+    public Damage Damage {
+        get {
+            return damage;
+        }
+
+        set {
+            damage = value;
+        }
+    }
 
     protected override void OnEnter(CharacterMono stateHolder) {
         base.OnEnter(stateHolder);
@@ -30,7 +40,7 @@ public class PoisoningState : BattleState{
     protected override void OnUpdate(CharacterMono stateHolder) {
         base.OnUpdate(stateHolder);
 
-        nowDamage += damage * Time.smoothDeltaTime;
+        nowDamage += Damage * Time.smoothDeltaTime;
         if (nowDamage.TotalDamage >= 1) {
             stateHolder.characterModel.Damaged(nowDamage);
             nowDamage = Damage.Zero;

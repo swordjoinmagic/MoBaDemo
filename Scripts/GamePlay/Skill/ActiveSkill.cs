@@ -10,10 +10,10 @@ using UnityEngine;
 ///     2.造成的基本伤害
 ///     3.附加伤害
 ///     4.释放键位
+///     5.允许释放目标
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-//[System.Serializable]
 public class ActiveSkill : BaseSkill{
     public int mp;
     protected int baseDamage;
@@ -32,8 +32,8 @@ public class ActiveSkill : BaseSkill{
     // 最后一次释放技能的时间
     protected float finalSpellTime;
 
-    // 判断此技能的释放是否必须指定敌人对象，true为必须指定
-    protected bool isMustDesignation;
+    // 此技能允许释放的目标，是一个多重枚举
+    protected UnitType skillTargetType;
 
     public int Mp {
         get {
@@ -95,13 +95,9 @@ public class ActiveSkill : BaseSkill{
         }
     }
 
-    public float FinalSpellTime {
+    public float CDRate {
         get {
-            return finalSpellTime;
-        }
-
-        set {
-            finalSpellTime = value;
+            return (Time.time - finalSpellTime)/CD;
         }
     }
 
@@ -115,23 +111,79 @@ public class ActiveSkill : BaseSkill{
         }
     }
 
-    public bool IsMustDesignation {
+    // 判断此技能的释放是否必须指定敌人对象，true为必须指定
+    public virtual bool IsMustDesignation {
         get {
-            return isMustDesignation;
+            return true;
+        }
+    }
+
+    public UnitType SkillTargetType {
+        get {
+            return skillTargetType;
         }
 
         set {
-            isMustDesignation = value;
+            skillTargetType = value;
         }
     }
+
+    /// <summary>
+    /// 判断此技能的指向目标是否包含某个目标（即targetType）,
+    /// 举个例子，此技能的指向目标是 Enermy | Firend | Tree,此时询问此技能指向目标是否包含Enermy，
+    /// 返回True
+    /// </summary>
+    /// <param name="targetType"></param>
+    /// <returns></returns>
+    public bool ContainsTarget(UnitType targetType) {
+        return (SkillTargetType & targetType) == targetType;
+    }
+
 
     /// <summary>
     /// 判断当前技能是否处于冷却中
     /// </summary>
     /// <returns></returns>
     public bool IsCoolDown() {
-        //Debug.Log("Time.time - finalSpellTime"+(Time.time - finalSpellTime).ToString()+"  CD:"+CD);
         return Time.time - finalSpellTime <= CD;
+    }
+
+    /// <summary>
+    /// 判断某个单位可以被准备释放的技能攻击
+    /// </summary>
+    /// <returns></returns>
+    protected bool CanBeExecuteToTarget(CharacterMono speller,CharacterMono target) {
+        // 1. 施法者和目标阵营不一样，且目标阵营不属于中立阵营，则目标属于敌人
+        if (!speller.CompareOwner(target)) {
+            if (ContainsTarget(UnitType.Enermy))
+                return true;
+        } else {
+            // 2. 施法者和目标阵营一样，则目标属于朋友单位
+            if (ContainsTarget(UnitType.Friend)) {
+                return true;
+            }
+        }
+
+        // 3. 目标是英雄单位
+        if (target is HeroMono) {
+            if (ContainsTarget(UnitType.Hero)) {
+                return true;
+            }
+        }
+
+        // 4. 目标是建筑物
+        if ((target.characterModel.unitType & UnitType.Building) == UnitType.Building)
+            if (ContainsTarget(UnitType.Building))
+                return true;
+
+        // 5. 目标是守卫
+        if ((target.characterModel.unitType & UnitType.Guard) == UnitType.Guard) {
+            if (ContainsTarget(UnitType.Guard))
+                return true;
+        }
+
+        // default:
+        return false;
     }
 
     /// <summary>
@@ -164,6 +216,7 @@ public class ActiveSkill : BaseSkill{
     /// <param name="speller">施法者</param>
     /// <param name="target">受到法术伤害的目标</param>
     public virtual void Execute(CharacterMono speller,Vector3 position) {
+        finalSpellTime = Time.time;
     }
 }
 

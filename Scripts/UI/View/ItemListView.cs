@@ -92,11 +92,11 @@ public class ItemListView : MonoBehaviour{
                 if (activeSkill == null) return;
 
                 float coolDown = activeSkill.CD;
-                float finalSpellTime = activeSkill.FinalSpellTime;
+                //float finalSpellTime = activeSkill.FinalSpellTime;
 
-                float different = Time.time - finalSpellTime;
+                //float different = Time.time - finalSpellTime;
 
-                float rate = 1 - Mathf.Clamp01(different / coolDown);
+                float rate = 1 - Mathf.Clamp01(activeSkill.CDRate);
 
                 maskImage[i].fillAmount = rate;
             }

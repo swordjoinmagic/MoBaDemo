@@ -211,7 +211,8 @@ public class CharacterMono : MonoBehaviour {
                     LongDescription = "one skill Description",
                     SkillLevel = 1,
                     SkillInfluenceRadius = 1,
-                    IsMustDesignation = false
+                    SkillTargetType = UnitType.Everything
+                    //IsMustDesignation = false
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
@@ -232,7 +233,8 @@ public class CharacterMono : MonoBehaviour {
                     ShortDescription = "bbbbbbbbbbbbbbbbbbbbbbbbbb",
                     SkillLevel = 6,
                     SkillInfluenceRadius = 5,
-                    IsMustDesignation = true
+                    //IsMustDesignation = true,
+                    SkillTargetType = UnitType.Enermy | UnitType.Friend
                 },
                 new PointingSkill{
                     BaseDamage = 1000,
@@ -258,7 +260,7 @@ public class CharacterMono : MonoBehaviour {
                     PlusDamage = 200,
                     SpellDistance = 4f,
                     CD = 5f,
-                    IsMustDesignation = true,
+                    //IsMustDesignation = true,
                     count = 4,
                     Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
                     lightningBoltScriptPrefab = lightningBoltScriptPrefab,
@@ -277,7 +279,7 @@ public class CharacterMono : MonoBehaviour {
                     PlusDamage = 200,
                     SpellDistance = 4f,
                     CD = 5f,
-                    IsMustDesignation = true,
+                    //IsMustDesignation = true,
                     count = 4,
                     Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
                     lightningBoltScriptPrefab = lightningBoltScriptPrefab,
@@ -518,7 +520,7 @@ public class CharacterMono : MonoBehaviour {
                 #region 测试，使敌方进入中毒状态
                 // 测试，使敌方进入中毒状态
                 target.AddBattleState(new PoisoningState{
-                    damage = new Damage(40, 10),
+                    Damage = new Damage(40, 10),
                     Duration = 15f,
                     stateHolderEffect = stateHolderEffect,
                     Name = "PosioningState",
@@ -612,18 +614,63 @@ public class CharacterMono : MonoBehaviour {
     public bool IsImmediatelySpell() {
         return prepareSkill.SpellDistance == 0;
     }
-     
+
+
+    /// <summary>
+    /// 判断某个单位可以被准备释放的技能攻击
+    /// </summary>
+    /// <returns></returns>
+    protected bool CanBeExecuteToTarget(CharacterMono target) {
+        // 1. 施法者和目标阵营不一样，且目标阵营不属于中立阵营，则目标属于敌人
+        if (!CompareOwner(target)) {
+            if (prepareSkill.ContainsTarget(UnitType.Enermy))
+                return true;
+        } else {
+            // 2. 施法者和目标阵营一样，则目标属于朋友单位
+            if (prepareSkill.ContainsTarget(UnitType.Friend)) {
+                return true;
+            }
+        }
+
+        // 3. 目标是英雄单位
+        if (target is HeroMono) {
+            if (prepareSkill.ContainsTarget(UnitType.Hero)) {
+                return true;
+            }
+        }
+
+        // 4. 目标是建筑物
+        if ((target.characterModel.unitType & UnitType.Building) == UnitType.Building)
+            if (prepareSkill.ContainsTarget(UnitType.Building))
+                return true;
+
+        // 5. 目标是守卫
+        if ((target.characterModel.unitType & UnitType.Guard) == UnitType.Guard) {
+            if (prepareSkill.ContainsTarget(UnitType.Guard))
+                return true;
+        }
+
+        // default:
+        return false;
+    }
+
     /// <summary>
     /// 适用于指定敌人的施法技能
     /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
     /// </summary>
-    public bool Spell(CharacterMono enemryMono,Vector3 position) {
+    public bool Spell(CharacterMono enemryMono, Vector3 position) {
 
         // 如果目标已经不可攻击,那么返回False
         if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
             ResetSpeellStateAnimator();
             arroundEnemies.Remove(enemryMono);
 
+            return false;
+        }
+
+        // 如果指定目标不符合准备释放的技能的指定目标,返回
+        if (enemryMono != null && !CanBeExecuteToTarget(enemryMono)) {
+            Debug.Log("单位不符合目标技能指定目标 目标单位type:"+enemryMono.characterModel.unitType+" 技能指定的Type:"+prepareSkill.SkillTargetType);
             return false;
         }
 

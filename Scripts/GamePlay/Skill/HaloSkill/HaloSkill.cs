@@ -45,7 +45,7 @@ public class HaloSkill : PassiveSkill{
         Trigger.gameObject.layer = 2;
 
         additiveState = new PoisoningState {
-            damage = new Damage(30, 0),
+            Damage = new Damage(30, 0),
             Description = "中毒光环,每秒-30生命值,增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述增长描述",
             Duration = -1,
             IconPath = "0046",
@@ -64,7 +64,7 @@ public class HaloSkill : PassiveSkill{
     public override void Execute(CharacterMono speller, CharacterMono target) {
         //base.Execute(speller, target);
 
-        Debug.Log("Enter  Execute(CharacterMono speller, CharacterMono target)");
+        //Debug.Log("Enter  Execute(CharacterMono speller, CharacterMono target)");
 
         additiveState.isFirstEnterState = true;
         // 给目标附加一个持续时间为永久的中毒状态

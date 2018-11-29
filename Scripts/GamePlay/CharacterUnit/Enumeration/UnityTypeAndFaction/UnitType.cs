@@ -7,9 +7,12 @@ using System.Text;
 /// 单位类型,用于区分不同的单位
 /// </summary>
 public enum UnitType {
-    Guard = 0,      // 守卫
-    Invincible = 1, // 无敌的
-    Ground = 2,     // 地面的
-    Flying = 3      // 飞行的
+    Everything = ~0,
+    Enermy = 1,      // 敌人
+    Friend = 2,      // 盟友单位
+    Hero = 4,        // 英雄单位
+    Guard = 8,      // 守卫
+    Building = 16,  // 建筑物
+    None = 0,
 }
 
