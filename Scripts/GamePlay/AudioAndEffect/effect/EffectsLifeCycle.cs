@@ -6,7 +6,11 @@ using UnityEngine.Assertions;
 /// </summary>
 public class EffectsLifeCycle : MonoBehaviour{
 
+    // 粒子对象存活条件
     public EffectConditional conditional;
+
+    // 当此粒子对象消亡时，调用的回调函数
+    public event OnSkillCompeleteHandler OnFinshied;
 
     public void Init(EffectConditonalType type,BattleState battleState=null,CharacterMono target=null,float during=-1,ParticleSystem particleSystem=null) {
         switch (type) {
@@ -33,6 +37,14 @@ public class EffectsLifeCycle : MonoBehaviour{
         // 如果粒子对象不合法,删除此特效对象
         if (!conditional.IsValid()) {
             Destroy(this.gameObject);
+        }
+    }
+
+    private void OnDestroy() {
+        if (OnFinshied != null) {
+            Debug.Log("OnFinished");
+            OnFinshied();
+            OnFinshied -= OnFinshied;
         }
     }
 }

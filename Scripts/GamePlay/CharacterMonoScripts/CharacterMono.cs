@@ -200,7 +200,6 @@ public class CharacterMono : MonoBehaviour {
             turningSpeed = 5,
             activeSkills = new List<ActiveSkill> {
                 new RangeDamageSkill{
-                    damage = new Damage(){ BaseDamage=500,PlusDamage=100 },
                     KeyCode = KeyCode.E,
                     Mp = 10,
                     PlusDamage = 200,
@@ -211,7 +210,7 @@ public class CharacterMono : MonoBehaviour {
                     LongDescription = "one skill Description",
                     SkillLevel = 1,
                     SkillInfluenceRadius = 1,
-                    SkillTargetType = UnitType.Everything
+                    SkillTargetType = UnitType.Everything,
                     //IsMustDesignation = false
                 },
                 new PointingSkill{
@@ -255,7 +254,7 @@ public class CharacterMono : MonoBehaviour {
                 },
                 new ChainSkill{
                     BaseDamage = 1000,
-                    KeyCode = KeyCode.R,
+                    KeyCode = KeyCode.P,
                     Mp = 220,
                     PlusDamage = 200,
                     SpellDistance = 4f,
@@ -272,24 +271,61 @@ public class CharacterMono : MonoBehaviour {
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
                     SkillLevel = 6
                 },
-                new ChainSkill{
-                    BaseDamage = 1000,
-                    KeyCode = KeyCode.R,
-                    Mp = 220,
-                    PlusDamage = 200,
+                new PointingSkillGroup{
+                    activeSkills = new ActiveSkill[]{
+                        new PointingSkill{
+                            SkillTargetType = UnitType.Everything,
+                            TargetEffect = targetPositionEffect,
+                            PlusDamage = 200
+                        },
+                        new PointingSkill{
+                            SkillTargetType = UnitType.Everything,
+                            TargetEffect = targetPositionEffect,
+                            PlusDamage = 200
+                        },
+                        new PointingSkill{
+                            SkillTargetType = UnitType.Everything,
+                            TargetEffect = targetPositionEffect,
+                            PlusDamage = 200
+                        },
+                        new PointingSkill{
+                            SkillTargetType = UnitType.Everything,
+                            TargetEffect = targetPositionEffect,
+                            PlusDamage = 200
+                        },
+                        new RangeDamageSkill{
+                            SkillTargetType = UnitType.Everything,
+                            TargetEffect = targetPositionEffect,
+                            PlusDamage = 200,
+                            SkillInfluenceRadius = 5
+                        }
+                    },
+                    skillDelayAttributes = new SkillDelayAttribute[] {
+                        new SkillDelayAttribute{
+                            isDelay = false,
+                            index = -1,
+                        },
+                        new SkillDelayAttribute{
+                            isDelay = true,
+                            index = 0
+                        },
+                        new SkillDelayAttribute{
+                            isDelay = true,
+                            index = 1
+                        },
+                        new SkillDelayAttribute{
+                            isDelay = true,
+                            index = 0
+                        },
+                        new SkillDelayAttribute{
+                            isDelay = true,
+                            index = 2
+                        }
+                    },
+                    SkillTargetType = UnitType.Everything,
+                    KeyCode = KeyCode.T,
+                    SkillLevel = 1,
                     SpellDistance = 4f,
-                    CD = 5f,
-                    //IsMustDesignation = true,
-                    count = 4,
-                    Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
-                    lightningBoltScriptPrefab = lightningBoltScriptPrefab,
-                    SkillName = "W技能",
-                    IconPath = "00041",
-                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    SkillLevel = 6
                 }
             },
             passiveSkills = new List<PassiveSkill> {},
@@ -387,8 +423,8 @@ public class CharacterMono : MonoBehaviour {
             characterModel.itemGrids[1].ItemCount = 5;
         }
 
-        HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red, HaloEffect= stateHolderEffect };
-        haloSkill.Execute(this);
+        //HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red, HaloEffect= stateHolderEffect };
+        //haloSkill.Execute(this);
         #endregion
     }
 

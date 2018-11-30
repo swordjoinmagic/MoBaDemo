@@ -1089,7 +1089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterModel:
-    maxHp: 2000
+    maxHp: 4000
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
@@ -1328,7 +1328,7 @@ Prefab:
     - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: characterModel.maxHp
-      value: 40000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_RootOrder
@@ -1357,7 +1357,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
@@ -1822,7 +1822,7 @@ Prefab:
     - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: characterModel.maxHp
-      value: 2000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_RootOrder
@@ -1924,7 +1924,7 @@ Prefab:
     - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: characterModel.maxHp
-      value: 40000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_RootOrder
@@ -1953,7 +1953,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
@@ -3349,7 +3349,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterModel:
-    maxHp: 2000
+    maxHp: 4000
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
@@ -4302,7 +4302,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000014317898
+      value: 0.000026346004
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -6688,7 +6688,7 @@ Prefab:
     - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
         type: 2}
       propertyPath: characterModel.maxHp
-      value: 40000
+      value: 4000
       objectReference: {fileID: 0}
     - target: {fileID: 4547156238197904, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_RootOrder
@@ -6717,7 +6717,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}

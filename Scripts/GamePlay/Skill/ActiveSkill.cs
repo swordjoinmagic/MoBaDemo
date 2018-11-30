@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+public delegate void OnSkillCompeleteHandler();
 /// <summary>
 /// 所有主动技能类的基类,包含了主动技能的基本特性:
 ///     1.消耗的mp
@@ -14,7 +15,7 @@ using UnityEngine;
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-public class ActiveSkill : BaseSkill{
+public class ActiveSkill : BaseSkill {
     public int mp;
     protected int baseDamage;
     protected int plusDamage;
@@ -34,6 +35,12 @@ public class ActiveSkill : BaseSkill{
 
     // 此技能允许释放的目标，是一个多重枚举
     protected UnitType skillTargetType;
+
+    // 施法时，自身产生的特效
+    protected GameObject selfEffect;
+
+    // 施法时，目标产生的特效
+    protected GameObject targetEffect;
 
     public int Mp {
         get {
@@ -97,7 +104,7 @@ public class ActiveSkill : BaseSkill{
 
     public float CDRate {
         get {
-            return (Time.time - finalSpellTime)/CD;
+            return (Time.time - finalSpellTime) / CD;
         }
     }
 
@@ -128,6 +135,26 @@ public class ActiveSkill : BaseSkill{
         }
     }
 
+    public GameObject SelfEffect {
+        get {
+            return selfEffect;
+        }
+
+        set {
+            selfEffect = value;
+        }
+    }
+
+    public GameObject TargetEffect {
+        get {
+            return targetEffect;
+        }
+
+        set {
+            targetEffect = value;
+        }
+    }
+
     /// <summary>
     /// 判断此技能的指向目标是否包含某个目标（即targetType）,
     /// 举个例子，此技能的指向目标是 Enermy | Firend | Tree,此时询问此技能指向目标是否包含Enermy，
@@ -137,6 +164,32 @@ public class ActiveSkill : BaseSkill{
     /// <returns></returns>
     public bool ContainsTarget(UnitType targetType) {
         return (SkillTargetType & targetType) == targetType;
+    }
+
+    // 当技能释放完毕后，执行的回调函数
+    public event OnSkillCompeleteHandler OnCompelte;
+
+    /// <summary>
+    /// 为技能产生一般性特效，即释放时，
+    /// 自身的特效 selfEffect;
+    /// 敌方的特效 targetEffect;
+    /// </summary>
+    protected void CreateEffect(CharacterMono speller, Vector3 position,CharacterMono target=null) {
+        EffectsLifeCycle tempSelfEffect = null;
+        EffectsLifeCycle tempTargetEffect = null;
+        if (SelfEffect != null) {
+            tempSelfEffect = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: SelfEffect, during: 5f);
+            tempSelfEffect.transform.position = position;
+        }
+        if (TargetEffect != null) {
+            tempTargetEffect = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: TargetEffect, during: 5f);
+            tempTargetEffect.transform.position = position;
+        }
+
+        // 如果有技能要延迟执行，默认根据目标特效对象的生命周期进行延迟执行
+        if (OnCompelte != null) {
+            tempTargetEffect.OnFinshied += OnCompelte;
+        }
     }
 
 
@@ -204,7 +257,8 @@ public class ActiveSkill : BaseSkill{
     /// <param name="speller">施法者</param>
     /// <param name="target">受到法术伤害的目标</param>
     public virtual void Execute(CharacterMono speller,CharacterMono target) {
-        Execute(speller,target.transform.position);
+        finalSpellTime = Time.time;
+        CreateEffect(speller, target.transform.position);
     }
 
     /// <summary>
@@ -217,6 +271,7 @@ public class ActiveSkill : BaseSkill{
     /// <param name="target">受到法术伤害的目标</param>
     public virtual void Execute(CharacterMono speller,Vector3 position) {
         finalSpellTime = Time.time;
+        CreateEffect(speller,position);
     }
 }
 

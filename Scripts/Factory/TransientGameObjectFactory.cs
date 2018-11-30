@@ -14,7 +14,7 @@ public class TransientGameObjectFactory{
     /// </summary>
     /// <param name="templateObject">模板对象</param>
     /// <returns></returns>
-    public static GameObject AcquireObject(EffectConditonalType type,GameObject templateObject=null,BattleState battleState = null, CharacterMono target = null, float during = -1, ParticleSystem particleSystem = null) {
+    public static EffectsLifeCycle AcquireObject(EffectConditonalType type,GameObject templateObject=null,BattleState battleState = null, CharacterMono target = null, float during = -1, ParticleSystem particleSystem = null) {
         GameObject result = null;
 
         if (templateObject == null) {
@@ -26,6 +26,6 @@ public class TransientGameObjectFactory{
         EffectsLifeCycle effectsLifeCycle = result.AddComponent<EffectsLifeCycle>();
         effectsLifeCycle.Init(type,battleState,target,during,particleSystem); 
 
-        return result;
+        return effectsLifeCycle;
     }
 }

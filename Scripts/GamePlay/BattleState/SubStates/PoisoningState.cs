@@ -31,7 +31,7 @@ public class PoisoningState : BattleState{
         base.OnEnter(stateHolder);
         if (effect != null && effectObject == null) {
             // 创建临时特效对象
-            effectObject = TransientGameObjectFactory.AcquireObject(EffectConditonalType.BattleState, templateObject: effect, battleState: this, target: stateHolder);
+            effectObject = TransientGameObjectFactory.AcquireObject(EffectConditonalType.BattleState, templateObject: effect, battleState: this, target: stateHolder).gameObject;
             effectObject.transform.position = stateHolder.transform.position;
             effectObject.transform.SetParent(stateHolder.transform);
         }

@@ -19,12 +19,40 @@ public class PointingSkillGroup : ActiveSkill{
     //===================================
     // 此技能开放的接口
     public ActiveSkill[] activeSkills;  // 技能组所包含的所有主动技能
+    public SkillDelayAttribute[] skillDelayAttributes;  // 技能的延迟属性
 
     public override void Execute(CharacterMono speller, CharacterMono target) {
         base.Execute(speller, target);
-        // 遍历所有技能组,对target目标释放效果
-        foreach (var activeSkill in activeSkills) {
-            activeSkill.Execute(speller,target);
+
+        for (int i=0;i<activeSkills.Count();i++) {
+            var skill = activeSkills[i];
+            var delayAttribute = skillDelayAttributes[i];
+            if (delayAttribute.isDelay) {
+                var activeSkill = activeSkills[delayAttribute.index];
+
+                OnSkillCompeleteHandler delayExcute = null;
+                delayExcute = () => {
+                    if(skill.IsMustDesignation)
+                        skill.Execute(speller,target);
+                    else
+                        skill.Execute(speller,target.transform.position);
+                    if(delayExcute!=null)
+                        activeSkill.OnCompelte -= delayExcute;
+                };
+                activeSkill.OnCompelte += delayExcute;
+
+            }
+        }
+
+        for (int i = 0; i < activeSkills.Count(); i++) {
+            var skill = activeSkills[i];
+            var delayAttribute = skillDelayAttributes[i];
+            if (!delayAttribute.isDelay) {
+                if (skill.IsMustDesignation)
+                    skill.Execute(speller, target);
+                else
+                    skill.Execute(speller, target.transform.position);
+            }
         }
     }
 }
