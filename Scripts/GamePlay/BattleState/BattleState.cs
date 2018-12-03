@@ -114,8 +114,11 @@ public class BattleState {
     protected virtual void OnEnter(CharacterMono stateHolder) {
         firsstEnterTime = Time.time;
 
-        if(stateHolderEffect!=null)
-            GameObject.Instantiate(stateHolderEffect,stateHolder.transform.position,Quaternion.identity);
+        if (stateHolderEffect != null) {
+            EffectsLifeCycle lifeCycle = TransientGameObjectFactory.AcquireObject(EffectConditonalType.BattleState,templateObject:stateHolderEffect,battleState:this,target:stateHolder);
+            lifeCycle.transform.SetParent(stateHolder.transform,false);
+            lifeCycle.transform.localPosition = Vector3.zero;
+        }
     }
     protected virtual void OnUpdate(CharacterMono stateHolder) {
 
@@ -123,8 +126,18 @@ public class BattleState {
     protected virtual void OnExit(CharacterMono stateHolder) {
         isStateDying = true;
         // 状态消失时，自动将当前状态从单位的状态列表中去除
-        stateHolder.RemoveBattleState(this);
+        stateHolder.RemoveBattleState(this.name);
     }
 
+    /// <summary>
+    /// 重置状态存在时间,当状态被重复附加给一个单位，且状态不可叠加时，将状态存在时间重置
+    /// </summary>
+    public void ResetDuration() {
+        firsstEnterTime = Time.time;
+    }
+
+    public virtual BattleState DeepCopy() {
+        return null;
+    }
 }
 

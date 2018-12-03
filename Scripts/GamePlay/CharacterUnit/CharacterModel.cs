@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using uMVVM;
+using System;
 
 /// <summary>
 /// 基本单位,所有单位的基类
@@ -24,16 +22,28 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public string name;
     // 该单位的普通攻击距离
     public float attackDistance;
+
+    #region 技能相关
     // 当前角色的所有技能
     public List<BaseSkill> baseSkills = new List<BaseSkill>();
     // 当前角色的所有主动技能
     public List<ActiveSkill> activeSkills = new List<ActiveSkill>();
     // 当前角色所有被动技能
     public List<PassiveSkill> passiveSkills = new List<PassiveSkill>();
+    // 单位可以拥有的最大技能数
+    public int MaxSkillCount {
+        get {
+            return 5;
+        }
+    }
+    #endregion
     // 单位身上拥有的所有物品
     public List<ItemGrid> itemGrids;
     // 单位攻击力
     public int attack;
+    // 攻击浮动值,举例 当浮动值=5，攻击值=10，那么整体攻击值应该在5-15之间浮动。
+    // 即[attack-float , attack+float]这样一个区间内浮动
+    public int attackFloatingValue;
     // 单位攻击类型
     public AttackType attackType;
     // 单位攻击速度,百分比单位,当为1的时候,表示原始速度100%,当为1.5的时候,表示比原始速度快50%,即150%.
@@ -235,6 +245,8 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
                     }
                 }
             }
+
+
             return newAttackPlus;
         }
     }
@@ -277,7 +289,14 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
             OnDamaged(damage,attacker,Hp);
     }
 
-
+    /// <summary>
+    /// 计算单位能对目标造成的一次普通伤害
+    /// </summary>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public Damage GetDamage(CharacterModel target) {
+        return new Damage { BaseDamage= UnityEngine.Random.Range(attack - attackFloatingValue, attack + attackFloatingValue) };
+    }
 
     // 获得当前CharacterModel对象的深拷贝对象
     public virtual CharacterModel DeepCopy() {

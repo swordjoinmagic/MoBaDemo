@@ -189,6 +189,8 @@ public class ActiveSkill : BaseSkill {
         // 如果有技能要延迟执行，默认根据目标特效对象的生命周期进行延迟执行
         if (OnCompelte != null) {
             tempTargetEffect.OnFinshied += OnCompelte;
+            // 清除委托
+            OnCompelte -= OnCompelte;
         }
     }
 

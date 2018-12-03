@@ -25,24 +25,6 @@ public class HeroMono : CharacterMono{
         return result;
     }
 
-    /// <summary>
-    /// 单位获得物品的方法，返回True表示单位成功获得该物品，
-    /// 返回Fals表示因为单位物品栏限制，单位获得物品失败。
-    /// </summary>
-    /// <param name="item"></param>
-    /// <returns></returns>
-    public bool GetItem(ItemGrid item) {
-        for (int i=0;i<HeroModel.itemGrids.Count;i++) {
-            ItemGrid itemGrid = HeroModel.itemGrids[i];
-            if (itemGrid.item == null) {
-                itemGrid.item = item.item;
-                itemGrid.ItemCount = item.ItemCount;
-                return true;
-            }
-        }
-        return false;
-    }
-
     public override void Update() {
         base.Update();
     }

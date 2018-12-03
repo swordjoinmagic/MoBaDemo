@@ -24,6 +24,8 @@ public class PointingSkillGroup : ActiveSkill{
     public override void Execute(CharacterMono speller, CharacterMono target) {
         base.Execute(speller, target);
 
+        //========================================
+        // 为延迟技能增加监听事件
         for (int i=0;i<activeSkills.Count();i++) {
             var skill = activeSkills[i];
             var delayAttribute = skillDelayAttributes[i];
@@ -36,14 +38,13 @@ public class PointingSkillGroup : ActiveSkill{
                         skill.Execute(speller,target);
                     else
                         skill.Execute(speller,target.transform.position);
-                    if(delayExcute!=null)
-                        activeSkill.OnCompelte -= delayExcute;
                 };
                 activeSkill.OnCompelte += delayExcute;
-
             }
         }
 
+        //=============================================
+        // 执行每一个非延迟技能
         for (int i = 0; i < activeSkills.Count(); i++) {
             var skill = activeSkills[i];
             var delayAttribute = skillDelayAttributes[i];

@@ -29,7 +29,7 @@ public class MouseCursorChanged : MonoBehaviour {
             MouseIconManager.Instace.ChangeMouseIcon(MouseIconManager.MouseState.Spell);
 
             ActiveSkill activeSkill = characterMono.prepareSkill;
-            if (activeSkill.SkillInfluenceRadius > 0) {
+            if (activeSkill.SkillInfluenceRadius > 0 && !activeSkill.IsMustDesignation) {
                 if (Physics.Raycast(ray, out hit2, 100,layerMask:1<<11)) {
                     Vector3 position = hit2.point;
                     //Debug.Log(position);

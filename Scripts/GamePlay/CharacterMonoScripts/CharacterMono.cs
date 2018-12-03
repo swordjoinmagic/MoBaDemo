@@ -61,7 +61,7 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="Attacker">攻击者</param>
     /// <param name="Suffered">遭受伤害者</param>
     /// <param name="Damage">此次攻击造成的伤害</param>
-    public delegate void AttackHandler(CharacterMono Attacker,CharacterMono Suffered,Damage damage);
+    public delegate void AttackHandler(CharacterMono Attacker, CharacterMono Suffered, Damage damage);
 
     /// <summary>
     /// 当单位进行施法时，或者遭受某个施法的单位指向时，触发的事件
@@ -70,13 +70,26 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="Target">法术指定目标</param>
     /// <param name="damage">此次造成的伤害（为负则为治疗）</param>
     /// <param name="activeSkill">此次施法释放的主动技能（被动技能不算把？）</param>
-    public delegate void SpellHandler(CharacterMono Spller, CharacterMono Target, Damage damage,ActiveSkill activeSkill);
+    public delegate void SpellHandler(CharacterMono Spller, CharacterMono Target, Damage damage, ActiveSkill activeSkill);
 
     /// <summary>
     /// 当单位死亡时，进行调用
     /// </summary>
     /// <param name="dead">死者</param>
     public delegate void DiedHandler(CharacterMono dead);
+
+    /// <summary>
+    /// 当单位学习/遗忘技能时，触发的回调函数/事件
+    /// </summary>
+    /// <param name="learner"></param>
+    /// <param name="skill"></param>
+    public delegate void SkillHandler(CharacterMono learner, BaseSkill skill);
+
+    /// <summary>
+    /// 当单位获取/遗失物品时，触发的回调函数/事件
+    /// </summary>
+    /// <param name="characterMono"></param>
+    public delegate void ItemHandler(CharacterMono characterMono, ItemGrid itemGrid);
     //=====================================
     // 事件集合
 
@@ -93,6 +106,14 @@ public class CharacterMono : MonoBehaviour {
 
     // 当单位死亡时，触发的事件
     public event DiedHandler OnUnitDied;
+
+    // 当单位学习/遗忘技能时
+    public event SkillHandler OnLearnSkill;
+    public event SkillHandler OnForgetSkill;
+
+    // 当单位获得/遗失物品时
+    public event ItemHandler OnGetItem;
+    public event ItemHandler OnLostItem;
     #endregion
 
     // 当前人物的动画组件以及寻路组件
@@ -140,18 +161,24 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="newBattleState"></param>
     public void AddBattleState(BattleState newBattleState) {
         // 判断单位身上已经是否有这个状态了,并且判断状态是否可以叠加
-        if (battleStates.Find((battleState) => { return battleState.GetType() == newBattleState.GetType(); }) == null ||
-            newBattleState.IsStackable) {
+        var state = battleStates.Find((battleState) => { return battleState.Name == newBattleState.Name; });
+        if (newBattleState.IsStackable || state==null) {
             battleStates.Add(newBattleState);
 
             // 触发单位状态附加事件,向所有订阅该事件的观察者发送消息
             if (OnAddNewBattleStatus != null)
                 OnAddNewBattleStatus(newBattleState);
         }
+        // 如果状态已经存在，且状态不可叠加，那么重置状态存在时间
+        // 不触发单位状态附加事件
+        if (state != null && !state.IsStackable) {
+            state.ResetDuration();
+        }
+
     }
 
     /// <summary>
-    /// 去除单位身上某一个状态
+    /// 根据状态对象去除单位身上某一个状态,重载方法的最底层重载
     /// </summary>
     /// <param name="battleState"></param>
     public void RemoveBattleState(BattleState battleState) {
@@ -160,6 +187,34 @@ public class CharacterMono : MonoBehaviour {
         if (OnRemoveBattleStatus != null)
             OnRemoveBattleStatus(battleState);
     }
+    /// <summary>
+    /// 根据状态名去除单位身上某一个状态
+    /// </summary>
+    /// <param name="battleState"></param>
+    public void RemoveBattleState(string battleState) {
+        for (int i=0;i<battleStates.Count;) {
+            var state = battleStates[i];
+            if (state != null && state.Name == battleState) {
+                RemoveBattleState(state);
+                break;
+            } else {
+                i++;
+            }
+        }
+    }
+
+    public void RemoveBattleState(BattleStateType battleStateType) {
+        for (int i = 0; i < battleStates.Count;) {
+            var state = battleStates[i];
+            if (state != null && state.GetType().ToString() == battleStateType.ToString()) {
+                RemoveBattleState(state);
+                break;
+            } else {
+                i++;
+            }
+        }
+    }
+
     #endregion
 
     #region 测试
@@ -190,6 +245,7 @@ public class CharacterMono : MonoBehaviour {
             forcePower = 100,
             needExp = 1000,
             attack = 100,
+            attackFloatingValue = 99,
             Exp = 0,
             expfactor = 2,
             AvatarImagePath = "PlayerAvatarImage",
@@ -199,58 +255,88 @@ public class CharacterMono : MonoBehaviour {
             skillPointGrowthPoint = 1,
             turningSpeed = 5,
             activeSkills = new List<ActiveSkill> {
-                new RangeDamageSkill{
+                //new RangeDamageSkill{
+                //    KeyCode = KeyCode.E,
+                //    Mp = 10,
+                //    PlusDamage = 200,
+                //    SpellDistance = 7f,
+                //    CD = 2f,
+                //    SkillName = "E技能",
+                //    IconPath = "00046",
+                //    LongDescription = "one skill Description",
+                //    SkillLevel = 1,
+                //    SkillInfluenceRadius = 5,
+                //    SkillTargetType = UnitType.Everything,
+                //},
+                new RangeSkillGroup{
                     KeyCode = KeyCode.E,
+                    PlusDamage = 200,
+                    TargetEffect = targetPositionEffect,
+                    SpellDistance = 10f,
+                    SkillName = "E技能",
+                    IconPath = "00041",
+                    SkillLevel = 6,
+                    SkillInfluenceRadius = 6f,
+                    activeSkills = new ActiveSkill[]{
+                        new DisperseStateSkill{
+                            SpellDistance = 10,
+                            BattleStateType = BattleStateType.PoisoningState,
+                            SkillTargetType = UnitType.Everything
+                        }
+                    },
+                    skillDelayAttributes = new SkillDelayAttribute[] {
+                        new SkillDelayAttribute{
+                            isDelay = false,
+                            index = -1,
+                        }
+                    },
+                    SkillTargetType = UnitType.Everything,
+                },
+                new TransformSkill{
+                    KeyCode = KeyCode.W,
+                    SkillLevel = 1,
+                    SkillTargetType = UnitType.Everything,
+                    SkillName = "闪现",
+                    IconPath = "00046",
                     Mp = 10,
                     PlusDamage = 200,
-                    SpellDistance = 7f,
+                    SpellDistance = 15f,
                     CD = 2f,
-                    SkillName = "E技能",
-                    IconPath = "00046",
                     LongDescription = "one skill Description",
-                    SkillLevel = 1,
-                    SkillInfluenceRadius = 1,
-                    SkillTargetType = UnitType.Everything,
-                    //IsMustDesignation = false
+                    TargetEffect = targetEnemryEffect,
+                    SelfEffect = targetPositionEffect
                 },
-                new PointingSkill{
-                    BaseDamage = 1000,
-                    KeyCode = KeyCode.W,
-                    Mp = 220,
+                new RangeSkillGroup{
+                    KeyCode = KeyCode.F,
                     PlusDamage = 200,
-                    SelfEffect = null,
                     TargetEffect = targetPositionEffect,
-                    SpellDistance = 4f,
-                    CD = 0.5f,
-                    SkillName = "W技能",
+                    SpellDistance = 10f,
+                    SkillName = "F技能",
                     IconPath = "00041",
-                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    BackgroundDescription = "aaaaaaaaaaaaaaa",
-                    ShortDescription = "bbbbbbbbbbbbbbbbbbbbbbbbbb",
                     SkillLevel = 6,
-                    SkillInfluenceRadius = 5,
-                    //IsMustDesignation = true,
-                    SkillTargetType = UnitType.Enermy | UnitType.Friend
-                },
-                new PointingSkill{
-                    BaseDamage = 1000,
-                    KeyCode = KeyCode.Z,
-                    Mp = 220,
-                    PlusDamage = 200,
-                    SelfEffect = null,
-                    TargetEffect = null,
-                    SpellDistance = 4f,
-                    CD = 5f,
-                    SkillName = "W技能",
-                    IconPath = "00041",
-                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    SkillLevel = 6
+                    SkillInfluenceRadius = 6f,
+                    activeSkills = new ActiveSkill[]{
+                        new AdditionalStateSkill{
+                            SpellDistance = 10,
+                            AdditionalState = new PoisoningState{
+                                Description = "范围中毒技能",
+                                stateHolderEffect = targetEnemryEffect,
+                                Duration = 5,
+                                IconPath = "0041",
+                                Damage = new Damage{ PlusDamage = 100 },
+                                Name = "中毒",
+                                IsStackable = false,
+                            },
+                            SkillTargetType = UnitType.Everything
+                        }
+                    },
+                    skillDelayAttributes = new SkillDelayAttribute[] {
+                        new SkillDelayAttribute{
+                            isDelay = false,
+                            index = -1,
+                        }
+                    },
+                    SkillTargetType = UnitType.Everything,
                 },
                 new ChainSkill{
                     BaseDamage = 1000,
@@ -259,17 +345,18 @@ public class CharacterMono : MonoBehaviour {
                     PlusDamage = 200,
                     SpellDistance = 4f,
                     CD = 5f,
-                    //IsMustDesignation = true,
-                    count = 4,
-                    Damage = new Damage{ BaseDamage=1000,PlusDamage=1000 },
-                    lightningBoltScriptPrefab = lightningBoltScriptPrefab,
+                    Count = 4,
+                    Damage = new Damage{ BaseDamage=-1000,PlusDamage=-1000 },
                     SkillName = "W技能",
                     IconPath = "00041",
                     LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                     "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    SkillLevel = 6
+                    SkillLevel = 6,
+                    TargetEffect = targetEnemryEffect,
+                    SkillTargetType = UnitType.Everything,
+                    SkillInfluenceRadius = 10
                 },
                 new PointingSkillGroup{
                     activeSkills = new ActiveSkill[]{
@@ -295,7 +382,7 @@ public class CharacterMono : MonoBehaviour {
                         },
                         new RangeDamageSkill{
                             SkillTargetType = UnitType.Everything,
-                            TargetEffect = targetPositionEffect,
+                            TargetEffect = targetEnemryEffect,
                             PlusDamage = 200,
                             SkillInfluenceRadius = 5
                         }
@@ -326,6 +413,7 @@ public class CharacterMono : MonoBehaviour {
                     KeyCode = KeyCode.T,
                     SkillLevel = 1,
                     SpellDistance = 4f,
+                    //CD = 4f
                 }
             },
             passiveSkills = new List<PassiveSkill> {},
@@ -451,6 +539,26 @@ public class CharacterMono : MonoBehaviour {
 
     }
 
+    #region 用于处理物品的获取与丢失
+    /// <summary>
+    /// 单位获得物品的方法，返回True表示单位成功获得该物品，
+    /// 返回Fals表示因为单位物品栏限制，单位获得物品失败。
+    /// </summary>
+    /// <param name="item"></param>
+    /// <returns></returns>
+    public bool GetItem(ItemGrid item) {
+        for (int i = 0; i < characterModel.itemGrids.Count; i++) {
+            ItemGrid itemGrid = characterModel.itemGrids[i];
+            if (itemGrid.item == null) {
+                itemGrid.item = item.item;
+                itemGrid.ItemCount = item.ItemCount;
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion
+
     #region 人物的逻辑操作,包括 追逐敌人、攻击敌人、施法、移动等操作
     //=====================================================
     // 人物的逻辑操作,包括 追逐敌人、攻击敌人、施法、移动等操作
@@ -542,7 +650,7 @@ public class CharacterMono : MonoBehaviour {
             !isAttackFinish) {
 
             if (characterModel.projectileModel == null) {
-                Damage damage = new Damage(characterModel.TotalAttack,0);
+                Damage damage = characterModel.GetDamage(target.characterModel);
 
                 // 执行所有倍增伤害的被动技能
                 foreach (PassiveSkill passiveSkill in characterModel.passiveSkills) {

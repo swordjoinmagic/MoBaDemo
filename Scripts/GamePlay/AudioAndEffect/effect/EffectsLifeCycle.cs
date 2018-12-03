@@ -36,15 +36,12 @@ public class EffectsLifeCycle : MonoBehaviour{
 
         // 如果粒子对象不合法,删除此特效对象
         if (!conditional.IsValid()) {
+            if (OnFinshied != null) {
+                Debug.Log("OnFinished");
+                OnFinshied();
+                OnFinshied -= OnFinshied;
+            }
             Destroy(this.gameObject);
-        }
-    }
-
-    private void OnDestroy() {
-        if (OnFinshied != null) {
-            Debug.Log("OnFinished");
-            OnFinshied();
-            OnFinshied -= OnFinshied;
         }
     }
 }

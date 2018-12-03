@@ -31,9 +31,9 @@ public class BaseAtributeChangeSkill : PassiveSkill{
                 result = attributeValue * value;
             else
                 result = value;
-        } else
+        } else {
             result = 0;
-        //Debug.Log("此被动技能增加的值是："+result);
+        }
     }
 
 }

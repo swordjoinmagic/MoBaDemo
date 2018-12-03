@@ -46,5 +46,20 @@ public class PoisoningState : BattleState{
             nowDamage = Damage.Zero;
         }
     }
+
+    public override BattleState DeepCopy() {
+        PoisoningState poisoningState = new PoisoningState() {
+            damage = damage,
+            effect = effect,
+            Name = Name,
+            Description = Description,
+            IconPath = IconPath,
+            Duration = Duration,
+            statePassiveSkills = statePassiveSkills,
+            stateHolderEffect = stateHolderEffect,
+            IsStackable = IsStackable,
+        };
+        return poisoningState;
+    }
 }
 

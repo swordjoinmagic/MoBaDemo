@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
+/// <summary>
+/// 简单范围型技能：
+///     将对一个范围内的敌人造成一定的伤害
+/// </summary>
 public class RangeDamageSkill : ActiveSkill{
 
     public override bool IsMustDesignation {
