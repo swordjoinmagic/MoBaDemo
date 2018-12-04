@@ -31,7 +31,7 @@ public class ProjectileMono : MonoBehaviour{
         Vector3 dir = (-transform.position + position).normalized;
 
         // 一次移动的距离
-        Vector3 distance = dir * Time.deltaTime * projectileModel.movingSpeed;
+        Vector3 distance = dir * Time.deltaTime * projectileModel.MovingSpeed;
 
         transform.Translate(distance); 
 

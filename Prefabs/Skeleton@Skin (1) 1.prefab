@@ -1466,14 +1466,14 @@ MonoBehaviour:
     maxMp: 0
     name: "\u5C0F\u5175"
     attackDistance: 4
-    attack: 250
-    attackFloatingValue: 100
+    attack: 111
+    attackFloatingValue: 50
     attackType: 0
-    attackSpeed: 0
-    defense: 0
+    attackSpeed: 10
+    defense: 100
     defenseType: 0
-    movingSpeed: 0
-    turningSpeed: 1
+    movingSpeed: 100
+    turningSpeed: 10
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0

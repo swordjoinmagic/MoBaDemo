@@ -23,16 +23,20 @@ public class CharacterAttributeViewModel : ViewModelBase{
     public BindableProperty<HeroMainAttribute> mainAttribute = new BindableProperty<HeroMainAttribute>();
 
     public void Modify(HeroModel characterModel) {
-        attack.Value = characterModel.attack.ToString();
-        attackSpeed.Value = characterModel.attackSpeed.ToString();
+        string str = "{0} {1} <color=#00ff25>{2}</color>";
+        if (characterModel.AttackPlus == 0)
+            attack.Value = characterModel.Attack.ToString();
+        else
+            attack.Value = string.Format(str, characterModel.Attack, characterModel.AttackPlus>0?"+":"-",characterModel.AttackPlus);
+        attackSpeed.Value = characterModel.AttackSpeed.ToString();
         attackDistance.Value = characterModel.attackDistance.ToString();
-        moveSpeed.Value = characterModel.movingSpeed.ToString();
-        restoreHpSpeed.Value = characterModel.restoreHpSpeed.ToString();
-        defense.Value = characterModel.defense.ToString();
-        physicalResistance.Value = characterModel.physicalResistance.ToString();
-        magicalResistance.Value = characterModel.magicalResistance.ToString();
-        dodgeRate.Value = characterModel.dodgeRate.ToString();
-        resotreMpSpeed.Value = characterModel.resotreMpSpeed.ToString();
+        moveSpeed.Value = characterModel.MovingSpeed.ToString();
+        restoreHpSpeed.Value = characterModel.RestoreHpSpeed.ToString();
+        defense.Value = characterModel.Defense.ToString();
+        physicalResistance.Value = characterModel.PhysicalResistance.ToString();
+        magicalResistance.Value = characterModel.MagicalResistance.ToString();
+        dodgeRate.Value = characterModel.DodgeRate.ToString();
+        resotreMpSpeed.Value = characterModel.ResotreMpSpeed.ToString();
         forcePower.Value = characterModel.forcePower.ToString();
         agilePower.Value = characterModel.agilePower.ToString();
         intelligencePower.Value = characterModel.intelligencePower.ToString();

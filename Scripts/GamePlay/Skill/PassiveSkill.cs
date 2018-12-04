@@ -40,7 +40,7 @@ public class PassiveSkill : BaseSkill {
     }
 
     // 被动技能触发类型
-    public PassiveSkillTriggerType triggerType;
+    private PassiveSkillTriggerType triggerType;
 
     public virtual PassiveSkillTriggerType TiggerType {
         get {
@@ -77,13 +77,15 @@ public class PassiveSkill : BaseSkill {
     /// </summary>
     /// <param name="speller">被动技能施法者</param>
     /// <param name="result">输出此增益型技能增加的值</param>
-    /// <param name="characterAttribute">输入的属性参数，某些增益型技能只增加某些固定属性</param>
+    /// <param name="characterAttribute">表示此被动技能增加的是什么属性,用来在外部执行时，可以获得此被动技能关联的属性</param>
     /// <param name="attributeValue">该属性原先的值</param>
-    public virtual void Execute(CharacterModel speller,out int result,CharacterAttribute characterAttribute,int attributeValue) {
+    public virtual void Execute(CharacterModel speller,out int result,out CharacterAttribute characterAttribute) {
         result = 0;
+        characterAttribute = CharacterAttribute.Attack;
     }
-    public virtual void Execute(CharacterModel speller, out float result,CharacterAttribute characterAttribute, float attributeValue) {
+    public virtual void Execute(CharacterModel speller, out float result, out CharacterAttribute characterAttribute) {
         result = 0f;
+        characterAttribute = CharacterAttribute.Attack;
     }
     
 }

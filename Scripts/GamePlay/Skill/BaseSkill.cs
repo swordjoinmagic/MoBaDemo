@@ -7,25 +7,25 @@ using UnityEngine.UI;
 
 public class BaseSkill {
 
-    public string skillName;
+    private string skillName;
 
     // 图标地址，用地址保存，当要使用时进行加载
-    public string iconPath;
+    private string iconPath;
 
     // 技能长描述
-    public string longDescription;
+    private string longDescription;
     // 技能短描述
-    public string shortDescription;
+    private string shortDescription;
     // 技能背景描述
-    public string backgroundDescription;
+    private string backgroundDescription;
 
     // 技能等级
-    public int skillLevel;
+    private int skillLevel;
 
     // 对于英雄来说的,该技能下一级需要的英雄等级
     private int nextLevelNeedHeroLevel;
 
-    public string skillType;
+    private string skillType;
 
     public string SkillType {
         get {

@@ -37,6 +37,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         }
     }
     #endregion
+
     // 单位身上拥有的所有物品
     public List<ItemGrid> itemGrids;
     // 单位攻击力
@@ -84,7 +85,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // 闪避率
     public float dodgeRate;
 
-
+    #region 基础属性
     public int Hp {
         get {
             return hp.Value;
@@ -125,6 +126,107 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
             level.Value = value;
         }
     }
+
+    public float AttackSpeed {
+        get {
+            return attackSpeed;
+        }
+
+        set {
+            attackSpeed = value;
+        }
+    }
+
+    public int AttackFloatingValue {
+        get {
+            return attackFloatingValue;
+        }
+
+        set {
+            attackFloatingValue = value;
+        }
+    }
+
+    public int Attack {
+        get {
+            return attack;
+        }
+
+        set {
+            attack = value;
+        }
+    }
+
+    public int Defense {
+        get {
+            return defense;
+        }
+
+        set {
+            defense = value;
+        }
+    }
+
+    public int MovingSpeed {
+        get {
+            return movingSpeed;
+        }
+
+        set {
+            movingSpeed = value;
+        }
+    }
+
+    public float RestoreHpSpeed {
+        get {
+            return restoreHpSpeed;
+        }
+
+        set {
+            restoreHpSpeed = value;
+        }
+    }
+
+    public float ResotreMpSpeed {
+        get {
+            return resotreMpSpeed;
+        }
+
+        set {
+            resotreMpSpeed = value;
+        }
+    }
+
+    public float PhysicalResistance {
+        get {
+            return physicalResistance;
+        }
+
+        set {
+            physicalResistance = value;
+        }
+    }
+
+    public float MagicalResistance {
+        get {
+            return magicalResistance;
+        }
+
+        set {
+            magicalResistance = value;
+        }
+    }
+
+    public float DodgeRate {
+        get {
+            return dodgeRate;
+        }
+
+        set {
+            dodgeRate = value;
+        }
+    }
+    #endregion
 
     #endregion
 
@@ -215,39 +317,109 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // ● Plus 设置处
     //===============================================================
 
-    /// <summary>
-    ///  单位附加攻击力,此处所指的附加攻击力指的是 
-    ///  1. 被动技能
-    ///  2. 装备 
-    ///  等等
-    ///  所带来的附加攻击力
-    /// </summary>
+    // 附加攻击力
+    private int attackPlus;
     public int AttackPlus {
         get {
-            int newAttackPlus = 0;
-            int plus;
-            // 根据 单位身上的 被动技能 和 装备 来计算攻击附加值
+            return attackPlus;
+        }
+        set {
+            attackPlus = value;
+        }
+    }
 
-            foreach (var passiveSkill in passiveSkills) {
-                if (passiveSkill.TiggerType == PassiveSkillTriggerType.GainAttribute) {
-                    passiveSkill.Execute(this,out plus,CharacterAttribute.Attack,attack);
-                    newAttackPlus += plus;
-                }
-            }
+    // 附加防御力
+    private int defensePlus;
+    public int DefensePlus {
+        get {
+            return defensePlus;
+        }
 
-            foreach (var itemGrid in itemGrids) {
-                if (itemGrid!=null && itemGrid.item != null) {
-                    foreach (var passiveSkill in itemGrid.item.itemPassiveSkills) {
-                        if (passiveSkill.TiggerType == PassiveSkillTriggerType.GainAttribute) {
-                            passiveSkill.Execute(this, out plus, CharacterAttribute.Attack, attack);
-                            newAttackPlus += plus;
-                        }
-                    }
-                }
-            }
+        set {
+            defensePlus = value;
+        }
+    }
 
+    // 附加攻击距离
+    private float attackDistancePlus;
+    public float AttackDistancePlus {
+        get {
+            return attackDistancePlus;
+        }
 
-            return newAttackPlus;
+        set {
+            attackDistancePlus = value;
+        }
+    }
+
+    // 附加移动速度
+    private int movingSpeedPlus;
+    public int MovingSpeedPlus {
+        get {
+            return movingSpeedPlus;
+        }
+
+        set {
+            movingSpeedPlus = value;
+        }
+    }
+
+    // 附加回血速度
+    private float restoreHpSpeedPlus;
+    public float RestoreHpSpeedPlus {
+        get {
+            return restoreHpSpeedPlus;
+        }
+
+        set {
+            restoreHpSpeedPlus = value;
+        }
+    }
+
+    // 附加回魔速度
+    private float resotreMpSpeedPlus;
+    public float ResotreMpSpeedPlus {
+        get {
+            return resotreMpSpeedPlus;
+        }
+
+        set {
+            resotreMpSpeedPlus = value;
+        }
+    }
+
+    // 附加物理抗性
+    private float physicalResistancePlus;
+    public float PhysicalResistancePlus {
+        get {
+            return physicalResistancePlus;
+        }
+
+        set {
+            physicalResistancePlus = value;
+        }
+    }
+
+    // 附加魔法抗性
+    private float magicalResistancePlus;
+    public float MagicalResistancePlus {
+        get {
+            return magicalResistancePlus;
+        }
+
+        set {
+            magicalResistancePlus = value;
+        }
+    }
+
+    private float dodgeRatePlus;
+    public float DodgeRatePlus {
+        get {
+            return dodgeRatePlus;
+        }
+
+        set {
+            dodgeRatePlus = value;
         }
     }
     #endregion
@@ -257,7 +429,59 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
 
     public int TotalAttack {
         get {
-            return attack + AttackPlus;
+            return Attack + AttackPlus;
+        }
+    }
+
+    public int TotalDefense {
+        get {
+            return Defense+DefensePlus;
+        }
+    }
+
+    public int TotalMovingSpeed {
+        get {
+            return MovingSpeed+movingSpeedPlus;
+        }
+    }
+
+    public int TurningSpeed {
+        get {
+            return turningSpeed;
+        }
+
+        set {
+            turningSpeed = value;
+        }
+    }
+
+    public float TotalRestoreHpSpeed {
+        get {
+            return RestoreHpSpeed+resotreMpSpeedPlus;
+        }
+    }
+
+    public float TotalResotreMpSpeed {
+        get {
+            return ResotreMpSpeed+resotreMpSpeedPlus;
+        }
+    }
+
+    public float TotalPhysicalResistance {
+        get {
+            return PhysicalResistance + physicalResistancePlus;
+        }
+    }
+
+    public float TotalMagicalResistance {
+        get {
+            return MagicalResistance+magicalResistancePlus;
+        }
+    }
+
+    public float TotalDodgeRate {
+        get {
+            return DodgeRate+dodgeRatePlus;
         }
     }
     #endregion
@@ -295,7 +519,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     /// <param name="target"></param>
     /// <returns></returns>
     public Damage GetDamage(CharacterModel target) {
-        return new Damage { BaseDamage= UnityEngine.Random.Range(attack - attackFloatingValue, attack + attackFloatingValue) };
+        return new Damage { BaseDamage= UnityEngine.Random.Range(TotalAttack - AttackFloatingValue, TotalAttack + AttackFloatingValue) };
     }
 
     // 获得当前CharacterModel对象的深拷贝对象

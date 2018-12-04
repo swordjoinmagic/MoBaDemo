@@ -75,15 +75,11 @@ public class GamePlayManager : MonoBehaviour{
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
                     if (a == 0) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Red);
-
                     } else if (a == 1) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.MiddleRoad, UnitFaction.Red);
                     } else if (a == 2) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.DownRoad, UnitFaction.Red);
                     }
-                    // 设置敌人
-                    //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersBlue);
-
                     // 设置战争迷雾
                     FogSystem.Instace.AddFOVUnit(soliderObject.GetComponent<CharacterMono>());
 

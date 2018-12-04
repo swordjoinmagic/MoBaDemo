@@ -39,12 +39,12 @@ public class SkillPanelViewModel : ViewModelBase{
 
     public void Modify(BaseSkill skill) {
 
-        skillName.Value = skill.skillName;
-        imagePath.Value = skill.iconPath;
+        skillName.Value = skill.SkillName;
+        imagePath.Value = skill.IconPath;
         longDescription.Value = skill.LongDescription;
         shortDescription.Value = skill.ShortDescription;
         targetDescription.Value = skill.TargetDescription;
-        skillLevel.Value = skill.skillLevel.ToString();
+        skillLevel.Value = skill.SkillLevel.ToString();
         nextLevel.Value = skill.NextLevelNeedHeroLevel.ToString();
         if (skill is ActiveSkill) {
             // 主动技能的情况下

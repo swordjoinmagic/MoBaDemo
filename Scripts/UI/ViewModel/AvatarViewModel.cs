@@ -30,9 +30,9 @@ public class AvatarViewModel : ViewModelBase{
 
     public void Modify(HeroModel hero) {
         Name.Value = hero.name;
-        Attack.Value = hero.attack;
-        Defense.Value = hero.defense;
-        MoveSpeed.Value = hero.movingSpeed;
+        Attack.Value = hero.TotalAttack;
+        Defense.Value = hero.TotalDefense;
+        MoveSpeed.Value = hero.TotalMovingSpeed;
         ForcePower.Value = Mathf.FloorToInt(hero.forcePower); 
         AgilePower.Value = Mathf.FloorToInt(hero.agilePower);
         IntelligencePower.Value = Mathf.FloorToInt(hero.intelligencePower);

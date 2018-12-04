@@ -73,7 +73,7 @@ public struct Damage {
     }
 
     public override string ToString() {
-        return string.Format("(baseDamage=%.2s ,plusDamage=%.2s)",baseDamage.ToString(),plusDamage.ToString());
+        return string.Format("(baseDamage={0} ,plusDamage={1})",baseDamage.ToString(),plusDamage.ToString());
     }
 }
 

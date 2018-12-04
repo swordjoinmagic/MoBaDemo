@@ -25,15 +25,61 @@ public class BaseAtributeChangeSkill : PassiveSkill{
         }
     }
 
-    public override void Execute(CharacterModel speller, out int result,CharacterAttribute characterAttribute,int attributeValue) {
-        if (attribute == characterAttribute) {
-            if (isScale)
-                result = attributeValue * value;
-            else
-                result = value;
+    public override void Execute(CharacterModel speller, out int result,out CharacterAttribute characterAttribute) {
+
+        int attributeValue = 0;
+        characterAttribute = attribute;
+
+        if (isScale) {
+            switch (attribute) {
+                case CharacterAttribute.Attack:
+                    attributeValue = speller.Attack;
+                    break;
+                case CharacterAttribute.Defense:
+                    attributeValue = speller.Defense;
+                    break;
+                case CharacterAttribute.MaxHP:
+                    attributeValue = speller.maxHp;
+                    break;
+                case CharacterAttribute.MaxMp:
+                    attributeValue = speller.maxMp;
+                    break;
+                case CharacterAttribute.movingSpeed:
+                    attributeValue = speller.MovingSpeed;
+                    break;
+            }
+            result = attributeValue * value;
         } else {
-            result = 0;
+            result = value;
         }
     }
 
+    public override void Execute(CharacterModel speller, out float result,out CharacterAttribute characterAttribute) {
+        
+        float attributeValue = 0;
+        characterAttribute = attribute;
+
+        if (isScale) {
+            switch (attribute) {
+                case CharacterAttribute.AttackDistance:
+                    attributeValue = speller.attackDistance;
+                    break;
+                case CharacterAttribute.AttackSpeed:
+                    attributeValue = speller.AttackSpeed;
+                    break;
+                case CharacterAttribute.DodgeRate:
+                    attributeValue = speller.DodgeRate;
+                    break;
+                case CharacterAttribute.MagicalResistance:
+                    attributeValue = speller.MagicalResistance;
+                    break;
+                case CharacterAttribute.PhysicalResistance:
+                    attributeValue = speller.PhysicalResistance;
+                    break;
+            }
+            result = attributeValue * value;
+        } else {
+            result = value;
+        }
+    }
 }

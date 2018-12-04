@@ -45,16 +45,21 @@ public class CharacterAttributeTipsView : MonoBehaviour {
 
         //==================================================
         // 根据单位的属性来更改UI显示的结果
-        attackText.text = character.TotalAttack.ToString();
-        attackSpeedText.text = character.attackSpeed.ToString();
+        string str = "{0} {1} <color=#00ff25>{2}</color>";
+        if (character.AttackPlus == 0)
+            attackText.text = character.Attack.ToString();
+        else
+            attackText.text = string.Format(str, character.Attack, character.AttackPlus > 0 ? "+" : "-", character.AttackPlus);
+
+        attackSpeedText.text = character.AttackSpeed.ToString();
         attackDistanceText.text = character.attackDistance.ToString();
-        moveSpeedText.text = character.movingSpeed.ToString();
-        resotreMpSpeedText.text = character.resotreMpSpeed.ToString();
-        defenseText.text = character.defense.ToString();
-        physicalResistanceText.text = character.physicalResistance.ToString();
-        magicalResistance.text = character.magicalResistance.ToString();
-        dodgeRate.text = character.dodgeRate.ToString();
-        restoreHpSpeed.text = character.restoreHpSpeed.ToString();
+        moveSpeedText.text = character.MovingSpeed.ToString();
+        resotreMpSpeedText.text = character.ResotreMpSpeed.ToString();
+        defenseText.text = character.Defense.ToString();
+        physicalResistanceText.text = character.PhysicalResistance.ToString();
+        magicalResistance.text = character.MagicalResistance.ToString();
+        dodgeRate.text = character.DodgeRate.ToString();
+        restoreHpSpeed.text = character.RestoreHpSpeed.ToString();
 
         //===========================================================
         // 设置单位的主属性

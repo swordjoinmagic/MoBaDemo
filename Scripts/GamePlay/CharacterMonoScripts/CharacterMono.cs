@@ -244,8 +244,8 @@ public class CharacterMono : MonoBehaviour {
             Level = 0,
             forcePower = 100,
             needExp = 1000,
-            attack = 100,
-            attackFloatingValue = 99,
+            Attack = 100,
+            AttackFloatingValue = 99,
             Exp = 0,
             expfactor = 2,
             AvatarImagePath = "PlayerAvatarImage",
@@ -253,7 +253,7 @@ public class CharacterMono : MonoBehaviour {
             intelligencePower = 10,
             mainAttribute = HeroMainAttribute.AGI,
             skillPointGrowthPoint = 1,
-            turningSpeed = 5,
+            TurningSpeed = 5,
             activeSkills = new List<ActiveSkill> {
                 //new RangeDamageSkill{
                 //    KeyCode = KeyCode.E,
@@ -321,11 +321,18 @@ public class CharacterMono : MonoBehaviour {
                             AdditionalState = new PoisoningState{
                                 Description = "范围中毒技能",
                                 stateHolderEffect = targetEnemryEffect,
-                                Duration = 5,
+                                Duration = 15,
                                 IconPath = "0041",
                                 Damage = new Damage{ PlusDamage = 100 },
                                 Name = "中毒",
                                 IsStackable = false,
+                                statePassiveSkills = new List<PassiveSkill>{
+                                    new BaseAtributeChangeSkill{
+                                        attribute = CharacterAttribute.Attack,
+                                        value = 10,
+                                        isScale = true
+                                    }
+                                }
                             },
                             SkillTargetType = UnitType.Everything
                         }
@@ -433,6 +440,27 @@ public class CharacterMono : MonoBehaviour {
         audioSource = GetComponent<AudioSource>();
         characterAudio = new CharacterAudio(characterModel);
         characterAudio.Bind(this, audioSource);
+
+        //==============================
+        // ·初始化被动技能的订阅事件
+        OnLearnSkill += (CharacterMono learner, BaseSkill skill) => {
+            CalculatePlusAttribute();
+        };
+        OnForgetSkill += (CharacterMono learner, BaseSkill skill) => {
+            CalculatePlusAttribute();
+        };
+        OnGetItem += (CharacterMono characterMono, ItemGrid itemGrid) => {
+            CalculatePlusAttribute();
+        };
+        OnLostItem += (CharacterMono characterMono, ItemGrid itemGrid) => {
+            CalculatePlusAttribute();
+        };
+        OnAddNewBattleStatus += (BattleState battleState) => {
+            CalculatePlusAttribute();
+        };
+        OnRemoveBattleStatus += (BattleState battleState) => {
+            CalculatePlusAttribute();
+        };
     }
 
     public void Awake() {
@@ -539,7 +567,7 @@ public class CharacterMono : MonoBehaviour {
 
     }
 
-    #region 用于处理物品的获取与丢失
+    #region 用于处理物品的获取与消耗/丢失
     /// <summary>
     /// 单位获得物品的方法，返回True表示单位成功获得该物品，
     /// 返回Fals表示因为单位物品栏限制，单位获得物品失败。
@@ -552,11 +580,203 @@ public class CharacterMono : MonoBehaviour {
             if (itemGrid.item == null) {
                 itemGrid.item = item.item;
                 itemGrid.ItemCount = item.ItemCount;
+
+                if (OnGetItem != null) OnGetItem(this,item);
                 return true;
             }
         }
         return false;
     }
+    /// <summary>
+    /// 单位遗失某个技能的方法，返回True表示遗失成功，返回False表示没有在物品栏找到该物品
+    /// </summary>
+    /// <returns></returns>
+    public bool LostItem(ItemGrid item) {
+        for (int i=0;i<characterModel.itemGrids.Count;i++) {
+            ItemGrid itemGrid = characterModel.itemGrids[i];
+            if (itemGrid.item!=null && itemGrid.item.name == item.item.name) {
+                itemGrid.ItemCount -= 1;
+
+                if (OnLostItem != null) OnLostItem(this,item);
+                return true;
+            }
+        }
+        return false;
+    }
+    public bool LostItem(int index) {
+        try {
+            return LostItem(characterModel.itemGrids[index]);
+        } catch (Exception e) {
+            Debug.LogWarning(e.Message);
+            return false;
+        }
+    }
+    #endregion
+
+    #region 用于处理人物学习/遗忘技能
+
+    /// <summary>
+    /// 单位学习技能的方法,返回True表示学习成功，
+    /// 返回False表示因为单位身上最大技能数量的限制，学习失败
+    /// </summary>
+    /// <param name="baseSkill"></param>
+    /// <returns></returns>
+    public bool LearnSkill(BaseSkill baseSkill) {
+        if (characterModel.baseSkills.Count() < characterModel.MaxSkillCount) {
+            characterModel.baseSkills.Add(baseSkill);
+            
+            if (baseSkill is ActiveSkill) {
+                characterModel.activeSkills.Add(baseSkill as ActiveSkill);
+            } else {
+                characterModel.passiveSkills.Add(baseSkill as PassiveSkill);
+            }
+
+            // 触发学习技能事件
+            if (OnLearnSkill != null) OnLearnSkill(this,baseSkill);
+        }
+        return false;
+    }
+
+    /// <summary>
+    /// 单位遗忘技能的方法，遗忘成功返回True，技能列表中没有这招技能即为False
+    /// </summary>
+    /// <param name="baseSkill"></param>
+    /// <returns></returns>
+    public bool ForgetSkill(BaseSkill baseSkill) {
+        for (int i=0;i< characterModel.baseSkills.Count();i++) {
+            var skill = characterModel.baseSkills[i];
+            if (skill.SkillName == baseSkill.SkillName) {
+                characterModel.baseSkills.RemoveAt(i);
+
+                // 触发遗忘技能事件
+                if (OnForgetSkill != null) OnForgetSkill(this,baseSkill);
+                return true;
+            }
+        }
+        return false;
+    }
+    #endregion
+
+    #region Plus属性的计算
+    /// <summary>
+    /// 用于计算单位身上的Plus属性，即通过被动技能、装备、状态增加的属性
+    /// </summary>
+    public void CalculatePlusAttribute() {
+
+        //===============================
+        // 新的Plus属性
+        int attackPlusNew = 0;
+        int defensePlusNew = 0;
+        int maxHPPlusNew = 0;
+        int maxMPPlusNew = 0;
+        int movingSpeedPlusNew = 0;
+        float attackDistancePlusNew = 0;
+        float attackSpeedPlusNew = 0;
+        float DodgeRatePlusNew = 0;
+        float magicalResistancePlusNew = 0;
+        float physicalResistancePlusNew = 0;
+
+        //===================================
+        // 遍历被动技能
+        foreach (var skill in characterModel.passiveSkills) {
+            GetAdditionalPlusAttribute(skill,ref attackPlusNew,ref defensePlusNew,ref maxHPPlusNew,ref maxMPPlusNew,
+                ref movingSpeedPlusNew,ref attackDistancePlusNew,ref attackSpeedPlusNew,ref DodgeRatePlusNew,ref magicalResistancePlusNew,
+                ref physicalResistancePlusNew);
+        }
+
+        //=====================================
+        // 遍历状态
+        for (int i=0;i<battleStates.Count;i++) {
+            BattleState battleState = battleStates[i];
+            if (battleState == null || battleState.IsStateDying || battleState.statePassiveSkills==null) {
+                continue;
+            }
+            foreach (var skill in battleState.statePassiveSkills) {
+                GetAdditionalPlusAttribute(skill, ref attackPlusNew, ref defensePlusNew, ref maxHPPlusNew, ref maxMPPlusNew,
+                    ref movingSpeedPlusNew, ref attackDistancePlusNew, ref attackSpeedPlusNew, ref DodgeRatePlusNew, 
+                    ref magicalResistancePlusNew, ref physicalResistancePlusNew);
+            }
+        }
+
+        //=========================================
+        // 遍历装备
+        foreach (var itemGrid in characterModel.itemGrids) {
+            if (itemGrid.item!=null && itemGrid.ItemCount != 0) {
+                //===============================
+                // 遍历装备技能
+                foreach (var skill in itemGrid.item.itemPassiveSkills) {
+                    GetAdditionalPlusAttribute(skill, ref attackPlusNew, ref defensePlusNew, ref maxHPPlusNew, ref maxMPPlusNew,
+                        ref movingSpeedPlusNew, ref attackDistancePlusNew, ref attackSpeedPlusNew, ref DodgeRatePlusNew,
+                        ref magicalResistancePlusNew, ref physicalResistancePlusNew);
+                }
+            }
+        }
+
+        //================================
+        // 设置新的Plus属性
+        characterModel.AttackPlus = attackPlusNew;
+        characterModel.DefensePlus = defensePlusNew;
+        characterModel.MovingSpeedPlus = movingSpeedPlusNew;
+        characterModel.AttackDistancePlus = attackDistancePlusNew;
+        characterModel.DodgeRatePlus = DodgeRatePlusNew;
+        characterModel.MagicalResistancePlus = magicalResistancePlusNew;
+        characterModel.PhysicalResistancePlus = physicalResistancePlusNew;
+
+    }
+
+    /// <summary>
+    /// 根据某一个GainAttr被动技能，
+    /// </summary>
+    /// <param name="passiveSkill"></param>
+    public void GetAdditionalPlusAttribute(PassiveSkill skill,
+        ref int attackPlusNew,ref int defensePlusNew,ref int maxHPPlusNew,ref int maxMPPlusNew,
+        ref int movingSpeedPlusNew,ref float attackDistancePlusNew,ref float attackSpeedPlusNew,
+        ref float DodgeRatePlusNew,ref float magicalResistancePlusNew,ref float physicalResistancePlusNew) {
+
+        CharacterAttribute attribute = CharacterAttribute.Attack;
+        int attributePlusNew = 0;
+        float attributePlusNewF = 0;
+
+        if (skill.TiggerType == PassiveSkillTriggerType.GainAttribute) {
+            skill.Execute(characterModel, out attributePlusNew, out attribute);
+            switch (attribute) {
+                case CharacterAttribute.Attack:
+                    attackPlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.Defense:
+                    defensePlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.MaxHP:
+                    maxHPPlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.MaxMp:
+                    maxMPPlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.movingSpeed:
+                    movingSpeedPlusNew += attributePlusNew;
+                    break;
+            }
+            skill.Execute(characterModel, out attributePlusNewF, out attribute);
+            switch (attribute) {
+                case CharacterAttribute.AttackDistance:
+                    attackDistancePlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.AttackSpeed:
+                    attackSpeedPlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.DodgeRate:
+                    DodgeRatePlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.MagicalResistance:
+                    magicalResistancePlusNew += attributePlusNew;
+                    break;
+                case CharacterAttribute.PhysicalResistance:
+                    physicalResistancePlusNew += attributePlusNew;
+                    break;
+            }
+        }
+    }
+
     #endregion
 
     #region 人物的逻辑操作,包括 追逐敌人、攻击敌人、施法、移动等操作
@@ -629,7 +849,7 @@ public class CharacterMono : MonoBehaviour {
         // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击(注意必须是在单位没有攻击时，才转向敌人)
         if (!IsTargetFront(target) && !currentAnimatorStateInfo.IsName("attack")) {
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), characterModel.turningSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), characterModel.TurningSpeed * Time.deltaTime);
 
             return false;
         }
@@ -663,18 +883,18 @@ public class CharacterMono : MonoBehaviour {
 
                 #region 测试，使敌方进入中毒状态
                 // 测试，使敌方进入中毒状态
-                target.AddBattleState(new PoisoningState{
-                    Damage = new Damage(40, 10),
-                    Duration = 15f,
-                    stateHolderEffect = stateHolderEffect,
-                    Name = "PosioningState",
-                    IconPath = "00046",
-                    Description = "中毒技能,每秒中减少20点生命值",
-                });
+                //target.AddBattleState(new PoisoningState{
+                //    Damage = new Damage(40, 10),
+                //    Duration = 15f,
+                //    stateHolderEffect = stateHolderEffect,
+                //    Name = "PosioningState",
+                //    IconPath = "00046",
+                //    Description = "中毒技能,每秒中减少20点生命值",
+                //});
                 #endregion
 
                 // 近战攻击事件，向所有订阅近战攻击的观察者发送消息
-                if (OnAttack != null) OnAttack(this,target,damage);
+                //if (OnAttack != null) OnAttack(this,target,damage);
 
             } else {
                 Transform shotPosition = transform.Find("shootPosition");
@@ -821,6 +1041,14 @@ public class CharacterMono : MonoBehaviour {
         // 获得当前动画和下一个动画状态
         AnimatorStateInfo currentAnimatorStateInfo = animator.GetCurrentAnimatorStateInfo(0);
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
+
+        // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击(注意必须是在单位没有攻击时，才转向敌人)
+        if (enemryMono != null && !IsTargetFront(enemryMono) && !currentAnimatorStateInfo.IsName("Spell")) {
+
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(enemryMono.transform.position - transform.position), characterModel.TurningSpeed * Time.deltaTime);
+
+            return false;
+        }
 
         if (IsImmediatelySpell()) {
             // 原地释放技能,此时直接释放技能
