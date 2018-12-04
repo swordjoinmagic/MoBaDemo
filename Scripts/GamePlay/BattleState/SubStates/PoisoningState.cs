@@ -11,11 +11,12 @@ public class PoisoningState : BattleState{
 
     //============================================
     // 提供给外部调用的接口
-    private Damage damage = Damage.Zero;     // 中毒时每间隔1秒受到的伤害
+    private Damage damage = Damage.Zero;     // 中毒时每间隔interval秒受到的伤害
     public GameObject effect = null;        // 中毒时的特效
+    public float interval = 1f;             // 间隔的时间
 
-    private Damage nowDamage = Damage.Zero;
     private GameObject effectObject = null;
+    private float time = 0;
 
     public Damage Damage {
         get {
@@ -29,6 +30,7 @@ public class PoisoningState : BattleState{
 
     protected override void OnEnter(CharacterMono stateHolder) {
         base.OnEnter(stateHolder);
+        time = interval;
         if (effect != null && effectObject == null) {
             // 创建临时特效对象
             effectObject = TransientGameObjectFactory.AcquireObject(EffectConditonalType.BattleState, templateObject: effect, battleState: this, target: stateHolder).gameObject;
@@ -40,10 +42,12 @@ public class PoisoningState : BattleState{
     protected override void OnUpdate(CharacterMono stateHolder) {
         base.OnUpdate(stateHolder);
 
-        nowDamage += Damage * Time.smoothDeltaTime;
-        if (nowDamage.TotalDamage >= 1) {
-            stateHolder.characterModel.Damaged(nowDamage);
-            nowDamage = Damage.Zero;
+        time += Time.smoothDeltaTime;
+        if (time >= interval) {
+            stateHolder.characterModel.Damaged(damage);
+            
+            // 置空时间
+            time = 0;
         }
     }
 

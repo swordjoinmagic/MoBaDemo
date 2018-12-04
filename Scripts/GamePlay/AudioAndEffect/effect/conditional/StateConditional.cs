@@ -24,7 +24,7 @@ public class StateConditional : EffectConditional {
     }
 
     private void RemoveState(BattleState battleState) {
-        if (battleState == this.battleState) {
+        if (battleState.Name == this.battleState.Name) {
             isValid = false;
             target.OnRemoveBattleStatus -= RemoveState;
         }

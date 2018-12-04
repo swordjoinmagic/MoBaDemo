@@ -182,10 +182,12 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <param name="battleState"></param>
     public void RemoveBattleState(BattleState battleState) {
-        battleStates.Remove(battleState);
 
-        if (OnRemoveBattleStatus != null)
-            OnRemoveBattleStatus(battleState);
+        if (battleStates.Remove(battleState)) {
+
+            if (OnRemoveBattleStatus != null)
+                OnRemoveBattleStatus(battleState);
+        }
     }
     /// <summary>
     /// 根据状态名去除单位身上某一个状态
@@ -202,7 +204,10 @@ public class CharacterMono : MonoBehaviour {
             }
         }
     }
-
+    public void RemoveBattleState(int index) {
+        if(index<battleStates.Count)
+            RemoveBattleState(battleStates[index]);
+    }
     public void RemoveBattleState(BattleStateType battleStateType) {
         for (int i = 0; i < battleStates.Count;) {
             var state = battleStates[i];
@@ -212,6 +217,11 @@ public class CharacterMono : MonoBehaviour {
             } else {
                 i++;
             }
+        }
+    }
+    public void RemoveAllBattleState() {
+        while (battleStates.Count>0) {
+            RemoveBattleState(0);
         }
     }
 
@@ -268,30 +278,30 @@ public class CharacterMono : MonoBehaviour {
                 //    SkillInfluenceRadius = 5,
                 //    SkillTargetType = UnitType.Everything,
                 //},
-                new RangeSkillGroup{
-                    KeyCode = KeyCode.E,
-                    PlusDamage = 200,
-                    TargetEffect = targetPositionEffect,
-                    SpellDistance = 10f,
-                    SkillName = "E技能",
-                    IconPath = "00041",
-                    SkillLevel = 6,
-                    SkillInfluenceRadius = 6f,
-                    activeSkills = new ActiveSkill[]{
-                        new DisperseStateSkill{
-                            SpellDistance = 10,
-                            BattleStateType = BattleStateType.PoisoningState,
-                            SkillTargetType = UnitType.Everything
-                        }
-                    },
-                    skillDelayAttributes = new SkillDelayAttribute[] {
-                        new SkillDelayAttribute{
-                            isDelay = false,
-                            index = -1,
-                        }
-                    },
-                    SkillTargetType = UnitType.Everything,
-                },
+                //new RangeSkillGroup{
+                //    KeyCode = KeyCode.E,
+                //    PlusDamage = 200,
+                //    TargetEffect = targetPositionEffect,
+                //    SpellDistance = 10f,
+                //    SkillName = "E技能",
+                //    IconPath = "00041",
+                //    SkillLevel = 6,
+                //    SkillInfluenceRadius = 6f,
+                //    activeSkills = new ActiveSkill[]{
+                //        new DisperseStateSkill{
+                //            SpellDistance = 10,
+                //            BattleStateType = BattleStateType.PoisoningState,
+                //            SkillTargetType = UnitType.Everything
+                //        }
+                //    },
+                //    skillDelayAttributes = new SkillDelayAttribute[] {
+                //        new SkillDelayAttribute{
+                //            isDelay = false,
+                //            index = -1,
+                //        }
+                //    },
+                //    SkillTargetType = UnitType.Everything,
+                //},
                 new TransformSkill{
                     KeyCode = KeyCode.W,
                     SkillLevel = 1,
@@ -429,6 +439,26 @@ public class CharacterMono : MonoBehaviour {
         Owner = new Player() {
             Money = 1000
         };
+        this.LearnSkill(new HaloSkill {
+            SkillLevel = 3,
+            SkillName = "aaaaaaaaaaaaaaaa",
+            IconPath = "00046",
+            CD = 2f,
+            LongDescription = "one skill Description",
+            HaloEffect = targetEnemryEffect,
+            targetFaction = UnitFaction.Red,
+            TiggerType = PassiveSkillTriggerType.Halo,
+            inflenceRadius = 10f,
+            additiveState = new PoisoningState {
+                Description = "范围中毒技能",
+                stateHolderEffect = targetEnemryEffect,
+                Duration = -1,
+                IconPath = "0041",
+                Damage = new Damage { PlusDamage = 100 },
+                Name = "中毒",
+                IsStackable = false,
+            }
+        });
     }
     //================================================
     #endregion
@@ -631,6 +661,13 @@ public class CharacterMono : MonoBehaviour {
                 characterModel.passiveSkills.Add(baseSkill as PassiveSkill);
             }
 
+            //================================================================================
+            // 用于判断学习的技能是否是光环技能,对于光环技能来说,学习时自动执行他的Execute方法
+            // 目的是为了给单位增加光环触发器
+            if (baseSkill is HaloSkill) {
+                (baseSkill as HaloSkill).Execute(this);
+            }
+
             // 触发学习技能事件
             if (OnLearnSkill != null) OnLearnSkill(this,baseSkill);
         }
@@ -647,6 +684,13 @@ public class CharacterMono : MonoBehaviour {
             var skill = characterModel.baseSkills[i];
             if (skill.SkillName == baseSkill.SkillName) {
                 characterModel.baseSkills.RemoveAt(i);
+
+                //================================================================================
+                // 用于判断学习的技能是否是光环技能,对于光环技能来说,学习时自动执行他的Execute方法
+                // 目的是为了给单位增加光环触发器
+                if (baseSkill is HaloSkill) {
+                    (baseSkill as HaloSkill).CancelExecute(this);
+                }
 
                 // 触发遗忘技能事件
                 if (OnForgetSkill != null) OnForgetSkill(this,baseSkill);
@@ -1153,6 +1197,10 @@ public class CharacterMono : MonoBehaviour {
 
         // 触发死亡事件
         if (OnUnitDied != null) OnUnitDied(this);
+
+        //================================
+        // 清除单位目前身上所有状态
+        RemoveAllBattleState();
 
         // 停止目前一切动作
         ResetAllStateAnimator();
