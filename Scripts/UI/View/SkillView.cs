@@ -65,10 +65,9 @@ class SkillView : MonoBehaviour{
         Bind();
 
         for (int i=0;i<skillPanelViews.Count;i++) {
-
             // 对每一个技能面板进行初始化
             SkillPanelView skillPanelView = skillPanelViews[i];
-            BaseSkill baseSkill = characterMono.characterModel.activeSkills[i];
+            BaseSkill baseSkill = characterMono.characterModel.baseSkills[i];
             skillPanelView.BindingContext = new SkillPanelViewModel();
             skillPanelView.BindingContext.Modify(baseSkill);
 
@@ -110,7 +109,7 @@ class SkillView : MonoBehaviour{
 
         for (int i=0;i<skillLevelButtons.Count;i++) {
             Button levelUpButtonn = skillLevelButtons[i];
-            BaseSkill skill = characterMono.characterModel.activeSkills[i];
+            BaseSkill skill = characterMono.characterModel.baseSkills[i];
             levelUpButtonn.onClick.AddListener(() => {
                 if (skill.NextLevelNeedHeroLevel <= character.Level && character.SkillPoint > 0) {
                     skill.SkillLevel += 1;

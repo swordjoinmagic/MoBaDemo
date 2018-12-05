@@ -24,7 +24,8 @@ public class TransientGameObjectFactory{
         }
 
         EffectsLifeCycle effectsLifeCycle = result.AddComponent<EffectsLifeCycle>();
-        effectsLifeCycle.Init(type,battleState,target,during,particleSystem); 
+        effectsLifeCycle.Init(type,battleState,target,during,particleSystem);
+        
 
         return effectsLifeCycle;
     }

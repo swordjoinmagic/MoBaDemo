@@ -60,8 +60,8 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public int turningSpeed;
     // 投射物Model类属性
     public ProjectileModel projectileModel;
-    // 投射物Mono类
-    public ProjectileMono projectile;
+    // 投射物
+    public GameObject projectile;
     // 等级
     private BindableProperty<int> level = new BindableProperty<int>();
     // 回血速度，以秒为单位，即以秒回多少血

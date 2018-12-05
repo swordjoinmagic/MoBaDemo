@@ -1876,6 +1876,11 @@ Prefab:
       propertyPath: characterModel.attackFloatingValue
       value: 50
       objectReference: {fileID: 0}
+    - target: {fileID: 114712036569920436, guid: 10ba44e096b7b7144808d3168a5d6d7a,
+        type: 2}
+      propertyPath: characterModel.unitFaction
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
   m_IsPrefabParent: 0
@@ -4422,7 +4427,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000034682365
+      value: -0.000009494309
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -6067,6 +6072,12 @@ Prefab:
       propertyPath: targetEnemryEffect
       value: 
       objectReference: {fileID: 1292397218127246, guid: c3d8fa2e35817d2489ceb28d4bb1ad55,
+        type: 2}
+    - target: {fileID: 114231663357843512, guid: ff332da03782f0549a37cdead37357ad,
+        type: 2}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 1229413420632202, guid: e235aaeb17790d44381bc9fcb71b1451,
         type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ff332da03782f0549a37cdead37357ad, type: 2}

@@ -12,7 +12,7 @@ public class HaloSkill : PassiveSkill{
     public HaloTrigger Trigger;
 
     public float inflenceRadius;
-    public UnitFaction targetFaction;
+    protected UnitType skillTargetType;
     public GameObject HaloEffect;
 
     // 给单位附加的状态
@@ -21,6 +21,16 @@ public class HaloSkill : PassiveSkill{
     public override PassiveSkillTriggerType TiggerType {
         get {
             return PassiveSkillTriggerType.Halo;
+        }
+    }
+
+    protected UnitType SkillTargetType {
+        get {
+            return skillTargetType;
+        }
+
+        set {
+            skillTargetType = value;
         }
     }
 
@@ -48,10 +58,11 @@ public class HaloSkill : PassiveSkill{
 
         // 设置光环触发器的一些属性
         Trigger.TiggerRadius = inflenceRadius;
-        Trigger.UnitType = targetFaction;
+        Trigger.SkillTargetType = skillTargetType;
         Trigger.HaloSkillExecute += Execute;
         Trigger.HaloSkillCancelExecute += CancelExecute;
         Trigger.gameObject.layer = 2;
+        Trigger.Speller = speller;
     }
 
     /// <summary>
@@ -75,12 +86,15 @@ public class HaloSkill : PassiveSkill{
     /// <param name="speller"></param>
     /// <param name="target"></param>
     public override void Execute(CharacterMono speller, CharacterMono target) {
-        // 给目标附加一个持续时间为永久的中毒状态
-        target.AddBattleState(additiveState.DeepCopy());
-
+        if (CanBeExecuteToTarget(speller,target)) {
+            // 给目标附加一个持续时间为永久的中毒状态
+            target.AddBattleState(additiveState.DeepCopy());
+        }
     }
     public void CancelExecute(CharacterMono speller, CharacterMono target) {
-        target.RemoveBattleState(additiveState.Name);
+        if (CanBeExecuteToTarget(speller, target)) {
+            target.RemoveBattleState(additiveState.Name);
+        }
     }
 }
 

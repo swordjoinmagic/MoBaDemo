@@ -8,7 +8,10 @@ public class HaloTrigger : MonoBehaviour{
     // 触发器的半径
     private float tiggerRadius;
     // 符合该光环作用的目标类型
-    private UnitFaction unitType;
+    private UnitType skillTargetType;
+    // 此光环技能释放者
+    private CharacterMono speller;
+
     // 目前此光环作用的单位列表
     private List<CharacterMono> targetList = new List<CharacterMono>();
 
@@ -22,13 +25,13 @@ public class HaloTrigger : MonoBehaviour{
         }
     }
 
-    public UnitFaction UnitType {
+    public UnitType SkillTargetType {
         get {
-            return unitType;
+            return skillTargetType;
         }
 
         set {
-            unitType = value;
+            skillTargetType = value;
         }
     }
 
@@ -42,32 +45,40 @@ public class HaloTrigger : MonoBehaviour{
         }
     }
 
+    public CharacterMono Speller {
+        get {
+            return speller;
+        }
+
+        set {
+            speller = value;
+        }
+    }
+
     public delegate void HaloSkillExecuteHandler(CharacterMono speller, CharacterMono target);
     public event HaloSkillExecuteHandler HaloSkillExecute;
     public event HaloSkillExecuteHandler HaloSkillCancelExecute;
 
     private void OnTriggerEnter(Collider other) {
-        //Debug.Log("单位进入了触发器");
-
         CharacterMono target = other.GetComponent<CharacterMono>();
-        if (target != null && target.characterModel.unitFaction == UnitType) {
+        if (target != null) {
             TargetList.Add(target);
 
             //Debug.Log("单位进入了触发器");
-            if (HaloSkillExecute != null) HaloSkillExecute(null,target);
+            if (HaloSkillExecute != null && speller!=null) HaloSkillExecute(speller, target);
         }
     }
     private void OnTriggerExit(Collider other) {
         CharacterMono target = other.GetComponent<CharacterMono>();
-        if (target != null && target.characterModel.unitFaction == UnitType) {
+        if (target != null) {
             TargetList.Remove(target);
-            if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(null,target);
+            if (HaloSkillCancelExecute != null && speller != null) HaloSkillCancelExecute(speller,target);
         }
     }
 
     private void OnDisable() {
         foreach (var target in targetList) {
-            if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(null, target);
+            if (HaloSkillCancelExecute != null) HaloSkillCancelExecute(speller, target);
         }
     }
 }

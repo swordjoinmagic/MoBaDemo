@@ -15,7 +15,7 @@ public class PointingSkill : ActiveSkill{
 
         base.Execute(spller,target);
 
-        target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamage=PlusDamage });
+        target.characterModel.Damaged(new Damage() { BaseDamage=BaseDamage,PlusDamage=PlusDamage },spller);
     }
 }
 

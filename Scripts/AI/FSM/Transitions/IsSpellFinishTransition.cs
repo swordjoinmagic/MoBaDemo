@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FSM;
+using UnityEngine;
 
 /// <summary>
 /// 用于判断施法是否结束，施法结束后自动回到Idle状态

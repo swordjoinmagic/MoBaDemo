@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Scripts.AI.Behavior_Node.HeroAI.AIConditional {
     /// <summary>
-    /// 判断单位是否处于泉水附近，
+    /// 判断单位是否处于泉水附近
     /// </summary>
     public class IsCharacterOnWaterArea : Conditional{
 

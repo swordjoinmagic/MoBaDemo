@@ -9,7 +9,7 @@ public class TestDatabase : MonoBehaviour {
     public CharacterMono characterMono;
 
     private void Awake() {
-        DataManager.Instance.LoadData();
+        //DataManager.Instance.LoadData();
 
         //int[] a = new int[100];
 

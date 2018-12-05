@@ -17,14 +17,6 @@ public class HeroMono : CharacterMono{
         }
     }
 
-    public override bool Attack(ref bool isAttackFinish, Transform targetTransform, CharacterMono target) {
-        bool result = base.Attack(ref isAttackFinish, targetTransform, target);
-        if (target.isDying || target == null) {
-            HeroModel.Exp += target.characterModel.supportExp;
-        }
-        return result;
-    }
-
     public override void Update() {
         base.Update();
     }

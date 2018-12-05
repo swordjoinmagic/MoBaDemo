@@ -15,7 +15,6 @@ using UnityEngine.AI;
 /// 
 /// </summary>
 public class SpellState : FSMState {
-
     public CharacterMono enemryMono;    
     public Transform enermyTransform;
     public Vector3 enermyPosition;
@@ -33,23 +32,27 @@ public class SpellState : FSMState {
 
         // 重置攻击状态
         spllerMono.ResetAttackStateAnimator();
+        Debug.Log("进入spell状态");
     }
 
     public override void OnExit() {
         spllerMono.isPrepareUseSkill = false;
-        //spllerMono.prepareSkill = null;
-
+        Debug.Log("离开spell状态");
     }
 
     public override void OnUpdate() {
+        Debug.Log("SpellUpdate:"+spllerMono.name);
         bool result = false;
         // 如果施放技能状态结束,就自动回到Idle状态,为黑板设置变量
         if (spllerMono != null) {
+            Debug.Log("进入spell状态，准备释放技能："+spllerMono.prepareSkill.SkillName);
             if (spllerMono.prepareSkill.IsMustDesignation && enemryMono != null) {
+                Debug.Log("adsadasdas");
                 result = spllerMono.Spell(enemryMono, enermyTransform.position);
             } else {
                 result = spllerMono.Spell(enermyPosition);
             }
+
             if (result) {
                 BlackBorad.SetBool("IsUseSkillFinish", true);
                 BlackBorad.SetBool("isPrePareUseSkill", false);

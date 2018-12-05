@@ -22,14 +22,14 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
 
 
         // 获得当前要释放的技能
-        Debug.Log("当前要释放的技能时:"+ characterMono.prepareSkill);
-
         // 判断该技能是否是原地释放技能,
         // 即判断该主动技能的施法距离是否为0,为0时,
         // 为原地释放技能
         if (characterMono.IsImmediatelySpell()) {
             // 原地释放技能,直接进入Spell状态
-            BlackBorad.SetBool("isImmediatelySpell", true);
+            BlackBorad.SetVector3("EnemryPosition", characterMono.transform.position);
+            BlackBorad.SetBool("isPrePareUseSkill", false);
+
             return true;
 
         } else {

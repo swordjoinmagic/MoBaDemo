@@ -13,6 +13,9 @@ public class ProjectileMono : MonoBehaviour{
     // 投射物要攻击的目标
     public CharacterMono target;
 
+    // 发射投射物的单位
+    public CharacterMono launcher;
+
     // 该投射物的目标位置
     public Vector3 targetPosition;
 
@@ -31,7 +34,7 @@ public class ProjectileMono : MonoBehaviour{
         Vector3 dir = (-transform.position + position).normalized;
 
         // 一次移动的距离
-        Vector3 distance = dir * Time.deltaTime * projectileModel.MovingSpeed;
+        Vector3 distance = dir * Time.deltaTime * projectileModel.movingSpeed;
 
         transform.Translate(distance); 
 
@@ -59,19 +62,21 @@ public class ProjectileMono : MonoBehaviour{
 
     // 产生特效并执行伤害
     public void Execute() {
-        GameObject targetEnemryEffect;
-        GameObject targetPositionEffect;
         if (projectileModel.spherInfluence == 0) {
             // 只影响单人的投射物
 
             // 产生敌人身上的特效
             if (projectileModel.tartgetEnemryEffect != null) {
-                targetEnemryEffect = Instantiate(projectileModel.tartgetEnemryEffect, targetPosition,Quaternion.identity);
+                EffectsLifeCycle lifeCycle = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During,templateObject: projectileModel.tartgetEnemryEffect,during:2f);
+                lifeCycle.transform.SetParent(target.transform);
+                lifeCycle.transform.localPosition = Vector3.zero;
             }
 
             // 产生目标位置的特效
             if (projectileModel.targetPositionEffect != null) {
-                targetPositionEffect = Instantiate(projectileModel.targetPositionEffect, transform);
+                EffectsLifeCycle lifeCycle = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: projectileModel.targetPositionEffect, during: 2f);
+                lifeCycle.transform.SetParent(target.transform);
+                lifeCycle.transform.localPosition = Vector3.zero;
             }
 
             target.characterModel.Damaged(damage);
@@ -82,19 +87,25 @@ public class ProjectileMono : MonoBehaviour{
 
             // 产生目标位置的特效
             if (projectileModel.targetPositionEffect != null) {
-                targetPositionEffect = Instantiate(projectileModel.targetPositionEffect, transform.position,Quaternion.identity);
+                EffectsLifeCycle lifeCycle = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: projectileModel.targetPositionEffect, during: 2f);
+                lifeCycle.transform.SetParent(target.transform);
+                lifeCycle.transform.localPosition = Vector3.zero;
             }
 
             Collider[] colliders = Physics.OverlapSphere(targetPosition, projectileModel.spherInfluence);
             foreach (Collider collider in colliders) {
                 CharacterMono targetMono = collider.GetComponent<CharacterMono>();
+
                 if (targetMono == null) continue;
+
                 // 产生敌人身上的特效
                 if (projectileModel.tartgetEnemryEffect != null) {
-                    targetEnemryEffect = Instantiate(projectileModel.tartgetEnemryEffect, collider.transform.position,Quaternion.identity);
+                    EffectsLifeCycle lifeCycle = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: projectileModel.tartgetEnemryEffect, during: 2f);
+                    lifeCycle.transform.SetParent(target.transform);
+                    lifeCycle.transform.localPosition = Vector3.zero;
                 }
 
-                targetMono.characterModel.Damaged(damage);
+                targetMono.characterModel.Damaged(damage,launcher);
             }
         }
     }

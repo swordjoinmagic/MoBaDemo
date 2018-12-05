@@ -25,7 +25,7 @@ class SpellToIdleTransition : FSMTransition {
 
         Vector3 position = target == null ? targetPosition : target.transform.position;
 
-        if ((Input.GetKeyDown(KeyCode.Escape)||Input.GetMouseButtonDown(1)) &&
+        if ( (Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1) ) &&
             Vector2.Distance(
                 new Vector2(position.x,position.z),
                 new Vector2(characterMono.transform.position.x, characterMono.transform.position.z)
