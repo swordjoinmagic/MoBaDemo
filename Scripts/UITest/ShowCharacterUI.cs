@@ -76,9 +76,9 @@ public class ShowCharacterUI : MonoBehaviour {
         if (UI==null) {
             UI = Instantiate<SimpleCharacterView>(simpleCharacterView,Canvas);
             UI.transform.localPosition = WorldPointToUIPosition(transform.position);
+            UI.characterMono = character;
             UI.BindingContext = new SimpleCharacterViewModel();
             UI.BindingContext.Modify(character.characterModel);
-            character.SimpleCharacterViewModel = UI.BindingContext;
         }
         UI.Reveal(true);
     }

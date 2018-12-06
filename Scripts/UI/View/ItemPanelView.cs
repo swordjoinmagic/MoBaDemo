@@ -16,11 +16,21 @@ public class ItemPanelView : UnityGuiView<ItemViewModel>{
     public Image iconImage;
     public Text remainCountText;
 
+    public ItemGrid itemGrid;   // 此视图所依附的ItemGrid对象
+
+    private void Init() {
+        //==========================================
+        // 监听CharacterMono的物品改变事件
+        itemGrid.OnIconPathChanged += OnIconImageChanged;
+        itemGrid.OnItemCountChanged += OnRemainCountChanged;
+    }
+
     protected override void OnInitialize() {
         base.OnInitialize();
 
         binder.Add<int>("itemCount", OnRemainCountChanged);
         binder.Add<string>("iconPath",OnIconImageChanged);
+        Init();
     }
 
     /// <summary>

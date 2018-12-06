@@ -13,32 +13,10 @@ using UnityEngine.AI;
 /// </summary>
 [RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
 public class CharacterMono : MonoBehaviour {
-    protected SimpleCharacterViewModel simpleCharacterViewModel;
-    private List<ItemViewModel> itemViewModels = new List<ItemViewModel>(6);
-    public SimpleCharacterViewModel SimpleCharacterViewModel {
-        get {
-            return simpleCharacterViewModel;
-        }
-
-        set {
-            simpleCharacterViewModel = value;
-        }
-    }
-    public List<ItemViewModel> ItemViewModels {
-        get {
-            return itemViewModels;
-        }
-
-        set {
-            itemViewModels = value;
-        }
-    }
-
     #region 单位的声音模块
     private AudioSource audioSource;     // 声音模块的发声者
     CharacterAudio characterAudio = null;
     #endregion
-
 
     #region 小兵的WayPointUnit属性
     public WayPointsUnit wayPointsUnit = null;
@@ -237,25 +215,17 @@ public class CharacterMono : MonoBehaviour {
     public LightningBoltScript lightningBoltScriptPrefab;     // 用于控制闪电链的LineRender对象
     public void Install() {
         characterModel = new HeroModel {
-            projectileModel = new ProjectileModel {
-                spherInfluence = 5,
-                targetPositionEffect = targetPositionEffect,
-                movingSpeed = 5
-            },
+            //projectileModel = new ProjectileModel {
+            //    spherInfluence = 5,
+            //    targetPositionEffect = targetPositionEffect,
+            //    movingSpeed = 5
+            //},
             maxHp = 10000,
             Hp = 200,
             maxMp = 1000,
             Mp = 1000,
             name = "sjm",
             attackDistance = 10f,
-            //projectileModel = new ProjectileModel {
-            //    spherInfluence = 3f,
-            //    targetPositionEffect = targetPositionEffect,
-            //    tartgetEnemryEffect = targetEnemryEffect,
-            //    movingSpeed = 4,
-            //    turningSpeed = 1
-            //},
-            //projectile = projectile,
             Level = 0,
             forcePower = 100,
             needExp = 1000,
@@ -321,26 +291,26 @@ public class CharacterMono : MonoBehaviour {
                         }
             }
         });
-        LearnSkill(new ChainSkill {
-            BaseDamage = 1000,
-            KeyCode = KeyCode.P,
-            Mp = 220,
-            PlusDamage = 200,
-            SpellDistance = 4f,
-            CD = 5f,
-            Count = 4,
-            Damage = new Damage { BaseDamage = -1000, PlusDamage = -1000 },
-            SkillName = "W技能",
-            IconPath = "00041",
-            LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-            SkillLevel = 6,
-            TargetEffect = targetEnemryEffect,
-            SkillTargetType = UnitType.Everything,
-            SkillInfluenceRadius = 10
-        });
+        //LearnSkill(new ChainSkill {
+        //    BaseDamage = 1000,
+        //    KeyCode = KeyCode.P,
+        //    Mp = 220,
+        //    PlusDamage = 200,
+        //    SpellDistance = 4f,
+        //    CD = 5f,
+        //    Count = 4,
+        //    Damage = new Damage { BaseDamage = -1000, PlusDamage = -1000 },
+        //    SkillName = "W技能",
+        //    IconPath = "00041",
+        //    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+        //    SkillLevel = 6,
+        //    TargetEffect = targetEnemryEffect,
+        //    SkillTargetType = UnitType.Everything,
+        //    SkillInfluenceRadius = 10
+        //});
         LearnSkill(new RangeSkillGroup {
             KeyCode = KeyCode.F,
             PlusDamage = 200,
@@ -417,6 +387,34 @@ public class CharacterMono : MonoBehaviour {
                         }
                     },
             SkillTargetType = UnitType.Everything,
+        });
+        LearnSkill(new AdditionalActiveSkill {
+            TiggerType = PassiveSkillTriggerType.WhenAttack,
+            CD = 0.1f,
+            IconPath = "0041",
+            SkillName = "AdditionActiveSkil",
+            SkillTargetType = UnitType.Everything,
+            SkillLevel = 1,
+            additionalActiveSkill = new ChainSkill {
+                BaseDamage = 1000,
+                KeyCode = KeyCode.P,
+                Mp = 220,
+                PlusDamage = 200,
+                SpellDistance = 4f,
+                CD = 5f,
+                Count = 4,
+                Damage = new Damage { PlusDamage = 500 },
+                SkillName = "W技能",
+                IconPath = "00041",
+                LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                SkillLevel = 6,
+                TargetEffect = targetEnemryEffect,
+                SkillTargetType = UnitType.Everything,
+                SkillInfluenceRadius = 10
+            }
         });
     }
     //================================================
@@ -496,7 +494,9 @@ public class CharacterMono : MonoBehaviour {
                     SelfEffect = targetPositionEffect,
                     TargetEffect = targetPositionEffect,
                     SpellDistance = 10,
-                    CD = 3
+                    CD = 3,
+                    SkillTargetType = UnitType.Everything,
+                    SkillLevel = 1,
                 },
                 itemType = ItemType.Consumed,
                 maxCount = 10,
@@ -506,26 +506,8 @@ public class CharacterMono : MonoBehaviour {
                 passiveDescription = "+100攻击力\n+100防御力\n+10力量",
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品"
             };
-            characterModel.itemGrids[0].ItemCount = 3;
+            characterModel.itemGrids[0].ItemCount = 2;
 
-            characterModel.itemGrids[1].item = new Item {
-                name = "测试物品",
-                itemActiveSkill = new PointingSkill {
-                    BaseDamage = 1000,
-                    SelfEffect = targetPositionEffect,
-                    TargetEffect = targetPositionEffect,
-                    SpellDistance = 10,
-                    CD = 3
-                },
-                itemType = ItemType.Consumed,
-                maxCount = 10,
-                iconPath = "00046",
-                useMethodDescription = "使用：点目标",
-                activeDescription = "对一个目标进行投掷",
-                passiveDescription = "+100攻击力\n+100防御力\n+10力量",
-                backgroundDescription = "一个用来测试的物品"
-            };
-            characterModel.itemGrids[1].ItemCount = 5;
         }
 
         //HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red, HaloEffect= stateHolderEffect };
@@ -875,10 +857,14 @@ public class CharacterMono : MonoBehaviour {
             if (characterModel.projectileModel == null) {
                 Damage damage = characterModel.GetDamage(target.characterModel);
 
-                // 执行所有倍增伤害的被动技能
+                
                 foreach (PassiveSkill passiveSkill in characterModel.passiveSkills) {
                     if (passiveSkill.TiggerType == PassiveSkillTriggerType.WhenAttack || passiveSkill.TiggerType == PassiveSkillTriggerType.WhenNormalAttack) {
+                        // 执行所有倍增伤害的被动技能
                         passiveSkill.Execute(this,target,ref damage);
+
+                        // 执行攻击时特效
+                        passiveSkill.Execute(this,target);
                     }
                 }
 
@@ -1253,34 +1239,12 @@ public class CharacterMono : MonoBehaviour {
 
     #endregion
 
-    #region 绑定UI，这份代码需要重构，因为UI和人物耦合了
+    #region 绑定事件，监听单位的死亡事件和被攻击事件
     //======================================
     // ●绑定Model中的各项属性到ViewModel中
     protected virtual void Bind() {
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
-        characterModel.HpValueChangedHandler += OnHpValueChanged;
         characterModel.OnDamaged += OnDamged; 
-
-        //==========================
-        // 绑定物品
-        foreach (var itemGrid in characterModel.itemGrids) {
-            itemGrid.OnIconPathChanged += OnItemIconPathChanged;
-            itemGrid.OnItemCountChanged += OnItemCountChanged;
-        }
-
-
-    }
-    public void OnHpValueChanged(int oldHp,int newHp) {
-        if(simpleCharacterViewModel!=null)
-            simpleCharacterViewModel.Hp.Value = newHp;
-    }
-    public void OnItemCountChanged(int oldItemCount,int newItemCount,int index) {
-        if(itemViewModels.Count>=index)
-            ItemViewModels[index - 1].itemCount.Value = newItemCount; 
-    }
-    public void OnItemIconPathChanged(string oldItemPath,string newItemPath,int index) {
-        if (itemViewModels.Count >= index)
-            ItemViewModels[index - 1].iconPath.Value = newItemPath;
     }
     #endregion
 }

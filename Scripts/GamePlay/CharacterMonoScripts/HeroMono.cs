@@ -21,15 +21,11 @@ public class HeroMono : CharacterMono{
         base.Update();
     }
 
-    #region UI和Model之间的绑定
+    #region 对经验值改变和升级事件进行监听
     protected override void Bind() {
         base.Bind();
-        characterModel.HpValueChangedHandler += OnHpChanged;
         HeroModel.ExpChangedHandler += OnExpChanged;
         HeroModel.LevelChangedHandler += OnLevelChanged;
-    }
-    public void OnHpChanged(int oldHp, int newHp) {
-        HPViewModel.Hp.Value = newHp;
     }
     public void OnExpChanged(int oldExp,int newExp) {
 

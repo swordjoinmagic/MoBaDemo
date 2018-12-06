@@ -11,7 +11,7 @@ using UnityEngine;
 /// </summary>
 public class ItemGrid {
 
-    public delegate void OnValueChangeHandler<T>(T oldValue,T newValue,int index);
+    public delegate void OnValueChangeHandler<T>(T oldValue,T newValue);
 
     //============================
     // 用于监控itemCount和ItemPath的变化
@@ -49,12 +49,12 @@ public class ItemGrid {
             if (oldItemCount == value)
                 return;
             if(OnItemCountChanged!=null)
-                OnItemCountChanged(oldItemCount,ItemCount,index);
+                OnItemCountChanged(oldItemCount,ItemCount);
             if(OnIconPathChanged != null)
                 if(item!=null)
-                    OnIconPathChanged(item.iconPath,item.iconPath,index);
+                    OnIconPathChanged(item.iconPath,item.iconPath);
                 else
-                    OnIconPathChanged(null, null,index);
+                    OnIconPathChanged(null, null);
         }
     }
 
@@ -77,7 +77,7 @@ public class ItemGrid {
             bool oldCanBuy = canBuy;
             canBuy = value;
             if (OnCanBuyChanged!=null) {
-                OnCanBuyChanged(oldCanBuy,value,index);
+                OnCanBuyChanged(oldCanBuy,value);
             }
         }
     }

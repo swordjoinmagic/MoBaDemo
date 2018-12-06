@@ -50,7 +50,8 @@ public class PassiveSkill : BaseSkill {
             triggerType = value;
         }
     }
-    
+
+    #region 用于单位攻击/被攻击/升级/死亡时执行的被动技能,基类技能方法签名为Execute(CharacterMono speller, CharacterMono target,ref Damage damage)
     /// <summary>
     /// 执行该被动技能效果
     /// 具体的效果由子类进行覆写,此方法主要是用于非增益型被动技能，
@@ -70,7 +71,9 @@ public class PassiveSkill : BaseSkill {
     /// <param name="speller"></param>
     /// <param name="result"></param>
     public virtual void Execute(CharacterMono speller, CharacterMono target,ref Damage damage) { }
+    #endregion
 
+    #region 用于增加属性/光环的被动技能
     /// <summary>
     /// 执行该被动技能效果,并将计算得到的附加值输出至result变量(注意是附加值)
     /// 此被动技能主要是用于属性增益型被动技能
@@ -87,5 +90,5 @@ public class PassiveSkill : BaseSkill {
         result = 0f;
         characterAttribute = CharacterAttribute.Attack;
     }
-    
+    #endregion
 }

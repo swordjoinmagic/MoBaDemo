@@ -42,7 +42,7 @@ class IsAttackFinisth : Conditional{
             nextAnimatorStateInfo.IsName("Idle") &&
             isStartAttack.Value) {
             characterModel.Hp -= 50;
-            character.SimpleCharacterViewModel.Modify(characterModel);
+            //character.SimpleCharacterViewModel.Modify(characterModel);
 
             //Debug.Log("攻击完成,设置isStartAttack为False,并进行减血操作");
             isStartAttack.Value = false;

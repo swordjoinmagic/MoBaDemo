@@ -12,8 +12,8 @@ using UnityEngine.UI;
 public class ItemListView : MonoBehaviour{
 
     // 和单位的ItemGrids数组一一对应
-    public ItemPanelView[] itemViews = new ItemPanelView[6];
-    public Image[] maskImage;
+    private ItemPanelView[] itemViews;
+    private Image[] maskImage;
 
     public CharacterMono characterMono;
     private List<ItemGrid> itemGrids;
@@ -31,14 +31,21 @@ public class ItemListView : MonoBehaviour{
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
+        itemViews = GameObject.FindObjectsOfType<ItemPanelView>().Reverse().ToArray();
+        maskImage = new Image[itemViews.Count()];
+        for (int i=0;i<itemViews.Count();i++) {
+            var itemView = itemViews[i];
+            maskImage[i] = itemView.transform.Find("ItemImagePanel").GetComponentInChildren<Mask>().GetComponent<Image>();
+        }
+
         itemGrids = characterMono.characterModel.itemGrids;
-        for (int i=0;i<6;i++) {
+        for (int i=0;i< itemViews.Count(); i++) {
             ItemPanelView itemPanelView = itemViews[i];
             ItemGrid itemGrid = itemGrids[i];
 
+            itemPanelView.itemGrid = itemGrid;
             itemPanelView.BindingContext = new ItemViewModel();
             itemPanelView.BindingContext.Modify(itemGrid);
-            characterMono.ItemViewModels.Add(itemPanelView.BindingContext);
 
             // 为每一个ItemPanelView添加鼠标进入和离开事件
 

@@ -19,15 +19,22 @@ public class SimpleCharacterView : UnityGuiView<SimpleCharacterViewModel>{
     public Text nameText;
 
 
+    // 此视图依附的单位
+    public CharacterMono characterMono;
+
     private Coroutine slowDownHp = null;
+
+    private void Init() {
+        characterMono.characterModel.HpValueChangedHandler += OnHpValueChanged;
+    }
 
     protected override void OnInitialize() {
         base.OnInitialize();
 
         binder.Add<int>("Hp",OnHpValueChanged);
         binder.Add<string>("name",OnNameValueChanged);
+        Init();
     }
-
 
 
     private void OnHpValueChanged(int oldHp,int newHp) {

@@ -11,10 +11,10 @@ class InstallHPView : MonoBehaviour{
     public HeroMono CharacterMono;
 
     private void Start() {
+        HPView.characterMono = CharacterMono;
         HPView.BindingContext = new HPViewModel();
         HPView.BindingContext.Init(CharacterMono.characterModel);
-        Debug.Log("初始化HPVIEW完成");
-        CharacterMono.HPViewModel = HPView.BindingContext;
+        
     }
 
     private void Update() {

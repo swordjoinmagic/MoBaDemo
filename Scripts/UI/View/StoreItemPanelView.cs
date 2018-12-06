@@ -16,6 +16,14 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
     public Image iconImage;
     public Text remainCountText;
     public Outline outline;
+    public ItemGrid itemGrid;
+
+    private void Init() {
+        //==========================================
+        // 监听CharacterMono的物品改变事件
+        itemGrid.OnIconPathChanged += OnIconImageChanged;
+        itemGrid.OnItemCountChanged += OnRemainCountChanged;
+    }
 
     protected override void OnInitialize() {
         base.OnInitialize();
@@ -25,6 +33,7 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
 
         if(outline != null)
             binder.Add<bool>("outlineColor",OnOutlineColorChanged);
+        Init();
     }
 
     /// <summary>

@@ -59,7 +59,6 @@ class StoreView : MonoBehaviour{
     public void Reveal() {
         (transform as RectTransform).DOSizeDelta(new Vector2(250f, (transform as RectTransform).sizeDelta.y),1f);
         canvasGroup.DOFade(1,1f);
-        //transform.localScale = Vector3.one;
 
         UpdateShowCommdities(showCommidtyType);
     }
@@ -80,6 +79,7 @@ class StoreView : MonoBehaviour{
             ItemGrid itemGrid = showItemGrids[i];
             itemGrid.index = i;
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid,heroMono);
+
             // 如果当前ItemPanelView够用就用之前的创建的
             // 当不够用的时候,创建新的ItemPanelView
             if (i >= itemGridsView.Count) {
@@ -95,9 +95,15 @@ class StoreView : MonoBehaviour{
         }
     }
 
+    /// <summary>
+    /// 给单位的ItemPanel视图设置鼠标停留、离开事件（用于显示提示视图）
+    /// </summary>
+    /// <param name="itemGrid"></param>
+    /// <param name="itemPanel"></param>
     private void SetItemPanelMouseEvent(ItemGrid itemGrid,StoreItemPanelView itemPanel) {
-        EventTrigger.Entry onMouseEnter = new EventTrigger.Entry();
-        onMouseEnter.eventID = EventTriggerType.PointerEnter;
+        EventTrigger.Entry onMouseEnter = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerEnter
+        };
         onMouseEnter.callback.AddListener(eventData => {
             if (itemGrid.item == null) return;
 
@@ -114,22 +120,23 @@ class StoreView : MonoBehaviour{
             itemTipsView.BindingContext.Modify(itemGrid);
             itemTipsView.Reveal();
         });
-        EventTrigger.Entry onMouseExit = new EventTrigger.Entry();
-        onMouseExit.eventID = EventTriggerType.PointerExit;
+        EventTrigger.Entry onMouseExit = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerExit
+        };
         onMouseExit.callback.AddListener(eventData => {
             if (itemGrid.item == null) return;
             itemTipsView.Hide(immediate: true);
         });
 
         // 右键单击购买物品的事件
-        EventTrigger.Entry onMouseClick = new EventTrigger.Entry();
-        onMouseClick.eventID = EventTriggerType.PointerClick;
+        EventTrigger.Entry onMouseClick = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerClick
+        };
         onMouseClick.callback.AddListener(eventData => {
             if (Input.GetMouseButtonUp(1)) {
                 if (showItemGrids[itemGrid.index]==itemGrid) {
                     itemTipsView.Hide();
                 }
-
                 storeLogic.Sell(heroMono, showItemGrids[itemGrid.index]);
             }
         });
@@ -147,20 +154,12 @@ class StoreView : MonoBehaviour{
     /// <param name="itemGrid">要进行绑定的实体类对象(Model),当实体类对象,View会自动改变,实质上是View订阅了实体类改变的事件</param>
     public void CreateItemPanel(ItemGrid itemGrid) {
         StoreItemPanelView itemPanel = GameObject.Instantiate<StoreItemPanelView>(itemPanelViewPrefab ,parent: contentRectTransform,worldPositionStays:false);
+        itemPanel.itemGrid = itemGrid;
         itemGridsView.Add(itemPanel);
-        itemGrid.OnIconPathChanged += OnIconPathValueChanged;
-        itemGrid.OnItemCountChanged += OnItemCountChanged;
-    }
-
-    private void OnIconPathValueChanged(string oldIconPathValue,string newIconPathValue,int index) {
-        itemGridsView[index].BindingContext.iconPath.Value = newIconPathValue;
-    }
-    private void OnItemCountChanged(int oldValue,int newValue,int index) {
-        itemGridsView[index].BindingContext.itemCount.Value = newValue;
     }
 
     /// <summary>
-    /// 绑定按钮的事件
+    /// 绑定按钮的事件(即分类按钮,展开和收起商店按钮)
     /// </summary>
     private void BindButtonEvent() {
         // 绑定分类按钮的Click事件
