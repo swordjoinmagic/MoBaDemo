@@ -351,7 +351,7 @@ public class FogSystem : MonoBehaviour {
         for (int i = 0; i < PresentationLayerObjects.Count(); i++) {
             lock (PresentationLayerObjects) {
                 Vector3 vector3 = PresentationLayerObjects[i].Position;
-                RevealUsingVision(vector3);
+                RevealUsingVision(vector3, PresentationLayerObjects[i].Radius);
             }
         }
     }
@@ -360,7 +360,8 @@ public class FogSystem : MonoBehaviour {
     /// 使用视野单位更新可见区域
     /// </summary>
     /// <param name="position">视野单位的坐标</param>
-    public void RevealUsingVision(Vector3 position) {
+    /// <param name="viewRadius">视野单位的视野半径</param>
+    public void RevealUsingVision(Vector3 position,float viewRadius) {
 
         //====================================
         // 第一步
@@ -370,7 +371,7 @@ public class FogSystem : MonoBehaviour {
 
         //===================================
         // 第二步,根据视野单位的视野,设置可见范围,y轴表现在贴图坐标上是从下到上的
-        float radius = 10 * WorldToTex;
+        float radius = viewRadius * WorldToTex;
 
         // 探查视野的范围
         int minX = Mathf.Clamp(Mathf.FloorToInt(position.x - radius), 0, textureSize - 1);

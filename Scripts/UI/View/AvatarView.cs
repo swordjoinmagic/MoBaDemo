@@ -52,7 +52,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
         binder.Add<string>("Name",OnNameChanged);
         binder.Add<int>("Attack",OnAttackChanged);
         binder.Add<int>("Defense",OnDefenseTextChanged);
-        binder.Add<int>("MoveSpeed", OnMoveSpeedChanged);
+        binder.Add<float>("MoveSpeed", OnMoveSpeedChanged);
         binder.Add<int>("ForcePower", OnForcePowerChanged);
         binder.Add<int>("AgilePower", OnAgilePowerChanged);
         binder.Add<int>("IntelligencePower", OnIntelligencePowerChanged);
@@ -114,7 +114,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     public void OnDefenseTextChanged(int oldDefense, int newDefense) {
         defenseText.text = newDefense.ToString();
     }
-    public void OnMoveSpeedChanged(int oldMoveSpeed, int newMoveSpeed) {
+    public void OnMoveSpeedChanged(float oldMoveSpeed, float newMoveSpeed) {
         moveSpeedText.text = newMoveSpeed.ToString();
     }
     public void OnForcePowerChanged(int oldForcePower, int newForcePower) {

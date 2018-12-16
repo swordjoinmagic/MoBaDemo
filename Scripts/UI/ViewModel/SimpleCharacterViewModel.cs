@@ -20,7 +20,7 @@ public class SimpleCharacterViewModel : ViewModelBase{
     public void Modify(CharacterModel characterModel) {
         maxHp.Value = characterModel.maxHp;
         Hp.Value = characterModel.Hp;
-        name.Value = characterModel.name;
+        name.Value = characterModel.Name;
     }
 }
 

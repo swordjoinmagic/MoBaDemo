@@ -19,7 +19,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // 最大魔法值
     public int maxMp;
     // 单位名称
-    public string name;
+    private string name;
     // 该单位的普通攻击距离
     public float attackDistance;
 
@@ -55,9 +55,9 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // 单位防御类型
     public DefenseType defenseType;
     // 移动速度
-    public int movingSpeed;
+    public float movingSpeed;
     // 转身速度
-    public int turningSpeed;
+    public float turningSpeed;
     // 投射物Model类属性
     public ProjectileModel projectileModel;
     // 投射物
@@ -85,7 +85,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // 闪避率
     public float dodgeRate;
 
-    #region 基础属性
+    #region 基础属性 Getter/Setter
     public int Hp {
         get {
             return hp.Value;
@@ -167,7 +167,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         }
     }
 
-    public int MovingSpeed {
+    public float MovingSpeed {
         get {
             return movingSpeed;
         }
@@ -255,6 +255,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     //=====================================
     // 用于战争迷雾
     private Vector3 position;
+    [SerializeField]
     private float radius;
     private bool isVisible = false;
     public Vector3 Position {
@@ -439,13 +440,13 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         }
     }
 
-    public int TotalMovingSpeed {
+    public float TotalMovingSpeed {
         get {
             return MovingSpeed+movingSpeedPlus;
         }
     }
 
-    public int TurningSpeed {
+    public float TurningSpeed {
         get {
             return turningSpeed;
         }
@@ -482,6 +483,26 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public float TotalDodgeRate {
         get {
             return DodgeRate+dodgeRatePlus;
+        }
+    }
+
+    public string Name {
+        get {
+            return name;
+        }
+
+        set {
+            name = value;
+        }
+    }
+
+    public List<BaseSkill> BaseSkills {
+        get {
+            return baseSkills;
+        }
+
+        set {
+            baseSkills = value;
         }
     }
     #endregion
@@ -524,7 +545,32 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
 
     // 获得当前CharacterModel对象的深拷贝对象
     public virtual CharacterModel DeepCopy() {
-        CharacterModel deepCopyModel = new CharacterModel() { };
+        CharacterModel deepCopyModel = new CharacterModel() {
+            maxHp = maxHp,
+            maxMp = maxMp,
+            Hp = Hp,
+            Mp = Mp,
+            Name = Name,
+            attackDistance = attackDistance,
+            BaseSkills = new List<BaseSkill>(),
+            Attack = attack,
+            AttackFloatingValue = attackFloatingValue,
+            AttackSpeed = attackSpeed,
+            Defense = defense,
+            MovingSpeed = movingSpeed,
+            TurningSpeed = turningSpeed,
+            Level = Level,
+            RestoreHpSpeed = RestoreHpSpeed,
+            ResotreMpSpeed = ResotreMpSpeed,
+            canBeAttacked = canBeAttacked,
+            unitType = unitType,
+            unitFaction = unitFaction,
+            supportExp = supportExp,
+            supportMoney = supportMoney,
+            PhysicalResistance = PhysicalResistance,
+            MagicalResistance = MagicalResistance,
+            DodgeRate = DodgeRate
+        };
         return deepCopyModel;
     }
 }

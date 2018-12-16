@@ -1472,8 +1472,8 @@ MonoBehaviour:
     attackSpeed: 10
     defense: 100
     defenseType: 0
-    movingSpeed: 100
-    turningSpeed: 10
+    movingSpeed: 3.5
+    turningSpeed: 120
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -1485,6 +1485,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    radius: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0

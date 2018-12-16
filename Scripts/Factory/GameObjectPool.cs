@@ -32,6 +32,9 @@ public class GameObjectPool{
                 for (int i = 0; i < pools.Count; i++) {
                     PoolData p = pools[i];
                     if (!p.InUse) {
+                        // 初始化对象
+                        p.Obj.transform.position = position;
+                        p.Obj.SetActive(true);
                         p.InUse = true;
                         return p.Obj;
                     }
@@ -76,6 +79,7 @@ public class GameObjectPool{
         PoolData p = GetPoolData(obj);
         // 将该PoolData设为未使用状态
         if (p != null) {
+            p.Obj.SetActive(false);
             p.InUse = false;
         }
     }

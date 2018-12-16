@@ -44,9 +44,6 @@ public class BaseAtributeChangeSkill : PassiveSkill{
                 case CharacterAttribute.MaxMp:
                     attributeValue = speller.maxMp;
                     break;
-                case CharacterAttribute.movingSpeed:
-                    attributeValue = speller.MovingSpeed;
-                    break;
             }
             result = attributeValue * value;
         } else {
@@ -75,6 +72,9 @@ public class BaseAtributeChangeSkill : PassiveSkill{
                     break;
                 case CharacterAttribute.PhysicalResistance:
                     attributeValue = speller.PhysicalResistance;
+                    break;
+                case CharacterAttribute.movingSpeed:
+                    attributeValue = speller.MovingSpeed;
                     break;
             }
             result = attributeValue * value;

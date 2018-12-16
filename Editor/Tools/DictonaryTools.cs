@@ -26,5 +26,25 @@ public static class DictonaryTools {
         
         return data;
     }
+    public static JsonData Get(this JsonData jsondatas, int key, Type type = null) {
+        JsonData data;
+        try {
+            data = jsondatas[key];
+        } catch (Exception) {
+            if (type == null || type == typeof(string))
+                data = "";
+            else if (type == typeof(int))
+                data = 0;
+            else if (type == typeof(float)) {
+                data = 0f;
+                Debug.Log("data:" + data.ToJson());
+            } else if (type == typeof(bool))
+                data = false;
+            else
+                data = "";
+        }
+
+        return data;
+    }
 }
 

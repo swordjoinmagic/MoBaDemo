@@ -37,7 +37,7 @@ public class SkillEditor : EditorWindow {
     /// <summary>
     /// 读取技能数据
     /// </summary>
-    private static JsonData Load() {
+    public static JsonData Load() {
         string jsonText = Resources.Load<TextAsset>("Data/TestData").text;
 
         return JsonMapper.ToObject(jsonText);
@@ -70,13 +70,13 @@ public class SkillEditor : EditorWindow {
     public static void CreateWindows() {
         SkillObjectList = Load();
         // 创建窗口
-        Rect rect = new Rect(0,0,500,500);
+        Rect rect = new Rect(0,0,800,500);
         SkillEditor skillEditor = GetWindowWithRect<SkillEditor>(rect,true,"技能编辑器");
         skillEditor.Show();
 
         s = new List<string>();
         for (int i = 0; i < SkillObjectList.Count; i++) {
-            s.Add(i.ToString());
+            s.Add(i.ToString()+":"+SkillObjectList[i]["SkillName"]);            
         }
 
     }
@@ -92,7 +92,7 @@ public class SkillEditor : EditorWindow {
 
         //========================================================
         // 技能编号
-        GUILayout.BeginArea(new Rect(0,0,100,400));
+        GUILayout.BeginArea(new Rect(0,0,300,400));
         slider = GUILayout.BeginScrollView(slider, false,true);
         selectedIndex = GUILayout.SelectionGrid(selectedIndex,s.ToArray(),1);
         GUILayout.EndScrollView();
@@ -110,7 +110,7 @@ public class SkillEditor : EditorWindow {
 
         //===============================================
         // 对单个技能对象进行编辑
-        GUILayout.BeginArea(new Rect(125, 0, 375, 400));
+        GUILayout.BeginArea(new Rect(325, 0, 375, 400));
         objectSlider = GUILayout.BeginScrollView(objectSlider, false, true);
         JsonData value = SkillPanel();
         GUILayout.EndScrollView();
@@ -156,6 +156,9 @@ public class SkillEditor : EditorWindow {
                 else {
                     EditorGUILayout.LabelField(propertyInfo.Name + ":");
                     ObjectJsonData[propertyInfo.Name] = EditorGUILayout.TextArea(ObjectJsonData.Get(propertyInfo.Name).ToString());
+                }
+                if (propertyInfo.Name.Contains("Name")) {
+                    s[selectedIndex] = selectedIndex+":"+SkillObjectList[selectedIndex][propertyInfo.Name].ToString();
                 }
             }
             if (propertyInfo.PropertyType == typeof(float)) {

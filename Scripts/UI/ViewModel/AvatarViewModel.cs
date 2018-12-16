@@ -9,7 +9,7 @@ public class AvatarViewModel : ViewModelBase{
     // 防御力
     public BindableProperty<int> Defense = new BindableProperty<int>();
     // 移动速度
-    public BindableProperty<int> MoveSpeed = new BindableProperty<int>();
+    public BindableProperty<float> MoveSpeed = new BindableProperty<float>();
     // 力量
     public BindableProperty<int> ForcePower = new BindableProperty<int>();
     // 敏捷
@@ -29,7 +29,7 @@ public class AvatarViewModel : ViewModelBase{
     }
 
     public void Modify(HeroModel hero) {
-        Name.Value = hero.name;
+        Name.Value = hero.Name;
         Attack.Value = hero.TotalAttack;
         Defense.Value = hero.TotalDefense;
         MoveSpeed.Value = hero.TotalMovingSpeed;

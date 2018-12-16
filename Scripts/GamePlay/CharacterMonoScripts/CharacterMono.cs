@@ -224,7 +224,7 @@ public class CharacterMono : MonoBehaviour {
             Hp = 200,
             maxMp = 1000,
             Mp = 1000,
-            name = "sjm",
+            Name = "sjm",
             attackDistance = 10f,
             Level = 0,
             forcePower = 100,
@@ -238,8 +238,10 @@ public class CharacterMono : MonoBehaviour {
             intelligencePower = 10,
             mainAttribute = HeroMainAttribute.AGI,
             skillPointGrowthPoint = 1,
-            TurningSpeed = 5,
+            TurningSpeed = 120,
             AttackAudioPath = "attackAudio",
+            Radius = 10,
+            MovingSpeed = 4,
         };
         Owner = new Player() {
             Money = 1000
@@ -515,8 +517,19 @@ public class CharacterMono : MonoBehaviour {
         #endregion
     }
 
+    /// <summary>
+    /// 根据CharacterModel，初始化动画状态与移动代理的方法
+    /// </summary>
+    public void InitAnimatorAndNavAgent() {
+        agent.speed = characterModel.MovingSpeed;
+        agent.angularSpeed = characterModel.TurningSpeed;
+    }
+
     private void Start() {
         Init();
+
+        // 根据CharacterModel初始化身上的组件
+        InitAnimatorAndNavAgent();
     }
 
     public virtual void Update() {
@@ -593,8 +606,8 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="baseSkill"></param>
     /// <returns></returns>
     public bool LearnSkill(BaseSkill baseSkill) {
-        if (characterModel.baseSkills.Count() < characterModel.MaxSkillCount) {
-            characterModel.baseSkills.Add(baseSkill);
+        if (characterModel.BaseSkills.Count() < characterModel.MaxSkillCount) {
+            characterModel.BaseSkills.Add(baseSkill);
             
             if (baseSkill is ActiveSkill) {
                 characterModel.activeSkills.Add(baseSkill as ActiveSkill);
@@ -621,10 +634,10 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="baseSkill"></param>
     /// <returns></returns>
     public bool ForgetSkill(BaseSkill baseSkill) {
-        for (int i=0;i< characterModel.baseSkills.Count();i++) {
-            var skill = characterModel.baseSkills[i];
+        for (int i=0;i< characterModel.BaseSkills.Count();i++) {
+            var skill = characterModel.BaseSkills[i];
             if (skill.SkillName == baseSkill.SkillName) {
-                characterModel.baseSkills.RemoveAt(i);
+                characterModel.BaseSkills.RemoveAt(i);
 
                 //================================================================================
                 // 用于判断学习的技能是否是光环技能,对于光环技能来说,学习时自动执行他的Execute方法
@@ -834,7 +847,7 @@ public class CharacterMono : MonoBehaviour {
         // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击(注意必须是在单位没有攻击时，才转向敌人)
         if (!IsTargetFront(target) && !currentAnimatorStateInfo.IsName("attack")) {
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), characterModel.TurningSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(target.transform.position - transform.position), characterModel.TurningSpeed * Time.deltaTime * 0.1f);
 
             return false;
         }
@@ -1022,7 +1035,7 @@ public class CharacterMono : MonoBehaviour {
         // 判断单位是否正对目标，如果没有，则转身面对目标在进行攻击(注意必须是在单位没有攻击时，才转向敌人)
         if (enemryMono != null && !IsTargetFront(enemryMono) && !currentAnimatorStateInfo.IsName("Spell")) {
 
-            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(enemryMono.transform.position - transform.position), characterModel.TurningSpeed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(enemryMono.transform.position - transform.position), characterModel.TurningSpeed * 0.1f * Time.deltaTime);
 
             return false;
         }
@@ -1098,6 +1111,35 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
+    /// 重置身上的所有属性，用于在在对象池中获取一个旧对象时，
+    /// 将其状态恢复
+    /// </summary>
+    public void ResetCharacterModel() {
+        // 清除状态
+        RemoveAllBattleState();
+
+        // 清除死亡标志
+        isDying = false;
+
+        // 清除动画
+        ResetAllStateAnimator();
+
+        // 回满血、魔
+        characterModel.Hp = characterModel.maxHp;
+        characterModel.Mp = characterModel.maxMp;
+
+        // 启动AI系统
+        BehaviorTree behaviorTree = GetComponent<BehaviorTree>();
+        if (behaviorTree != null)
+            behaviorTree.enabled = true;
+
+        CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>();
+        if (characterOperationFSM != null)
+            characterOperationFSM.enabled = true;
+    }
+
+    
+    /// <summary>
     /// 当单位受到伤害时执行的事件
     /// </summary>
     /// <param name="damage"></param>
@@ -1126,9 +1168,6 @@ public class CharacterMono : MonoBehaviour {
 
         // 设置isDying为True
         isDying = true;
-
-        // 触发死亡事件
-        if (OnUnitDied != null) OnUnitDied(this);
 
         //================================
         // 清除单位目前身上所有状态
@@ -1161,6 +1200,10 @@ public class CharacterMono : MonoBehaviour {
 
         // 当死亡动画播放完毕,单位确实死了
         if (isDying && currentAnimatorStateInfo.IsName("Death") && nextAnimatorStateInfo.IsName("Idle")) {
+
+            // 触发死亡事件
+            if (OnUnitDied != null) OnUnitDied(this);
+
             return true;
         }
         return false;

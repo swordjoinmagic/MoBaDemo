@@ -75,7 +75,7 @@ public class HeroModel : CharacterModel{
     }
 
     public override string ToString() {
-        return "Name:" + name + " hp:" + Hp + " exp:" + Exp;
+        return "Name:" + Name + " hp:" + Hp + " exp:" + Exp;
     }
 }
 
