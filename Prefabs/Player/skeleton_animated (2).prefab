@@ -736,6 +736,7 @@ GameObject:
   - component: {fileID: 114308099915368656}
   - component: {fileID: 54103373443786580}
   - component: {fileID: 114231663357843512}
+  - component: {fileID: 82705927102094618}
   m_Layer: 10
   m_Name: skeleton_animated (2)
   m_TagString: Player
@@ -1397,8 +1398,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1608766948276850}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15.2, y: -4.12, z: 7}
-  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_LocalPosition: {x: 104.8, y: 0, z: 140.2}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4761412929782550}
   - {fileID: 4774992203704720}
@@ -2211,7 +2212,7 @@ Camera:
   m_AllowMSAA: 0
   m_AllowDynamicResolution: 0
   m_ForceIntoRT: 0
-  m_OcclusionCulling: 1
+  m_OcclusionCulling: 0
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
 --- !u!23 &23063549153831316
@@ -2283,6 +2284,101 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &82705927102094618
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1608766948276850}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 5
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!95 &95957555714191218
 Animator:
   serializedVersion: 3
@@ -2312,14 +2408,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbe4ff6c23c56574a8cfbd6480e6d3ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDying: 0
   characterModel:
     maxHp: 0
     maxMp: 0
-    name: 
     attackDistance: 0
-    activeSkills: []
     attack: 0
+    attackFloatingValue: 0
     attackType: 0
     attackSpeed: 0
     defense: 0
@@ -2327,7 +2421,6 @@ MonoBehaviour:
     movingSpeed: 0
     turningSpeed: 0
     projectile: {fileID: 0}
-    level: 0
     restoreHpSpeed: 0
     resotreMpSpeed: 0
     canBeAttacked: 1
@@ -2335,22 +2428,21 @@ MonoBehaviour:
     unitFaction: 0
     supportExp: 0
     supportMoney: 0
-    position: {x: 0, y: 0, z: 0}
+    physicalResistance: 0
+    magicalResistance: 0
+    dodgeRate: 0
     radius: 0
-    isVisible: 0
-  prepareSkill:
-    skillName: 
-    iconPath: 
-    description: 
-    skillLevel: 0
+  isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 100010, guid: 645413a00f7bd0242bbd6d0e5eb6f439, type: 2}
-  targetEnemryEffect: {fileID: 0}
-  projectile: {fileID: 114851151471337476, guid: 91f5f5ee49adba44e90af28708fada2f,
+  targetEnemryEffect: {fileID: 1292397218127246, guid: c3d8fa2e35817d2489ceb28d4bb1ad55,
     type: 2}
+  projectile: {fileID: 1229413420632202, guid: e235aaeb17790d44381bc9fcb71b1451, type: 2}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!114 &114308099915368656
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2394,6 +2486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!124 &124806511512074952
 Behaviour:
   m_ObjectHideFlags: 1
@@ -2539,7 +2632,7 @@ SkinnedMeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 7d99630e4d5e92b43b38292a6c902370, type: 2}
+  - {fileID: 2100000, guid: 5fb70b7e700363b4d843f0dc7a91e1bf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2631,7 +2724,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 3.6
+  m_Speed: 3.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360

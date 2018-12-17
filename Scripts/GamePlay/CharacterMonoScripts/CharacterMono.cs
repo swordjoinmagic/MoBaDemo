@@ -61,19 +61,36 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <param name="learner"></param>
     /// <param name="skill"></param>
-    public delegate void SkillHandler(CharacterMono learner, BaseSkill skill);
+    public delegate void SkillLerningHandler(CharacterMono learner, BaseSkill skill);
 
     /// <summary>
     /// 当单位获取/遗失物品时，触发的回调函数/事件
     /// </summary>
     /// <param name="characterMono"></param>
     public delegate void ItemHandler(CharacterMono characterMono, ItemGrid itemGrid);
+
+    /// <summary>
+    /// 当单位移动时,触发的事件
+    /// </summary>
+    /// <param name="characterMono">正在移动的单位</param>
+    /// <param name="pos">单位要移动到的目标位置</param>
+    public delegate void MoveHandler(CharacterMono characterMono,Vector3 pos);
+
+    /// <summary>
+    /// 当单位播放动画时触发的事件
+    /// </summary>
+    /// <param name="characterMono"></param>
+    /// <param name="operation">要播放的动画的字符串标识符</param>
+    public delegate void AnimationHandler(CharacterMono characterMono,string operation);
     //=====================================
     // 事件集合
 
     // 当单位身上增加新的状态(如中毒状态)时,触发的事件
     public event BattleStatusChangedHandler OnAddNewBattleStatus;
     public event BattleStatusChangedHandler OnRemoveBattleStatus;
+
+    // 当单位移动时,触发的事件
+    public event MoveHandler OnMove;
 
     // 当单位攻击、遭受伤害时，触发的事件
     public event AttackHandler OnAttack;        // 当攻击时
@@ -86,12 +103,15 @@ public class CharacterMono : MonoBehaviour {
     public event DiedHandler OnUnitDied;
 
     // 当单位学习/遗忘技能时
-    public event SkillHandler OnLearnSkill;
-    public event SkillHandler OnForgetSkill;
+    public event SkillLerningHandler OnLearnSkill;
+    public event SkillLerningHandler OnForgetSkill;
 
     // 当单位获得/遗失物品时
     public event ItemHandler OnGetItem;
     public event ItemHandler OnLostItem;
+
+    // 当单位播放动画时
+    public event AnimationHandler OnPlayAnimation;
     #endregion
 
     // 当前人物的动画组件以及寻路组件
@@ -801,13 +821,19 @@ public class CharacterMono : MonoBehaviour {
         );
 
         if (!agent.pathPending && distance <= forwardDistance) {
-            animator.SetBool("isRun", false);
+            //animator.SetBool("isRun", false);
+            DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
             agent.isStopped = true;
             return true;
         } else {
-            animator.SetBool("isRun", true);
+            //animator.SetBool("isRun", true);
+            DoCharacterMonoAnimation(AnimatorEnumeration.Run);
             agent.isStopped = false;
             agent.SetDestination(position);
+
+            // 触发移动事件
+            if (OnMove != null) OnMove(this,position);
+
             return false;
         }
 
@@ -856,7 +882,8 @@ public class CharacterMono : MonoBehaviour {
         // 播放攻击动画
         // 如果准备开始攻击,那么播放动画
         if (!currentAnimatorStateInfo.IsName("attack")) {
-            animator.SetTrigger("attack");
+            //animator.SetTrigger("attack");
+            DoCharacterMonoAnimation(AnimatorEnumeration.Attack);
             isAttackFinish = false;
         }
 
@@ -909,6 +936,7 @@ public class CharacterMono : MonoBehaviour {
         return false;
     }
 
+    #region 辅助动画相关
     /// <summary>
     /// 重置人物的攻击动画
     /// </summary>
@@ -943,20 +971,63 @@ public class CharacterMono : MonoBehaviour {
     }
 
     /// <summary>
+    /// 触发动画播放事件的代理播放动画的方法,
+    /// 使用此方法的目的是:
+    ///     1. 防止后面瞎几把改Animator里面的各种trigger,bool时候,不会搞得整个代码都要重新改
+    ///     2. 解耦网络通信与游戏逻辑,当播放动画时,自动向服务器发送播放动画的协议
+    /// </summary>
+    /// <param name="animator"></param>
+    /// <param name="animationStr"></param>
+    public void DoCharacterMonoAnimation(string animationStr) {
+        switch (animationStr) {
+            case "Spell":
+                animator.SetTrigger("spell");
+                break;
+            case "Attack":
+                animator.SetTrigger("attack");
+                break;
+            case "Run":
+                animator.ResetTrigger("spell");
+                animator.ResetTrigger("attack");
+                animator.SetBool("isRun", true);
+                break;
+            case "Idle":
+                animator.SetBool("isRun", false);
+                break;
+            case "Died":
+                animator.SetTrigger("died");
+                break;
+            default:
+                // IDLE
+                animator.ResetTrigger("spell");
+                animator.ResetTrigger("attack");
+                animator.SetBool("isRun", false);
+                break;
+        }
+        if (OnPlayAnimation != null) OnPlayAnimation(this,animationStr);
+    }
+
+    #endregion
+    /// <summary>
     /// 移动到指定地点,移动结束返回False,移动尚未结束返回True
     /// </summary>
-    /// <param name="position"></param>
+    /// <param name="position">指定地点</param>
     /// <returns></returns>
     public bool Move(Vector3 position) {
         ResetAttackStateAnimator();
-        animator.SetBool("isRun", true);
+        //animator.SetBool("isRun", true);
+        DoCharacterMonoAnimation(AnimatorEnumeration.Run);
         agent.isStopped = false;
         agent.SetDestination(position);
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
-            animator.SetBool("isRun", false);
+            //animator.SetBool("isRun", false);
+            DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
             return false;
         }
+
+        // 触发移动事件
+        if (OnMove != null) OnMove(this,position);
 
         return true;
     }
@@ -1045,7 +1116,9 @@ public class CharacterMono : MonoBehaviour {
 
             // 播放释放技能的动画
             if (!currentAnimatorStateInfo.IsName("Spell"))
-                animator.SetTrigger("spell");
+
+                //animator.SetTrigger("spell");
+                DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
 
             // 如果技能释放结束,那么产生特效,计算伤害
             if (currentAnimatorStateInfo.IsName("Spell") &&
@@ -1072,7 +1145,8 @@ public class CharacterMono : MonoBehaviour {
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
                 if (!currentAnimatorStateInfo.IsName("Spell")) {
-                    animator.SetTrigger("spell");
+                    //animator.SetTrigger("spell");
+                    DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
                 }
 
                 // 如果技能释放结束,那么产生特效,计算伤害
@@ -1186,7 +1260,7 @@ public class CharacterMono : MonoBehaviour {
             characterOperationFSM.enabled = false;
 
         // 播放死亡动画
-        animator.SetTrigger(AnimatorEnumeration.Died);
+        animator.SetTrigger("died");
     }
 
     /// <summary>

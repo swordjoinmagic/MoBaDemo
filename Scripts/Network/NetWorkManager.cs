@@ -61,8 +61,11 @@ public class NetWorkManager : MonoBehaviour {
     }
 
     public void StartGame() {
-        AddNetworkPlayer(text.text, UnityEngine.Random.insideUnitCircle * 5);
-        networkPlayers[text.text].AddComponent<NetWorkPlayerr>();
+        AddNetworkPlayer(NowPlayerID, UnityEngine.Random.insideUnitCircle * 5);
+        networkPlayers[NowPlayerID].GetComponent<CharacterOperationFSM>().enabled = true ;
+
+        synchronizeTest = new SynchronizeTest(networkPlayers[NowPlayerID].GetComponent<CharacterMono>());
+
         SendPos();
     }
 
@@ -156,4 +159,18 @@ public class NetWorkManager : MonoBehaviour {
             DispatchMsgEvent(protocolBytes);
         }
 	}
+
+    #region 测试
+
+    public void TestConnect() {
+        nowPlayerID = text.text;
+        Connect();
+    }
+    public CharacterMono characterMono;
+    SynchronizeTest synchronizeTest;
+    private void Start() {
+
+    }
+
+    #endregion
 }
