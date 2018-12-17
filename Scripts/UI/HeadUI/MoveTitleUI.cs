@@ -18,6 +18,8 @@ public class MoveTitleUI : MonoBehaviour {
 
     public RectTransform titleTransform;
 
+    private bool isReadyQuit = false;
+
     // Use this for initialization
     void Start() {
 
@@ -57,6 +59,24 @@ public class MoveTitleUI : MonoBehaviour {
         Disturbance(panelTransform);
     }
 
+    public void AniamtionQuit() {
+        for (int i = 0; i < buttons.Length; i++) {
+            Button button = buttons[i];
+            RectTransform transform = button.transform as RectTransform;
+
+            float y = transform.anchoredPosition.y;
+            float x = transform.anchoredPosition.x;
+            transform.anchoredPosition = new Vector2(x + transform.sizeDelta.x, y + transform.sizeDelta.y);
+            y = transform.anchoredPosition.y;
+            x = transform.anchoredPosition.x;
+            transform.DOAnchorPosY(y - 100, 0.3f).OnComplete(() => {
+                transform.DOAnchorPosX(x - 700, 0.3f).OnComplete(() => {
+                    Disturbance(transform);
+                });
+            }).SetDelay(i * 0.2f);
+        }
+    }
+
     void BindButtonEvent() {
         foreach (var button in buttons) {
             RectTransform bgTransform = button.transform.Find("background") as RectTransform;
@@ -90,23 +110,26 @@ public class MoveTitleUI : MonoBehaviour {
         Vector2 origin = new Vector2(x,y);
         Vector2 randomVector2 = new Vector2(x+Random.Range(-this.disturbanceRange, this.disturbanceRange),y+ Random.Range(-this.disturbanceRange, this.disturbanceRange));
 
-        // 扰动
-        Tweener tweener = rectTransform.DOAnchorPos(randomVector2, disturbanceInterval).OnComplete(()=> {
-            // 归位
-            Rest(rectTransform, origin);
-        });
-        tweener.SetEase(Ease.InOutSine);
-
+        if (!isReadyQuit) {
+            // 扰动
+            Tweener tweener = rectTransform.DOAnchorPos(randomVector2, disturbanceInterval).OnComplete(() => {
+                // 归位
+                Rest(rectTransform, origin);
+            });
+            tweener.SetEase(Ease.InOutSine);
+        }
     }
 
     void Rest(RectTransform rectTransform,Vector2 origin, bool isTitle = false) {
-        // 归位
-        Tweener tweener = rectTransform.DOAnchorPos(origin, disturbanceInterval).OnComplete(() => {
-            // 扰动
-            Disturbance(rectTransform);
-        });
-        tweener.SetEase(Ease.InOutSine);
 
+        if (!isReadyQuit) {
+            // 归位
+            Tweener tweener = rectTransform.DOAnchorPos(origin, disturbanceInterval).OnComplete(() => {
+                // 扰动
+                Disturbance(rectTransform);
+            });
+            tweener.SetEase(Ease.InOutSine);
+        }
     }
 
     // Update is called once per frame

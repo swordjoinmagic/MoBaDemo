@@ -143,15 +143,18 @@ public class CharacterModelEditor : EditorWindow {
                 try {
                     maxCount = ObjectJsonData[propertyInfo.Name].Count;
                 } catch (Exception e) {
-                    
+                    ObjectJsonData[propertyInfo.Name] = new JsonData();
+                    ObjectJsonData[propertyInfo.Name].Add(0);
                 }
 
                 Debug.Log("maxCount:"+maxCount);
-                
-                BaseSkillListPanel();
 
-                for(int i=0;i<maxCount; i++)
-                    EditorGUILayout.Popup((int)ObjectJsonData[propertyInfo.Name].Get(i, typeof(int)), GetAllSkillName());
+                if (GUILayout.Button("增加技能")) {
+                    ObjectJsonData[propertyInfo.Name].Add(0); 
+                }
+
+                for (int i=0;i<maxCount; i++)
+                    ObjectJsonData[propertyInfo.Name][i] = EditorGUILayout.Popup((int)ObjectJsonData[propertyInfo.Name].Get(i, typeof(int)), GetAllSkillName());
                 
                 EditorGUILayout.LabelField("============================================");
             }
@@ -169,11 +172,6 @@ public class CharacterModelEditor : EditorWindow {
         return ObjectJsonData;
     }
 
-    private void BaseSkillListPanel() {
-        if (GUILayout.Button("增加技能")) {
-            
-        }
-    }
 
 
     private void OnGUI() {
