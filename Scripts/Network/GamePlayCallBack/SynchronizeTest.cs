@@ -14,22 +14,21 @@ public class SynchronizeTest {
         NetWorkManager.Instance.AddListener("Damage", TreateDamageProtocol);
         NetWorkManager.Instance.AddListener("Level",TreateLevelProtocol);
         NetWorkManager.Instance.AddListener("SpellSkill",TreateSpellSkillProtocol);
+        NetWorkManager.Instance.AddListener("AddItem",TreateGetItemProtocol);
+        NetWorkManager.Instance.AddListener("DeleteItem",TreateDeleteItemProtocol);
         characterMono.OnMove += TransformSynchronize;
         characterMono.OnPlayAnimation += AniamtionSynchronize;
         characterMono.characterModel.LevelChangedHandler += LevelSynchronize;
         characterMono.OnSpell += SpellSkillSynchronize;
+        characterMono.OnGetItem += GetItemSynchronize;
+        characterMono.OnDelteItem += DeleteItemSynchronize;
     }
 
     private float time;
 
     // 位置同步
     public void TransformSynchronize(CharacterMono characterMono, Vector3 pos) {
-        //time += Time.smoothDeltaTime;
-        //if (time >= 0.1f) {
         NetWorkManager.Instance.SendPos();
-        //Debug.Log("单位正在移动");
-        //time = 0;
-        //}
     }
 
     // 动画同步
@@ -166,6 +165,7 @@ public class SynchronizeTest {
         // 协议参数
         protocol.AddString(NetWorkManager.Instance.NowPlayerID);
         protocol.AddInt(skillID);
+        protocol.AddInt(activeSkill.SkillLevel);
         protocol.AddString(skillTarget);
 
         // 根据技能是否一定要指定敌人来构造 SpellSkil协议
@@ -202,6 +202,9 @@ public class SynchronizeTest {
         // 要释放的技能的ID
         int skillId = protocol.GetInt();
 
+        // 要释放的技能的等级
+        int skillLevel = protocol.GetInt();
+
         // 技能目标
         string skillTarget = protocol.GetString();
 
@@ -219,7 +222,156 @@ public class SynchronizeTest {
 
             skill.Execute(NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>(), NetWorkManager.Instance.networkPlayers[targetId].GetComponent<CharacterMono>());
         }
+    }
 
+
+    /// <summary>
+    /// 技能学习同步,监听技能学习事件
+    /// </summary>
+    /// <param name="learner"></param>
+    /// <param name="skill"></param>
+    public void LearnSkillSynchronize(CharacterMono learner, BaseSkill skill) {
+        // 当前要学习的技能的ID
+        int skillID = skill.SkillID;
+
+        // 构造协议
+        ProtocolBytes protocolBytes = new ProtocolBytes();
+
+        // 协议名
+        protocolBytes.AddString("LearnSkill");
+
+        // 协议参数
+        protocolBytes.AddString(NetWorkManager.Instance.NowPlayerID);
+        protocolBytes.AddInt(skillID);
+
+        // 发送协议,告诉其他客户端,本地玩家NowPlayerID学习了X技能
+        NetWorkManager.Instance.Send(protocolBytes);
+    }
+
+    /// <summary>
+    /// 处理LearnSkill协议
+    /// </summary>
+    /// <param name="protocol"></param>
+    public void TreateLearnSkillProtocol(ProtocolBytes protocol) {
+        // 获得用户名
+        string userName = protocol.GetString();
+
+        if (userName == NetWorkManager.Instance.NowPlayerID) return;
+
+        // 获得学习的技能的ID
+        int skillID = protocol.GetInt();
+
+    }
+
+    /// <summary>
+    /// 获得物品同步,监听获得物品事件
+    /// </summary>
+    /// <param name="characterMono"></param>
+    /// <param name="itemGrid"></param>
+    public void GetItemSynchronize(CharacterMono characterMono, ItemGrid itemGrid) {        
+        if (itemGrid.item == null) return;
+
+        // 获得物品ID
+        int itemId = itemGrid.item.ItemId;
+
+        // 获得用户名
+        string userName = NetWorkManager.Instance.NowPlayerID;
+
+        // 构造获得物品协议
+        ProtocolBytes protocolBytes = new ProtocolBytes();
+
+        // 协议名
+        protocolBytes.AddString("AddItem");
+
+        // 参数
+        protocolBytes.AddString(userName);
+        protocolBytes.AddInt(itemId);
+        protocolBytes.AddInt(itemGrid.ItemCount);
+
+        // 发送协议
+        NetWorkManager.Instance.Send(protocolBytes);
+    }
+
+    /// <summary>
+    /// 处理获得物品协议
+    /// </summary>
+    /// <param name="protocol"></param>
+    public void TreateGetItemProtocol(ProtocolBytes protocol) {
+        // 获得用户名
+        string userName = protocol.GetString();
+
+        if (userName == NetWorkManager.Instance.NowPlayerID) return;
+
+        // 获得物品ID
+        int itemId = protocol.GetInt();
+        // 获得物品数量
+        int itemNumber = protocol.GetInt();
+
+        // 根据用户名获得英雄
+        CharacterMono character = NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>();
+
+        // 构造物品格子
+        ItemGrid itemGrid = new ItemGrid {
+            item = TestDatabase.Instance.items[0],
+            ItemCount = itemNumber
+        };
+
+        // 处理单位获得物品事件
+        character.GetItem(itemGrid);
+    }
+
+    /// <summary>
+    /// 删除物品同步,监听删除物品事件
+    /// </summary>
+    /// <param name="characterMono"></param>
+    /// <param name="itemGrid"></param>
+    public void DeleteItemSynchronize(CharacterMono characterMono, ItemGrid itemGrid) {
+        if (itemGrid.item == null) return;
+
+        // 获得物品ID
+        int itemId = itemGrid.item.ItemId;
+
+        // 获得用户名
+        string userName = NetWorkManager.Instance.NowPlayerID;
+
+        // 构造获得物品协议
+        ProtocolBytes protocolBytes = new ProtocolBytes();
+
+        // 协议名
+        protocolBytes.AddString("DeleteItem");
+
+        // 参数
+        protocolBytes.AddString(userName);
+        protocolBytes.AddInt(itemId);
+
+        // 发送协议
+        NetWorkManager.Instance.Send(protocolBytes);
+    }
+
+    /// <summary>
+    /// 处理删除物品的协议
+    /// </summary>
+    /// <param name="protocol"></param>
+    public void TreateDeleteItemProtocol(ProtocolBytes protocol) {
+
+        // 获得用户名
+        string userName = protocol.GetString();
+        // 获得物品ID
+        int id = protocol.GetInt();
+
+        // 根据用户名获得英雄
+        CharacterMono character = NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>();
+
+        // 遍历英雄物品格子,删除物品id和id一样的物品
+        for (int i=0;i<character.characterModel.itemGrids.Count;i++) {
+
+            ItemGrid itemGrid = character.characterModel.itemGrids[i];
+
+            if (itemGrid.item != null && itemGrid.item.ItemId == id) {
+                itemGrid.ItemCount = 0;
+                return;
+            }
+        }
     }
 }
 

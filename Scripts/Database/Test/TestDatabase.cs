@@ -7,6 +7,7 @@ using System.Reflection;
 public class TestDatabase : MonoBehaviour {
 
     public List<BaseSkill> baseSkills;
+    public List<Item> items;
     public GameObject targetPositionEffect;
     public GameObject targetEnemryEffect;
 
@@ -148,6 +149,27 @@ public class TestDatabase : MonoBehaviour {
                     SkillTargetType = UnitType.Everything,
                     SkillInfluenceRadius = 10
                 }
+            }
+        };
+        items = new List<Item>() {
+            new Item {
+                name = "测试物品",
+                itemActiveSkill = new PointingSkill {
+                    BaseDamage = 1000,
+                    SelfEffect = targetPositionEffect,
+                    TargetEffect = targetPositionEffect,
+                    SpellDistance = 10,
+                    CD = 3,
+                    SkillTargetType = UnitType.Everything,
+                    SkillLevel = 1,
+                },
+                itemType = ItemType.Consumed,
+                maxCount = 10,
+                iconPath = "00046",
+                useMethodDescription = "使用：点目标",
+                activeDescription = "对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害",
+                passiveDescription = "+100攻击力\n+100防御力\n+10力量",
+                backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品"
             }
         };
     }

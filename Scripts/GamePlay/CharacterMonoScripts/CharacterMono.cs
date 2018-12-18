@@ -110,6 +110,7 @@ public class CharacterMono : MonoBehaviour {
     // 当单位获得/遗失物品时
     public event ItemHandler OnGetItem;
     public event ItemHandler OnLostItem;
+    public event ItemHandler OnDelteItem;   // 当一个物品从物品栏删除时
 
     // 当单位播放动画时
     public event AnimationHandler OnPlayAnimation;
@@ -487,8 +488,6 @@ public class CharacterMono : MonoBehaviour {
         };
     }
 
-    public void Awake() {
-    }
 
     /// <summary>
     /// 根据CharacterModel，初始化动画状态与移动代理的方法
@@ -622,6 +621,7 @@ public class CharacterMono : MonoBehaviour {
                 itemGrid.ItemCount -= 1;
 
                 if (OnLostItem != null) OnLostItem(this,item);
+                if (itemGrid.ItemCount == 0 && OnDelteItem != null) OnDelteItem(this,item);
                 return true;
             }
         }
@@ -1142,7 +1142,6 @@ public class CharacterMono : MonoBehaviour {
 
             // 播放释放技能的动画
             if (!currentAnimatorStateInfo.IsName("Spell"))
-
                 //animator.SetTrigger("spell");
                 DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
 
@@ -1171,7 +1170,6 @@ public class CharacterMono : MonoBehaviour {
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
                 if (!currentAnimatorStateInfo.IsName("Spell")) {
-                    //animator.SetTrigger("spell");
                     DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
                 }
 

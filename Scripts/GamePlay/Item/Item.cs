@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 
 public class Item {
+    // 物品ID,表示此物品在物品列表的位置
+    private int itemId;
     // 物品名
     public string name;
     // 物品价格
@@ -30,5 +32,15 @@ public class Item {
     public ActiveSkill itemActiveSkill;
     // 物品被动特技(可用于增益属性,增加特效等等)
     public List<PassiveSkill> itemPassiveSkills = new List<PassiveSkill>();
+
+    public int ItemId {
+        get {
+            return itemId;
+        }
+
+        set {
+            itemId = value;
+        }
+    }
 }
 

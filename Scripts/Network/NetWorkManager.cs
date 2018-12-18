@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BehaviorDesigner.Runtime;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
@@ -7,10 +8,13 @@ using UnityEngine.UI;
 
 public class NetWorkManager : MonoBehaviour {
 
+    public GameObject NpcPrefab;
     public GameObject playerPrefab;
 
     public InputField text;
     private string nowPlayerID = "sjm";
+    private bool isHomeowner = false;
+    private SynchronizeTest test;
 
     // 单例
     private static NetWorkManager instance;
@@ -29,6 +33,12 @@ public class NetWorkManager : MonoBehaviour {
         }
     }
 
+    public bool IsHomeowner {
+        get {
+            return isHomeowner;
+        }
+    }
+
     private Connection connection = null;
 
     /// <summary>
@@ -41,11 +51,14 @@ public class NetWorkManager : MonoBehaviour {
     /// </summary>
     /// <param name="id"></param>
     /// <param name="position"></param>
-    public void AddNetworkPlayer(string id, Vector3 position) {        
+    public void AddNetworkPlayer(string id, Vector3 position) {
         GameObject player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
         player.transform.position = new Vector3(player.transform.position.x, 0.5f, player.transform.position.z);
+
+        // 设置CharacterMono的网络ID
         player.GetComponent<CharacterMono>().NetWorkPlayerID = id;
-        if(synchronizeTest!=null)
+
+        if (synchronizeTest != null)
             player.GetComponent<CharacterMono>().characterModel.OnDamaged += synchronizeTest.DamageSynchronize;
         networkPlayers.Add(id, player);
     }
@@ -64,11 +77,29 @@ public class NetWorkManager : MonoBehaviour {
 
     public void StartGame() {
         AddNetworkPlayer(NowPlayerID, UnityEngine.Random.insideUnitCircle * 5);
-        networkPlayers[NowPlayerID].GetComponent<CharacterOperationFSM>().enabled = true ;
+        networkPlayers[NowPlayerID].GetComponent<CharacterOperationFSM>().enabled = true;
 
         synchronizeTest = new SynchronizeTest(networkPlayers[NowPlayerID].GetComponent<CharacterMono>());
 
         SendPos();
+    }
+
+    public void SendNpcPos(string id) {
+        Transform playerTransform = networkPlayers[id].transform;
+        Vector3 pos = playerTransform.position;
+        Vector3 rotation = playerTransform.rotation.eulerAngles;
+
+        // 构造位置改变消息
+        ProtocolBytes protocolBytes = new ProtocolBytes();
+        protocolBytes.AddString("UpdateInfo");
+        protocolBytes.AddString(NowPlayerID);
+        protocolBytes.AddFloat(pos.x);
+        protocolBytes.AddFloat(pos.y);
+        protocolBytes.AddFloat(pos.z);
+        protocolBytes.AddFloat(rotation.x);
+        protocolBytes.AddFloat(rotation.y);
+        protocolBytes.AddFloat(rotation.z);
+        connection.Send(protocolBytes);
     }
 
     public void SendPos() {
@@ -120,6 +151,7 @@ public class NetWorkManager : MonoBehaviour {
     /// <param name="id"></param>
     /// <param name="pos"></param>
     public void UpdateInfo(string id, Vector3 pos,Vector3 rotation) {
+
         if (id != NowPlayerID) {
             if (!networkPlayers.ContainsKey(id)) {
                 AddNetworkPlayer(id, UnityEngine.Random.insideUnitCircle * 5);

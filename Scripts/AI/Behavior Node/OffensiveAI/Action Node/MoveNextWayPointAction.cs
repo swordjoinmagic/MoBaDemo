@@ -14,10 +14,12 @@ namespace Assets.Scripts.AI.Behavior_Node.OffensiveAI.Action_Node {
 
         public override void OnAwake() {
             characterMono = GetComponent<CharacterMono>();
-            moveTargetPosition.Value = characterMono.wayPointsUnit.GetNextWayPoint();
+            if(characterMono.wayPointsUnit!=null)
+                moveTargetPosition.Value = characterMono.wayPointsUnit.GetNextWayPoint();
         }
 
         public override TaskStatus OnUpdate() {
+            if (characterMono.wayPointsUnit == null) return TaskStatus.Failure;
             moveTargetPosition.Value = characterMono.wayPointsUnit.GetNowWayPoint();
             if (!characterMono.Move(moveTargetPosition.Value)) {
                 // 如果移动结束，那么下一次就移动到下一个路径点
