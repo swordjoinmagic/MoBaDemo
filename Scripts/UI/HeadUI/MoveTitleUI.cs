@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class MoveTitleUI : MonoBehaviour {
 
+    public LoginUIView loginUI;
+
     public RectTransform panelTransform;
 
     public Button[] buttons;
@@ -20,21 +22,37 @@ public class MoveTitleUI : MonoBehaviour {
 
     private bool isReadyQuit = false;
 
-    // Use this for initialization
-    void Start() {
+    private System.Action QuitAction;
 
+    public void Show() {
         // 使按钮不可见
         foreach (var button in buttons) {
             button.transform.localScale = Vector3.zero;
         }
 
-        panelTransform.anchoredPosition = new Vector2(1920,0);
-        panelTransform.localRotation = Quaternion.Euler(0,90,0);
+        panelTransform.anchoredPosition = new Vector2(Screen.width, 0);
+        panelTransform.localRotation = Quaternion.Euler(0, 90, 0);
         panelTransform.DOAnchorPosX(0, 1.5f);
-        panelTransform.DORotate(new Vector3(0,0,0), 1).OnComplete(()=> {
+
+        panelTransform.DORotate(new Vector3(0, 0, 0), 1).OnComplete(() => {
             AnimationInit();
             BindButtonEvent();
         });
+    }
+
+    public void Hide() {
+        AniamtionQuit();
+    }
+
+    public void ShowLoginUI() {
+        QuitAction += () => {
+            loginUI.Show();
+        };
+    }
+
+    // Use this for initialization
+    void Start() {
+        Show();
     }
 
     public void AnimationInit() {
@@ -60,6 +78,7 @@ public class MoveTitleUI : MonoBehaviour {
     }
 
     public void AniamtionQuit() {
+        isReadyQuit = true;
         for (int i = 0; i < buttons.Length; i++) {
             Button button = buttons[i];
             RectTransform transform = button.transform as RectTransform;
@@ -69,12 +88,16 @@ public class MoveTitleUI : MonoBehaviour {
             transform.anchoredPosition = new Vector2(x + transform.sizeDelta.x, y + transform.sizeDelta.y);
             y = transform.anchoredPosition.y;
             x = transform.anchoredPosition.x;
-            transform.DOAnchorPosY(y - 100, 0.3f).OnComplete(() => {
-                transform.DOAnchorPosX(x - 700, 0.3f).OnComplete(() => {
+            transform.DOAnchorPosY(y + 50, 0.5f).OnComplete(() => {
+                transform.DOAnchorPosX(x + 700, 0.5f).OnComplete(() => {
                     Disturbance(transform);
                 });
-            }).SetDelay(i * 0.2f);
+            }).SetDelay((i + 1) * 0.3f);
         }
+        panelTransform.DOSizeDelta(new Vector2(panelTransform.sizeDelta.x, 200f), 1f).OnComplete(() => {
+            panelTransform.DOAnchorPosX(Screen.width + panelTransform.sizeDelta.x / 2, 1f).OnComplete(()=> { QuitAction(); });
+        }).SetDelay(0.4f * buttons.Length);
+
     }
 
     void BindButtonEvent() {
@@ -132,8 +155,4 @@ public class MoveTitleUI : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

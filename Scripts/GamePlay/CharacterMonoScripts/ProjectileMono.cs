@@ -105,7 +105,7 @@ public class ProjectileMono : MonoBehaviour{
                     lifeCycle.transform.localPosition = Vector3.zero;
                 }
 
-                targetMono.characterModel.Damaged(damage,launcher);
+                targetMono.characterModel.Damaged(targetMono,damage,launcher);
             }
         }
     }

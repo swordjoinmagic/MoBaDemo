@@ -11,5 +11,6 @@ public enum SkillType {
     PointingSkill,
     CritSkill,
     ChainSkill,
+    AdditionalStateSkill
 }
 

@@ -118,6 +118,14 @@ public class CharacterMono : MonoBehaviour {
     private Animator animator;
     private NavMeshAgent agent;
 
+    #region 单位的网络ID
+    private string netWorkPlayerID;
+    public string NetWorkPlayerID {
+        get { return netWorkPlayerID; }
+        set { netWorkPlayerID = value; }
+    }
+    #endregion
+
     /// <summary>
     /// 表示当前单位的一些基本属性,如:hp,mp,攻击力等等
     /// </summary>
@@ -167,6 +175,7 @@ public class CharacterMono : MonoBehaviour {
             if (OnAddNewBattleStatus != null)
                 OnAddNewBattleStatus(newBattleState);
         }
+
         // 如果状态已经存在，且状态不可叠加，那么重置状态存在时间
         // 不触发单位状态附加事件
         if (state != null && !state.IsStackable) {
@@ -849,8 +858,14 @@ public class CharacterMono : MonoBehaviour {
         Vector3 direction = target.transform.position - transform.position;
         if (Vector3.Angle(transform.forward, direction) <= 30f)
             return true;
-        else
+        else {
+
+            //==============================
+            // 表明此单位正在转身，触发OnMove事件
+            if (OnMove != null) OnMove(this,transform.position);
+
             return false;
+        }
     }
 
     /// <summary>
@@ -908,7 +923,7 @@ public class CharacterMono : MonoBehaviour {
                     }
                 }
 
-                target.characterModel.Damaged(damage,this);
+                target.characterModel.Damaged(target,damage,this);
 
                 // 攻击事件，向所有订阅近战攻击的观察者发送消息
                 if (OnAttack != null) OnAttack(this, target, damage);
@@ -1218,7 +1233,7 @@ public class CharacterMono : MonoBehaviour {
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="attacker"></param>
-    private void OnDamged(Damage damage, CharacterMono attacker, int nowHp) {
+    private void OnDamged(CharacterMono victim,Damage damage, CharacterMono attacker, int nowHp) {
         //=======================================================
         // 处理单位死亡时,敌对单位获得经验的行为
         if (attacker!=null && isDying && !attacker.CompareOwner(this) && nowHp==0) {
@@ -1361,7 +1376,7 @@ public class CharacterMono : MonoBehaviour {
     // ●绑定Model中的各项属性到ViewModel中
     protected virtual void Bind() {
         characterModel.HpValueChangedHandler += OnDying;        // 绑定监测死亡的函数
-        characterModel.OnDamaged += OnDamged; 
+        characterModel.OnDamaged += OnDamged;
     }
     #endregion
 }

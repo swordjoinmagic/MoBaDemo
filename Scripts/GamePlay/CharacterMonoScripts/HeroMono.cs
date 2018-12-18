@@ -45,7 +45,8 @@ public class HeroMono : CharacterMono{
             HeroModel.SkillPoint += HeroModel.skillPointGrowthPoint * (newLevel - oldLevel);
         }
         HeroModel.Exp = 0;
-        avatarViewModel.Level.Value = newLevel;
+        if(avatarViewModel!=null)
+            avatarViewModel.Level.Value = newLevel;
     }
     #endregion
 }

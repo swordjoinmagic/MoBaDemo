@@ -44,7 +44,9 @@ public class NetWorkManager : MonoBehaviour {
     public void AddNetworkPlayer(string id, Vector3 position) {        
         GameObject player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
         player.transform.position = new Vector3(player.transform.position.x, 0.5f, player.transform.position.z);
-        player.GetComponentInChildren<TextMesh>().text = "id=" + id;
+        player.GetComponent<CharacterMono>().NetWorkPlayerID = id;
+        if(synchronizeTest!=null)
+            player.GetComponent<CharacterMono>().characterModel.OnDamaged += synchronizeTest.DamageSynchronize;
         networkPlayers.Add(id, player);
     }
 
@@ -70,7 +72,9 @@ public class NetWorkManager : MonoBehaviour {
     }
 
     public void SendPos() {
-        Vector3 pos = networkPlayers[NowPlayerID].transform.position;
+        Transform playerTransform = networkPlayers[NowPlayerID].transform;
+        Vector3 pos = playerTransform.position;
+        Vector3 rotation = playerTransform.rotation.eulerAngles;
 
         // 构造位置改变消息
         ProtocolBytes protocolBytes = new ProtocolBytes();
@@ -79,6 +83,9 @@ public class NetWorkManager : MonoBehaviour {
         protocolBytes.AddFloat(pos.x);
         protocolBytes.AddFloat(pos.y);
         protocolBytes.AddFloat(pos.z);
+        protocolBytes.AddFloat(rotation.x);
+        protocolBytes.AddFloat(rotation.y);
+        protocolBytes.AddFloat(rotation.z);
         connection.Send(protocolBytes);
     }
     
@@ -103,17 +110,22 @@ public class NetWorkManager : MonoBehaviour {
         connection.Send(protocolBytes);
     }
 
+    public void OnLoginSuccess(string userName) {
+        nowPlayerID = userName;
+    }
+
     /// <summary>
     /// 基于Updateinfo协议，根据ID更新一个游戏单位的位置
     /// </summary>
     /// <param name="id"></param>
     /// <param name="pos"></param>
-    public void UpdateInfo(string id, Vector3 pos) {
+    public void UpdateInfo(string id, Vector3 pos,Vector3 rotation) {
         if (id != NowPlayerID) {
             if (!networkPlayers.ContainsKey(id)) {
                 AddNetworkPlayer(id, UnityEngine.Random.insideUnitCircle * 5);
             } else {
                 networkPlayers[id].transform.position = pos;
+                networkPlayers[id].transform.rotation = Quaternion.Euler(rotation);
             }
         }
     }
@@ -128,9 +140,13 @@ public class NetWorkManager : MonoBehaviour {
             float x = protocolBytes.GetFloat();
             float y = protocolBytes.GetFloat();
             float z = protocolBytes.GetFloat();
+            float tx = protocolBytes.GetFloat();
+            float ty = protocolBytes.GetFloat();
+            float tz = protocolBytes.GetFloat();
             Debug.Log("id：" + id + " x:" + x + " y:" + y + " z:" + z);
-            UpdateInfo(id, new Vector3(x, y, z));
+            UpdateInfo(id, new Vector3(x, y, z),new Vector3(tx,ty,tz));
         });
+        
     }
 
     public void DispatchMsgEvent(ProtocolBytes protocolBytes) {

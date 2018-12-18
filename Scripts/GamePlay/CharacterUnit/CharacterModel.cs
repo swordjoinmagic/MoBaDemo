@@ -520,18 +520,19 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         Hp -= damage.TotalDamage;
     }
 
-    public delegate void OnDamageHandler(Damage damage,CharacterMono attacker,int nowHp);
+    public delegate void OnDamageHandler(CharacterMono victim, Damage damage,CharacterMono attacker,int nowHp);
     public event OnDamageHandler OnDamaged;
+
     /// <summary>
     /// 
     /// </summary>
     /// <param name="damage"></param>
     /// <param name="attacker">袭击这个单位的人</param>
-    public virtual void Damaged(Damage damage,CharacterMono attacker) {
+    public virtual void Damaged(CharacterMono victim, Damage damage,CharacterMono attacker) {
         Damaged(damage);
 
         if (OnDamaged != null)
-            OnDamaged(damage,attacker,Hp);
+            OnDamaged(victim,damage, attacker,Hp);
     }
 
     /// <summary>

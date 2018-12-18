@@ -1,36 +1,51 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class RoomListView : MonoBehaviour{
+public class RoomListView : MonoBehaviour {
     public Button createRoomButton;
     public Button attendRoomButton;
     public InputField roomNameInputField;
+    public RoomView roomView;
+
+    private System.Action OnHideCompelteAction;
+
+    public void Show() {
+        gameObject.SetActive(true);
+    }
+
+    public void Hide() {
+        transform.DOScale(new Vector3(0, 0, 0), 1f).onComplete += () => {
+            if (OnHideCompelteAction != null) OnHideCompelteAction();
+        };
+    }
 
     private void Start() {
 
-        NetWorkManager.Instance.Connect();
-
         InitListener();
 
-        createRoomButton.onClick.AddListener(() => {
-            ProtocolBytes protocolBytes = new ProtocolBytes();
+        createRoomButton.onClick.AddListener(SendCreateRoomProtocol);
 
-            // 协议名
-            protocolBytes.AddString("CreateRoom");
-
-            // 协议参数
-            protocolBytes.AddString(NetWorkManager.Instance.NowPlayerID);
-            protocolBytes.AddString("rooms1");
-
-            Debug.Log("当前用户创建房间rooms1");
-
-            // 发送协议
-            NetWorkManager.Instance.Send(protocolBytes);
-        });
 
         //attendRoomButton.onClick.AddListener(()=> {
 
         //});
+    }
+
+    public void SendCreateRoomProtocol() {
+        ProtocolBytes protocolBytes = new ProtocolBytes();
+
+        // 协议名
+        protocolBytes.AddString("CreateRoom");
+
+        // 协议参数
+        protocolBytes.AddString(NetWorkManager.Instance.NowPlayerID);
+        protocolBytes.AddString("rooms1");
+
+        Debug.Log("当前用户创建房间rooms1");
+
+        // 发送协议
+        NetWorkManager.Instance.Send(protocolBytes);
     }
 
     public void InitListener() {
@@ -82,7 +97,8 @@ public class RoomListView : MonoBehaviour{
             failReason = protocolBytes.GetString();
         }
         if (result == "Success") {
-            Debug.Log("用户:"+userName+"成功加入房间"+roomName);
+            Hide();
+            OnHideCompelteAction += () => { roomView.Show(); };
         }
     }
 }
