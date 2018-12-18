@@ -48,7 +48,8 @@ public class CharacterMono : MonoBehaviour {
     /// <param name="Target">法术指定目标</param>
     /// <param name="damage">此次造成的伤害（为负则为治疗）</param>
     /// <param name="activeSkill">此次施法释放的主动技能（被动技能不算把？）</param>
-    public delegate void SpellHandler(CharacterMono Spller, CharacterMono Target, Damage damage, ActiveSkill activeSkill);
+    /// <param name="position">施法的目标位置</param>
+    public delegate void SpellHandler(CharacterMono Spller, CharacterMono Target,Vector3 position, ActiveSkill activeSkill);
 
     /// <summary>
     /// 当单位死亡时，进行调用
@@ -295,33 +296,33 @@ public class CharacterMono : MonoBehaviour {
         //        IsStackable = false,
         //    }
         //});
-        LearnSkill(new SwitchBattleStateSkill {
-            BaseDamage = 1000,
-            KeyCode = KeyCode.T,
-            Mp = 220,
-            PlusDamage = 200,
-            CD = 5f,
-            SpellDistance = 0,
-            SkillName = "T技能",
-            IconPath = "00041",
-            SkillLevel = 6,
-            TargetEffect = targetPositionEffect,
-            SkillTargetType = UnitType.Everything,
-            AdditionalState = new BattleState {
-                Description = "anohter",
-                stateHolderEffect = targetEnemryEffect,
-                Duration = -1,
-                IconPath = "0041",
-                Name = "anohter",
-                IsStackable = false,
-                statePassiveSkills = new List<PassiveSkill>{
-                            new BaseAtributeChangeSkill{
-                                attribute = CharacterAttribute.Attack,
-                                value = 500,
-                            }
-                        }
-            }
-        });
+        //LearnSkill(new SwitchBattleStateSkill {
+        //    BaseDamage = 1000,
+        //    KeyCode = KeyCode.T,
+        //    Mp = 220,
+        //    PlusDamage = 200,
+        //    CD = 5f,
+        //    SpellDistance = 0,
+        //    SkillName = "T技能",
+        //    IconPath = "00041",
+        //    SkillLevel = 6,
+        //    TargetEffect = targetPositionEffect,
+        //    SkillTargetType = UnitType.Everything,
+        //    AdditionalState = new BattleState {
+        //        Description = "anohter",
+        //        stateHolderEffect = targetEnemryEffect,
+        //        Duration = -1,
+        //        IconPath = "0041",
+        //        Name = "anohter",
+        //        IsStackable = false,
+        //        statePassiveSkills = new List<PassiveSkill>{
+        //                    new BaseAtributeChangeSkill{
+        //                        attribute = CharacterAttribute.Attack,
+        //                        value = 500,
+        //                    }
+        //                }
+        //    }
+        //});
         //LearnSkill(new ChainSkill {
         //    BaseDamage = 1000,
         //    KeyCode = KeyCode.P,
@@ -342,111 +343,116 @@ public class CharacterMono : MonoBehaviour {
         //    SkillTargetType = UnitType.Everything,
         //    SkillInfluenceRadius = 10
         //});
-        LearnSkill(new RangeSkillGroup {
-            KeyCode = KeyCode.F,
-            PlusDamage = 200,
-            TargetEffect = targetPositionEffect,
-            SpellDistance = 10f,
-            SkillName = "F技能",
-            IconPath = "00041",
-            SkillLevel = 6,
-            SkillInfluenceRadius = 6f,
-            activeSkills = new ActiveSkill[]{
-                        new AdditionalStateSkill{
-                            SpellDistance = 10,
-                            AdditionalState = new PoisoningState{
-                                Description = "范围中毒技能",
-                                stateHolderEffect = targetEnemryEffect,
-                                Duration = 15,
-                                IconPath = "0041",
-                                Damage = new Damage{ PlusDamage = 100 },
-                                Name = "中毒",
-                                IsStackable = false,
-                                statePassiveSkills = new List<PassiveSkill>{
-                                    new BaseAtributeChangeSkill{
-                                        attribute = CharacterAttribute.Attack,
-                                        value = 10,
-                                        isScale = true
-                                    }
-                                }
-                            },
-                            SkillTargetType = UnitType.Everything
-                        }
-                    },
-            skillDelayAttributes = new SkillDelayAttribute[] {
-                        new SkillDelayAttribute{
-                            isDelay = false,
-                            index = -1,
-                        }
-                    },
-            SkillTargetType = UnitType.Everything,
-        });
-        LearnSkill(new TransformSkill {
-            KeyCode = KeyCode.W,
-            SkillLevel = 1,
-            SkillTargetType = UnitType.Everything,
-            SkillName = "闪现",
-            IconPath = "00046",
-            Mp = 10,
-            PlusDamage = 200,
-            SpellDistance = 15f,
-            CD = 2f,
-            LongDescription = "one skill Description",
-            TargetEffect = targetEnemryEffect,
-            SelfEffect = targetPositionEffect
-        });
-        LearnSkill(new RangeSkillGroup {
-            KeyCode = KeyCode.E,
-            PlusDamage = 200,
-            TargetEffect = targetPositionEffect,
-            SpellDistance = 10f,
-            SkillName = "E技能",
-            IconPath = "00041",
-            SkillLevel = 6,
-            SkillInfluenceRadius = 6f,
-            activeSkills = new ActiveSkill[]{
-                        new DisperseStateSkill{
-                            SpellDistance = 10,
-                            BattleStateType = BattleStateType.PoisoningState,
-                            SkillTargetType = UnitType.Everything
-                        }
-                    },
-            skillDelayAttributes = new SkillDelayAttribute[] {
-                        new SkillDelayAttribute{
-                            isDelay = false,
-                            index = -1,
-                        }
-                    },
-            SkillTargetType = UnitType.Everything,
-        });
-        LearnSkill(new AdditionalActiveSkill {
-            TiggerType = PassiveSkillTriggerType.WhenAttack,
-            CD = 0.1f,
-            IconPath = "0041",
-            SkillName = "AdditionActiveSkil",
-            SkillTargetType = UnitType.Everything,
-            SkillLevel = 1,
-            additionalActiveSkill = new ChainSkill {
-                BaseDamage = 1000,
-                KeyCode = KeyCode.P,
-                Mp = 220,
-                PlusDamage = 200,
-                SpellDistance = 4f,
-                CD = 5f,
-                Count = 4,
-                Damage = new Damage { PlusDamage = 500 },
-                SkillName = "W技能",
-                IconPath = "00041",
-                LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                SkillLevel = 6,
-                TargetEffect = targetEnemryEffect,
-                SkillTargetType = UnitType.Everything,
-                SkillInfluenceRadius = 10
-            }
-        });
+        //LearnSkill(new RangeSkillGroup {
+        //    KeyCode = KeyCode.F,
+        //    PlusDamage = 200,
+        //    TargetEffect = targetPositionEffect,
+        //    SpellDistance = 10f,
+        //    SkillName = "F技能",
+        //    IconPath = "00041",
+        //    SkillLevel = 6,
+        //    SkillInfluenceRadius = 6f,
+        //    activeSkills = new ActiveSkill[]{
+        //                new AdditionalStateSkill{
+        //                    SpellDistance = 10,
+        //                    AdditionalState = new PoisoningState{
+        //                        Description = "范围中毒技能",
+        //                        stateHolderEffect = targetEnemryEffect,
+        //                        Duration = 15,
+        //                        IconPath = "0041",
+        //                        Damage = new Damage{ PlusDamage = 100 },
+        //                        Name = "中毒",
+        //                        IsStackable = false,
+        //                        statePassiveSkills = new List<PassiveSkill>{
+        //                            new BaseAtributeChangeSkill{
+        //                                attribute = CharacterAttribute.Attack,
+        //                                value = 10,
+        //                                isScale = true
+        //                            }
+        //                        }
+        //                    },
+        //                    SkillTargetType = UnitType.Everything
+        //                }
+        //            },
+        //    skillDelayAttributes = new SkillDelayAttribute[] {
+        //                new SkillDelayAttribute{
+        //                    isDelay = false,
+        //                    index = -1,
+        //                }
+        //            },
+        //    SkillTargetType = UnitType.Everything,
+        //});
+        //LearnSkill(new TransformSkill {
+        //    KeyCode = KeyCode.W,
+        //    SkillLevel = 1,
+        //    SkillTargetType = UnitType.Everything,
+        //    SkillName = "闪现",
+        //    IconPath = "00046",
+        //    Mp = 10,
+        //    PlusDamage = 200,
+        //    SpellDistance = 15f,
+        //    CD = 2f,
+        //    LongDescription = "one skill Description",
+        //    TargetEffect = targetEnemryEffect,
+        //    SelfEffect = targetPositionEffect
+        //});
+        //LearnSkill(new RangeSkillGroup {
+        //    KeyCode = KeyCode.E,
+        //    PlusDamage = 200,
+        //    TargetEffect = targetPositionEffect,
+        //    SpellDistance = 10f,
+        //    SkillName = "E技能",
+        //    IconPath = "00041",
+        //    SkillLevel = 6,
+        //    SkillInfluenceRadius = 6f,
+        //    activeSkills = new ActiveSkill[]{
+        //                new DisperseStateSkill{
+        //                    SpellDistance = 10,
+        //                    BattleStateType = BattleStateType.PoisoningState,
+        //                    SkillTargetType = UnitType.Everything
+        //                }
+        //            },
+        //    skillDelayAttributes = new SkillDelayAttribute[] {
+        //                new SkillDelayAttribute{
+        //                    isDelay = false,
+        //                    index = -1,
+        //                }
+        //            },
+        //    SkillTargetType = UnitType.Everything,
+        //});
+        //LearnSkill(new AdditionalActiveSkill {
+        //    TiggerType = PassiveSkillTriggerType.WhenAttack,
+        //    CD = 0.1f,
+        //    IconPath = "0041",
+        //    SkillName = "AdditionActiveSkil",
+        //    SkillTargetType = UnitType.Everything,
+        //    SkillLevel = 1,
+        //    additionalActiveSkill = new ChainSkill {
+        //        BaseDamage = 1000,
+        //        KeyCode = KeyCode.P,
+        //        Mp = 220,
+        //        PlusDamage = 200,
+        //        SpellDistance = 4f,
+        //        CD = 5f,
+        //        Count = 4,
+        //        Damage = new Damage { PlusDamage = 500 },
+        //        SkillName = "W技能",
+        //        IconPath = "00041",
+        //        LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+        //            "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+        //        SkillLevel = 6,
+        //        TargetEffect = targetEnemryEffect,
+        //        SkillTargetType = UnitType.Everything,
+        //        SkillInfluenceRadius = 10
+        //    }
+        //});
+        LearnSkill(TestDatabase.Instance.baseSkills[0]);
+        LearnSkill(TestDatabase.Instance.baseSkills[1]);
+        LearnSkill(TestDatabase.Instance.baseSkills[2]);
+        LearnSkill(TestDatabase.Instance.baseSkills[3]);
+        LearnSkill(TestDatabase.Instance.baseSkills[4]);
     }
     //================================================
     #endregion
@@ -482,6 +488,19 @@ public class CharacterMono : MonoBehaviour {
     }
 
     public void Awake() {
+    }
+
+    /// <summary>
+    /// 根据CharacterModel，初始化动画状态与移动代理的方法
+    /// </summary>
+    public void InitAnimatorAndNavAgent() {
+        agent.speed = characterModel.MovingSpeed;
+        agent.angularSpeed = characterModel.TurningSpeed;
+    }
+
+    private void Start() {
+
+        #region 测试
         if (CompareTag("Player"))
             Install();
         //if (CompareTag("Enermy"))
@@ -544,17 +563,9 @@ public class CharacterMono : MonoBehaviour {
         //HaloSkill haloSkill = new HaloSkill() { SkillLevel = 1, inflenceRadius = 10, targetFaction = UnitFaction.Red, HaloEffect= stateHolderEffect };
         //haloSkill.Execute(this);
         #endregion
-    }
 
-    /// <summary>
-    /// 根据CharacterModel，初始化动画状态与移动代理的方法
-    /// </summary>
-    public void InitAnimatorAndNavAgent() {
-        agent.speed = characterModel.MovingSpeed;
-        agent.angularSpeed = characterModel.TurningSpeed;
-    }
+        #endregion
 
-    private void Start() {
         Init();
 
         // 根据CharacterModel初始化身上的组件
@@ -1168,13 +1179,26 @@ public class CharacterMono : MonoBehaviour {
                 if (currentAnimatorStateInfo.IsName("Spell") &&
                     nextAnimatorStateInfo.IsName("Idle")) {
 
-                    if (!isPrepareUseItemSkill)
-                        if(prepareSkill.IsMustDesignation)
+                    if (!isPrepareUseItemSkill) {
+                        if (prepareSkill.IsMustDesignation) {
+
+                            // 触发施法事件
+                            if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position,prepareSkill);
+
                             prepareSkill.Execute(this, enemryMono);
-                        else
+                        } else {
+
+                            // 触发施法事件
+                            if (OnSpell != null) OnSpell(this, enemryMono,position, prepareSkill);
+
                             prepareSkill.Execute(this, position);
-                    else {
-                        prepareItemSkillItemGrid.ExecuteItemSkill(this,enemryMono);
+                        }
+                    } else {
+
+                        // 触发施法事件
+                        if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
+
+                        prepareItemSkillItemGrid.ExecuteItemSkill(this, enemryMono);
                         isPrepareUseItemSkill = false;
                         prepareItemSkillItemGrid = null;
                     }

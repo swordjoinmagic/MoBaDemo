@@ -13,9 +13,11 @@ public class SynchronizeTest {
         NetWorkManager.Instance.AddListener("AnimationOperation", TreateAnimationOperation);
         NetWorkManager.Instance.AddListener("Damage", TreateDamageProtocol);
         NetWorkManager.Instance.AddListener("Level",TreateLevelProtocol);
+        NetWorkManager.Instance.AddListener("SpellSkill",TreateSpellSkillProtocol);
         characterMono.OnMove += TransformSynchronize;
         characterMono.OnPlayAnimation += AniamtionSynchronize;
         characterMono.characterModel.LevelChangedHandler += LevelSynchronize;
+        characterMono.OnSpell += SpellSkillSynchronize;
     }
 
     private float time;
@@ -144,6 +146,80 @@ public class SynchronizeTest {
             // 更改该玩家的远程Clone的等级
             NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>().characterModel.Level = level;
         }
+    }
+
+    /// <summary>
+    /// 技能释放同步,监听施法事件(OnSpell)
+    /// </summary>
+    public void SpellSkillSynchronize(CharacterMono Spller, CharacterMono Target, Vector3 position, ActiveSkill activeSkill) {
+        // 获得当前要释放的技能的ID
+        int skillID = activeSkill.SkillID;
+        // 判断该技能是否一定要指定敌人
+        string skillTarget = activeSkill.IsMustDesignation ? "Target" : "Position";
+
+        // 构造协议
+        ProtocolBytes protocol = new ProtocolBytes();
+
+        // 协议名
+        protocol.AddString("SpellSkill");
+
+        // 协议参数
+        protocol.AddString(NetWorkManager.Instance.NowPlayerID);
+        protocol.AddInt(skillID);
+        protocol.AddString(skillTarget);
+
+        // 根据技能是否一定要指定敌人来构造 SpellSkil协议
+        if (activeSkill.IsMustDesignation) {
+            // 添加敌人的ID
+            protocol.AddString(Target.NetWorkPlayerID);
+        } else {
+            // 添加目标位置
+            protocol.AddFloat(position.x);
+            protocol.AddFloat(position.y);
+            protocol.AddFloat(position.z);
+        }
+
+        Debug.Log("发送SpellSkill协议");
+
+        // 发送协议
+        NetWorkManager.Instance.Send(protocol);
+    }
+
+    /// <summary>
+    /// 用于处理SpellSkill协议
+    /// </summary>
+    /// <param name="protocol"></param>
+    public void TreateSpellSkillProtocol(ProtocolBytes protocol) {
+
+        // 释放技能的单位的ID
+        string userName = protocol.GetString();
+
+        // 不处理本地玩家的SpellSkill协议
+        if ( userName == NetWorkManager.Instance.NowPlayerID ) return;
+
+        Debug.Log("处理SpellSkill协议");
+
+        // 要释放的技能的ID
+        int skillId = protocol.GetInt();
+
+        // 技能目标
+        string skillTarget = protocol.GetString();
+
+        ActiveSkill skill = TestDatabase.Instance.baseSkills[skillId] as ActiveSkill;
+
+        if (skillTarget == "Position") {
+            float x = protocol.GetFloat();
+            float y = protocol.GetFloat();
+            float z = protocol.GetFloat();
+
+            skill.Execute(NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>(), new Vector3(x,y,z));
+
+        } else {
+            string targetId = protocol.GetString();
+
+            skill.Execute(NetWorkManager.Instance.networkPlayers[userName].GetComponent<CharacterMono>(), NetWorkManager.Instance.networkPlayers[targetId].GetComponent<CharacterMono>());
+        }
+
     }
 }
 

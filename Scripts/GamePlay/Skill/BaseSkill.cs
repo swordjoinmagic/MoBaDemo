@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class BaseSkill {
 
+    // 技能在技能列表的ID号
+    private int skillID;
+
     private string skillName;
 
     // 图标地址，用地址保存，当要使用时进行加载
@@ -123,6 +126,16 @@ public class BaseSkill {
 
         set {
             skillTargetType = value;
+        }
+    }
+
+    public int SkillID {
+        get {
+            return skillID;
+        }
+
+        set {
+            skillID = value;
         }
     }
 
