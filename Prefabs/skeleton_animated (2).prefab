@@ -2511,29 +2511,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterModel:
-    maxHp: 0
-    maxMp: 0
-    attackDistance: 0
-    attack: 0
-    attackFloatingValue: 0
+    maxHp: 10000
+    maxMp: 1000
+    attackDistance: 10
+    attack: 100
+    attackFloatingValue: 50
     attackType: 0
-    attackSpeed: 0
-    defense: 0
+    attackSpeed: 1
+    defense: 100
     defenseType: 0
-    movingSpeed: 0
-    turningSpeed: 0
+    movingSpeed: 4
+    turningSpeed: 120
     projectile: {fileID: 0}
-    restoreHpSpeed: 0
-    resotreMpSpeed: 0
+    restoreHpSpeed: 10
+    resotreMpSpeed: 10
     canBeAttacked: 1
-    unitType: 0
+    unitType: 4
     unitFaction: 0
-    supportExp: 0
-    supportMoney: 0
+    supportExp: 10
+    supportMoney: 10
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    radius: 0
+    radius: 8
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0

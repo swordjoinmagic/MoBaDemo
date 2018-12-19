@@ -121,7 +121,7 @@ public class CharacterMono : MonoBehaviour {
     private NavMeshAgent agent;
 
     #region 单位的网络ID
-    private string netWorkPlayerID;
+    private string netWorkPlayerID = "";
     public string NetWorkPlayerID {
         get { return netWorkPlayerID; }
         set { netWorkPlayerID = value; }
@@ -245,35 +245,35 @@ public class CharacterMono : MonoBehaviour {
     public GameObject stateHolderEffect;
     public LightningBoltScript lightningBoltScriptPrefab;     // 用于控制闪电链的LineRender对象
     public void Install() {
-        characterModel = new HeroModel {
-            //projectileModel = new ProjectileModel {
-            //    spherInfluence = 5,
-            //    targetPositionEffect = targetPositionEffect,
-            //    movingSpeed = 5
-            //},
-            maxHp = 10000,
-            Hp = 200,
-            maxMp = 1000,
-            Mp = 1000,
-            Name = "sjm",
-            attackDistance = 10f,
-            Level = 0,
-            forcePower = 100,
-            needExp = 1000,
-            Attack = 100,
-            AttackFloatingValue = 99,
-            Exp = 0,
-            expfactor = 2,
-            AvatarImagePath = "PlayerAvatarImage",
-            agilePower = 20,
-            intelligencePower = 10,
-            mainAttribute = HeroMainAttribute.AGI,
-            skillPointGrowthPoint = 1,
-            TurningSpeed = 120,
-            AttackAudioPath = "attackAudio",
-            Radius = 10,
-            MovingSpeed = 4,
-        };
+        //characterModel = new HeroModel {
+        //projectileModel = new ProjectileModel {
+        //    spherInfluence = 5,
+        //    targetPositionEffect = targetPositionEffect,
+        //    movingSpeed = 5
+        //},
+        //characterModel.maxHp = 10000,
+        //    characterModel.Hp = 200,
+        //    characterModel.maxMp = 1000,
+        //    characterModel.Mp = 1000,
+        //    characterModel.Name = "sjm",
+        //    attackDistance = 10f,
+        //    Level = 0,
+        //    forcePower = 100,
+        //    needExp = 1000,
+        //    Attack = 100,
+        //    AttackFloatingValue = 99,
+        //    Exp = 0,
+        //    expfactor = 2,
+        //    AvatarImagePath = "PlayerAvatarImage",
+        //    agilePower = 20,
+        //    intelligencePower = 10,
+        //    mainAttribute = HeroMainAttribute.AGI,
+        //    skillPointGrowthPoint = 1,
+        //    TurningSpeed = 120,
+        //    AttackAudioPath = "attackAudio",
+        //    Radius = 10,
+        //    MovingSpeed = 4,
+        //};
         Owner = new Player() {
             Money = 1000
         };
@@ -453,7 +453,7 @@ public class CharacterMono : MonoBehaviour {
         LearnSkill(TestDatabase.Instance.baseSkills[1]);
         LearnSkill(TestDatabase.Instance.baseSkills[2]);
         LearnSkill(TestDatabase.Instance.baseSkills[3]);
-        LearnSkill(TestDatabase.Instance.baseSkills[4]);
+        LearnSkill(TestDatabase.Instance.baseSkills[5]);
     }
     //================================================
     #endregion
@@ -842,12 +842,16 @@ public class CharacterMono : MonoBehaviour {
 
         if (!agent.pathPending && distance <= forwardDistance) {
             //animator.SetBool("isRun", false);
-            DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
-            agent.isStopped = true;
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run") || animator.GetNextAnimatorStateInfo(0).IsName("Run")) {
+                DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
+                agent.isStopped = true;
+                //agent.
+            }
             return true;
         } else {
             //animator.SetBool("isRun", true);
-            DoCharacterMonoAnimation(AnimatorEnumeration.Run);
+            if(!animator.GetCurrentAnimatorStateInfo(0).IsName("Run") && !animator.GetNextAnimatorStateInfo(0).IsName("Run"))
+                DoCharacterMonoAnimation(AnimatorEnumeration.Run);
             agent.isStopped = false;
             agent.SetDestination(position);
 
@@ -873,7 +877,7 @@ public class CharacterMono : MonoBehaviour {
 
             //==============================
             // 表明此单位正在转身，触发OnMove事件
-            if (OnMove != null) OnMove(this,transform.position);
+            if (OnMove != null) OnMove(this, transform.position);
 
             return false;
         }
@@ -907,7 +911,7 @@ public class CharacterMono : MonoBehaviour {
         //======================================
         // 播放攻击动画
         // 如果准备开始攻击,那么播放动画
-        if (!currentAnimatorStateInfo.IsName("attack")) {
+        if (!currentAnimatorStateInfo.IsName("attack") && !nextAnimatorStateInfo.IsName("attack")) {
             //animator.SetTrigger("attack");
             DoCharacterMonoAnimation(AnimatorEnumeration.Attack);
             isAttackFinish = false;
@@ -1042,13 +1046,15 @@ public class CharacterMono : MonoBehaviour {
     public bool Move(Vector3 position) {
         ResetAttackStateAnimator();
         //animator.SetBool("isRun", true);
-        DoCharacterMonoAnimation(AnimatorEnumeration.Run);
+        if (!animator.GetCurrentAnimatorStateInfo(0).IsName("Run") && !animator.GetNextAnimatorStateInfo(0).IsName("Run"))
+            DoCharacterMonoAnimation(AnimatorEnumeration.Run);
         agent.isStopped = false;
         agent.SetDestination(position);
 
         if (!agent.pathPending && agent.remainingDistance <= agent.stoppingDistance) {
             //animator.SetBool("isRun", false);
-            DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
+            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Run") || animator.GetNextAnimatorStateInfo(0).IsName("Run"))
+                DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
             return false;
         }
 
@@ -1148,7 +1154,7 @@ public class CharacterMono : MonoBehaviour {
             // 如果技能释放结束,那么产生特效,计算伤害
             if (currentAnimatorStateInfo.IsName("Spell") &&
                 nextAnimatorStateInfo.IsName("Idle")) {
-
+                    
                 if (!isPrepareUseItemSkill)
                     prepareSkill.Execute(this, position);
                 else {
@@ -1169,7 +1175,7 @@ public class CharacterMono : MonoBehaviour {
                 //======================================
                 // 播放施法动画
                 // 如果准备开始施法,那么播放动画
-                if (!currentAnimatorStateInfo.IsName("Spell")) {
+                if (!currentAnimatorStateInfo.IsName("Spell") && !nextAnimatorStateInfo.IsName("Spell")) {
                     DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
                 }
 

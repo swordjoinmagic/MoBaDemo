@@ -97,7 +97,7 @@ public class Connection {
         try {
             int count = Socket.EndReceive(asyncResult);
 
-            Debug.Log("受到字节：" + count);
+            //Debug.Log("受到字节：" + count);
 
             // bufferCount指针前移
             bufferCount += count;

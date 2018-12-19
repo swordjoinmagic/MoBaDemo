@@ -51,6 +51,10 @@ public class GamePlayManager : MonoBehaviour{
     // 游戏是否结束
     public bool isGameOver;
 
+    // 产生对象的事件,用于解耦网络联机产生NPC的逻辑
+    public delegate void CreateNPCGameObject(Vector3 position,GameObject soliderObject, GameObjectPool gameObjectPool);
+    public event CreateNPCGameObject OnCreateNPCGameObject;
+
     public void Start() {
         poolObjectFactory = new GameObjectPool(50);
 
@@ -71,6 +75,10 @@ public class GamePlayManager : MonoBehaviour{
                 foreach (var solider in solidersPrefabs) {
                     Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
+
+                    // 触发产生对象的事件
+                    if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position,soliderObject, poolObjectFactory);
+
                     // 设置该单位的阵营
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
                     if (a == 0) {
@@ -94,6 +102,10 @@ public class GamePlayManager : MonoBehaviour{
                 foreach (var solider in solidersPrefabs) {
                     Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
+
+                    // 触发产生对象的事件
+                    if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position, soliderObject,poolObjectFactory);
+
                     // 设置该单位的阵营
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Blue;
 
@@ -106,10 +118,6 @@ public class GamePlayManager : MonoBehaviour{
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.DownRoad, UnitFaction.Blue);
                     }
 
-                    // 设置敌人
-                    //soliderObject.GetComponent<BehaviorTree>().GetVariable("targetList").SetValue(towersRed);
-
-                    // 设置战争迷雾
                     // 设置战争迷雾
                     FogSystem.Instace.AddFOVUnit(soliderObject.GetComponent<CharacterMono>());
                 }

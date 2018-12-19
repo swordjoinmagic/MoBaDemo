@@ -8,7 +8,7 @@ using uMVVM;
 /// <summary>
 /// 游戏对象的对象池工厂
 /// </summary>
-public class GameObjectPool{
+public class GameObjectPool {
 
     private class PoolData {
         public bool InUse { get; set; }
@@ -16,6 +16,13 @@ public class GameObjectPool{
     }
 
     private List<PoolData> pools;
+    
+    // 对象池目前对象的容量
+    public int Length{
+        get {
+            return pools.Count;
+        }
+    }
 
     private int max;
     public GameObjectPool(int max) {

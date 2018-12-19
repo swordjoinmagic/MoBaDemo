@@ -24,8 +24,8 @@ public class HeroMono : CharacterMono{
     #region 对经验值改变和升级事件进行监听
     protected override void Bind() {
         base.Bind();
-        HeroModel.ExpChangedHandler += OnExpChanged;
-        HeroModel.LevelChangedHandler += OnLevelChanged;
+        //HeroModel.ExpChangedHandler += OnExpChanged;
+        //HeroModel.LevelChangedHandler += OnLevelChanged;
     }
     public void OnExpChanged(int oldExp,int newExp) {
 

@@ -531,8 +531,9 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public virtual void Damaged(CharacterMono victim, Damage damage,CharacterMono attacker) {
         Damaged(damage);
 
-        if (OnDamaged != null)
-            OnDamaged(victim,damage, attacker,Hp);
+        if (OnDamaged != null) {
+            OnDamaged(victim, damage, attacker, Hp);
+        }
     }
 
     /// <summary>

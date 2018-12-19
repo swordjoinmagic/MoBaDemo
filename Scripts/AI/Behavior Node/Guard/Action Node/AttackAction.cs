@@ -29,8 +29,10 @@ namespace Assets.Scripts.AI.Behavior_Node.Guard.Action_Node {
 
             if (target.Value == null) return TaskStatus.Failure;
 
-            if (characterMono.Attack(ref isAttackFinish, target.Value.transform, targetCharacterMono)) {
-                return TaskStatus.Success;
+            if (characterMono.Chasing(target.Value.transform.position, characterMono.characterModel.attackDistance)) {
+                if (characterMono.Attack(ref isAttackFinish, target.Value.transform, targetCharacterMono)) {
+                    return TaskStatus.Success;
+                }
             }
             if (targetCharacterMono.IsCanBeAttack())
                 return TaskStatus.Running;

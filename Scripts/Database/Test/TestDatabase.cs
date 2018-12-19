@@ -149,6 +149,26 @@ public class TestDatabase : MonoBehaviour {
                     SkillTargetType = UnitType.Everything,
                     SkillInfluenceRadius = 10
                 }
+            },
+            new ChainSkill {
+                BaseDamage = 1000,
+                KeyCode = KeyCode.P,
+                Mp = 220,
+                PlusDamage = 200,
+                SpellDistance = 4f,
+                CD = 5f,
+                Count = 4,
+                Damage = new Damage { BaseDamage = -1000, PlusDamage = -1000 },
+                SkillName = "W技能",
+                IconPath = "00041",
+                LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                SkillLevel = 6,
+                TargetEffect = targetEnemryEffect,
+                SkillTargetType = UnitType.Everything,
+                SkillInfluenceRadius = 10
             }
         };
         items = new List<Item>() {
