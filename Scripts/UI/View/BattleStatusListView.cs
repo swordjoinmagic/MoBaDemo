@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class BattleStatusListView : MonoBehaviour {
-    public HeroMono heroMono;
+    private HeroMono heroMono;
 
     //=======================================
     // 此View管理的UI控件
@@ -90,10 +90,15 @@ public class BattleStatusListView : MonoBehaviour {
         heroMono.OnRemoveBattleStatus += OnRemoveBattleStatus;
     }
 
-    private void Start() {
+    private void Init() {
         canvas = GameObject.FindObjectOfType<Canvas>();
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         Bind();
+    }
+
+    public void Init(HeroMono heroMono) {
+        this.heroMono = heroMono;
+        Init();
     }
 }
 

@@ -10,8 +10,8 @@ using UnityEngine.EventSystems;
 /// <summary>
 /// 用于管理一个连续多个技能的技能面板
 /// </summary>
-class SkillView : MonoBehaviour{
-    public HeroMono characterMono;
+public class SkillView : MonoBehaviour{
+    private HeroMono characterMono;
     private HeroModel character;
     private List<ActiveSkill> activeSkills;
 
@@ -57,7 +57,12 @@ class SkillView : MonoBehaviour{
     }
     #endregion
 
-    private void Start() {
+    public void Init(HeroMono characterMono) {
+        this.characterMono = characterMono;
+        Init();
+    }
+
+    private void Init() {
 
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -120,6 +125,7 @@ class SkillView : MonoBehaviour{
     }
 
     private void Update() {
+        if (characterMono == null) return;
 
         character = characterMono.HeroModel;
         activeSkills = character.activeSkills;

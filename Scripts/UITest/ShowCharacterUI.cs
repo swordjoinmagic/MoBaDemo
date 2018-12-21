@@ -7,8 +7,8 @@ public class ShowCharacterUI : MonoBehaviour {
     // 简易人物视图，用于显示每个人头顶上的血条及名字
     // 一个预制体
     public SimpleCharacterView simpleCharacterView;
-    public Camera UICamera;
-    public RectTransform Canvas;
+    private Camera UICamera;
+    private RectTransform Canvas;
 
     private CharacterMono character;
 

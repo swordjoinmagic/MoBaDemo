@@ -571,7 +571,8 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
             supportMoney = supportMoney,
             PhysicalResistance = PhysicalResistance,
             MagicalResistance = MagicalResistance,
-            DodgeRate = DodgeRate
+            DodgeRate = DodgeRate,
+            Radius = Radius,
         };
         return deepCopyModel;
     }

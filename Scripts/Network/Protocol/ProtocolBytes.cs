@@ -22,6 +22,10 @@ public class ProtocolBytes : IProtocolBase {
         }
     }
 
+    public void ResetIndex() {
+        start = 0;
+    }
+
     public static ProtocolBytes Decode(byte[] readBuff, int start, int length) {
         ProtocolBytes protocolBytes = new ProtocolBytes();
         protocolBytes.bytes = new byte[length];

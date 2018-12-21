@@ -10,12 +10,13 @@ public class MouseCursorChanged : MonoBehaviour {
     public Projector skillCircleInflencePrefabs;
 
 
-    public void Start() {
+    public void Init() {
         characterMono = GameObject.FindWithTag("Player").GetComponent<CharacterMono>();
     }
 
     // Update is called once per frame
     void Update () {
+        if (characterMono == null) return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         RaycastHit hit2;

@@ -15,7 +15,7 @@ public class ItemListView : MonoBehaviour{
     private ItemPanelView[] itemViews;
     private Image[] maskImage;
 
-    public CharacterMono characterMono;
+    private CharacterMono characterMono;
     private List<ItemGrid> itemGrids;
 
     // 物品提示窗口预制体
@@ -26,7 +26,12 @@ public class ItemListView : MonoBehaviour{
     private Canvas canvas;
     private Camera UICamera;
 
-    private void Start() {
+    public void Init(CharacterMono characterMono) {
+        this.characterMono = characterMono;
+        Init();
+    }
+
+    private void Init() {
 
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
@@ -88,6 +93,7 @@ public class ItemListView : MonoBehaviour{
     }
 
     private void Update() {
+        if (characterMono == null) return;
         for (int i= 0;i<6;i++) {
 
             ItemGrid itemGrid = itemGrids[i];

@@ -52,10 +52,13 @@ public class GamePlayManager : MonoBehaviour{
     public bool isGameOver;
 
     // 产生对象的事件,用于解耦网络联机产生NPC的逻辑
-    public delegate void CreateNPCGameObject(Vector3 position,GameObject soliderObject, GameObjectPool gameObjectPool);
+    public delegate void CreateNPCGameObject(Vector3 position, GameObject soliderObject, GameObjectPool gameObjectPool);
     public event CreateNPCGameObject OnCreateNPCGameObject;
 
-    public void Start() {
+    public void Init() {
+
+        Debug.Log("初始化GamePlayManager");
+
         poolObjectFactory = new GameObjectPool(50);
 
         StartCoroutine(DispatchSoliders());
@@ -67,6 +70,9 @@ public class GamePlayManager : MonoBehaviour{
         yield return new WaitForSeconds(2);
         while (!isGameOver) {
 
+            Debug.Log("开始出兵");
+
+
             int a = 0;
 
             // 遍历每个出兵点，进行出兵
@@ -76,11 +82,12 @@ public class GamePlayManager : MonoBehaviour{
                     Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
 
+                    // 设置该单位的阵营
+                    soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
+
                     // 触发产生对象的事件
                     if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position,soliderObject, poolObjectFactory);
 
-                    // 设置该单位的阵营
-                    soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Red;
                     if (a == 0) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Red);
                     } else if (a == 1) {
@@ -103,11 +110,11 @@ public class GamePlayManager : MonoBehaviour{
                     Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
 
-                    // 触发产生对象的事件
-                    if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position, soliderObject,poolObjectFactory);
-
                     // 设置该单位的阵营
                     soliderObject.GetComponent<CharacterMono>().characterModel.unitFaction = UnitFaction.Blue;
+
+                    // 触发产生对象的事件
+                    if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position, soliderObject,poolObjectFactory);
 
                     if (b == 0) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Blue);

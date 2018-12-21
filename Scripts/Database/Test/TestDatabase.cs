@@ -8,6 +8,7 @@ public class TestDatabase : MonoBehaviour {
 
     public List<BaseSkill> baseSkills;
     public List<Item> items;
+    public List<CharacterModel> characterModels;
     public GameObject targetPositionEffect;
     public GameObject targetEnemryEffect;
 
@@ -190,6 +191,37 @@ public class TestDatabase : MonoBehaviour {
                 activeDescription = "对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害",
                 passiveDescription = "+100攻击力\n+100防御力\n+10力量",
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品"
+            }
+        };
+        characterModels = new List<CharacterModel> {
+            new HeroModel {
+                //projectileModel = new ProjectileModel {
+                //    spherInfluence = 5,
+                //    targetPositionEffect = targetPositionEffect,
+                //    movingSpeed = 5
+                //},
+                maxHp = 10000,
+                Hp = 200,
+                maxMp = 1000,
+                Mp = 1000,
+                Name = "sjm",
+                attackDistance = 10f,
+                Level = 0,
+                forcePower = 100,
+                needExp = 1000,
+                Attack = 100,
+                AttackFloatingValue = 99,
+                Exp = 0,
+                expfactor = 2,
+                AvatarImagePath = "PlayerAvatarImage",
+                agilePower = 20,
+                intelligencePower = 10,
+                mainAttribute = HeroMainAttribute.AGI,
+                skillPointGrowthPoint = 1,
+                TurningSpeed = 120,
+                AttackAudioPath = "attackAudio",
+                Radius = 20,
+                MovingSpeed = 4,
             }
         };
     }

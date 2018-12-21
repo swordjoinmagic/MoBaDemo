@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class MoveTitleUI : MonoBehaviour {
@@ -47,6 +48,15 @@ public class MoveTitleUI : MonoBehaviour {
     public void ShowLoginUI() {
         QuitAction += () => {
             loginUI.Show();
+        };
+    }
+
+    /// <summary>
+    /// 开始单机游戏
+    /// </summary>
+    public void StartStandAloneGame() {
+        QuitAction += () => {
+            SceneManager.LoadScene("MainScene");
         };
     }
 
@@ -95,7 +105,7 @@ public class MoveTitleUI : MonoBehaviour {
             }).SetDelay((i + 1) * 0.3f);
         }
         panelTransform.DOSizeDelta(new Vector2(panelTransform.sizeDelta.x, 200f), 1f).OnComplete(() => {
-            panelTransform.DOAnchorPosX(Screen.width + panelTransform.sizeDelta.x / 2, 1f).OnComplete(()=> { QuitAction(); });
+            panelTransform.DOAnchorPosX(Screen.width + panelTransform.sizeDelta.x, 1f).OnComplete(()=> { QuitAction(); });
         }).SetDelay(0.4f * buttons.Length);
 
     }

@@ -1288,13 +1288,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df6963dae7044fc4ea511b8ab147f550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDying: 0
   characterModel:
     maxHp: 2000
     maxMp: 0
-    name: "\u5C0F\u5175"
     attackDistance: 4
     attack: 33
+    attackFloatingValue: 0
     attackType: 0
     attackSpeed: 0
     defense: 0
@@ -1302,7 +1301,6 @@ MonoBehaviour:
     movingSpeed: 0
     turningSpeed: 0
     projectile: {fileID: 0}
-    level: 0
     restoreHpSpeed: 0
     resotreMpSpeed: 0
     canBeAttacked: 1
@@ -1313,13 +1311,17 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    radius: 8
+  isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
   arroundEnemies: []
+  arroundFriends: []
   targetPositionEffect: {fileID: 0}
   targetEnemryEffect: {fileID: 0}
   projectile: {fileID: 0}
   stateHolderEffect: {fileID: 0}
+  lightningBoltScriptPrefab: {fileID: 0}
 --- !u!114 &114125950769771154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1333,8 +1335,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   simpleCharacterView: {fileID: 114813664509387620, guid: 17079bb36ad6b06448f99b3c50b3f4fd,
     type: 2}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!114 &114382115274500070
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1347,6 +1347,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   arroundEnemies: []
+  arroundFriends: []
 --- !u!114 &114609840067796436
 MonoBehaviour:
   m_ObjectHideFlags: 1

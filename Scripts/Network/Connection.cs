@@ -167,6 +167,17 @@ public class Connection {
     }
 
     /// <summary>
+    /// 用于为某一个具体的协议删除监听(回调)方法
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="protocolHandler"></param>
+    public void RemoveListener(string name, ProtocolHandler protocolHandler) {
+        if (eventDict.ContainsKey(name)) {
+            eventDict[name] -= protocolHandler;
+        }
+    }
+
+    /// <summary>
     /// 根据协议名,处理一个具体的协议信息,
     /// 返回布尔型,True表示处理完成,False表示未对此协议添加监听方法
     /// </summary>

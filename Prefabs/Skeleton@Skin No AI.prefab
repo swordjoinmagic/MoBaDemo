@@ -1419,7 +1419,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
-    radius: 0
+    radius: 8
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -1436,15 +1436,13 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1395335794614730}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe838758f45b63542949a68af0d43e5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   simpleCharacterView: {fileID: 114813664509387620, guid: 17079bb36ad6b06448f99b3c50b3f4fd,
     type: 2}
-  UICamera: {fileID: 0}
-  Canvas: {fileID: 0}
 --- !u!135 &135809623471808476
 SphereCollider:
   m_ObjectHideFlags: 1

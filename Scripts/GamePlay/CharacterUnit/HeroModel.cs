@@ -77,5 +77,40 @@ public class HeroModel : CharacterModel{
     public override string ToString() {
         return "Name:" + Name + " hp:" + Hp + " exp:" + Exp;
     }
+
+    // 获得当前CharacterModel对象的深拷贝对象
+    public override CharacterModel DeepCopy() {
+        CharacterModel deepCopyModel = new HeroModel() {
+            maxHp = maxHp,
+            maxMp = maxMp,
+            Hp = Hp,
+            Mp = Mp,
+            Name = Name,
+            attackDistance = attackDistance,
+            BaseSkills = new List<BaseSkill>(),
+            Attack = attack,
+            AttackFloatingValue = attackFloatingValue,
+            AttackSpeed = attackSpeed,
+            Defense = defense,
+            MovingSpeed = movingSpeed,
+            TurningSpeed = turningSpeed,
+            Level = Level,
+            RestoreHpSpeed = RestoreHpSpeed,
+            ResotreMpSpeed = ResotreMpSpeed,
+            canBeAttacked = canBeAttacked,
+            unitType = unitType,
+            unitFaction = unitFaction,
+            supportExp = supportExp,
+            supportMoney = supportMoney,
+            PhysicalResistance = PhysicalResistance,
+            MagicalResistance = MagicalResistance,
+            DodgeRate = DodgeRate,
+            needExp = 2000,
+            expfactor = 0.5f,
+            Radius = Radius
+        };
+        return deepCopyModel;
+    }
+
 }
 

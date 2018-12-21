@@ -458,8 +458,8 @@ public class CharacterMono : MonoBehaviour {
     //================================================
     #endregion
 
-    // 单位初始化身上所有状态的方法
-    public void Init() {
+    // 单位初始化身上所有模块的方法
+    public void InitModule() {
         //============================
         // ·初始化声音模块
         audioSource = GetComponent<AudioSource>();
@@ -497,7 +497,7 @@ public class CharacterMono : MonoBehaviour {
         agent.angularSpeed = characterModel.TurningSpeed;
     }
 
-    private void Start() {
+    public void Init() {
 
         #region 测试
         if (CompareTag("Player"))
@@ -565,10 +565,14 @@ public class CharacterMono : MonoBehaviour {
 
         #endregion
 
-        Init();
+        InitModule();
 
         // 根据CharacterModel初始化身上的组件
         InitAnimatorAndNavAgent();
+    }
+
+    private void Start() {
+        Init();
     }
 
     public virtual void Update() {

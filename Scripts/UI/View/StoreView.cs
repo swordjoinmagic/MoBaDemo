@@ -7,11 +7,11 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using DG.Tweening;
 
-class StoreView : MonoBehaviour{
+public class StoreView : MonoBehaviour{
 
     //==================================================
     // 商店对应的HeroMono类，在游戏初始化时对其进行初始化
-    public HeroMono heroMono;
+    private HeroMono heroMono;
 
     /// <summary>
     ///  商店逻辑类
@@ -39,10 +39,15 @@ class StoreView : MonoBehaviour{
     public Button OnOrOffButton;
     public Text OnOrOffButtonText;
 
+    public void Init(HeroMono heroMono) {
+        this.heroMono = heroMono;
+        Init();
+    }
+
     /// <summary>
     /// 用于初始化
     /// </summary>
-    private void Start() {
+    private void Init() {
         canvas = GameObject.FindObjectOfType<Canvas>();
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvasGroup = GetComponent<CanvasGroup>();

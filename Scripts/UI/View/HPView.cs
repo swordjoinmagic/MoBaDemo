@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
 
-class HPView : UnityGuiView<HPViewModel>{
+public class HPView : UnityGuiView<HPViewModel>{
 
     //====================================
     // 此View管理的UI控件
@@ -23,7 +23,8 @@ class HPView : UnityGuiView<HPViewModel>{
 
     public HeroMono characterMono;
 
-    public void Init() {
+    public void Init(HeroMono characterMono) {
+        this.characterMono = characterMono;
         characterMono.HeroModel.HpValueChangedHandler += OnHpChanged;
         characterMono.HeroModel.MpValueChangedHandler += OnMpValueChanged;
     }
@@ -32,7 +33,6 @@ class HPView : UnityGuiView<HPViewModel>{
         base.OnInitialize();
 
         binder.Add<int>("Hp", OnHpChanged);
-        Init();
     }
 
     public void OnHpChanged(int oldValue,int newValue) {

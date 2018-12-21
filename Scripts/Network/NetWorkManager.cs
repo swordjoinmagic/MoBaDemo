@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class NetWorkManager : MonoBehaviour {
@@ -14,6 +15,12 @@ public class NetWorkManager : MonoBehaviour {
     public InputField text;
     private string nowPlayerID = "sjm";
 
+    // 保存房间内各个玩家的基础信息
+    public List<RoomPlayer> roomPlayers = new List<RoomPlayer>();
+    // 当前房间
+    private string roomName;
+    // 当前玩家的阵营
+    private string nowPlayerFaction;
 
     private bool isHomeowner = false;
     private List<string> Npcs;  // 保存一份NPC列表
@@ -44,7 +51,32 @@ public class NetWorkManager : MonoBehaviour {
         }
     }
 
+    public string RoomName {
+        get {
+            return roomName;
+        }
+
+        set {
+            roomName = value;
+        }
+    }
+
+    public string NowPlayerFaction {
+        get {
+            return nowPlayerFaction;
+        }
+
+        set {
+            nowPlayerFaction = value;
+        }
+    }
+
     private Connection connection = null;
+
+    // 用于判断是否连接网络
+    public bool IsConnect() {
+        return connection != null;
+    }
 
     /// <summary>
     /// 用于管理 在该场景中的所有网络单位
@@ -56,8 +88,9 @@ public class NetWorkManager : MonoBehaviour {
     /// </summary>
     /// <param name="id"></param>
     /// <param name="position"></param>
-    public void AddNetworkPlayer(string id, Vector3 position) {
-        GameObject player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
+    public void AddNetworkPlayer(string id, Vector3 position,CharacterModel characterModel) {
+        //GameObject player = GameObject.Instantiate(playerPrefab, position, Quaternion.identity);
+        CharacterMono player = CharacterMonoFactory.AcquireObject(characterModel,playerPrefab,position);
         player.transform.position = new Vector3(player.transform.position.x, 0.5f, player.transform.position.z);
 
         // 设置CharacterMono的网络ID
@@ -66,8 +99,24 @@ public class NetWorkManager : MonoBehaviour {
         // 给产生的网络对象附加伤害同步的监听方法
         player.GetComponent<HeroMono>().characterModel.OnDamaged += DamageSynchronize;
 
+        networkPlayers.Add(id, player.gameObject);
+    }
+    /// <summary>
+    /// 产生一个网络对象
+    /// </summary>
+    /// <param name="id"></param>
+    /// <param name="position"></param>
+    public void AddNetworkPlayer(string id, Vector3 position, CharacterModel characterModel,CharacterMono player) {
+        player.transform.position = new Vector3(position.x, 0.5f, position.z);
 
-        networkPlayers.Add(id, player);
+        // 设置CharacterMono的网络ID
+        player.GetComponent<CharacterMono>().NetWorkPlayerID = id;
+
+        // 给产生的网络对象附加伤害同步的监听方法
+        player.GetComponent<HeroMono>().characterModel.OnDamaged += DamageSynchronize;
+
+
+        networkPlayers.Add(id, player.gameObject);
     }
 
     /// <summary>
@@ -85,10 +134,11 @@ public class NetWorkManager : MonoBehaviour {
             networkPlayers[id] = soliderObject;
 
             // 给单位增加AI系统
-            soliderObject.AddComponent<BehaviorTree>().ExternalBehavior = Resources.Load<ExternalBehavior>("External Behavior Tree/OffseniveAI Behavior");
+            //soliderObject.AddComponent<BehaviorTree>().ExternalBehavior = Resources.Load<ExternalBehavior>("External Behavior Tree/OffseniveAI Behavior");
 
             // 设置网络ID
             soliderObject.GetComponent<CharacterMono>().NetWorkPlayerID = id;
+            soliderObject.GetComponent<CharacterMono>().characterModel.Name = id;
 
             // 给产生的网络对象附加伤害同步的监听方法
             soliderObject.GetComponent<CharacterMono>().characterModel.OnDamaged += DamageSynchronize;
@@ -105,15 +155,22 @@ public class NetWorkManager : MonoBehaviour {
     /// 非房主产生NPC对象的方法,非房主产生的NPC无AI系统也无同步系统,其主要根据房主的NPC进行同步.
     /// </summary>
     /// <param name="id"></param>
-    public void AddNetworkNpc(string id,Vector3 pos) {        
+    public void AddNetworkNpc(string id,Vector3 pos,string unitFaction) {        
         if (!networkPlayers.ContainsKey(id)) {
-            // 如果本次生成的对象不是旧对象,那么将该对象放到networkPlayers字典中去,同时给对象增加AI系统和同步系统
-            GameObject NPC = GameObject.Instantiate(NpcPrefab,pos,Quaternion.identity);
+            CharacterModel characterModel = NpcPrefab.GetComponent<CharacterMono>().characterModel.DeepCopy();
+            if (unitFaction == "Red")
+                characterModel.unitFaction = UnitFaction.Red;
+            else
+                characterModel.unitFaction = UnitFaction.Blue;
 
-            networkPlayers[id] = NPC;
+            // 如果本次生成的对象不是旧对象,那么将该对象放到networkPlayers字典中去,同时给对象增加AI系统和同步系统
+            CharacterMono NPC = CharacterMonoFactory.AcquireObject(characterModel,NpcPrefab,pos);
+
+            networkPlayers[id] = NPC.gameObject;
 
             // 设置网络ID
             NPC.GetComponent<CharacterMono>().NetWorkPlayerID = id;
+            NPC.GetComponent<CharacterMono>().characterModel.Name = id;
 
             // 给产生的网络对象附加伤害同步的监听方法
             NPC.GetComponent<CharacterMono>().characterModel.OnDamaged += DamageSynchronize;
@@ -136,10 +193,10 @@ public class NetWorkManager : MonoBehaviour {
     /// <summary>
     /// 单击开始游戏按钮
     /// </summary>
-    public void StartGame() {
+    public void StartGame(Vector3 pos,CharacterMono characterMono) {        
 
         // 测试,当单击开始游戏按钮后,一个 游戏单位(表示本地玩家) 就被创建出来了
-        AddNetworkPlayer(NowPlayerID, UnityEngine.Random.insideUnitCircle * 5);
+        AddNetworkPlayer(NowPlayerID, pos,characterMono.characterModel.DeepCopy(),characterMono);
 
         // 开启本地玩家的 状态机, 非本地玩家的状态机不开启
         networkPlayers[NowPlayerID].GetComponent<CharacterOperationFSM>().enabled = true;
@@ -166,6 +223,10 @@ public class NetWorkManager : MonoBehaviour {
         protocolBytes.AddFloat(rotation.x);
         protocolBytes.AddFloat(rotation.y);
         protocolBytes.AddFloat(rotation.z);
+
+        protocolBytes.AddString(networkPlayers[id].GetComponent<CharacterMono>().characterModel.unitFaction.ToString());
+
+
         connection.Send(protocolBytes);
     }
 
@@ -184,6 +245,9 @@ public class NetWorkManager : MonoBehaviour {
         protocolBytes.AddFloat(rotation.x);
         protocolBytes.AddFloat(rotation.y);
         protocolBytes.AddFloat(rotation.z);
+
+        protocolBytes.AddString(NowPlayerFaction);
+
         connection.Send(protocolBytes);
     }
     
@@ -217,15 +281,15 @@ public class NetWorkManager : MonoBehaviour {
     /// </summary>
     /// <param name="id"></param>
     /// <param name="pos"></param>
-    public void UpdateInfo(string id, Vector3 pos,Vector3 rotation) {
+    public void UpdateInfo(string id, Vector3 pos,Vector3 rotation,string unitFaction) {
 
         #region NPC测试
         // 单位id带有NPC#并且当前玩家不是房主
         if (id.Contains("NPC#") && !IsHomeowner) {
             if (!networkPlayers.ContainsKey(id)) {
-                AddNetworkNpc(id, pos);
+                AddNetworkNpc(id, pos, unitFaction);
             } else {
-                Debug.Log("更新NPC的位置");
+                //Debug.Log("更新NPC的位置");
                 networkPlayers[id].transform.position = pos;
                 networkPlayers[id].transform.rotation = Quaternion.Euler(rotation);
             }
@@ -236,7 +300,12 @@ public class NetWorkManager : MonoBehaviour {
 
         if (id != NowPlayerID) {
             if (!networkPlayers.ContainsKey(id)) {
-                AddNetworkPlayer(id, UnityEngine.Random.insideUnitCircle * 5);
+                CharacterModel characterModel = TestDatabase.Instance.characterModels[0].DeepCopy();
+                if (unitFaction == "Red")
+                    characterModel.unitFaction = UnitFaction.Red;
+                else
+                    characterModel.unitFaction = UnitFaction.Blue;
+                AddNetworkPlayer(id, pos, characterModel);
             } else {
                 networkPlayers[id].transform.position = pos;
                 networkPlayers[id].transform.rotation = Quaternion.Euler(rotation);
@@ -255,11 +324,12 @@ public class NetWorkManager : MonoBehaviour {
         NetWorkManager.Instance.AddListener("SpellSkill", TreateSpellSkillProtocol);
         NetWorkManager.Instance.AddListener("AddItem", TreateGetItemProtocol);
         NetWorkManager.Instance.AddListener("DeleteItem", TreateDeleteItemProtocol);
+        NetWorkManager.Instance.AddListener("StartGame", TreateStartGameProtocol);
     }
 
     public void DispatchMsgEvent(ProtocolBytes protocolBytes) {
         string name = protocolBytes.GetString();
-        Debug.Log("分发协议："+name);
+        //Debug.Log("分发协议："+name);
         connection.TreateProtocol(name,protocolBytes);
     }
 
@@ -272,8 +342,17 @@ public class NetWorkManager : MonoBehaviour {
         connection.AddListener(name,protocolHandler);
     }
 
+    /// <summary>
+    /// 用于删除某个具体的协议的监听方法
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="protocolHandler"></param>
+    public void RemoveListener(string name, Connection.ProtocolHandler protocolHandler) {
+        connection.RemoveListener(name,protocolHandler);
+    }
+
     public void TreateUpdateInfoProtocol(ProtocolBytes protocolBytes) {
-        Debug.Log("处理位置改变协议中");
+        //Debug.Log("处理位置改变协议中");
         string id = protocolBytes.GetString();
 
         // 不处理本地玩家,因为本地玩家已经由客户端进行处理了
@@ -286,7 +365,8 @@ public class NetWorkManager : MonoBehaviour {
         float tx = protocolBytes.GetFloat();
         float ty = protocolBytes.GetFloat();
         float tz = protocolBytes.GetFloat();
-        UpdateInfo(id, new Vector3(x, y, z), new Vector3(tx, ty, tz));
+        string unitFaction = protocolBytes.GetString();
+        UpdateInfo(id, new Vector3(x, y, z), new Vector3(tx, ty, tz),unitFaction);
     }
 
     /// <summary>
@@ -368,7 +448,7 @@ public class NetWorkManager : MonoBehaviour {
         if (userName.Contains("NPC#") && IsHomeowner) return;
 
 
-        Debug.Log("处理SpellSkill协议");
+        //Debug.Log("处理SpellSkill协议");
 
         // 要释放的技能的ID
         int skillId = protocol.GetInt();
@@ -464,6 +544,14 @@ public class NetWorkManager : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// 处理游戏开始协议
+    /// </summary>
+    /// <param name="protocol"></param>
+    public void TreateStartGameProtocol(ProtocolBytes protocol) {
+        SceneManager.LoadScene("MainScene");
+    }
+
     // 伤害同步
     public void DamageSynchronize(CharacterMono victim, Damage damage, CharacterMono attacker, int nowHp) {
 
@@ -549,7 +637,7 @@ public class NetWorkManager : MonoBehaviour {
     public CharacterMono characterMono;
     SynchronizeTest synchronizeTest;
     private void Start() {
-
+        DontDestroyOnLoad(this.gameObject);
     }
 
     #endregion
