@@ -27,7 +27,15 @@ class StoreLogic {
             // 出售商品给单位
             heroMono.GetItem(item);
             heroMono.Owner.Money -= item.item.price;
-            item.ItemCount -= 1;
+
+            // 如果该物品的数量<=1,说明再减一就要为0了,在这里限制物品数量为1,当物品被买光后,设置此物品为正在冷却状态(isCoolDowning)
+            if (item.ItemCount <= 1) {
+                item.IsCoolDowning = true;
+            } else
+                item.ItemCount -= 1;
+
+            // 更新物品最后一次购买时间
+            item.LatestBuyTime = Time.time;
         }
     }
 
@@ -90,7 +98,9 @@ class StoreLogic {
                 passiveDescription = "+100攻击力\n+100防御力\n+10力量",
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品",
                 price = Random.Range(100, 10000),
-                commditType = (CommditType)(Random.Range(0,6))
+                commditType = (CommditType)(Random.Range(0,6)),
+                itemPayInteral = 5f,
+                ItemId = 1
             }
         };
         soldProps.Add(itemGrid);

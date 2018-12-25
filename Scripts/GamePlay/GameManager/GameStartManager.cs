@@ -43,6 +43,11 @@ public class GameStartManager : MonoBehaviour{
         InitUI();
         InitGamePlay();
 
+        if (NetWorkManager.Instance == null) {
+            new GameObject().AddComponent<NetWorkManager>();
+        }
+            
+
         // 判断此时是在联机对战还是在单人游戏
         if (NetWorkManager.Instance.IsConnect()) {
             gamePlayManager.OnCreateNPCGameObject += NetWorkManager.Instance.AddNetworkNpc;
@@ -69,6 +74,7 @@ public class GameStartManager : MonoBehaviour{
             gamePlayManager.Init();
             Camera.main.transform.position = new Vector3(15, Camera.main.transform.position.y, 6);
             characterMono.GetComponent<CharacterOperationFSM>().enabled = true;
+            
         }
     }
 

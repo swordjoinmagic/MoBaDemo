@@ -26,6 +26,31 @@ public class ItemGrid {
     // 玩家是否买得起此物品
     private bool canBuy;
 
+    #region 用于商店的物品属性
+    // 是否处于购买冷却的状态
+    private bool isCoolDowning;
+    // 上次购买时间
+    private float latestBuyTime;
+    public bool IsCoolDowning {
+        get {
+            return isCoolDowning;
+        }
+
+        set {
+            isCoolDowning = value;
+        }
+    }
+    public float LatestBuyTime {
+        get {
+            return latestBuyTime;
+        }
+
+        set {
+            latestBuyTime = value;
+        }
+    }
+    #endregion
+
     // 使用该物品的热键
     public KeyCode hotKey;
 

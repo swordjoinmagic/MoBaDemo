@@ -12,7 +12,7 @@ using UnityEngine.UI;
 public class ItemListView : MonoBehaviour{
 
     // 和单位的ItemGrids数组一一对应
-    private ItemPanelView[] itemViews;
+    public ItemPanelView[] itemViews;
     private Image[] maskImage;
 
     private CharacterMono characterMono;
@@ -36,7 +36,7 @@ public class ItemListView : MonoBehaviour{
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         canvas = GameObject.Find("Canvas").GetComponent<Canvas>();
 
-        itemViews = GameObject.FindObjectsOfType<ItemPanelView>().Reverse().ToArray();
+        
         maskImage = new Image[itemViews.Count()];
         for (int i=0;i<itemViews.Count();i++) {
             var itemView = itemViews[i];

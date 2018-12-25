@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 /// <summary>
-/// 用于显示在物品栏的物品视图
+/// 用于显示在商店的物品视图
 /// </summary>
 [RequireComponent(typeof(EventTrigger))]
 public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
@@ -17,6 +17,8 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
     public Text remainCountText;
     public Outline outline;
     public ItemGrid itemGrid;
+    // 冷却的图形
+    public Image coolDownImage;
 
     private void Init() {
         //==========================================
@@ -62,6 +64,19 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
             outline.effectColor = Color.green;
         } else {
             outline.effectColor = Color.red;
+        }
+    }
+
+    private void Update() {
+        if (itemGrid!=null && itemGrid.item != null && itemGrid.IsCoolDowning) {
+            // 更新冷却条
+            if (itemGrid.item.itemPayInteral != 0 && itemGrid.LatestBuyTime!=0) {
+                float rate = Mathf.Clamp01((Time.time - itemGrid.LatestBuyTime) / itemGrid.item.itemPayInteral);
+                coolDownImage.fillAmount = 1 - rate;
+                if (rate == 1 && itemGrid.IsCoolDowning) {
+                    itemGrid.IsCoolDowning = false;
+                }
+            }
         }
     }
 }

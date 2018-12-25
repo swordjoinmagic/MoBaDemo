@@ -572,7 +572,8 @@ public class CharacterMono : MonoBehaviour {
     }
 
     private void Start() {
-        Init();
+        if (!CompareTag("Player"))
+            Init();
     }
 
     public virtual void Update() {

@@ -218,7 +218,7 @@ public class TestDatabase : MonoBehaviour {
                 intelligencePower = 10,
                 mainAttribute = HeroMainAttribute.AGI,
                 skillPointGrowthPoint = 1,
-                TurningSpeed = 120,
+                TurningSpeed = 50,
                 AttackAudioPath = "attackAudio",
                 Radius = 20,
                 MovingSpeed = 4,

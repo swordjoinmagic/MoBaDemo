@@ -101,7 +101,7 @@ public class StoreView : MonoBehaviour{
     }
 
     /// <summary>
-    /// 给单位的ItemPanel视图设置鼠标停留、离开事件（用于显示提示视图）
+    /// 给单位的ItemPanel视图设置鼠标停留、离开事件（用于显示提示视图）、还有购买物品
     /// </summary>
     /// <param name="itemGrid"></param>
     /// <param name="itemPanel"></param>
@@ -138,7 +138,8 @@ public class StoreView : MonoBehaviour{
             eventID = EventTriggerType.PointerClick
         };
         onMouseClick.callback.AddListener(eventData => {
-            if (Input.GetMouseButtonUp(1)) {
+            // 当物品不处于冷却状态时,才能购买此物品
+            if (Input.GetMouseButtonUp(1) && !itemGrid.IsCoolDowning) {
                 if (showItemGrids[itemGrid.index]==itemGrid) {
                     itemTipsView.Hide();
                 }
@@ -172,6 +173,7 @@ public class StoreView : MonoBehaviour{
             CommditType type = (CommditType)i;
             Button button = categoryButtons[i];
             button.onClick.AddListener(()=> {
+                showCommidtyType = type;
                 UpdateShowCommdities(type);
                 UpdateButtonForcus(button);
             });
@@ -210,7 +212,6 @@ public class StoreView : MonoBehaviour{
     /// 更新商品的购买边框
     /// </summary>
     private void UpdateCanBuyButton() {
-        Debug.Log("showItemGrids.Count:"+showItemGrids.Count);
         for (int i=0;i<showItemGrids.Count;i++) {
             ItemGrid itemGrid = showItemGrids[i];
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid, heroMono);
@@ -221,5 +222,24 @@ public class StoreView : MonoBehaviour{
     private void BindCanBuyButtonEvent() {
         heroMono.Owner.OnMoneyChanged += UpdateCanBuyButton;
     }
-}
 
+
+    ///// <summary>
+    ///// 每一帧更新物品的冷却情况
+    ///// </summary>
+    //private void Update() {
+    //    foreach (ItemGrid item in showItemGrids) {
+    //        // 更新物品数量
+    //        if (item!=null && item.item!=null && item.ItemCount < item.item.maxCount && item.LatestBuyTime!=0) {
+    //            // 如果当前物品距离上次购买的时间大于此物品购买间隔,那么此物品数量+1
+    //            if (item.item.itemPayInteral != 0) {
+    //                float rate = Mathf.Clamp01((Time.time - item.LatestBuyTime) / item.item.itemPayInteral);
+    //                if (rate == 1) {
+    //                    // 物品数量+1
+    //                    item.ItemCount += 1;
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
+}
