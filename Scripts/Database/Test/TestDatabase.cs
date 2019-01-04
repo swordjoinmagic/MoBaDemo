@@ -170,6 +170,51 @@ public class TestDatabase : MonoBehaviour {
                 TargetEffect = targetEnemryEffect,
                 SkillTargetType = UnitType.Everything,
                 SkillInfluenceRadius = 10
+            },
+            new ContinuousRangeSkillGroup {
+                SkillID = 3,
+                KeyCode = KeyCode.Y,
+                PlusDamage = 200,
+                TargetEffect = targetPositionEffect,
+                SpellDistance = 10f,
+                SkillName = "E技能",
+                IconPath = "00041",
+                SkillLevel = 6,
+                SkillInfluenceRadius = 6f,
+                activeSkills = new ActiveSkill[]{
+                            new PointingSkill{
+                                PlusDamage = 100
+                            },
+                            new AdditionalStateSkill{
+                                SpellDistance = 10,
+                                AdditionalState = new PoisoningState{
+                                    stateHolderEffect = targetEnemryEffect,
+                                    Duration = 15,
+                                    Damage = new Damage{ PlusDamage = 100 },
+                                    IsStackable = false,
+                                    statePassiveSkills = new List<PassiveSkill>{
+                                        new BaseAtributeChangeSkill{
+                                            attribute = CharacterAttribute.Attack,
+                                            value = 10,
+                                            isScale = true
+                                        }
+                                    }
+                                },
+                                SkillTargetType = UnitType.Everything
+                            }
+                        },
+                skillDelayAttributes = new SkillDelayAttribute[] {
+                            new SkillDelayAttribute{
+                                isDelay = false,
+                                index = -1,
+                            },
+                           new SkillDelayAttribute{
+                                isDelay = false,
+                                index = -1,
+                            }
+                        },
+                SkillTargetType = UnitType.Everything,
+                SpellDuration = 3,
             }
         };
         items = new List<Item>() {
@@ -235,5 +280,7 @@ public class TestDatabase : MonoBehaviour {
             return instance;
         }
     }
-    
+
+    private void Start() {
+    }
 }

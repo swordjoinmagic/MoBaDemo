@@ -46,7 +46,7 @@ class DataManager {
     /// </summary>
     public List<BaseSkill> baseSkillDataSet = new List<BaseSkill>();
     // 技能数据JSON的地址
-    private string skillDataPath = "SkillData";
+    private string skillDataPath = "TestData";
 
     /// <summary>
     /// 物品数据集合

@@ -30,6 +30,13 @@ public class ActiveSkill : BaseSkill {
     // 技能CD时间
     protected float cooldown;
 
+    // 施法持续时间,为0时表示该技能不会持续释放
+    protected float spellDuration;
+
+    // 表示该技能是否可以被打断,默认所有技能都不能被打断,
+    // 部分持续施法技能可以被单位的操作/其他技能打断
+    protected float canBeInterrupt;
+
     // 最后一次释放技能的时间
     protected float finalSpellTime;
 
@@ -142,6 +149,26 @@ public class ActiveSkill : BaseSkill {
         }
     }
 
+    public float SpellDuration {
+        get {
+            return spellDuration;
+        }
+
+        set {
+            spellDuration = value;
+        }
+    }
+
+    public float CanBeInterrupt {
+        get {
+            return canBeInterrupt;
+        }
+
+        set {
+            canBeInterrupt = value;
+        }
+    }
+
     // 当技能释放完毕后，执行的回调函数
     public event OnSkillCompeleteHandler OnCompelte;
 
@@ -177,6 +204,25 @@ public class ActiveSkill : BaseSkill {
     /// <returns></returns>
     public bool IsCoolDown() {
         return Time.time - finalSpellTime <= CD;
+    }
+
+    /// <summary>
+    /// 持续施法技能释放,非持续施法技能不会重写这个方法,
+    /// 施法结束(施法成功/施法失败都算施法结束)返回True
+    /// 施法未完成返回False
+    /// </summary>
+    /// <param name="speller"></param>
+    /// <param name="target"></param>
+    /// <returns></returns>
+    public virtual bool ContinuousExecute(CharacterMono speller, CharacterMono target) {
+        finalSpellTime = Time.time;
+        CreateEffect(speller, target.transform.position);
+        return true;
+    }
+    public virtual bool ContinuousExecute(CharacterMono speller, Vector3 position) {
+        finalSpellTime = Time.time;
+        CreateEffect(speller, position);
+        return true;
     }
 
     /// <summary>

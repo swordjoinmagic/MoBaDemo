@@ -453,7 +453,7 @@ public class CharacterMono : MonoBehaviour {
         LearnSkill(TestDatabase.Instance.baseSkills[1]);
         LearnSkill(TestDatabase.Instance.baseSkills[2]);
         LearnSkill(TestDatabase.Instance.baseSkills[3]);
-        LearnSkill(TestDatabase.Instance.baseSkills[5]);
+        LearnSkill(TestDatabase.Instance.baseSkills[6]);
     }
     //================================================
     #endregion
@@ -1028,15 +1028,24 @@ public class CharacterMono : MonoBehaviour {
                 break;
             case "Idle":
                 animator.SetBool("isRun", false);
+                animator.SetBool("isCasting",false);
                 break;
             case "Died":
+                animator.SetBool("isRun", false);
+                animator.SetBool("isCasting", false);
                 animator.SetTrigger("died");
+                break;
+            case "Casting":
+                animator.ResetTrigger("spell");
+                animator.ResetTrigger("attack");
+                animator.SetBool("isCasting",true);
                 break;
             default:
                 // IDLE
                 animator.ResetTrigger("spell");
                 animator.ResetTrigger("attack");
                 animator.SetBool("isRun", false);
+                animator.SetBool("isCasting", false);
                 break;
         }
         if (OnPlayAnimation != null) OnPlayAnimation(this,animationStr);
@@ -1118,22 +1127,22 @@ public class CharacterMono : MonoBehaviour {
 
     /// <summary>
     /// 适用于指定敌人的施法技能
-    /// 释放技能的函数,施法结束返回True,施法失败或施法未完成返回False
+    /// 释放技能的函数,施法结束返回True（施法失败、施法成功均属于这一类）,施法未完成返回False
     /// </summary>
     public bool Spell(CharacterMono enemryMono, Vector3 position) {
 
-        // 如果目标已经不可攻击,那么返回False
+        // 如果目标已经不可攻击,那么返回True，表示施法结束
         if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
             ResetSpeellStateAnimator();
             arroundEnemies.Remove(enemryMono);
 
-            return false;
+            return true;
         }
 
-        // 如果指定目标不符合准备释放的技能的指定目标,返回
+        // 如果指定目标不符合准备释放的技能的指定目标,返回True
         if (enemryMono != null && !CanBeExecuteToTarget(enemryMono)) {
             Debug.Log("单位不符合目标技能指定目标 目标单位type:"+enemryMono.characterModel.unitType+" 技能指定的Type:"+prepareSkill.SkillTargetType);
-            return false;
+            return true;
         }
 
         // 获得当前动画和下一个动画状态
@@ -1151,6 +1160,7 @@ public class CharacterMono : MonoBehaviour {
         if (IsImmediatelySpell()) {
             // 原地释放技能,此时直接释放技能
 
+            #region 非持续施法技能
             // 播放释放技能的动画
             if (!currentAnimatorStateInfo.IsName("Spell"))
                 //animator.SetTrigger("spell");
@@ -1172,50 +1182,112 @@ public class CharacterMono : MonoBehaviour {
                 prepareSkill = null;
                 return true;
             }
+            #endregion
+
         } else {
             // 指向型技能
-
+            
             // 当前距离敌人 > 施法距离,进行追击
             if (Chasing(position,prepareSkill.SpellDistance)) {
-                //======================================
-                // 播放施法动画
-                // 如果准备开始施法,那么播放动画
-                if (!currentAnimatorStateInfo.IsName("Spell") && !nextAnimatorStateInfo.IsName("Spell")) {
-                    DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
-                }
 
-                // 如果技能释放结束,那么产生特效,计算伤害
-                if (currentAnimatorStateInfo.IsName("Spell") &&
-                    nextAnimatorStateInfo.IsName("Idle")) {
-
-                    if (!isPrepareUseItemSkill) {
-                        if (prepareSkill.IsMustDesignation) {
-
-                            // 触发施法事件
-                            if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position,prepareSkill);
-
-                            prepareSkill.Execute(this, enemryMono);
-                        } else {
-
-                            // 触发施法事件
-                            if (OnSpell != null) OnSpell(this, enemryMono,position, prepareSkill);
-
-                            prepareSkill.Execute(this, position);
-                        }
-                    } else {
-
-                        // 触发施法事件
-                        if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
-
-                        prepareItemSkillItemGrid.ExecuteItemSkill(this, enemryMono);
-                        isPrepareUseItemSkill = false;
-                        prepareItemSkillItemGrid = null;
+                if (prepareSkill.SpellDuration == 0) {
+                    #region 非持续施法技能
+                    //======================================
+                    // 播放施法动画
+                    // 如果准备开始施法,那么播放动画
+                    if (!currentAnimatorStateInfo.IsName("Spell") && !nextAnimatorStateInfo.IsName("Spell")) {
+                        DoCharacterMonoAnimation(AnimatorEnumeration.Spell);
                     }
 
+                    // 如果技能释放结束,那么产生特效,计算伤害
+                    if (currentAnimatorStateInfo.IsName("Spell") &&
+                        nextAnimatorStateInfo.IsName("Idle")) {
 
-                    isPrepareUseSkill = false;
-                    prepareSkill = null;
-                    return true;
+                        if (!isPrepareUseItemSkill) {
+                            #region 人物技能
+                            if (prepareSkill.IsMustDesignation) {
+
+                                // 触发施法事件
+                                if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
+
+                                prepareSkill.Execute(this, enemryMono);
+                            } else {
+
+                                // 触发施法事件
+                                if (OnSpell != null) OnSpell(this, enemryMono, position, prepareSkill);
+
+                                prepareSkill.Execute(this, position);
+                            }
+                            #endregion
+                        } else {
+                            #region 物品技能
+                            // 触发施法事件
+                            if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
+
+                            prepareItemSkillItemGrid.ExecuteItemSkill(this, enemryMono);
+                            isPrepareUseItemSkill = false;
+                            prepareItemSkillItemGrid = null;
+                            #endregion
+                        }
+
+                        isPrepareUseSkill = false;
+                        prepareSkill = null;
+                        return true;
+                    }
+                    #endregion
+                } else {
+                    #region 持续施法技能
+                    //======================================
+                    // 播放施法动画
+                    // 如果准备开始施法,那么播放动画
+                    if (!currentAnimatorStateInfo.IsName("Casting") && !nextAnimatorStateInfo.IsName("Casting")) {
+                        DoCharacterMonoAnimation(AnimatorEnumeration.Casting);
+                    }
+
+                    // 当已经进入持续施法的动画后,开始执行技能效果
+                    if (currentAnimatorStateInfo.IsName("Casting")) {
+                        // 判断是人物技能还是物品技能,对于物品技能来说,
+                        // 释放完毕要根据物品类型对物品的数量进行增减
+                        if (!isPrepareUseItemSkill) {
+                            #region 人物技能
+                            if (prepareSkill.IsMustDesignation) {
+
+                                // 触发施法事件
+                                if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
+
+                                if (prepareSkill.ContinuousExecute(this, enemryMono)) {
+                                    // 如果持续施法结束,那么回到IDLE状态,重置isPrepareUseSkill
+                                    isPrepareUseSkill = false;
+                                    prepareSkill = null;
+                                    DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
+                                    return true;
+                                }
+                            } else {
+
+                                // 触发施法事件
+                                if (OnSpell != null) OnSpell(this, enemryMono, position, prepareSkill);
+
+                                if (prepareSkill.ContinuousExecute(this, position)) {
+                                    // 如果持续施法结束,那么回到IDLE状态,重置isPrepareUseSkill
+                                    isPrepareUseSkill = false;
+                                    prepareSkill = null;
+                                    DoCharacterMonoAnimation(AnimatorEnumeration.Idle);
+                                    return true;
+                                }
+                            }
+                            #endregion
+                        } else {
+                            #region 物品技能 TODO~
+                            // 触发施法事件
+                            if (OnSpell != null) OnSpell(this, enemryMono, enemryMono.transform.position, prepareSkill);
+
+                            prepareItemSkillItemGrid.ExecuteItemSkill(this, enemryMono);
+                            isPrepareUseItemSkill = false;
+                            prepareItemSkillItemGrid = null;
+                            #endregion
+                        }
+                    }
+                    #endregion
                 }
             }
         }

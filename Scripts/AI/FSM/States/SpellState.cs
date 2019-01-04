@@ -42,12 +42,13 @@ public class SpellState : FSMState {
 
     public override void OnUpdate() {
         Debug.Log("SpellUpdate:"+spllerMono.name);
+
+        // reuslt为施法结束状态,为true表示施法结束,其中施法成功、施法失败均表示施法结束，也就是
         bool result = false;
         // 如果施放技能状态结束,就自动回到Idle状态,为黑板设置变量
         if (spllerMono != null) {
             Debug.Log("进入spell状态，准备释放技能："+spllerMono.prepareSkill.SkillName);
             if (spllerMono.prepareSkill.IsMustDesignation && enemryMono != null) {
-                Debug.Log("adsadasdas");
                 result = spllerMono.Spell(enemryMono, enermyTransform.position);
             } else {
                 result = spllerMono.Spell(enermyPosition);
@@ -58,11 +59,11 @@ public class SpellState : FSMState {
                 BlackBorad.SetBool("isPrePareUseSkill", false);
             }
 
-            // 如果目标单位不能被攻击,回到Idle状态
-            if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
-                BlackBorad.SetBool("IsUseSkillFinish", true);
-                BlackBorad.SetBool("isPrePareUseSkill", false);
-            }
+            //// 如果目标单位不能被攻击,回到Idle状态
+            //if (enemryMono!=null && !enemryMono.IsCanBeAttack()) {
+            //    BlackBorad.SetBool("IsUseSkillFinish", true);
+            //    BlackBorad.SetBool("isPrePareUseSkill", false);
+            //}
         }
     }
 }

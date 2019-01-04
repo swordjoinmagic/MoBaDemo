@@ -10,5 +10,6 @@ public static class AnimatorEnumeration {
     public static string Run = "Run";
     public static string Walk = "Walk";
     public static string Idle = "Idle";
+    public static string Casting = "Casting";
 }
 
