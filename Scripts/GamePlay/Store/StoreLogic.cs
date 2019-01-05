@@ -22,7 +22,7 @@ class StoreLogic {
     public void UpdateCommodityRecoverySituation() {
         foreach (var itemGrid in soldProps) {
             // 如果当前物品的数量小于最大数量，那么对其回复进度进行刷新
-            if (itemGrid.item!=null && itemGrid.ItemCount < itemGrid.item.maxCount) {
+            if (itemGrid.item != null && itemGrid.ItemCount < itemGrid.item.maxCount) {
                 itemGrid.TimeProgressRate += Time.smoothDeltaTime;
 
                 // 如果回复进度大于商品回复间隔，那么商品数量+1，同时回复进度置0
@@ -33,10 +33,13 @@ class StoreLogic {
                     else
                         // 商品不处于卖空的状态时,回复时间到,商品数量增加
                         itemGrid.ItemCount += 1;
-                    
+
                     // 重置回复进度
                     itemGrid.TimeProgressRate = 0;
                 }
+            } else if (itemGrid.item != null && itemGrid.ItemCount >= itemGrid.item.maxCount) {
+                // 重置回复进度
+                itemGrid.TimeProgressRate = 0;
             }
         }
     }
@@ -49,6 +52,7 @@ class StoreLogic {
     public void Sell(HeroMono heroMono, ItemGrid item) {
         // 判断价格是否足够,物品是否已空
         if (item.item != null && heroMono.Owner.Money >= item.item.price) {
+
             // 出售商品给单位
             heroMono.GetItem(item);
             heroMono.Owner.Money -= item.item.price;
@@ -58,11 +62,6 @@ class StoreLogic {
                 item.IsCoolDowning = true;
             } else
                 item.ItemCount -= 1;
-
-            // 如果此时商品回复进度为0,表示这个商品尚未开始回复或刚从最大数量减少下来
-            // 此时,将时间设为当前时间,使商品进行恢复
-            //if(item.TimeProgressRate == 0)
-            //    item.TimeProgressRate = Time.time;
         }
     }
 
@@ -109,7 +108,7 @@ class StoreLogic {
     }
 
     public ItemGrid TestItemGrids() {
-        int price = Random.Range(100, 10000);
+        int price = Random.Range(100, 500);
         ItemGrid itemGrid = new ItemGrid {
             item = new Item {
                 name = "测试物品 价格:"+ price,

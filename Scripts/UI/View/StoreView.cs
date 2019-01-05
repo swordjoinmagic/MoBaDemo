@@ -82,6 +82,7 @@ public class StoreView : MonoBehaviour{
         int i = 0;
         for (;i<showItemGrids.Count;i++) {
             ItemGrid itemGrid = showItemGrids[i];
+
             itemGrid.index = i;
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid,heroMono);
 
@@ -89,70 +90,20 @@ public class StoreView : MonoBehaviour{
             // 当不够用的时候,创建新的ItemPanelView
             if (i >= itemGridsView.Count) {
                 CreateItemPanel(itemGrid);
-                itemGridsView[i].BindingContext = new ItemViewModel();
             }
+
             itemGridsView[i].Reveal();
-            itemGridsView[i].BindingContext.Modify(itemGrid);
-            SetItemPanelMouseEvent(itemGrid,itemGridsView[i]);
         }
+
         for (;i<itemGridsView.Count;i++) {
             itemGridsView[i].Hide();
         }
     }
 
-    /// <summary>
-    /// 给单位的ItemPanel视图设置鼠标停留、离开事件（用于显示提示视图）、还有购买物品
-    /// </summary>
-    /// <param name="itemGrid"></param>
-    /// <param name="itemPanel"></param>
-    private void SetItemPanelMouseEvent(ItemGrid itemGrid,StoreItemPanelView itemPanel) {
-        EventTrigger.Entry onMouseEnter = new EventTrigger.Entry {
-            eventID = EventTriggerType.PointerEnter
-        };
-        onMouseEnter.callback.AddListener(eventData => {
-            if (itemGrid.item == null) return;
-
-            if (itemTipsView == null) {
-                itemTipsView = GameObject.Instantiate<ItemTipsView>(ItemTipsViewPrefab, canvas.transform);
-                itemTipsView.BindingContext = new ItemViewModel();
-            }
-
-            // 设置提示窗口出现位置
-            itemTipsView.transform.SetParent(itemPanel.transform);
-            (itemTipsView.transform as RectTransform).anchoredPosition = new Vector2((itemPanel.transform as RectTransform).sizeDelta.x / 2, (itemPanel.transform as RectTransform).sizeDelta.y / 2);
-            itemTipsView.transform.SetParent(canvas.transform);
-
-            itemTipsView.BindingContext.Modify(itemGrid);
-            itemTipsView.Reveal();
-        });
-        EventTrigger.Entry onMouseExit = new EventTrigger.Entry {
-            eventID = EventTriggerType.PointerExit
-        };
-        onMouseExit.callback.AddListener(eventData => {
-            if (itemGrid.item == null) return;
-            itemTipsView.Hide(immediate: true);
-        });
-
-        // 右键单击购买物品的事件
-        EventTrigger.Entry onMouseClick = new EventTrigger.Entry {
-            eventID = EventTriggerType.PointerClick
-        };
-        onMouseClick.callback.AddListener(eventData => {
-            // 当物品不处于冷却状态时,才能购买此物品
-            if (Input.GetMouseButtonUp(1) && !itemGrid.IsCoolDowning) {
-                if (showItemGrids[itemGrid.index]==itemGrid) {
-                    itemTipsView.Hide();
-                }
-                storeLogic.Sell(heroMono, showItemGrids[itemGrid.index]);
-            }
-        });
-
-        EventTrigger eventTrigger = itemPanel.GetComponent<EventTrigger>();
-        eventTrigger.triggers.Clear();
-        eventTrigger.triggers.Add(onMouseEnter);
-        eventTrigger.triggers.Add(onMouseExit);
-        eventTrigger.triggers.Add(onMouseClick);
+    public void Sell(ItemGrid itemGrid) {
+        storeLogic.Sell(heroMono,itemGrid);
     }
+
 
     /// <summary>
     /// 新建ItemPanel的方法，在创建的同时，为其增加绑定方法
@@ -160,7 +111,7 @@ public class StoreView : MonoBehaviour{
     /// <param name="itemGrid">要进行绑定的实体类对象(Model),当实体类对象,View会自动改变,实质上是View订阅了实体类改变的事件</param>
     public void CreateItemPanel(ItemGrid itemGrid) {
         StoreItemPanelView itemPanel = GameObject.Instantiate<StoreItemPanelView>(itemPanelViewPrefab ,parent: contentRectTransform,worldPositionStays:false);
-        itemPanel.itemGrid = itemGrid;
+        itemPanel.Init(itemGrid);
         itemGridsView.Add(itemPanel);
     }
 
@@ -174,7 +125,7 @@ public class StoreView : MonoBehaviour{
             Button button = categoryButtons[i];
             button.onClick.AddListener(()=> {
                 showCommidtyType = type;
-                UpdateShowCommdities(type);
+                UpdateShowCommdities(showCommidtyType);
                 UpdateButtonForcus(button);
             });
         }
@@ -212,10 +163,10 @@ public class StoreView : MonoBehaviour{
     /// 更新商品的购买边框
     /// </summary>
     private void UpdateCanBuyButton() {
-        for (int i=0;i<showItemGrids.Count;i++) {
-            ItemGrid itemGrid = showItemGrids[i];
+        Debug.Log("更新可购买商品");
+        for (int i=0;i<storeLogic.soldProps.Count;i++) {
+            ItemGrid itemGrid = storeLogic.soldProps[i];
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid, heroMono);
-            itemGridsView[i].BindingContext.Modify(itemGrid);
         }
     }
 

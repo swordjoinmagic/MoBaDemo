@@ -6,36 +6,58 @@ using uMVVM;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using DG.Tweening;
+
 /// <summary>
 /// 用于显示在商店的物品视图
 /// </summary>
 [RequireComponent(typeof(EventTrigger))]
-public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
+public class StoreItemPanelView : MonoBehaviour{
     //===============================
     // 此视图管理的UI元素
     public Image iconImage;
     public Text remainCountText;
     public Outline outline;
-    public ItemGrid itemGrid;
+    public ItemTipsView ItemTipsViewPrefab;
+    private ItemTipsView itemTipsView;
+    private Canvas canvas;
+    private StoreView storeView;
+
+
     // 冷却的图形
     public Image coolDownImage;
 
-    private void Init() {
-        //==========================================
-        // 监听CharacterMono的物品改变事件
-        itemGrid.OnIconPathChanged += OnIconImageChanged;
-        itemGrid.OnItemCountChanged += OnRemainCountChanged;
+    // 此View所依附的ItemGrid
+    public ItemGrid itemGrid;
+
+    private void Start() {
+        canvas = GameObject.FindObjectOfType<Canvas>();
+        storeView = GameObject.FindObjectOfType<StoreView>();
     }
 
-    protected override void OnInitialize() {
-        base.OnInitialize();
+    public void Init(ItemGrid itemGrid) {
 
-        binder.Add<int>("itemCount", OnRemainCountChanged);
-        binder.Add<string>("iconPath",OnIconImageChanged);
+        if (this.itemGrid != null) {
+            //===============================
+            // 解除绑定
+            this.itemGrid.OnIconPathChanged -= OnIconImageChanged;
+            this.itemGrid.OnItemCountChanged -= OnRemainCountChanged;
+            this.itemGrid.OnCanBuyChanged -= OnOutlineColorChanged;
+        }
 
-        if(outline != null)
-            binder.Add<bool>("outlineColor",OnOutlineColorChanged);
-        Init();
+        // 设置新的ItemGrid,并触发ItemGrid更替事件
+        OnIconImageChanged("",itemGrid.ItemImagePath);
+        OnRemainCountChanged(0,itemGrid.ItemCount);
+        OnOutlineColorChanged(false,itemGrid.CanBuy);
+
+        this.itemGrid = itemGrid;
+
+        //==========================================
+        // 监听CharacterMono的物品改变事件
+        this.itemGrid.OnIconPathChanged += OnIconImageChanged;
+        this.itemGrid.OnItemCountChanged += OnRemainCountChanged;
+        this.itemGrid.OnCanBuyChanged += OnOutlineColorChanged;
+        SetItemPanelMouseEvent();
     }
 
     /// <summary>
@@ -53,10 +75,13 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
     /// 当物品剩余数量发生改变时
     /// </summary>
     public void OnRemainCountChanged(int oldItemCount,int newItemCount) {
+        Debug.Log("新的物品数量是:"+newItemCount);
         if (newItemCount != 0)
             remainCountText.text = newItemCount.ToString();
         else
             remainCountText.text = "";
+        if(itemGrid!=null && itemGrid.IsCoolDowning)
+            remainCountText.text = "已售空";
     }
 
     public void OnOutlineColorChanged(bool oldValue,bool newValue) {
@@ -75,6 +100,64 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
                 coolDownImage.fillAmount = 1 - rate;
             }
         }
+    }
+
+    public void Reveal() {
+        GetComponent<CanvasGroup>().DOFade(1,0.5f);
+    }
+
+    public void Hide() {
+        GetComponent<CanvasGroup>().DOFade(0, 0.5f);
+    }
+
+    /// <summary>
+    /// 给单位的ItemPanel视图设置鼠标停留、离开事件（用于显示提示视图）、还有购买物品
+    /// </summary>
+    private void SetItemPanelMouseEvent() {
+        EventTrigger.Entry onMouseEnter = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerEnter
+        };
+        onMouseEnter.callback.AddListener(eventData => {
+            if (itemGrid.item == null) return;
+
+            if (itemTipsView == null) {
+                itemTipsView = GameObject.Instantiate<ItemTipsView>(ItemTipsViewPrefab, canvas.transform);
+                itemTipsView.BindingContext = new ItemViewModel();
+            }
+
+            // 设置提示窗口出现位置
+            itemTipsView.transform.SetParent(transform);
+            (itemTipsView.transform as RectTransform).anchoredPosition = new Vector2((transform as RectTransform).sizeDelta.x / 2, (transform as RectTransform).sizeDelta.y / 2);
+            itemTipsView.transform.SetParent(canvas.transform);
+
+            itemTipsView.BindingContext.Modify(itemGrid);
+            itemTipsView.Reveal();
+        });
+        EventTrigger.Entry onMouseExit = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerExit
+        };
+        onMouseExit.callback.AddListener(eventData => {
+            if (itemGrid.item == null) return;
+            itemTipsView.Hide(immediate: true);
+        });
+
+        // 右键单击购买物品的事件
+        EventTrigger.Entry onMouseClick = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerClick
+        };
+        onMouseClick.callback.AddListener(eventData => {
+            // 当物品不处于冷却状态时,才能购买此物品
+            if (Input.GetMouseButtonUp(1) && !itemGrid.IsCoolDowning) {
+                itemTipsView.Hide();
+                storeView.Sell(itemGrid);
+            }
+        });
+
+        EventTrigger eventTrigger = GetComponent<EventTrigger>();
+        eventTrigger.triggers.Clear();
+        eventTrigger.triggers.Add(onMouseEnter);
+        eventTrigger.triggers.Add(onMouseExit);
+        eventTrigger.triggers.Add(onMouseClick);
     }
 }
 

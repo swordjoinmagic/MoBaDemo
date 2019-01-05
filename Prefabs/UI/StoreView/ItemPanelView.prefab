@@ -266,10 +266,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c16d93e488c18f048b97d746c5a6382f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnHide: 0
   iconImage: {fileID: 114862956391792602}
   remainCountText: {fileID: 114775229663248246}
   outline: {fileID: 114447485459651792}
+  ItemTipsViewPrefab: {fileID: 114908090791410130, guid: a5f71fbc986b4bd4e9f4ba013669c44e,
+    type: 2}
   coolDownImage: {fileID: 114663717992720662}
 --- !u!222 &222069860145760554
 CanvasRenderer:

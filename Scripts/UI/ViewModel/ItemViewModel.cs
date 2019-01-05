@@ -41,6 +41,7 @@ public class ItemViewModel : ViewModelBase{
         } else {
             iconPath.Value = null;
             itemCount.Value = 0;
+            
         }
         
     }
