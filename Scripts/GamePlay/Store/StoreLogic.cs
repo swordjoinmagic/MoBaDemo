@@ -17,6 +17,31 @@ class StoreLogic {
     }
 
     /// <summary>
+    /// 更新商品复原情况
+    /// </summary>
+    public void UpdateCommodityRecoverySituation() {
+        foreach (var itemGrid in soldProps) {
+            // 如果当前物品的数量小于最大数量，那么对其回复进度进行刷新
+            if (itemGrid.item!=null && itemGrid.ItemCount < itemGrid.item.maxCount) {
+                itemGrid.TimeProgressRate += Time.smoothDeltaTime;
+
+                // 如果回复进度大于商品回复间隔，那么商品数量+1，同时回复进度置0
+                if (itemGrid.TimeProgressRate >= itemGrid.item.itemPayInteral) {
+                    // 如果该商品处于冷却状态(也就是被卖空了),那么将其冷却状态回复,同时不增加它的数量
+                    if (itemGrid.IsCoolDowning)
+                        itemGrid.IsCoolDowning = false;
+                    else
+                        // 商品不处于卖空的状态时,回复时间到,商品数量增加
+                        itemGrid.ItemCount += 1;
+                    
+                    // 重置回复进度
+                    itemGrid.TimeProgressRate = 0;
+                }
+            }
+        }
+    }
+
+    /// <summary>
     /// 贩卖商品
     /// </summary>
     /// <param name="heroMono"></param>
@@ -34,8 +59,10 @@ class StoreLogic {
             } else
                 item.ItemCount -= 1;
 
-            // 更新物品最后一次购买时间
-            item.LatestBuyTime = Time.time;
+            // 如果此时商品回复进度为0,表示这个商品尚未开始回复或刚从最大数量减少下来
+            // 此时,将时间设为当前时间,使商品进行恢复
+            //if(item.TimeProgressRate == 0)
+            //    item.TimeProgressRate = Time.time;
         }
     }
 
@@ -82,22 +109,23 @@ class StoreLogic {
     }
 
     public ItemGrid TestItemGrids() {
+        int price = Random.Range(100, 10000);
         ItemGrid itemGrid = new ItemGrid {
             item = new Item {
-                name = "测试物品"+Random.Range(0,1000),
+                name = "测试物品 价格:"+ price,
                 itemActiveSkill = new PointingSkill {
                     BaseDamage = 1000,
                     SpellDistance = 10,
                     CD = 3
                 },
                 itemType = ItemType.Consumed,
-                maxCount = 10,
+                maxCount = 2,
                 iconPath = "00046",
                 useMethodDescription = "使用：点目标",
                 activeDescription = "对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害对一个目标进行投掷，造成伤害",
                 passiveDescription = "+100攻击力\n+100防御力\n+10力量",
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品",
-                price = Random.Range(100, 10000),
+                price = price,
                 commditType = (CommditType)(Random.Range(0,6)),
                 itemPayInteral = 5f,
                 ItemId = 1

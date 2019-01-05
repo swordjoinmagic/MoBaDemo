@@ -29,8 +29,8 @@ public class ItemGrid {
     #region 用于商店的物品属性
     // 是否处于购买冷却的状态
     private bool isCoolDowning;
-    // 上次购买时间
-    private float latestBuyTime;
+    // 当前商品的回复时间进度
+    private float timeProgressRate;
     public bool IsCoolDowning {
         get {
             return isCoolDowning;
@@ -40,13 +40,13 @@ public class ItemGrid {
             isCoolDowning = value;
         }
     }
-    public float LatestBuyTime {
+    public float TimeProgressRate {
         get {
-            return latestBuyTime;
+            return timeProgressRate;
         }
 
         set {
-            latestBuyTime = value;
+            timeProgressRate = value;
         }
     }
     #endregion

@@ -70,12 +70,9 @@ public class StoreItemPanelView : UnityGuiView<ItemViewModel>{
     private void Update() {
         if (itemGrid!=null && itemGrid.item != null && itemGrid.IsCoolDowning) {
             // 更新冷却条
-            if (itemGrid.item.itemPayInteral != 0 && itemGrid.LatestBuyTime!=0) {
-                float rate = Mathf.Clamp01((Time.time - itemGrid.LatestBuyTime) / itemGrid.item.itemPayInteral);
+            if (itemGrid.item.itemPayInteral != 0 && itemGrid.TimeProgressRate!=0) {
+                float rate = Mathf.Clamp01(itemGrid.TimeProgressRate / itemGrid.item.itemPayInteral);
                 coolDownImage.fillAmount = 1 - rate;
-                if (rate == 1 && itemGrid.IsCoolDowning) {
-                    itemGrid.IsCoolDowning = false;
-                }
             }
         }
     }

@@ -227,19 +227,7 @@ public class StoreView : MonoBehaviour{
     ///// <summary>
     ///// 每一帧更新物品的冷却情况
     ///// </summary>
-    //private void Update() {
-    //    foreach (ItemGrid item in showItemGrids) {
-    //        // 更新物品数量
-    //        if (item!=null && item.item!=null && item.ItemCount < item.item.maxCount && item.LatestBuyTime!=0) {
-    //            // 如果当前物品距离上次购买的时间大于此物品购买间隔,那么此物品数量+1
-    //            if (item.item.itemPayInteral != 0) {
-    //                float rate = Mathf.Clamp01((Time.time - item.LatestBuyTime) / item.item.itemPayInteral);
-    //                if (rate == 1) {
-    //                    // 物品数量+1
-    //                    item.ItemCount += 1;
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
+    private void Update() {
+        storeLogic.UpdateCommodityRecoverySituation();
+    }
 }
