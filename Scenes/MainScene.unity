@@ -2689,6 +2689,7 @@ GameObject:
   - component: {fileID: 282840814}
   - component: {fileID: 282840813}
   - component: {fileID: 282840811}
+  - component: {fileID: 282840812}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -2703,6 +2704,21 @@ AudioListener:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
   m_Enabled: 1
+--- !u!114 &282840812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 282840810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e973d3b0a0b41224d88cff30a6704100, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rate: 0.99
+  moveSpeed: 8
+  moveX: {x: 1, y: 0, z: 0}
+  moveZ: {x: 0, y: 0, z: 1}
 --- !u!20 &282840813
 Camera:
   m_ObjectHideFlags: 0
@@ -4969,6 +4985,11 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 72caccbec853daf4c900f142a9d9198a, type: 2}
   m_IsPrefabParent: 0
+--- !u!224 &548158638 stripped
+RectTransform:
+  m_PrefabParentObject: {fileID: 224474104017685506, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1459852180}
 --- !u!1001 &551040033
 Prefab:
   m_ObjectHideFlags: 0
@@ -10725,6 +10746,12 @@ CanvasRenderer:
     type: 2}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 666674080}
+--- !u!114 &676489643 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 114281336459576200, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+    type: 2}
+  m_PrefabInternal: {fileID: 1459852180}
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
 --- !u!1 &690089247
 GameObject:
   m_ObjectHideFlags: 0
@@ -17428,7 +17455,6 @@ GameObject:
   - component: {fileID: 950538957}
   - component: {fileID: 950538958}
   - component: {fileID: 950538959}
-  - component: {fileID: 950538960}
   - component: {fileID: 950538961}
   m_Layer: 0
   m_Name: GamePlayrTest
@@ -17498,21 +17524,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScale: 1
---- !u!114 &950538960
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 950538954}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 269a2af45982ce94b8d7d14315f979b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rate: 0.99
-  moveSpeed: 8
-  moveX: {x: 1, y: 0, z: 0}
-  moveZ: {x: 0, y: 0, z: 1}
 --- !u!114 &950538961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20874,6 +20885,30 @@ Prefab:
         type: 2}
       propertyPath: m_Sprite
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 114421560758516046, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+        type: 2}
+      propertyPath: mapRectTransform
+      value: 
+      objectReference: {fileID: 548158638}
+    - target: {fileID: 114421560758516046, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+        type: 2}
+      propertyPath: CameraCursor
+      value: 
+      objectReference: {fileID: 676489643}
+    - target: {fileID: 1511116958363630, guid: 8cf5d35cee215d9478e5bb38ba77f58f, type: 2}
+      propertyPath: m_Name
+      value: Map Cursor
+      objectReference: {fileID: 0}
+    - target: {fileID: 114421560758516046, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+        type: 2}
+      propertyPath: cameraOffset.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114421560758516046, guid: 8cf5d35cee215d9478e5bb38ba77f58f,
+        type: 2}
+      propertyPath: cameraOffset.x
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8cf5d35cee215d9478e5bb38ba77f58f, type: 2}

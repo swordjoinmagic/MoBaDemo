@@ -14,9 +14,6 @@ class MoveCamera : MonoBehaviour{
     public Vector3 moveX = Vector3.right;
     public Vector3 moveZ = Vector3.forward;
 
-    private void Start() {
-    }
-
     private void Update() {
         Vector2 mousePosition = Input.mousePosition;
         int height = Camera.main.pixelHeight;

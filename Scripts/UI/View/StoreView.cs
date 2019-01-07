@@ -163,7 +163,6 @@ public class StoreView : MonoBehaviour{
     /// 更新商品的购买边框
     /// </summary>
     private void UpdateCanBuyButton() {
-        Debug.Log("更新可购买商品");
         for (int i=0;i<storeLogic.soldProps.Count;i++) {
             ItemGrid itemGrid = storeLogic.soldProps[i];
             itemGrid.CanBuy = storeLogic.IsCanBuyItem(itemGrid, heroMono);
