@@ -49,7 +49,7 @@ public class MainCameraManager : MonoBehaviour{
         }
     }
 
-    /// <summary>
+    /// <summary>d 
     /// 让摄像机向目标位置移动
     /// </summary>
     /// <param name="endVector3"></param>

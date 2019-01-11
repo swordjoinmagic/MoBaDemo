@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
+[GameType]
 public enum PassiveSkillTriggerType {
     GainAttribute = 0,          // 属性增益型,属于那种触发条件为True的被动技能
     WhenAttack,                 // 攻击时,会进行触发

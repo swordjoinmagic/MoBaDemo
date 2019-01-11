@@ -17456,6 +17456,7 @@ GameObject:
   - component: {fileID: 950538958}
   - component: {fileID: 950538959}
   - component: {fileID: 950538961}
+  - component: {fileID: 950538960}
   m_Layer: 0
   m_Name: GamePlayrTest
   m_TagString: Untagged
@@ -17524,6 +17525,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeScale: 1
+--- !u!114 &950538960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 950538954}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a7b6a9b1574b748af5b9957ccb185c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &950538961
 MonoBehaviour:
   m_ObjectHideFlags: 0

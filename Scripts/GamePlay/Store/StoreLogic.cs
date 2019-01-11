@@ -11,7 +11,7 @@ class StoreLogic {
     public List<ItemGrid> soldProps = new List<ItemGrid>();
 
     public StoreLogic() {
-        for (int i=0;i<100;i++) {
+        for (int i=0;i<500;i++) {
             TestItemGrids().ItemCount = 1;
         }
     }

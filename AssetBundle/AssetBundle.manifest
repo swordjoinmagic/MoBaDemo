@@ -1,0 +1,13 @@
+ManifestFileVersion: 0
+CRC: 409557690
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: cursor
+      Dependencies: {}
+    Info_1:
+      Name: data
+      Dependencies: {}
+    Info_2:
+      Name: testdependc
+      Dependencies: {}

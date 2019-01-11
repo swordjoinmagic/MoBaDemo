@@ -6,6 +6,7 @@ using System.Text;
 /// <summary>
 /// 单位类型,用于区分不同的单位
 /// </summary>
+[GameType]
 public enum UnitType {
     Everything = ~0,
     Enermy = 1,      // 敌人

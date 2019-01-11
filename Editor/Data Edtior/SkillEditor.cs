@@ -189,6 +189,7 @@ public class SkillEditor : EditorWindow {
                 if (propertyInfo.Name.Contains("TargetType")) {
                     // 多重枚举
                     ObjectJsonData[propertyInfo.Name] = (int)(UnitType)EditorGUILayout.EnumFlagsField(propertyInfo.Name, (UnitType)(int)ObjectJsonData.Get(propertyInfo.Name, typeof(int)));
+                    Debug.Log(propertyInfo.Name+":"+ObjectJsonData[propertyInfo.Name]);
                 } else {
                     // 普通枚举
                     ObjectJsonData[propertyInfo.Name] = (int)(Enum.ToObject(propertyInfo.PropertyType, EditorGUILayout.EnumPopup(propertyInfo.Name, (Enum)Enum.ToObject(propertyInfo.PropertyType, (int)ObjectJsonData.Get(propertyInfo.Name, typeof(int))))));
