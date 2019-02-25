@@ -6,12 +6,14 @@ public class MouseCursorChanged : MonoBehaviour {
 
     private CharacterMono characterMono;
     private Projector skillCircleInflence;
+    private OutLinePostEffect outLinePostEffect;
 
     public Projector skillCircleInflencePrefabs;
 
 
     public void Init() {
         characterMono = GameObject.FindWithTag("Player").GetComponent<CharacterMono>();
+        outLinePostEffect = Camera.main.GetComponent<OutLinePostEffect>();
     }
 
     // Update is called once per frame
@@ -24,6 +26,14 @@ public class MouseCursorChanged : MonoBehaviour {
         if (Physics.Raycast(ray, out hit)) {
             if (hit.collider.CompareTag("Enermy")) {
                 MouseIconManager.Instace.ChangeMouseIcon(MouseIconManager.MouseState.Attack);
+
+                // 为目标单位添加一个泛光描边
+                outLinePostEffect.targetObject = hit.collider.gameObject;
+                outLinePostEffect.outLineColor = Color.red;
+                outLinePostEffect.enabled = true;
+            } else {
+                if(outLinePostEffect.isActiveAndEnabled)
+                    outLinePostEffect.enabled = false;
             }
         }
         if (characterMono.isPrepareUseSkill) {

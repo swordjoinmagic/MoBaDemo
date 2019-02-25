@@ -47,6 +47,7 @@ public class EnumFlagsFieldToggleView : MonoBehaviour{
                     int number = int.Parse(currentValue);
                     dropDown.CurrentValue = "Mixed~";
                 } catch (Exception e) {
+                    Debug.LogWarning(e.Message);
                     dropDown.CurrentValue = currentValue;
                 }
             }

@@ -9,22 +9,26 @@ public class EnumFlagsFieldView : MonoBehaviour{
 
     EnumFlagsFieldDropDown dropDown;
 
-    [SerializeField]
-    public int index;
+    private Type enumType;
 
-    [SerializeField]
-    public string typeName;
+    public Type EnumType {
+        get {
+            return enumType;
+        }
 
-    [SerializeField]
-    public Type enumType;
+        set {
+            enumType = value;
 
+            if(dropDown==null) dropDown = GetComponentInChildren<EnumFlagsFieldDropDown>();
+
+            dropDown.Enum = (Enum)Enum.ToObject(EnumType, 0);
+        }
+    }
 
     private void Start() {
         dropDown = GetComponentInChildren<EnumFlagsFieldDropDown>();
 
-        enumType = Type.GetType(typeName);
-
-        dropDown.Enum = (Enum)Enum.ToObject(enumType,0);
+        EnumType = typeof(UnitType);
     }
 
 

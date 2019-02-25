@@ -1429,6 +1429,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 5
   isDying: 0
   isPrepareUseSkill: 0
@@ -3788,6 +3789,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0
@@ -10254,6 +10256,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0
@@ -11624,6 +11627,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 5
   isDying: 0
   isPrepareUseSkill: 0
@@ -18966,7 +18970,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000028945586
+      value: 0.000042631826
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -19016,7 +19020,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000013767117
+      value: -0.000019845396
       objectReference: {fileID: 0}
     - target: {fileID: 114411872474604150, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -20609,6 +20613,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0
@@ -22182,6 +22187,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0
@@ -23076,6 +23082,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0
@@ -25895,6 +25902,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 0
   isDying: 0
   isPrepareUseSkill: 0

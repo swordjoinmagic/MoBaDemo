@@ -13,7 +13,7 @@ namespace Assets.Scripts.AsstesBundles {
                 Application.dataPath+"/AssetBundle/", 
                 BuildAssetBundleOptions.ChunkBasedCompression,
                 BuildTarget.StandaloneWindows
-                );
+                );           
         }
 
         [MenuItem("Assets/Load AssetBundles")]

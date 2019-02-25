@@ -9,11 +9,8 @@ public class LoadAssetBundleTest : MonoBehaviour{
         AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath + "/AssetBundle/testdependc");
         Debug.Log(assetBundle);
 
-        GameObject a = assetBundle.LoadAsset<GameObject>("Skeleton@Skin No AI");
 
-        Debug.Log(a.name);
 
-        GameObject.Instantiate<GameObject>(a);
     }
 
 }

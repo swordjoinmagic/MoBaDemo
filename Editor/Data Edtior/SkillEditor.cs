@@ -108,6 +108,8 @@ public class SkillEditor : EditorWindow {
         }
         GUILayout.EndArea();
 
+        
+
         //===============================================
         // 对单个技能对象进行编辑
         GUILayout.BeginArea(new Rect(325, 0, 375, 400));
@@ -196,6 +198,8 @@ public class SkillEditor : EditorWindow {
                 }
             }
         }
+
+        
         return ObjectJsonData;
     }
 

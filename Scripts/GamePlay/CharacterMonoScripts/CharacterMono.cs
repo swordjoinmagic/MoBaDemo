@@ -457,7 +457,7 @@ public class CharacterMono : MonoBehaviour {
     }
     //================================================
     #endregion
-
+    
     // 单位初始化身上所有模块的方法
     public void InitModule() {
         //============================

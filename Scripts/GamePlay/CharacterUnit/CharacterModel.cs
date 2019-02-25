@@ -84,6 +84,8 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public float magicalResistance;
     // 闪避率
     public float dodgeRate;
+    // 单位守备范围（会自动攻击距离多少范围内的敌人）
+    public float defenseRange = 100;
 
     #region 基础属性 Getter/Setter
     public int Hp {
