@@ -28,9 +28,11 @@ public class MouseCursorChanged : MonoBehaviour {
                 MouseIconManager.Instace.ChangeMouseIcon(MouseIconManager.MouseState.Attack);
 
                 // 为目标单位添加一个泛光描边
-                outLinePostEffect.targetObject = hit.collider.gameObject;
-                outLinePostEffect.outLineColor = Color.red;
-                outLinePostEffect.enabled = true;
+                if (outLinePostEffect.TargetObject != hit.collider.gameObject) {
+                    outLinePostEffect.enabled = true;
+                    outLinePostEffect.TargetObject = hit.collider.gameObject;
+                    outLinePostEffect.outLineColor = Color.red;
+                }
             } else {
                 if(outLinePostEffect.isActiveAndEnabled)
                     outLinePostEffect.enabled = false;

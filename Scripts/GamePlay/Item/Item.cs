@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 
 public class Item {
-    // 物品ID,表示此物品在物品列表的位置
+    // 物品ID,唯一标识一个物品
     private int itemId;
     // 物品名
     public string name;
@@ -33,6 +33,18 @@ public class Item {
     // 物品被动特技(可用于增益属性,增加特效等等)
     public List<PassiveSkill> itemPassiveSkills = new List<PassiveSkill>();
 
+    // 前缀装备,表示该装备需要什么装备来进行合成,列表的值是需要的装备的ID值
+    private int[] prefixEquipments;
+    // 后缀装备,表示该装备可以合成出什么装备来,列表的值是可以合成的装备的ID值,需要注意的是后缀装备的值是输入系统自动生成的
+    private int[] suffixEquipments;
+
+    public bool Equals(Item otherItem) {
+        if (ItemId == otherItem.ItemId)
+            return true;
+        else
+            return false;
+    }
+
     public int ItemId {
         get {
             return itemId;
@@ -40,6 +52,26 @@ public class Item {
 
         set {
             itemId = value;
+        }
+    }
+
+    public int[] PrefixEquipments {
+        get {
+            return prefixEquipments;
+        }
+
+        set {
+            prefixEquipments = value;
+        }
+    }
+
+    public int[] SuffixEquipments {
+        get {
+            return suffixEquipments;
+        }
+
+        set {
+            suffixEquipments = value;
         }
     }
 }

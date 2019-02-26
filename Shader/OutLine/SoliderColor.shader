@@ -56,7 +56,7 @@ Shader "Volume xx/Outline/Solider Color" {
 
             v2f vert(a2v v){
                 v2f o;
-                v.vertex.xyz += v.normal * 0.03;
+                v.vertex.xyz += v.normal * 0.01;
                 o.pos = UnityObjectToClipPos(v.vertex);
                 
                 return o;

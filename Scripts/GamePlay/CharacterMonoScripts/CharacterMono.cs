@@ -58,6 +58,12 @@ public class CharacterMono : MonoBehaviour {
     public delegate void DiedHandler(CharacterMono dead);
 
     /// <summary>
+    /// 当单位死亡时，如果该handler不为空，那么以这个委托来代替默认的死亡处理（即Destroy）
+    /// </summary>
+    /// <param name="dead"></param>
+    public delegate void DiedReplacementHandler(CharacterMono dead);
+
+    /// <summary>
     /// 当单位学习/遗忘技能时，触发的回调函数/事件
     /// </summary>
     /// <param name="learner"></param>
@@ -102,6 +108,7 @@ public class CharacterMono : MonoBehaviour {
 
     // 当单位死亡时，触发的事件
     public event DiedHandler OnUnitDied;
+    public event DiedReplacementHandler OnDiedReplacement;
 
     // 当单位学习/遗忘技能时
     public event SkillLerningHandler OnLearnSkill;
@@ -592,6 +599,9 @@ public class CharacterMono : MonoBehaviour {
             }
 
         }
+
+        // 用于判断单位是否死亡
+        DiedJudge();
 
     }
 
@@ -1353,12 +1363,12 @@ public class CharacterMono : MonoBehaviour {
         }
     }
 
-    #region 单位的死亡逻辑 hp=0 -> OnDying -> Dying -> Died -> IsDied -> Destory(this)
+    #region 单位的死亡逻辑 hp=0 -> OnDying -> Dying -> DiedJuge -> IsDied -> Destory(this)
     /// <summary>
     /// 单位进入垂死状态
     /// </summary>
     /// <returns></returns>
-    private void Dying() {
+    private void Dying() {       
 
         // 设置isDying为True
         isDying = true;
@@ -1393,7 +1403,8 @@ public class CharacterMono : MonoBehaviour {
         AnimatorStateInfo nextAnimatorStateInfo = animator.GetNextAnimatorStateInfo(0);
 
         // 当死亡动画播放完毕,单位确实死了
-        if (isDying && currentAnimatorStateInfo.IsName("Death") && nextAnimatorStateInfo.IsName("Idle")) {
+        //if (isDying && currentAnimatorStateInfo.IsName("Death") && nextAnimatorStateInfo.IsName("Idle")) {
+        if (isDying && currentAnimatorStateInfo.IsName("Death") && currentAnimatorStateInfo.normalizedTime>1.5f) {
 
             // 触发死亡事件
             if (OnUnitDied != null) OnUnitDied(this);
@@ -1414,25 +1425,45 @@ public class CharacterMono : MonoBehaviour {
             Dying();
 
             // 开启单位死后善后的协程
-            StartCoroutine(Died());
+            //StartCoroutine(Died());
         }
     }
-    
+
+    /// <summary>
+    /// 用于判断对象是否死亡
+    /// </summary>
+    public void DiedJudge() {
+        if (isDying) {
+            if (IsDied()) {
+                isDying = false;
+
+                // 如果该委托不为空，那么以这个委托内容来代替原有的对单位死亡的处理
+                if (OnDiedReplacement != null) {
+                    OnDiedReplacement(this);
+                }else
+                    Destroy(gameObject);
+                //gameObject.SetActive(false);
+                return;
+            }
+        }
+    }
+
+    // 此处改到Update中进行判断，避免了开启协程的麻烦
     /// <summary>
     /// 人物死亡进行的操作,每帧判断一次,当人物死亡动画播放完毕时,摧毁该单位
     /// </summary>
     /// <returns></returns>
-    public IEnumerator Died() {
+    //public IEnumerator Died() {
 
-        while (isDying) {
-            if (IsDied()) {
-                //Destroy(gameObject);
-                gameObject.SetActive(false);
-                break;
-            }
-            yield return new WaitForFixedUpdate();
-        }
-    }
+    //    while (isDying) {
+    //        if (IsDied()) {
+    //            //Destroy(gameObject);
+    //            gameObject.SetActive(false);
+    //            break;
+    //        }
+    //        yield return new WaitForFixedUpdate();
+    //    }
+    //}
 
     /// <summary>
     /// 判断单位是否可以被攻击,

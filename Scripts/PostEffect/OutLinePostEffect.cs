@@ -49,6 +49,23 @@ public class OutLinePostEffect : MonoBehaviour {
         }
     }
 
+    public GameObject TargetObject {
+        get {
+            return targetObject;
+        }
+
+        set {
+            targetObject = value;
+
+            commandBuffer.ClearRenderTarget(true, true, Color.black);
+            // 将目标物体的所有render都扔到CommandBuffer里面去
+            Renderer[] renderers = value.GetComponentsInChildren<Renderer>();
+            foreach (Renderer r in renderers) {
+                commandBuffer.DrawRenderer(r, OutlineSoliderMaterial);
+            }
+        }
+    }
+
     // 用于高斯模糊的Shader
     public Shader gaussianBlurShader;
     private Material gaussianBlurMaterial;
@@ -62,7 +79,7 @@ public class OutLinePostEffect : MonoBehaviour {
     private Material outlineAddtionalMaterial;
 
     // 要进行描边的目标对象
-    public GameObject targetObject;
+    private GameObject targetObject;
 
     // CommandBuffer的渲染目标
     private RenderTexture renderTexture;
@@ -100,13 +117,15 @@ public class OutLinePostEffect : MonoBehaviour {
         commandBuffer.SetRenderTarget(renderTexture);
         commandBuffer.ClearRenderTarget(true,true,Color.black);
 
-        // 将目标物体的所有render都扔到CommandBuffer里面去
-        Renderer[] renderers = targetObject.GetComponentsInChildren<Renderer>();
-        foreach (Renderer r in renderers) {
-            commandBuffer.DrawRenderer(r,OutlineSoliderMaterial);
-        }
-
     }
+
+    //public void SetRenderTarget(GameObject target) {
+    //    commandBuffer.Clear();
+    //    Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
+    //    foreach (Renderer r in renderers) {
+    //        commandBuffer.DrawRenderer(r, OutlineSoliderMaterial);
+    //    }
+    //}
 
     private void OnDisable() {
         if (renderTexture != null) {
