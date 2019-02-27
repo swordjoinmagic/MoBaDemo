@@ -56,9 +56,6 @@ public class GamePlayManager : MonoBehaviour{
     public event CreateNPCGameObject OnCreateNPCGameObject;
 
     public void Init() {
-
-        Debug.Log("初始化GamePlayManager");
-
         poolObjectFactory = new GameObjectPool(50);
 
         StartCoroutine(DispatchSoliders());
@@ -69,10 +66,6 @@ public class GamePlayManager : MonoBehaviour{
     IEnumerator DispatchSoliders() {
         yield return new WaitForSeconds(2);
         while (!isGameOver) {
-
-            Debug.Log("开始出兵");
-
-
             int a = 0;
 
             // 遍历每个出兵点，进行出兵
@@ -80,6 +73,8 @@ public class GamePlayManager : MonoBehaviour{
                 // 对每个出兵点产生一群单位
                 foreach (var solider in solidersPrefabs) {
                     Vector3 position = (p + UnityEngine.Random.insideUnitSphere * 3);
+
+                    // 从对象池中取出对象
                     GameObject soliderObject = poolObjectFactory.AcquireObject(position, templateObject: solider);
 
                     // 设置该单位的阵营
@@ -118,7 +113,6 @@ public class GamePlayManager : MonoBehaviour{
 
                     if (b == 0) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Blue);
-
                     } else if (b == 1) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.MiddleRoad, UnitFaction.Blue);
                     } else if (b == 2) {

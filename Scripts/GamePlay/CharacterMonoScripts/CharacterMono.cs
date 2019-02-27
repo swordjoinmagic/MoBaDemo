@@ -1433,16 +1433,18 @@ public class CharacterMono : MonoBehaviour {
     /// 用于判断对象是否死亡
     /// </summary>
     public void DiedJudge() {
-        if (isDying) {
+        if (isDying && isActiveAndEnabled) {
             if (IsDied()) {
-                isDying = false;
+                //isDying = false;
 
                 // 如果该委托不为空，那么以这个委托内容来代替原有的对单位死亡的处理
                 if (OnDiedReplacement != null) {
+                    Debug.Log("启用替代的死亡方案处理");
                     OnDiedReplacement(this);
-                }else
+                } else {
                     Destroy(gameObject);
-                //gameObject.SetActive(false);
+                    gameObject.SetActive(false);
+                }                
                 return;
             }
         }

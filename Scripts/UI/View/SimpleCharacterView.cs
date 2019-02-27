@@ -44,9 +44,10 @@ public class SimpleCharacterView : UnityGuiView<SimpleCharacterViewModel>{
         if (slowDownHp != null) {
             StopCoroutine(slowDownHp);
         }
-        slowDownHp = StartCoroutine(
-            Util.SlowDown(hpImage, slowDownHpImage, maxRectTransform.sizeDelta.y)
-        );
+        if (isActiveAndEnabled)
+            slowDownHp = StartCoroutine(
+                Util.SlowDown(hpImage, slowDownHpImage, maxRectTransform.sizeDelta.y)
+            );
     }
     private void OnNameValueChanged(string oldName,string newName) {
         nameText.text = newName;

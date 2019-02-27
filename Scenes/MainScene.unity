@@ -2788,7 +2788,6 @@ MonoBehaviour:
     type: 3}
   outlineAdditionalShader: {fileID: 4800000, guid: 0e6f6a6bf9508b34f9a84f41f97b2939,
     type: 3}
-  targetObject: {fileID: 0}
   downSample: 1
   iteration: 2
   blurSize: 1.84
@@ -17553,7 +17552,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92654dc5caa223b40a15bf4c9ee82dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 1
+  timeScale: 2
 --- !u!114 &950538960
 MonoBehaviour:
   m_ObjectHideFlags: 0

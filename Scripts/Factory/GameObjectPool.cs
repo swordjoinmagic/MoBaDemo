@@ -10,6 +10,7 @@ using uMVVM;
 /// </summary>
 public class GameObjectPool {
 
+    // 池中单个对象
     private class PoolData {
         public bool InUse { get; set; }
         public GameObject Obj { get; set; }
@@ -32,29 +33,44 @@ public class GameObjectPool {
 
     public GameObject GetGameObjectWithPool(Vector3 position,GameObject templateObject=null) {
         lock (pools) {
-            lock (pools) {
-                // 判断要获取的对象的类型在池中是否有
-                // 如果要获取的对象,在对象池中还有剩余
-                // 返回这个剩余的对象
-                for (int i = 0; i < pools.Count; i++) {
-                    PoolData p = pools[i];
-                    if (!p.InUse) {
-                        // 初始化对象
-                        p.Obj.transform.position = position;
-                        p.Obj.SetActive(true);
-                        p.InUse = true;
-                        return p.Obj;
-                    }
-                }
+            // 判断要获取的对象的类型在池中是否有
+            // 如果要获取的对象在对象池中还有剩余
+            // 返回这个剩余的对象
+            for (int i = 0; i < pools.Count; i++) {
+                PoolData p = pools[i];
+                if (!p.InUse) {
+                    // 初始化对象
+                    p.Obj.transform.position = position;
+                    p.Obj.SetActive(true);
+                    p.InUse = true;
 
-                // 如果对象池中找不到要获取的对象,或者要获取的对象全部都在使用中,
-                // 那么新创建一个对象(从模板对象处进行创建)
-                if (templateObject == null) return null;        // 如果没有模板对象，那么返回null
-                GameObject obj = GameObject.Instantiate(templateObject, position, Quaternion.identity);
-                PoolData p1 = new PoolData { InUse = true, Obj = obj };
-                pools.Add(p1);
-                return obj;
+                    // 如果该对象是CharacterMono对象,使其状态回复                    
+                    CharacterMono c = p.Obj.GetComponent<CharacterMono>();
+                    if (c != null) {
+                        c.ResetCharacterModel();
+                    }
+
+                    return p.Obj;
+                }
             }
+
+            // 如果对象池中找不到要获取的对象,或者要获取的对象全部都在使用中,
+            // 那么新创建一个对象(从模板对象处进行创建)
+            if (templateObject == null) return null;        // 如果没有模板对象，那么返回null
+            GameObject obj = GameObject.Instantiate(templateObject, position, Quaternion.identity);
+
+            // 如果要创建的对象是CharacterMono,那么监听该CharacterMono的死亡事件
+            // 替换掉原本CharacterMono的死亡事件,将该对象死亡时回收对象池
+            CharacterMono characterMono = obj.GetComponent<CharacterMono>();
+            if (characterMono != null) {
+                characterMono.OnDiedReplacement += (CharacterMono character) => {
+                    PutObject(character.gameObject);
+                };
+            }
+
+            PoolData p1 = new PoolData { InUse = true, Obj = obj };
+            pools.Add(p1);
+            return obj;
         }
     }
 
@@ -79,7 +95,6 @@ public class GameObjectPool {
         }
         return null;
     }
-
 
     private void PutObject(GameObject obj) {
         // 获得这个obj对象在池中的PoolData
