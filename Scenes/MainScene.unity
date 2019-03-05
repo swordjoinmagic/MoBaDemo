@@ -1418,6 +1418,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -2776,7 +2785,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 282840810}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f03d471bc2b7a40449ea5ec68cb7bf0f, type: 3}
   m_Name: 
@@ -3802,6 +3811,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -10269,6 +10287,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -11640,6 +11667,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -17552,7 +17588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92654dc5caa223b40a15bf4c9ee82dda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeScale: 2
+  timeScale: 1
 --- !u!114 &950538960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18994,7 +19030,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000042631826
+      value: 0.000029508215
       objectReference: {fileID: 0}
     - target: {fileID: 224411615650951258, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -19044,7 +19080,7 @@ Prefab:
     - target: {fileID: 224566175427049760, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: -0.000019845396
+      value: -0.00001645941
       objectReference: {fileID: 0}
     - target: {fileID: 114411872474604150, guid: b7f52d920a516cc4f8a40f853e7b8574,
         type: 2}
@@ -20626,6 +20662,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -22200,6 +22245,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -23095,6 +23149,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0
@@ -23704,10 +23767,10 @@ MonoBehaviour:
   towersBlueMiddle: []
   towersBlueDown: []
   solidersPrefabs:
+  - {fileID: 1631785998815890, guid: 30a5ffb9bf8a9b54e9a4debee157b565, type: 2}
   - {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
   - {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
-  - {fileID: 1029562484478556, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
-  deltaTime: 180
+  deltaTime: 90
   playerTeams: 0000000001000000
   isGameOver: 0
 --- !u!1 &1779574607
@@ -25915,6 +25978,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 0
     turningSpeed: 0
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 0
     resotreMpSpeed: 0

@@ -59,7 +59,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     // 转身速度
     public float turningSpeed;
     // 投射物Model类属性
-    public ProjectileModel projectileModel;
+    public ProjectileModel projectileModel = null;
     // 投射物
     public GameObject projectile;
     // 等级

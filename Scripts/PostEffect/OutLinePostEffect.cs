@@ -58,10 +58,12 @@ public class OutLinePostEffect : MonoBehaviour {
             targetObject = value;
 
             commandBuffer.ClearRenderTarget(true, true, Color.black);
-            // 将目标物体的所有render都扔到CommandBuffer里面去
-            Renderer[] renderers = value.GetComponentsInChildren<Renderer>();
-            foreach (Renderer r in renderers) {
-                commandBuffer.DrawRenderer(r, OutlineSoliderMaterial);
+            if (targetObject != null) {
+                // 将目标物体的所有render都扔到CommandBuffer里面去
+                Renderer[] renderers = value.GetComponentsInChildren<Renderer>();
+                foreach (Renderer r in renderers) {
+                    commandBuffer.DrawRenderer(r, OutlineSoliderMaterial);
+                }
             }
         }
     }
@@ -119,13 +121,10 @@ public class OutLinePostEffect : MonoBehaviour {
 
     }
 
-    //public void SetRenderTarget(GameObject target) {
-    //    commandBuffer.Clear();
-    //    Renderer[] renderers = target.GetComponentsInChildren<Renderer>();
-    //    foreach (Renderer r in renderers) {
-    //        commandBuffer.DrawRenderer(r, OutlineSoliderMaterial);
-    //    }
-    //}
+    public void ClearRenderTarget() {
+        commandBuffer.ClearRenderTarget(true, true, Color.black);
+    }
+
 
     private void OnDisable() {
         if (renderTexture != null) {

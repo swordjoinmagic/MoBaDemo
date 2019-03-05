@@ -495,7 +495,6 @@ public class CharacterMono : MonoBehaviour {
         };
     }
 
-
     /// <summary>
     /// 根据CharacterModel，初始化动画状态与移动代理的方法
     /// </summary>
@@ -969,10 +968,8 @@ public class CharacterMono : MonoBehaviour {
                     }
                 }
 
-                ProjectileMono projectileMono = ProjectileMonoFactory.AcquireObject(this,target,shootPosition,damage,templateObject:projectile);
+                ProjectileMono projectileMono = ProjectileMonoFactory.AcquireObject(this,target,shootPosition,templateObject:projectile);
 
-                // 攻击事件，向所有订阅近战攻击的观察者发送消息
-                if (OnAttack != null) OnAttack(this, target, projectileMono.damage);
             }
             isAttackFinish = true;
             return true;
