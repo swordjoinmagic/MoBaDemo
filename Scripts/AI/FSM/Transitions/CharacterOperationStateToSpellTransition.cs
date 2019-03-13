@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FSM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CharacterOperationStateToSpellTransition : FSMTransition {
 
@@ -40,7 +41,7 @@ public class CharacterOperationStateToSpellTransition : FSMTransition {
 
             // 当为指向型技能时,更改主角的鼠标Icon,
             // 判断主角是否点击敌人,当点击敌人时,进入Spell状态
-            if (Input.GetMouseButtonDown(0)) {
+            if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject()) {      // 防止鼠标穿透UI
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
                 RaycastHit hit;
                 if (Physics.Raycast(ray, out hit)) {

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class MouseCursorChanged : MonoBehaviour {
 
@@ -63,5 +64,20 @@ public class MouseCursorChanged : MonoBehaviour {
                 skillCircleInflence.gameObject.SetActive(false);
             }
         }
+
+        // 处理用户拾取物品后鼠标图标的改变
+        RaycastHit hit3;
+        if (characterMono.IsPickUpItem) {
+            MouseIconManager.Instace.ChangeMouseIcon(MouseIconManager.MouseState.PickUpItem);
+            if (Input.GetMouseButton(0) && Physics.Raycast(ray, out hit3) && !EventSystem.current.IsPointerOverGameObject()) {
+                characterMono.IsPickUpItem = false;
+            }
+
+            // 鼠标右键或ESC键取消拾取
+            if ((Input.GetMouseButton(1) || Input.GetKey(KeyCode.Escape)) && !EventSystem.current.IsPointerOverGameObject()) {
+                characterMono.IsPickUpItem = false;
+            }
+        }
+
     }
 }

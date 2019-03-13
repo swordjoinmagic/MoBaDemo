@@ -25,7 +25,7 @@ public class SkillView : MonoBehaviour{
 
     //===============================
     // UI控件
-    public List<Image> images;
+    public List<Image> images;  // 冷却用Mask
     public CanvasGroup skillLevelUpPanel;
     public List<Button> skillLevelButtons;
 

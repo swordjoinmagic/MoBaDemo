@@ -144,6 +144,9 @@ public class CharacterMono : MonoBehaviour {
 
     #region GamePlay相关 包含一些用于战斗时的变量
 
+    // 表示当前单位是否被及本地玩家操纵
+    public bool isOperateByNowPlayer;
+
     // 表示当前单位是否垂死
     public bool isDying = false;
 
@@ -165,6 +168,37 @@ public class CharacterMono : MonoBehaviour {
 
     // 当前角色拥有的所有状态
     private List<BattleState> battleStates = new List<BattleState>();
+
+    
+    // 当前角色拿起的物品
+    public ItemGrid nowPickUpItem = null;
+    // 当前角色是否拿起物品
+    private bool isPickUpItem = false;
+    public bool IsPickUpItem {
+        get { return isPickUpItem; }
+        set {
+            isPickUpItem = value;
+            if (!isPickUpItem)
+                ItemFollowMouse.Instace.CancelPickUpItem();
+        }
+    }
+
+    /// <summary>
+    /// 单位拿起某个物品,此时鼠标指针变换,该物品跟随鼠标指针
+    /// 这个时候,只有单位主动取消拿起物品或将物品放到某个地方才可以从拿起物品的状态回到正常状态
+    /// </summary>
+    /// <param name="itemGrid"></param>
+    public void PickUpItem(ItemGrid itemGrid) {
+        // 处理异常情况,不处理空格子/空物品的情况
+        if (itemGrid == null || itemGrid.item == null) return;
+
+        // 引用指向该物品
+        nowPickUpItem = itemGrid;
+        IsPickUpItem = true;
+
+        // 物品图片开启跟随
+        ItemFollowMouse.Instace.StartPickUpItem(itemGrid.ItemImagePath);
+    }
 
     #endregion
 
@@ -605,6 +639,46 @@ public class CharacterMono : MonoBehaviour {
     }
 
     #region 用于处理物品的获取与消耗/丢失
+
+    /// <summary>
+    /// 放置物品的通常操作
+    /// </summary>
+    /// <returns></returns>
+    public bool PlaceItem() {
+        IsPickUpItem = false;
+        nowPickUpItem = null;
+
+        return true;
+    }
+
+    /// <summary>
+    /// 放置物品到另一个格子上，如果该格子已经有物品，那么就合并或者交换，如果该格子没物品，那么直接放上去
+    /// </summary>
+    /// <param name="itemGrid"></param>
+    public bool PlaceItem(ItemGrid itemGrid) {
+        Item tempItem = nowPickUpItem.item;
+        int tempItemCount = nowPickUpItem.ItemCount;
+
+        nowPickUpItem.item = itemGrid.item;
+        nowPickUpItem.ItemCount = itemGrid.ItemCount;
+
+        itemGrid.item = tempItem;
+        itemGrid.ItemCount = tempItemCount;
+
+        PlaceItem();
+        return true;
+    }
+
+    /// <summary>
+    /// 放置物品到地上，position为坐标，可以进行放置为True，不能进行放置为False
+    /// </summary>
+    /// <param name="worldPosition"></param>
+    public bool PlaceItem(Vector3 worldPosition) {
+
+        PlaceItem();
+        return false;
+    }
+
     /// <summary>
     /// 单位获得物品的方法，返回True表示单位成功获得该物品，
     /// 返回Fals表示因为单位物品栏限制，单位获得物品失败。

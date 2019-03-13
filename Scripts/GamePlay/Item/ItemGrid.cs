@@ -64,7 +64,14 @@ public class ItemGrid {
 
         set {
             int oldItemCount = ItemCount;
-            if (item == null) { itemCount = 0; return; }
+            if (item == null) {
+                itemCount = 0;
+                if (OnItemCountChanged != null)
+                    OnItemCountChanged(oldItemCount, ItemCount);
+                if (OnIconPathChanged != null)
+                    OnIconPathChanged(null, null);
+                return;
+            }
             // 持有物品数量不能超过该物品的最大持有数量
             itemCount = Mathf.Clamp(value,0,item.maxCount) ;
             // 如果物品使用完毕,自动将该物品设置为null

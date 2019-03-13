@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FSM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 判断是否进行移动的Transition,如果
@@ -21,7 +22,8 @@ public class IsClickedMoveTransition : FSMTransition {
     /// </summary>
     /// <returns></returns>
     public override bool IsValid() {
-        if (Input.GetMouseButtonDown(1)) {
+        // 当用户按下鼠标且鼠标没有停留在UI上时，才进行移动，防止鼠标穿透UI
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {
             Debug.Log("用户按下鼠标");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

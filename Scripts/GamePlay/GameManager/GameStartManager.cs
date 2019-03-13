@@ -39,6 +39,7 @@ public class GameStartManager : MonoBehaviour{
 
         characterMono = CharacterMonoFactory.AcquireObject(TestDatabase.Instance.characterModels[0], characterPrafab, new Vector3(17, 0, 18)) as HeroMono;
         characterMono.Init();
+        characterMono.isOperateByNowPlayer = true;
 
         InitUI();
         InitGamePlay();

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FSM;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// 用于判断用户是否点击敌人的Transition,
@@ -17,7 +18,8 @@ public class IsClickedEnermyTransition : FSMTransition {
     }
 
     public override bool IsValid() {
-        if (Input.GetMouseButtonDown(1)) {
+        
+        if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject()) {    // 防止鼠标穿透UI
             Debug.Log("用户按下鼠标对敌人进行攻击");
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;

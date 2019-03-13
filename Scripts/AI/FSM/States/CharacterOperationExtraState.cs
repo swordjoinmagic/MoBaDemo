@@ -54,7 +54,7 @@ public class CharacterOperationExtraState : FSMState {
 
         // 判断单位是否按下它的物品技能
         foreach (ItemGrid itemGrid in characterModel.itemGrids) {
-            if (itemGrid.item == null) return;
+            if (itemGrid.item == null) continue;
             ActiveSkill activeSkill = itemGrid.item.itemActiveSkill;
             if (Input.GetKeyDown(itemGrid.hotKey) && !activeSkill.IsCoolDown()) {
                 Debug.Log("按下了物品特技："+itemGrid.item.name);

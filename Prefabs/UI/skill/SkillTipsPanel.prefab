@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 224008637186334532}
   - component: {fileID: 222451881861934254}
   - component: {fileID: 114882742517819896}
+  - component: {fileID: 114180560009754576}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -687,6 +688,20 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\u4E0B\u4E00\u6B21\u5347\u7EA7\u5728\u82F1\u96C4<color=#ffA555>6</color>\u7EA7\u65F6"
+--- !u!114 &114180560009754576
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1246080813131512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: 1, y: -1}
+  m_UseGraphicAlpha: 1
 --- !u!114 &114237656045862014
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -787,7 +802,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -973,7 +988,7 @@ MonoBehaviour:
   m_Script: {fileID: -900027084, guid: f70555f144d8491a825f0804e09c671c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0.14424863, b: 0.4811321, a: 0.5}
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
 --- !u!114 &114587145856717422
@@ -1219,12 +1234,6 @@ MonoBehaviour:
   duringTimeText: {fileID: 114380821527223452}
   CDText: {fileID: 114949174520797936}
   nextLevelText: {fileID: 114133481890522422}
-  SkillTargetDescriptionPanel: {fileID: 224176129420620852}
-  SkillDescriptionPanel: {fileID: 224228510013081948}
-  SkillShortDescriptionPanel: {fileID: 224702445258161580}
-  SkillRangeTimeLevelDescriptionPanel: {fileID: 224900184834217434}
-  SkillTipsPanel: {fileID: 224217331701026510}
-  SkillNameAndLevelPanel: {fileID: 224362667578344936}
 --- !u!114 &114810313237393162
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1770,7 +1779,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 50, y: -397}
+  m_AnchoredPosition: {x: -456, y: -715.34}
   m_SizeDelta: {x: 172.7, y: 257.7}
   m_Pivot: {x: 0, y: 0.18}
 --- !u!224 &224228510013081948

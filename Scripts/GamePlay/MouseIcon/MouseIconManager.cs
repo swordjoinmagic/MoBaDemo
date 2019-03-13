@@ -26,7 +26,8 @@ public class MouseIconManager : MonoBehaviour {
         Up,         // 当鼠标指针向上移动的时候
         Down,
         Left,
-        Right
+        Right,
+        PickUpItem  // 当英雄拿起物品
     }
 
     CursorMode cursorMode = CursorMode.Auto;
@@ -48,7 +49,7 @@ public class MouseIconManager : MonoBehaviour {
     /// 复原鼠标指针为默认形态
     /// </summary>
     public void Recovery() {
-        Cursor.SetCursor(defaultCursorTexture, hotSpot, cursorMode);
+        ChangeMouseIcon(MouseState.Default);
     }
 
     public Texture2D RotateArrow(float angle) {
@@ -109,6 +110,9 @@ public class MouseIconManager : MonoBehaviour {
                 break;
             case MouseState.Down:
                 Cursor.SetCursor(RotateArrow(270), hotSpot, cursorMode);
+                break;
+            case MouseState.PickUpItem:
+                Cursor.SetCursor(spellCursorTexture, new Vector2(spellCursorTexture.height / 2, spellCursorTexture.width / 2), cursorMode);
                 break;
         }
     }

@@ -50,6 +50,10 @@ class StoreLogic {
     /// <param name="heroMono"></param>
     /// <param name="item"></param>
     public void Sell(HeroMono heroMono, ItemGrid item) {
+
+        // 当玩家准备购买商品事件
+        MessageAggregator.Instance.Broadcast<Player,ItemGrid>(EventType.OnPlayerPrepareBuyStoreItem,heroMono.Owner,item);
+
         // 判断价格是否足够,物品是否已空
         if (item.item != null && heroMono.Owner.Money >= item.item.price) {
 

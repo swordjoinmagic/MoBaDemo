@@ -56,7 +56,7 @@ public class IsFindEnemry : Conditional{
                 // 计算单位剩余魔法值的权重
                 enemryValue[i] += (1 - (float)unit.characterModel.Mp / (float)unit.characterModel.maxMp) * 2f;
                 // 英雄单位权重
-                enemryValue[i] += unit is HeroMono ? 2f : 0;
+                enemryValue[i] += unit is HeroMono ? 0.2f : 0;
                 // 单位距离权重(不开根号比较)
                 enemryValue[i] += GetDistance(unit) / 100f * 3;
 
