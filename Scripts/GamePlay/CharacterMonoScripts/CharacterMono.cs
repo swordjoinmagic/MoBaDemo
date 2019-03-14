@@ -145,7 +145,17 @@ public class CharacterMono : MonoBehaviour {
     #region GamePlay相关 包含一些用于战斗时的变量
 
     // 表示当前单位是否被及本地玩家操纵
-    public bool isOperateByNowPlayer;
+    private bool isOperateByNowPlayer;
+
+    public bool IsOperateByNowPlayer {
+        get {
+            return isOperateByNowPlayer;
+        }
+
+        set {
+            isOperateByNowPlayer = value;
+        }
+    }
 
     // 表示当前单位是否垂死
     public bool isDying = false;

@@ -18,6 +18,7 @@ public class GameStartManager : MonoBehaviour{
     public ItemListView itemListView;
     public BattleStatusListView battleStatusListView;
     public GamePlayManager gamePlayManager;
+    public GameObject operateCharacterProjector;
 
 
     // 单例类
@@ -39,7 +40,11 @@ public class GameStartManager : MonoBehaviour{
 
         characterMono = CharacterMonoFactory.AcquireObject(TestDatabase.Instance.characterModels[0], characterPrafab, new Vector3(17, 0, 18)) as HeroMono;
         characterMono.Init();
-        characterMono.isOperateByNowPlayer = true;
+        #region Test
+        characterMono.IsOperateByNowPlayer = true;
+        GameObject test = GameObject.Instantiate(operateCharacterProjector,characterMono.transform,false);
+        test.transform.localPosition = new Vector3(0,2,0);
+        #endregion
 
         InitUI();
         InitGamePlay();

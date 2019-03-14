@@ -164,6 +164,8 @@ MonoBehaviour:
   itemListView: {fileID: 1575341518}
   battleStatusListView: {fileID: 1591519074}
   gamePlayManager: {fileID: 1759221884}
+  operateCharacterProjector: {fileID: 1369701294637928, guid: a37ee6cacbf67694eae83f5424826150,
+    type: 2}
 --- !u!1001 &86558785
 Prefab:
   m_ObjectHideFlags: 0
@@ -1186,7 +1188,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 5
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -3558,7 +3559,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -4821,7 +4821,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -6686,7 +6685,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 5
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -6947,11 +6945,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -4.79
       objectReference: {fileID: 0}
     - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_LocalPosition.z
-      value: 6
+      value: 10.96
       objectReference: {fileID: 0}
     - target: {fileID: 4623908166439238, guid: 10ba44e096b7b7144808d3168a5d6d7a, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8329,7 +8327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00001645941, y: 0.000008266245}
+  m_AnchoredPosition: {x: -0.00001645941, y: 0.0000188063}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1193665803
@@ -9889,7 +9887,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -11168,7 +11165,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -11377,7 +11373,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -26.12, y: 0.000030517578}
+  m_AnchoredPosition: {x: -26.119995, y: 0.000030517578}
   m_SizeDelta: {x: -199.15, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1617352113
@@ -11842,7 +11838,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0
@@ -14327,7 +14322,6 @@ MonoBehaviour:
     dodgeRate: 0
     defenseRange: 100
     radius: 0
-  isOperateByNowPlayer: 0
   isDying: 0
   isPrepareUseSkill: 0
   isPrepareUseItemSkill: 0

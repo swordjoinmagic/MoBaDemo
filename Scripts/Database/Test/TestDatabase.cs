@@ -81,6 +81,7 @@ public class TestDatabase : MonoBehaviour {
                             }
                         },
                 SkillTargetType = UnitType.Everything,
+                mp = 1000
             },
             new TransformSkill {
                 SkillID = 2,

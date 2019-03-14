@@ -216,7 +216,7 @@ public class ActiveSkill : BaseSkill {
     /// <returns></returns>
     public virtual bool ContinuousExecute(CharacterMono speller, CharacterMono target) {
         finalSpellTime = Time.time;
-        CreateEffect(speller, target.transform.position);
+        CreateEffect(speller, target.transform.position);        
         return true;
     }
     public virtual bool ContinuousExecute(CharacterMono speller, Vector3 position) {
@@ -234,6 +234,11 @@ public class ActiveSkill : BaseSkill {
     /// <param name="speller">施法者</param>
     /// <param name="target">受到法术伤害的目标</param>
     public virtual void Execute(CharacterMono speller,CharacterMono target) {
+
+        #region 耦合,待重构
+        speller.characterModel.Mp -= this.mp;
+        #endregion
+
         finalSpellTime = Time.time;
         CreateEffect(speller, target.transform.position);
     }
@@ -247,6 +252,11 @@ public class ActiveSkill : BaseSkill {
     /// <param name="speller">施法者</param>
     /// <param name="target">受到法术伤害的目标</param>
     public virtual void Execute(CharacterMono speller,Vector3 position) {
+
+        #region 耦合,待重构
+        speller.characterModel.Mp -= this.mp;
+        #endregion
+
         finalSpellTime = Time.time;
         CreateEffect(speller,position);
     }

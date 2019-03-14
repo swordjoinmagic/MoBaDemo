@@ -7,9 +7,7 @@ using UnityEngine.Networking;
 public class LoadAssetBundleTest : MonoBehaviour{
     private void Start() {
         AssetBundle assetBundle = AssetBundle.LoadFromFile(Application.dataPath + "/AssetBundle/testdependc");
-        Debug.Log(assetBundle);
-
-
+        Debug.Log(assetBundle);        
 
     }
 

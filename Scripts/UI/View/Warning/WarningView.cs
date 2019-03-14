@@ -35,13 +35,13 @@ public class WarningView : MonoBehaviour {
 
         // 监听各类事件
         Bind();
-        
+
+        gameObject.SetActive(false);
     }
 
-    private void Show() {
+    private Tweener Show() {
         gameObject.SetActive(true);
-        canvasGroup.DOFade(1,0.5f);
-        
+        return canvasGroup.DOFade(1,1f);        
     }
 
     private void Hide() {
@@ -53,6 +53,8 @@ public class WarningView : MonoBehaviour {
         // 监听 当玩家购买商店物品 事件
         MessageAggregator.Instance.AddListener<Player, ItemGrid>(EventType.OnPlayerPrepareBuyStoreItem,OnPlayerPrepareBuyStoreItem);
 
+        // 监听 准备释放技能 事件
+        MessageAggregator.Instance.AddListener<CharacterMono,ActiveSkill>(EventType.OnPlayerPrepareSell,OnPlyaerPrepareSpell);
     }
 
     /// <summary>
@@ -64,9 +66,23 @@ public class WarningView : MonoBehaviour {
         if (itemGrid != null && itemGrid.item != null) {
             int price = itemGrid.item.price;
             if (price > player.Money) {
-                Show();
+                if(!isActiveAndEnabled)
+                    Show().onComplete += Hide;
                 WarnningString = "玩家的金钱不够!";
             }
+        }
+    }
+
+    /// <summary>
+    /// 监听 准备释放技能 事件
+    /// </summary>
+    /// <param name="characterMono"></param>
+    /// <param name="activeSkill"></param>
+    private void OnPlyaerPrepareSpell(CharacterMono characterMono,ActiveSkill activeSkill) {
+        if (characterMono.characterModel.Mp < activeSkill.Mp) {
+            if (!isActiveAndEnabled)
+                Show().onComplete += Hide;
+            WarnningString = "当前单位Mp值不足!";
         }
     }
 }

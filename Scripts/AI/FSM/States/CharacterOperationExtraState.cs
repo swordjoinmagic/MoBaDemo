@@ -42,6 +42,12 @@ public class CharacterOperationExtraState : FSMState {
         foreach (ActiveSkill skill in characterModel.activeSkills) {
             // 是否按下按键,如果按下,则令prepareSkill=skill
             if (skill.SkillLevel != 0 && Input.GetKeyDown(skill.KeyCode) && !skill.IsCoolDown()) {
+
+                #region 准备释放技能事件
+                // 触发准备释放技能事件，因为本状态机理论上只有玩家操作的角色才会有，所以无需担心监听方法触发到了奇奇怪怪的对象
+                MessageAggregator.Instance.Broadcast<CharacterMono,ActiveSkill>(EventType.OnPlayerPrepareSell,characterMono,skill);
+                #endregion
+
                 characterMono.prepareSkill = skill;
 
                 Debug.Log("为CharacterMono设置prepareSkill技能,技能是:" + characterMono.prepareSkill.SkillName);
