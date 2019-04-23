@@ -33,9 +33,9 @@ public class AvatarViewModel : ViewModelBase{
         Attack.Value = hero.TotalAttack;
         Defense.Value = hero.TotalDefense;
         MoveSpeed.Value = hero.TotalMovingSpeed;
-        ForcePower.Value = Mathf.FloorToInt(hero.forcePower); 
-        AgilePower.Value = Mathf.FloorToInt(hero.agilePower);
-        IntelligencePower.Value = Mathf.FloorToInt(hero.intelligencePower);
+        ForcePower.Value = Mathf.FloorToInt(hero.ForcePower); 
+        AgilePower.Value = Mathf.FloorToInt(hero.AgilePower);
+        IntelligencePower.Value = Mathf.FloorToInt(hero.IntelligencePower);
         AvatarImagePath.Value = hero.AvatarImagePath;
         Level.Value = hero.Level;
         ExpRate.Value = hero.Exp / hero.NextLevelNeedExp;

@@ -9,7 +9,6 @@ using UnityEngine;
 /// </summary>
 public class HeroMono : CharacterMono{
     public HPViewModel HPViewModel;
-    public AvatarViewModel avatarViewModel;
 
     public HeroModel HeroModel {
         get {
@@ -29,24 +28,27 @@ public class HeroMono : CharacterMono{
     }
     public void OnExpChanged(int oldExp,int newExp) {
 
-        //==========================================================================
-        // 修改UI
+        // 下一级所需经验
+        int nextLevelNeedExp = HeroModel.NextLevelNeedExp;
+
+        // 获得当前经验比率
         int expRate = Mathf.Clamp(Mathf.FloorToInt( ( (float)newExp / HeroModel.NextLevelNeedExp ) * 100 ),0,100);
-        avatarViewModel.ExpRate.Value = expRate;
 
         //==============================
         // 当经验值满值时,修改等级
         if (expRate == 100) {
             HeroModel.Level += 1;
-        }
+
+            // 由于升级的缘故,当前经验值减去之前升级所需经验
+            // 可以看作是消耗了这些经验导致升级
+            HeroModel.Exp -= nextLevelNeedExp;
+        }        
     }
     public void OnLevelChanged(int oldLevel, int newLevel) {
+        // 升级时，单位获得技能点
         if (newLevel > oldLevel) {
-            HeroModel.SkillPoint += HeroModel.skillPointGrowthPoint * (newLevel - oldLevel);
-        }
-        HeroModel.Exp = 0;
-        if(avatarViewModel!=null)
-            avatarViewModel.Level.Value = newLevel;
+            HeroModel.SkillPoint += HeroModel.SkillPointGrowthPoint * (newLevel - oldLevel);
+        }        
     }
     #endregion
 }

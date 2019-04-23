@@ -2203,6 +2203,7 @@ MonoBehaviour:
   blurSize: 1.84
   outLineColor: {r: 0, g: 1, b: 0, a: 1}
   outLineStrength: 3
+  outLineRadius: 0.01
 --- !u!1001 &285376150
 Prefab:
   m_ObjectHideFlags: 0
@@ -7814,7 +7815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebbc7fad507fc104c806dd583a4f80d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destroyOnHide: 0
   AvatarImage: {fileID: 1934068684}
   heroNameText: {fileID: 2097511992}
   levelText: {fileID: 1312861736}
@@ -8327,7 +8327,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00001645941, y: 0.0000064736673}
+  m_AnchoredPosition: {x: -0.00001645941, y: 0.000009872215}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1193665803
@@ -13186,8 +13186,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 785391110}
   m_HandleRect: {fileID: 785391109}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999994
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

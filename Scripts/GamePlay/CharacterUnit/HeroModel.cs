@@ -11,31 +11,34 @@ using uMVVM;
 [Serializable]
 public class HeroModel : CharacterModel{
     // 力量
-    public float forcePower;
+    private BindableProperty<float> forcePower = new BindableProperty<float>();
     // 力量成长
-    public float forcePowerGrowthPoint;
+    private float forcePowerGrowthPoint;
     // 敏捷
-    public float agilePower;
+    private BindableProperty<float> agilePower = new BindableProperty<float>();
     // 敏捷成长
-    public float agilePowerGrowthPoint;
+    private float agilePowerGrowthPoint;
     // 智力
-    public float intelligencePower;
+    private BindableProperty<float> intelligencePower = new BindableProperty<float>();
     // 智力成长
-    public float intelligenceGrowthPoint;
+    private float intelligenceGrowthPoint;
     // 技能点
     private BindableProperty<int> skillPoint = new BindableProperty<int>();
     // 技能点成长
-    public int skillPointGrowthPoint;
+    private int skillPointGrowthPoint;
     // 经验值
     private BindableProperty<int> exp = new BindableProperty<int>();
     // 经验值因子（每次升级所需经验值关联系数）
-    public float expfactor;
+    private float expfactor;
+    // 指定每级需要经验值，不指定的情况下，
+    // 该级经验值由经验因子和第0级升到第1级所需经验得出
+    public int[] expList;
     // 升级所需经验值(指第0级升到第一级所需经验) 
-    public float needExp;
+    private float needExp;
     // 英雄头像图片的地址
-    public string AvatarImagePath;
+    private string avatarImagePath;
     // 英雄主属性
-    public HeroMainAttribute mainAttribute;
+    private HeroMainAttribute mainAttribute;
 
     public int Exp {
         get {
@@ -52,7 +55,8 @@ public class HeroModel : CharacterModel{
 
     public int NextLevelNeedExp {
         get {
-            return Mathf.FloorToInt(needExp * expfactor * (Level+1));
+            if (expList[Level + 1] != 0) return expList[Level+1];
+            return Mathf.FloorToInt(NeedExp * Expfactor * (Level+1));
         }
     }
 
@@ -68,6 +72,143 @@ public class HeroModel : CharacterModel{
     public BindableProperty<int>.OnValueChangeHandler SkillPointChangedHandler {
         get { return skillPoint.OnValueChange; }
         set { skillPoint.OnValueChange = value; }
+    }
+
+    public float ForcePower {
+        get {
+            return forcePower.Value;
+        }
+
+        set {
+            forcePower.Value = value;
+        }
+    }
+    public BindableProperty<float>.OnValueChangeHandler ForcePowerHandler {
+        get {
+            return forcePower.OnValueChange;
+        }
+
+        set {
+            forcePower.OnValueChange = value;
+        }
+    }
+
+    public float AgilePower {
+        get {
+            return agilePower.Value;
+        }
+
+        set {
+            agilePower.Value = value;
+        }
+    }
+    public BindableProperty<float>.OnValueChangeHandler AgilePowerHandler {
+        get {
+            return agilePower.OnValueChange;
+        }
+
+        set {
+            agilePower.OnValueChange = value;
+        }
+    }
+
+    public float IntelligencePower {
+        get {
+            return intelligencePower.Value;
+        }
+
+        set {
+            intelligencePower.Value = value;
+        }
+    }
+    public BindableProperty<float>.OnValueChangeHandler IntelligencePowerHandler {
+        get {
+            return intelligencePower.OnValueChange;
+        }
+
+        set {
+            intelligencePower.OnValueChange = value;
+        }
+    }
+
+    public float NeedExp {
+        get {
+            return needExp;
+        }
+
+        set {
+            needExp = value;
+        }
+    }
+
+    public string AvatarImagePath {
+        get {
+            return avatarImagePath;
+        }
+
+        set {
+            avatarImagePath = value;
+        }
+    }
+
+    public HeroMainAttribute MainAttribute {
+        get {
+            return mainAttribute;
+        }
+
+        set {
+            mainAttribute = value;
+        }
+    }
+
+    public float Expfactor {
+        get {
+            return expfactor;
+        }
+
+        set {
+            expfactor = value;
+        }
+    }
+
+    public int SkillPointGrowthPoint {
+        get {
+            return skillPointGrowthPoint;
+        }
+
+        set {
+            skillPointGrowthPoint = value;
+        }
+    }
+
+    public float IntelligenceGrowthPoint {
+        get {
+            return intelligenceGrowthPoint;
+        }
+
+        set {
+            intelligenceGrowthPoint = value;
+        }
+    }
+
+    public float ForcePowerGrowthPoint {
+        get {
+            return forcePowerGrowthPoint;
+        }
+
+        set {
+            forcePowerGrowthPoint = value;
+        }
+    }
+
+    public float AgilePowerGrowthPoint {
+        get {
+            return agilePowerGrowthPoint;
+        }
+
+        set {
+            agilePowerGrowthPoint = value;
+        }
     }
 
     public override void Damaged(Damage damage) {
@@ -105,8 +246,8 @@ public class HeroModel : CharacterModel{
             PhysicalResistance = PhysicalResistance,
             MagicalResistance = MagicalResistance,
             DodgeRate = DodgeRate,
-            needExp = 2000,
-            expfactor = 0.5f,
+            NeedExp = 2000,
+            Expfactor = 0.5f,
             Radius = Radius
         };
         return deepCopyModel;

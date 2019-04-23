@@ -6,9 +6,7 @@ public class IntallAvatarView : MonoBehaviour{
     public HeroMono character;
 
     private void Start() {
-        avatarView.BindingContext = new AvatarViewModel();
-        avatarView.BindingContext.Modify(character.HeroModel);
-        character.avatarViewModel = avatarView.BindingContext;
+
     }
     private void Update() {
         if (Input.GetKey(KeyCode.X)) {

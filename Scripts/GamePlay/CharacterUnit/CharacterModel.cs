@@ -64,6 +64,8 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
     public GameObject projectile;
     // 等级
     private BindableProperty<int> level = new BindableProperty<int>();
+    // 单位最大等级
+    private BindableProperty<int> maxLevel = new BindableProperty<int>();
     // 回血速度，以秒为单位，即以秒回多少血
     public float restoreHpSpeed;
     // 回魔速度，以秒为单位，即以秒回多少Mp
@@ -125,7 +127,17 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         }
 
         set {
-            level.Value = value;
+            // 不能超过最大等级
+            level.Value = value > MaxLevel? MaxLevel : value;
+        }
+    }
+
+    public int MaxLevel {
+        get {
+            return maxLevel.Value;
+        }
+        set {
+            maxLevel.Value = value;            
         }
     }
 
@@ -310,6 +322,11 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
         }
         set {
             level.OnValueChange = value;
+        }
+    }
+    public BindableProperty<int>.OnValueChangeHandler MaxLevelChangeHandler {
+        get {
+            return maxLevel.OnValueChange;
         }
     }
     #endregion

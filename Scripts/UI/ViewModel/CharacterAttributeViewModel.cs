@@ -37,10 +37,10 @@ public class CharacterAttributeViewModel : ViewModelBase{
         magicalResistance.Value = characterModel.MagicalResistance.ToString();
         dodgeRate.Value = characterModel.DodgeRate.ToString();
         resotreMpSpeed.Value = characterModel.ResotreMpSpeed.ToString();
-        forcePower.Value = characterModel.forcePower.ToString();
-        agilePower.Value = characterModel.agilePower.ToString();
-        intelligencePower.Value = characterModel.intelligencePower.ToString();
-        mainAttribute.Value = characterModel.mainAttribute;
+        forcePower.Value = characterModel.ForcePower.ToString();
+        agilePower.Value = characterModel.AgilePower.ToString();
+        intelligencePower.Value = characterModel.IntelligencePower.ToString();
+        mainAttribute.Value = characterModel.MainAttribute;
     }
 }
 

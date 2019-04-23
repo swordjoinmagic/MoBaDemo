@@ -109,6 +109,9 @@ public class OutLinePostEffect : MonoBehaviour {
     // 描边强度
     [Range(0.0f,10.0f)]
     public float outLineStrength = 3.0f;
+    // 描边半径（即描边距离人物的距离）
+    [Range(0.0f,0.1f)]
+    public float outLineRadius = 0.01f;
 
 
     private void OnEnable() {
@@ -142,6 +145,7 @@ public class OutLinePostEffect : MonoBehaviour {
 
             // 设置描边颜色
             OutlineSoliderMaterial.SetColor("_OutlineColor", outLineColor);
+            OutlineSoliderMaterial.SetFloat("_OutlineRadius",outLineRadius);
 
             // 通过Graphic执行Command Buffer
             Graphics.ExecuteCommandBuffer(commandBuffer);

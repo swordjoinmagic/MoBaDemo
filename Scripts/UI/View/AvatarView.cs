@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 [RequireComponent(typeof(EventTrigger))]
-public class AvatarView : UnityGuiView<AvatarViewModel> {
+public class AvatarView : MonoBehaviour {
 
     //==========================
     // 此View管理的UI控件
@@ -27,6 +27,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     // 经验值图片
     public RectTransform expImage;
 
+
     // 人物属性信息提示窗口prefab
     public CharacterAttributeTipsView characterAttributeTipsViewPrefab;
 
@@ -35,6 +36,8 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     private GameObject canvas;
     private RectTransform rectTransform;
     private Camera UICamera;
+
+    // 该属性UI对应的单位的属性
     private HeroMono characterMono;
 
     public void Init(HeroMono heroMono) {
@@ -48,6 +51,7 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
         eventTrigger = GetComponent<EventTrigger>();
 
+        #region 为属性UI绑定鼠标事件
         EventTrigger.Entry enterEvent = new EventTrigger.Entry();
         enterEvent.eventID = EventTriggerType.PointerEnter;
         enterEvent.callback.AddListener(eventData => {
@@ -79,30 +83,18 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
 
         eventTrigger.triggers.Add(enterEvent);
         eventTrigger.triggers.Add(exitEvent);
+        #endregion
     }
 
-    protected override void OnInitialize() {
-        base.OnInitialize();
-
-        //==============================================================
-        // 属性绑定
-        binder.Add<string>("Name",OnNameChanged);
-        binder.Add<int>("Attack",OnAttackChanged);
-        binder.Add<int>("Defense",OnDefenseTextChanged);
-        binder.Add<float>("MoveSpeed", OnMoveSpeedChanged);
-        binder.Add<int>("ForcePower", OnForcePowerChanged);
-        binder.Add<int>("AgilePower", OnAgilePowerChanged);
-        binder.Add<int>("IntelligencePower", OnIntelligencePowerChanged);
-        binder.Add<int>("Level",OnLevelChanged);
-        binder.Add<int>("ExpRate",OnExpTextChanged);
-        binder.Add<string>("AvatarImagePath", OnAvatarImageChanged);
-
-
-        //===============================================================
-        // 设置鼠标进入、离开事件
-        //if (eventTrigger==null) eventTrigger = GetComponent<EventTrigger>();
-        //if (canvas == null) canvas = GameObject.Find("Canvas");
-
+    /// <summary>
+    /// 属性绑定
+    /// </summary>
+    protected void BindAttribute() {        
+        characterMono.HeroModel.ExpChangedHandler += OnExpChanged;      // 经验
+        characterMono.HeroModel.LevelChangedHandler += OnLevelChanged;  // 等级
+        characterMono.HeroModel.ForcePowerHandler += OnForcePowerChanged;   // 力量
+        characterMono.HeroModel.AgilePowerHandler += OnAgilePowerChanged;   // 敏捷
+        characterMono.HeroModel.IntelligencePowerHandler += OnIntelligencePowerChanged; // 智力
     }
     
     public void OnAvatarImageChanged(string oldImagePath,string newImagePath) {
@@ -124,19 +116,24 @@ public class AvatarView : UnityGuiView<AvatarViewModel> {
     public void OnMoveSpeedChanged(float oldMoveSpeed, float newMoveSpeed) {
         moveSpeedText.text = newMoveSpeed.ToString();
     }
-    public void OnForcePowerChanged(int oldForcePower, int newForcePower) {
-        forcePowerText.text = newForcePower.ToString();
+    public void OnForcePowerChanged(float oldForcePower, float newForcePower) {
+        // 显示时将其取整运算,直接舍去小数部分
+        forcePowerText.text = ((int)newForcePower).ToString();
     }
-    public void OnAgilePowerChanged(int oldAgilePower, int newAgilePower) {
-        agilePowerText.text = newAgilePower.ToString();
+    public void OnAgilePowerChanged(float oldAgilePower, float newAgilePower) {
+        agilePowerText.text = ((int)newAgilePower).ToString();
     }
-    public void OnIntelligencePowerChanged(int oldIntelligencePower,int newIntelligencePower) {
-        intelligencePowerText.text = newIntelligencePower.ToString();
+    public void OnIntelligencePowerChanged(float oldIntelligencePower, float newIntelligencePower) {
+        intelligencePowerText.text = ((int)newIntelligencePower).ToString();
     }
-    public void OnExpTextChanged(int oldExpRate,int newExpRate) {
-        expText.text = "EXP:"+newExpRate + "%";
-        //Debug.Log("newExpRate:"+newExpRate);
-        expImage.sizeDelta = new Vector2(expImage.sizeDelta.x,newExpRate);
+    public void OnExpChanged(int oldExp, int newExp) {
+
+        // 经验比率取整
+        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / characterMono.HeroModel.NextLevelNeedExp) * 100), 0, 100);
+
+        expText.text = string.Format("EXP: {0}%",expRate);
+        expImage.sizeDelta = new Vector2(expImage.sizeDelta.x, expRate);
     }
+
 }
 

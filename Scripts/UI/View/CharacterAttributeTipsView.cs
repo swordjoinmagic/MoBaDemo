@@ -63,7 +63,7 @@ public class CharacterAttributeTipsView : MonoBehaviour {
 
         //===========================================================
         // 设置单位的主属性
-        HeroMainAttribute mainAttribute = character.mainAttribute;
+        HeroMainAttribute mainAttribute = character.MainAttribute;
         forcePowerMainAttributeText.gameObject.SetActive(mainAttribute == HeroMainAttribute.STR);
         agiPowerMainAttributeText.gameObject.SetActive(mainAttribute == HeroMainAttribute.AGI);
         intPowerMainAttributeText.gameObject.SetActive(mainAttribute == HeroMainAttribute.INT);
@@ -76,7 +76,7 @@ public class CharacterAttributeTipsView : MonoBehaviour {
         //===========================================================
         // 设置力量属性的UI显示
         // 力量Text的显示变化
-        forcePowerText.text = character.forcePower.ToString();
+        forcePowerText.text = character.ForcePower.ToString();
 
         // 力量增加 基本属性 Text的显示变化
         forcePowerDescriptionText.text = "= x点生命值 + x点生命值回复速度";     // ToDo~
@@ -87,7 +87,7 @@ public class CharacterAttributeTipsView : MonoBehaviour {
         //===========================================================
         // 设置敏捷属性
         // 敏捷Text的显示变化
-        agiPowerText.text = character.agilePower.ToString();
+        agiPowerText.text = character.AgilePower.ToString();
 
         // 敏捷增加 基本属性 Text的显示变化
         agiPowerDescriptionText.text = "= x点防御力 + x点攻击速度";     // ToDo~
@@ -98,7 +98,7 @@ public class CharacterAttributeTipsView : MonoBehaviour {
         //===========================================================
         // 设置智力属性
         // 智力Text的显示变化
-        intPowerText.text = character.intelligenceGrowthPoint.ToString();
+        intPowerText.text = character.IntelligenceGrowthPoint.ToString();
 
         // 智力增加 基本属性 Text的显示变化
         intPowerDescriptionText.text = "= x点魔法值 + x点魔法回复速度";     // ToDo~

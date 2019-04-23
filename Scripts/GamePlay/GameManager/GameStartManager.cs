@@ -107,10 +107,6 @@ public class GameStartManager : MonoBehaviour{
 
     private void InstallAvaterView() {
         avatarView.Init(characterMono);
-        avatarView.BindingContext = new AvatarViewModel();
-        avatarView.BindingContext.Modify(characterMono.HeroModel);
-        characterMono.avatarViewModel = avatarView.BindingContext;
-
     }
 }
 
