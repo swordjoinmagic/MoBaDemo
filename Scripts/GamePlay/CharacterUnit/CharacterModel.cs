@@ -137,7 +137,7 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
             return maxLevel.Value;
         }
         set {
-            maxLevel.Value = value;            
+            maxLevel.Value = value;
         }
     }
 

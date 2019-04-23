@@ -12,7 +12,7 @@ public class GameStartManager : MonoBehaviour{
     public SkillView skillView;
     public StoreView storeView;
     public MouseCursorChanged mouseCursorChanged;
-    public HPView hPView;
+    public HPAndMPDetailView hPAndMPDetailView;
     public AvatarView avatarView;
     public ShowPlayerMoney showPlayerMoneyView;
     public ItemListView itemListView;
@@ -88,7 +88,7 @@ public class GameStartManager : MonoBehaviour{
     public void InitUI() {
         skillView.Init(characterMono);
         storeView.Init(characterMono);
-        InstallHpView();
+        InstallHpAndMPDetailView();
         InstallAvaterView();
         showPlayerMoneyView.Init(characterMono);
         itemListView.Init(characterMono);
@@ -99,10 +99,8 @@ public class GameStartManager : MonoBehaviour{
         mouseCursorChanged.Init();
     }
 
-    private void InstallHpView() {
-        hPView.characterMono = characterMono;
-        hPView.BindingContext = new HPViewModel();
-        hPView.BindingContext.Init(characterMono.characterModel);
+    private void InstallHpAndMPDetailView() {
+        hPAndMPDetailView.Init(characterMono);
     }
 
     private void InstallAvaterView() {

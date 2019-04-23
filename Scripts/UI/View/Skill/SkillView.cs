@@ -17,7 +17,6 @@ public class SkillView : MonoBehaviour{
 
     public List<SkillPanelView> skillPanelViews;
 
-
     // 技能信息提示窗口预制体
     public SkillTipsMessageView skillTipsMessageViewPrefab;
     // 技能提示窗口
@@ -59,6 +58,7 @@ public class SkillView : MonoBehaviour{
 
     public void Init(HeroMono characterMono) {
         this.characterMono = characterMono;
+        character = characterMono.HeroModel;
         Init();
     }
 
@@ -76,7 +76,7 @@ public class SkillView : MonoBehaviour{
             skillPanelView.BindingContext = new SkillPanelViewModel();
             skillPanelView.BindingContext.Modify(baseSkill);
 
-            // 监听EventTrigger控件事件
+            #region 监听EventTrigger控件事件
 
             // 鼠标悬停事件
             var enterViewEntry = new EventTrigger.Entry {
@@ -105,14 +105,16 @@ public class SkillView : MonoBehaviour{
                 skillTipsMessageView.Hide(immediate:true);
             });
 
-
             // eventTrigger添加监听事件
             EventTrigger eventTrigger = skillPanelView.GetComponent<EventTrigger>();
             eventTrigger.triggers.Add(enterViewEntry);
             eventTrigger.triggers.Add(exitViewEntry);
+            #endregion
         }
 
+        #region 设置各个升级按钮的click事件
         for (int i=0;i<skillLevelButtons.Count;i++) {
+            // 升级按钮和技能一一对应
             Button levelUpButtonn = skillLevelButtons[i];
             BaseSkill skill = characterMono.characterModel.BaseSkills[i];
             levelUpButtonn.onClick.AddListener(() => {
@@ -122,6 +124,7 @@ public class SkillView : MonoBehaviour{
                 }
             });
         }
+        #endregion
     }
 
     private void Update() {
@@ -133,11 +136,8 @@ public class SkillView : MonoBehaviour{
         for (int i=0;i<activeSkills.Count;i++) {
 
             ActiveSkill activeSkill = activeSkills[i];
-            if (activeSkill.SkillLevel == 0) continue;
+            if (activeSkill.SkillLevel == 0) continue;  // 0级的技能是还没有学会的技能
             float coolDown = activeSkill.CD;
-            //float finalSpellTime = activeSkill.FinalSpellTime;
-
-            //float different = Time.time - finalSpellTime;
 
             float rate = 1 - Mathf.Clamp01(activeSkill.CDRate);
             images[i].fillAmount = rate;

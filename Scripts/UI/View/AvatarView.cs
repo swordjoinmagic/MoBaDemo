@@ -34,15 +34,35 @@ public class AvatarView : MonoBehaviour {
     private EventTrigger eventTrigger;
     private CharacterAttributeTipsView TipsViewInstance;        // 提示信息窗口实例
     private GameObject canvas;
-    private RectTransform rectTransform;
+    private RectTransform rectTransform;        // 当前UI的rectTransfrorm
     private Camera UICamera;
 
     // 该属性UI对应的单位的属性
-    private HeroMono characterMono;
+    private HeroMono character;
 
     public void Init(HeroMono heroMono) {
-        this.characterMono = heroMono;
+        this.character = heroMono;
+        BindAttribute();
         Init();
+        Refresh();
+    }
+
+    /// <summary>
+    /// 更新UI,将所有UI的显示更新为对应单位的属性
+    /// 
+    /// 一般是当更换单位或第一次绑定单位时调用,
+    /// 因为第一次绑定单位时,要提前将UI更新,MVVM模式要等到单位的属性变化才会更新UI
+    /// </summary>
+    public void Refresh() {
+        OnNameChanged(character.HeroModel.Name, character.HeroModel.Name);
+        OnLevelChanged(character.HeroModel.Level, character.HeroModel.Level);
+        OnAttackChanged(character.HeroModel.Attack, character.HeroModel.Attack);
+        OnDefenseTextChanged(character.HeroModel.Defense, character.HeroModel.Defense);
+        OnMoveSpeedChanged(character.HeroModel.MovingSpeed, character.HeroModel.MovingSpeed);
+        OnForcePowerChanged(character.HeroModel.ForcePower, character.HeroModel.ForcePower);
+        OnAgilePowerChanged(character.HeroModel.AgilePower, character.HeroModel.AgilePower);
+        OnIntelligencePowerChanged(character.HeroModel.IntelligencePower, character.HeroModel.IntelligencePower);
+        OnExpChanged(character.HeroModel.Exp, character.HeroModel.Exp);        
     }
 
     public void Init() {
@@ -52,13 +72,14 @@ public class AvatarView : MonoBehaviour {
         eventTrigger = GetComponent<EventTrigger>();
 
         #region 为属性UI绑定鼠标事件
-        EventTrigger.Entry enterEvent = new EventTrigger.Entry();
-        enterEvent.eventID = EventTriggerType.PointerEnter;
+        EventTrigger.Entry enterEvent = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerEnter
+        };
         enterEvent.callback.AddListener(eventData => {
             if (TipsViewInstance == null) {
                 TipsViewInstance = Instantiate<CharacterAttributeTipsView>(characterAttributeTipsViewPrefab, canvas.transform);
             }
-            TipsViewInstance.Modify(characterMono.HeroModel);
+            TipsViewInstance.Modify(character.HeroModel);
 
             // 获得AvaterView视图的屏幕坐标
             Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(UICamera, rectTransform.position);
@@ -75,8 +96,9 @@ public class AvatarView : MonoBehaviour {
 
             TipsViewInstance.Reveal();
         });
-        EventTrigger.Entry exitEvent = new EventTrigger.Entry();
-        exitEvent.eventID = EventTriggerType.PointerExit;
+        EventTrigger.Entry exitEvent = new EventTrigger.Entry {
+            eventID = EventTriggerType.PointerExit
+        };
         exitEvent.callback.AddListener(eventData => {
             TipsViewInstance.Hide();
         });
@@ -90,11 +112,11 @@ public class AvatarView : MonoBehaviour {
     /// 属性绑定
     /// </summary>
     protected void BindAttribute() {        
-        characterMono.HeroModel.ExpChangedHandler += OnExpChanged;      // 经验
-        characterMono.HeroModel.LevelChangedHandler += OnLevelChanged;  // 等级
-        characterMono.HeroModel.ForcePowerHandler += OnForcePowerChanged;   // 力量
-        characterMono.HeroModel.AgilePowerHandler += OnAgilePowerChanged;   // 敏捷
-        characterMono.HeroModel.IntelligencePowerHandler += OnIntelligencePowerChanged; // 智力
+        character.HeroModel.ExpChangedHandler += OnExpChanged;      // 经验
+        character.HeroModel.LevelChangedHandler += OnLevelChanged;  // 等级
+        character.HeroModel.ForcePowerHandler += OnForcePowerChanged;   // 力量
+        character.HeroModel.AgilePowerHandler += OnAgilePowerChanged;   // 敏捷
+        character.HeroModel.IntelligencePowerHandler += OnIntelligencePowerChanged; // 智力
     }
     
     public void OnAvatarImageChanged(string oldImagePath,string newImagePath) {
@@ -129,7 +151,7 @@ public class AvatarView : MonoBehaviour {
     public void OnExpChanged(int oldExp, int newExp) {
 
         // 经验比率取整
-        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / characterMono.HeroModel.NextLevelNeedExp) * 100), 0, 100);
+        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / character.HeroModel.NextLevelNeedExp) * 100), 0, 100);
 
         expText.text = string.Format("EXP: {0}%",expRate);
         expImage.sizeDelta = new Vector2(expImage.sizeDelta.x, expRate);

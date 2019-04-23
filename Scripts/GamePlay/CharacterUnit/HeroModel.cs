@@ -55,7 +55,7 @@ public class HeroModel : CharacterModel{
 
     public int NextLevelNeedExp {
         get {
-            if (expList[Level + 1] != 0) return expList[Level+1];
+            if (Level<MaxLevel && expList[Level + 1] != 0) return expList[Level+1];
             return Mathf.FloorToInt(NeedExp * Expfactor * (Level+1));
         }
     }

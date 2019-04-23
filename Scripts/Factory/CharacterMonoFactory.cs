@@ -20,7 +20,7 @@ public class CharacterMonoFactory {
         if (characterMono == null)
             characterMono = gameObject.AddComponent<CharacterMono>();
         // 赋值CharacterModel属性
-        characterMono.characterModel = characterModel.DeepCopy();
+        characterMono.characterModel = characterModel.DeepCopy();        
         // 更改GameObject的名字
         characterMono.name = characterModel.Name;
 

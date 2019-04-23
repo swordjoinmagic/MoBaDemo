@@ -579,7 +579,7 @@ public class CharacterMono : MonoBehaviour {
         };
 
         //============================
-        // 与ViewModel双向绑定
+        // 订阅事件
         Bind();
 
         #region 对所有单位的测试
