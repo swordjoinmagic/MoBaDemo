@@ -66,7 +66,7 @@ public class GamePlayManager : MonoBehaviour{
     IEnumerator DispatchSoliders() {
         yield return new WaitForSeconds(2);
         while (!isGameOver) {
-            int a = 0;
+            int kind = 0;
 
             // 遍历每个出兵点，进行出兵
             foreach (var p in placesOfDispatchRed) {
@@ -83,11 +83,11 @@ public class GamePlayManager : MonoBehaviour{
                     // 触发产生对象的事件
                     if (OnCreateNPCGameObject != null) OnCreateNPCGameObject(position,soliderObject, poolObjectFactory);
 
-                    if (a == 0) {
+                    if (kind == 0) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.UpRoad, UnitFaction.Red);
-                    } else if (a == 1) {
+                    } else if (kind == 1) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.MiddleRoad, UnitFaction.Red);
-                    } else if (a == 2) {
+                    } else if (kind == 2) {
                         soliderObject.GetComponent<CharacterMono>().wayPointsUnit = new WayPointsUnit(WayPointEnum.DownRoad, UnitFaction.Red);
                     }
                     // 设置战争迷雾
@@ -95,7 +95,7 @@ public class GamePlayManager : MonoBehaviour{
 
                 }
 
-                a++;
+                kind++;
             }
 
             int b = 0;

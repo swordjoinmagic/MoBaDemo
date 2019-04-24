@@ -64,7 +64,14 @@ public class ItemFollowMouse : MonoBehaviour{
 
     private void Init() {
         imageTransform = transform.GetComponent<RectTransform>();
-        image = transform.Find("ItemImage").GetComponent<Image>();
+        foreach (Image i in transform.GetComponentsInChildren<Image>()) {
+            if (i.name == "ItemImage") {
+                image = i;
+                break;
+            }
+
+        }
+        //image = transform.Find("ItemImage").GetComponent<Image>();
         // 整个游戏只用一个Canvas,故可以直接find来找
         canvas = GameObject.Find("Canvas").GetComponent<RectTransform>();
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();

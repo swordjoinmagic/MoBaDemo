@@ -51,7 +51,7 @@ public class MapView : MonoBehaviour {
         var pointerDownEntry = new EventTrigger.Entry();
         pointerDownEntry.eventID = EventTriggerType.PointerDown;
         pointerDownEntry.callback.AddListener(eventdata => {
-            Debug.Log("PointerDown");
+            //Debug.Log("PointerDown");
             isMouseInMapView = true;
                    
         });
@@ -59,7 +59,7 @@ public class MapView : MonoBehaviour {
         var pointerUpEntry = new EventTrigger.Entry();
         pointerUpEntry.eventID = EventTriggerType.PointerUp;
         pointerUpEntry.callback.AddListener(eventdata => {
-            Debug.Log("PointerUp");
+            //Debug.Log("PointerUp");
             isMouseInMapView = false;
         });
 
@@ -95,12 +95,12 @@ public class MapView : MonoBehaviour {
         // 将摄像机当前位置转换为贴图位置
         Vector2 texturePosition = cameraPosition / TexToWorld;
 
-        Debug.Log("texPosition:"+texturePosition);
+        //Debug.Log("texPosition:"+texturePosition);
 
         // 贴图位置转换为UI位置
         Vector2 newUIPosition = texturePosition / UIToTex;
 
-        Debug.Log("newUIPosition:"+newUIPosition);
+        //Debug.Log("newUIPosition:"+newUIPosition);
 
         // 设置小地图游标新的位置
         CameraCursor.rectTransform.anchoredPosition = newUIPosition;

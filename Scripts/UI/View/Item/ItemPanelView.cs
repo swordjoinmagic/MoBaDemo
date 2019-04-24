@@ -20,7 +20,7 @@ public class ItemPanelView : UnityGuiView<ItemViewModel>{
 
     private void Init() {
         //==========================================
-        // 监听CharacterMono的物品改变事件
+        // 监听物品改变事件
         itemGrid.OnIconPathChanged += OnIconImageChanged;
         itemGrid.OnItemCountChanged += OnRemainCountChanged;
     }

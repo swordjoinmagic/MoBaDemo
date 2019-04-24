@@ -6,13 +6,13 @@ public class ShowCharacterUI : MonoBehaviour {
 
     // 简易人物视图，用于显示每个人头顶上的血条及名字
     // 一个预制体
-    public SimpleCharacterView simpleCharacterView;
+    public SimpleHPView simpleCharacterView;
     private Camera UICamera;
     private RectTransform Canvas;
 
     private CharacterMono character;
-
-    private SimpleCharacterView UI;
+    
+    private SimpleHPView UI;
 
     private enum VisibleStatus {
         VisibleChanged,     // 当单位变得可见时，产生的枚举状态
@@ -74,7 +74,7 @@ public class ShowCharacterUI : MonoBehaviour {
     /// </summary>
     private void OnVisible() {
         if (UI==null) {
-            UI = Instantiate<SimpleCharacterView>(simpleCharacterView,Canvas);
+            UI = Instantiate<SimpleHPView>(simpleCharacterView,Canvas);
             UI.transform.localPosition = WorldPointToUIPosition(transform.position);
             UI.characterMono = character;
             UI.BindingContext = new SimpleCharacterViewModel();

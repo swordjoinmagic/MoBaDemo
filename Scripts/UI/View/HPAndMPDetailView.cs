@@ -24,12 +24,13 @@ public class HPAndMPDetailView : MonoBehaviour{
     public int hpImageHeight;
     public int mpImageHeight;
 
-    public HeroMono characterMono;
+    private HeroMono characterMono;
 
     public void Init(HeroMono characterMono) {
         this.characterMono = characterMono;
         characterMono.HeroModel.HpValueChangedHandler += OnHpChanged;
         characterMono.HeroModel.MpValueChangedHandler += OnMpValueChanged;
+        Refresh();
     }
 
     public void Refresh() {

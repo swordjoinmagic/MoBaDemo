@@ -37,18 +37,29 @@ public class SkillView : MonoBehaviour{
         if (isShow) {
             skillLevelUpPanel.alpha = 1;
             skillLevelUpPanel.transform.localScale = Vector3.one;
+
+            // 遍历所有技能,当该技能目前英雄等级可以学习时,就出现技能升级按钮
+            for(int i=0;i<skillLevelButtons.Count;i++) {
+
+                BaseSkill skill = character.BaseSkills[i];
+
+                if (character.Level >= skill.NextLevelNeedHeroLevel) {
+                    skillLevelButtons[i].gameObject.SetActive(true);
+                }
+            }
+
         } else {
             skillLevelUpPanel.alpha = 0;
             skillLevelUpPanel.transform.localScale = Vector3.zero;
+
+            // Rest
+            foreach (var button in skillLevelButtons)
+                button.gameObject.SetActive(false);
         }
     }
 
     private void OnSkillPointChanged(int oldSkillPoint, int newSkillPoint) {
-        if (newSkillPoint > 0) {
-            ChangedSkillLevelUpPanelActive(true);
-        } else if (newSkillPoint == 0) {
-            ChangedSkillLevelUpPanelActive(false);
-        }
+        ChangedSkillLevelUpPanelActive(newSkillPoint > 0);
     }
 
     private void Bind() {
@@ -56,12 +67,16 @@ public class SkillView : MonoBehaviour{
     }
     #endregion
 
+    /// <summary>
+    /// 在初始化时，
+    /// 根据单位的技能列表（BaseSkills），设置各个技能面板
+    /// </summary>
     public void Init(HeroMono characterMono) {
         this.characterMono = characterMono;
         character = characterMono.HeroModel;
         Init();
     }
-
+    
     private void Init() {
 
         UICamera = GameObject.Find("UICamera").GetComponent<Camera>();
@@ -76,7 +91,7 @@ public class SkillView : MonoBehaviour{
             skillPanelView.BindingContext = new SkillPanelViewModel();
             skillPanelView.BindingContext.Modify(baseSkill);
 
-            #region 监听EventTrigger控件事件
+            #region 设置每个技能面板的鼠标事件
 
             // 鼠标悬停事件
             var enterViewEntry = new EventTrigger.Entry {

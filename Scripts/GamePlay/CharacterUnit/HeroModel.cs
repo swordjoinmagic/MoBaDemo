@@ -235,6 +235,7 @@ public class HeroModel : CharacterModel{
             Defense = defense,
             MovingSpeed = movingSpeed,
             TurningSpeed = turningSpeed,
+            MaxLevel = MaxLevel,
             Level = Level,
             RestoreHpSpeed = RestoreHpSpeed,
             ResotreMpSpeed = ResotreMpSpeed,
@@ -248,7 +249,9 @@ public class HeroModel : CharacterModel{
             DodgeRate = DodgeRate,
             NeedExp = 2000,
             Expfactor = 0.5f,
-            Radius = Radius
+            Radius = Radius,
+            expList = new int[]{ 2000,2000<<2, 2000 << 4, 2000 << 6, 2000 << 8, 2000 << 10, 2000 << 12, 2000 << 14, 2000 << 16 },
+            SkillPointGrowthPoint = SkillPointGrowthPoint
         };
         return deepCopyModel;
     }

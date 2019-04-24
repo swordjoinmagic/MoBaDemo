@@ -8,8 +8,6 @@ using UnityEngine;
 /// 英雄单位的Mono类
 /// </summary>
 public class HeroMono : CharacterMono{
-    public HPViewModel HPViewModel;
-
     public HeroModel HeroModel {
         get {
             return characterModel as HeroModel;
@@ -28,9 +26,6 @@ public class HeroMono : CharacterMono{
     }
     public void OnExpChanged(int oldExp,int newExp) {
 
-        // 下一级所需经验
-        int nextLevelNeedExp = HeroModel.NextLevelNeedExp;
-
         // 获得当前经验比率
         int expRate = Mathf.Clamp(Mathf.FloorToInt( ( (float)newExp / HeroModel.NextLevelNeedExp ) * 100 ),0,100);
 
@@ -38,10 +33,6 @@ public class HeroMono : CharacterMono{
         // 当经验值满值时,修改等级
         if (expRate == 100) {
             HeroModel.Level += 1;
-
-            // 由于升级的缘故,当前经验值减去之前升级所需经验
-            // 可以看作是消耗了这些经验导致升级
-            HeroModel.Exp -= nextLevelNeedExp;
         }        
     }
     public void OnLevelChanged(int oldLevel, int newLevel) {

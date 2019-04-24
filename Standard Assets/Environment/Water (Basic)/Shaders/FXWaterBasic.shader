@@ -1,4 +1,5 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "FX/Water (Basic)" {
 Properties {
@@ -36,7 +37,7 @@ v2f vert(appdata v)
 	v2f o;
 	float4 s;
 
-	o.pos = UnityObjectToClipPos(v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 
 	// scroll bump waves
 	float4 temp;

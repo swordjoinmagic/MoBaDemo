@@ -150,8 +150,15 @@ public class AvatarView : MonoBehaviour {
     }
     public void OnExpChanged(int oldExp, int newExp) {
 
+        int level = character.HeroModel.Level;
+
+        // 当前等级和上一级所需经验差值
+        int differentNextEXP = level > 0 ? character.HeroModel.NextLevelNeedExp - character.HeroModel.expList[level] : character.HeroModel.NextLevelNeedExp;
+        // 当前经验减去上一级所需经验
+        int exp = level > 0 ? newExp - character.HeroModel.expList[level] : newExp;
+
         // 经验比率取整
-        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)newExp / character.HeroModel.NextLevelNeedExp) * 100), 0, 100);
+        int expRate = Mathf.Clamp(Mathf.FloorToInt(((float)exp / differentNextEXP) * 100), 0, 100);
 
         expText.text = string.Format("EXP: {0}%",expRate);
         expImage.sizeDelta = new Vector2(expImage.sizeDelta.x, expRate);

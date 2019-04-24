@@ -246,14 +246,14 @@ public class TestDatabase : MonoBehaviour {
                 //    targetPositionEffect = targetPositionEffect,
                 //    movingSpeed = 5
                 //},
+                MaxLevel = 10,
                 maxHp = 10000,
                 Hp = 200,
                 maxMp = 1000,
-                Mp = 1000,
+                Mp = 200,
                 Name = "sjm",
                 attackDistance = 10f,
                 Level = 0,
-                MaxLevel = 10,
                 ForcePower = 100,
                 NeedExp = 1000,
                 Attack = 100,
@@ -268,7 +268,7 @@ public class TestDatabase : MonoBehaviour {
                 TurningSpeed = 50,
                 AttackAudioPath = "attackAudio",
                 Radius = 20,
-                MovingSpeed = 4,
+                MovingSpeed = 4,                
             }
         };
     }
@@ -283,6 +283,4 @@ public class TestDatabase : MonoBehaviour {
         }
     }
 
-    private void Start() {
-    }
 }

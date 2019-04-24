@@ -1,4 +1,5 @@
 // Upgrade NOTE: replaced '_Object2World' with 'unity_ObjectToWorld'
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 Shader "FX/Water" {
 Properties {
@@ -72,7 +73,7 @@ struct v2f {
 v2f vert(appdata v)
 {
 	v2f o;
-	o.pos = UnityObjectToClipPos(v.vertex);
+	o.pos = UnityObjectToClipPos (v.vertex);
 	
 
 	// scroll bump waves
@@ -86,7 +87,7 @@ v2f vert(appdata v)
 	o.viewDir.xzy = WorldSpaceViewDir(v.vertex);
 	
 	#if defined(HAS_REFLECTION) || defined(HAS_REFRACTION)
-	o.ref = ComputeNonStereoScreenPos(o.pos);
+	o.ref = ComputeScreenPos(o.pos);
 	#endif
 
 	UNITY_TRANSFER_FOG(o,o.pos);

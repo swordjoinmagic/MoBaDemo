@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class BattleStatusListView : MonoBehaviour {
-    private HeroMono heroMono;
+    private CharacterMono heroMono;
 
     //=======================================
     // 此View管理的UI控件
@@ -96,7 +96,7 @@ public class BattleStatusListView : MonoBehaviour {
         Bind();
     }
 
-    public void Init(HeroMono heroMono) {
+    public void Init(CharacterMono heroMono) {
         this.heroMono = heroMono;
         Init();
     }
