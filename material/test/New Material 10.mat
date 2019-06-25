@@ -55,7 +55,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _BlendFactor: 0
+    - _BlendFactor: 0.259
     - _BumpScale: 1
     - _Cutoff: 0.5
     - _DetailNormalMapScale: 1
@@ -75,5 +75,5 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Explored: {r: 0.33333334, g: 0.3372549, b: 0.3372549, a: 0}
-    - _Unexplored: {r: 0.05, g: 0.05, b: 0.05, a: 0}
+    - _Explored: {r: 0.33333334, g: 0.3372549, b: 0.3372549, a: 0.78431374}
+    - _Unexplored: {r: 0.05, g: 0.05, b: 0.05, a: 1}

@@ -217,6 +217,7 @@ public class FogSystem : MonoBehaviour {
         for (int i = 0; i < LogicalLayerObjects.Count();) {
             if (LogicalLayerObjects[i] != null) {
                 LogicalLayerObjects[i].characterModel.Position = LogicalLayerObjects[i].transform.position;
+                LogicalLayerObjects[i].characterModel.Rotation = LogicalLayerObjects[i].transform.rotation;
                 i++;
             } else {
                 RemoveFOVUnit(i);
@@ -318,7 +319,7 @@ public class FogSystem : MonoBehaviour {
                 RevalMap();
                 GeneratePassedRegion();
                 //Debug.Log("更新表示层完成");
-
+                
                 // 战争迷雾逻辑层
                 UpdateUnitVisibleStatus();
                 //Debug.Log("更新逻辑层");
@@ -339,29 +340,104 @@ public class FogSystem : MonoBehaviour {
     /// 每一个表示层物体都将对战争迷雾的显示层进行更新
     /// </summary>
     public void RevalMap() {
-        #region 待重构
-        //for (int i = 0; i < playersPositions.Count(); i++) {
-        //    lock (playersPositions) {
-        //        Vector3 vector3 = playersPositions[i];
-        //        RevealUsingVision(vector3);
-        //    }
-        //}
-        #endregion
-
         for (int i = 0; i < PresentationLayerObjects.Count(); i++) {
+            if(((CharacterModel)PresentationLayerObjects[i]).unitFaction==UnitFaction.Red)
             lock (PresentationLayerObjects) {
                 Vector3 vector3 = PresentationLayerObjects[i].Position;
-                RevealUsingVision(vector3, PresentationLayerObjects[i].Radius);
+                RevealUsingSphereVision(vector3, PresentationLayerObjects[i].Radius);
+                RevealUsingFOVVision(PresentationLayerObjects[i]);
             }
         }
     }
 
     /// <summary>
-    /// 使用视野单位更新可见区域
+    /// 使用视野单位的fov(扇形)视野来更新可见区域
+    /// </summary>
+    /// <param name="fOVUnit"></param>
+    public void RevealUsingFOVVision(IFOVUnit fOVUnit) {
+        try {
+            float fov = 30;
+            float distance = 25f;
+            float halfFov = fov / 2;
+            float halfL = Mathf.Abs(distance * Mathf.Sin(halfFov));
+            float H = Mathf.Abs(distance * Mathf.Cos(halfFov));            
+
+            Vector3 pos = fOVUnit.Position;
+            Vector3 leftPoint = new Vector3(pos.x - halfL, pos.y, pos.z + H);
+            Vector3 rightPoint = new Vector3(pos.x + halfL, pos.y, pos.z + H);
+
+            Vector3 originToLeft = (-pos + leftPoint);
+            Vector3 originToRight = (-pos + rightPoint);
+
+            // 左右两个向量在贴图上相距了多少个像素
+            float textxelCount = (originToRight - originToLeft).magnitude;
+
+            Matrix4x4 rMatrix = fOVUnit.Rotation == null ? Matrix4x4.identity : Matrix4x4.Rotate(fOVUnit.Rotation);
+            originToLeft = rMatrix * originToLeft;
+            originToRight = rMatrix * originToRight;
+            originToLeft.Normalize(); originToRight.Normalize();
+
+            // delta表示在贴图上每个像素的长宽
+            // 即贴图上1单位的像素的物体表现在世界坐标上的长宽
+            float delta = textureSize / worldSize;
+
+            // 则t的增量即为 delta / textxelCount
+            float tDelta = delta / textxelCount / 2;
+
+            float t = 0;
+            for (; t <= 1; t += tDelta) {
+                Vector3 direction = Vector3.Lerp(originToLeft, originToRight, t).normalized;
+
+                for (float d = 0; d <= distance; d += delta/2) {
+
+                    // 当前射线所涉及的点
+                    Vector3 endPoint = pos + direction * d;
+
+                    bool hit = false;
+                    // 碰撞体半径
+                    float objR = 1f;
+
+                    // 对每一个逻辑层物体进行碰撞检测,
+                    // 如果视线碰撞到障碍物,那么该视线就断了
+                    for (int i=0;i<LogicalLayerObjects.Count;i++) {
+                        
+                        CharacterMono logicalObject = LogicalLayerObjects[i];
+                        if (logicalObject == null) continue;
+
+                        Vector3 logicalObjectPos = logicalObject.characterModel.Position;
+                        if (logicalObjectPos == pos || (logicalObjectPos-pos).magnitude<=distance/20) continue;
+
+                        // 暂时以半径为1的球形碰撞体举例
+                        // 判断点在球体内,公式为 (x-x1)2 + (y-y1)2 + (z-z1)2 <= r2
+                        if (
+                            (endPoint.x - logicalObjectPos.x) * (endPoint.x - logicalObjectPos.x) +
+                            (endPoint.z - logicalObjectPos.z) * (endPoint.z - logicalObjectPos.z)
+                            <
+                            objR * objR
+                        ) {
+                            hit = true;
+                            break;
+                        }
+
+                    }
+                    if (hit) break;
+
+                    endPoint *= delta;
+                    int zw = (int)(endPoint.z) * textureSize;
+                    int x = (int)(endPoint.x);
+                    if (x + zw < 0 || x+zw>=textureSizeSqr || x>=textureSize || zw>=textureSizeSqr) continue;
+                    buffer0[x + zw].r = 255;
+                }
+            }
+        } catch (Exception e) { Debug.LogError(e.Message); }
+    }
+
+    /// <summary>
+    /// 使用视野单位的圆形视野来更新可见区域
     /// </summary>
     /// <param name="position">视野单位的坐标</param>
     /// <param name="viewRadius">视野单位的视野半径</param>
-    public void RevealUsingVision(Vector3 position,float viewRadius) {
+    public void RevealUsingSphereVision(Vector3 position,float viewRadius) {
 
         //====================================
         // 第一步

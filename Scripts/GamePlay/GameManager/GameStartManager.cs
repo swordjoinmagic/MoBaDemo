@@ -38,8 +38,8 @@ public class GameStartManager : MonoBehaviour{
     // 开始游戏的方法
     private void StartGame() {
 
-        characterMono = CharacterMonoFactory.AcquireObject(TestDatabase.Instance.characterModels[0], characterPrafab, new Vector3(17, 0, 18)) as HeroMono;
-        characterMono.Init();
+        characterMono = CharacterMonoFactory.AcquireObject(TestDatabase.Instance.characterModels[0], characterPrafab, new Vector3(16,0f,15) ) as HeroMono;
+        characterMono.Init(); 
         #region Test
         characterMono.IsOperateByNowPlayer = true;
         GameObject test = GameObject.Instantiate(operateCharacterProjector,characterMono.transform,false);

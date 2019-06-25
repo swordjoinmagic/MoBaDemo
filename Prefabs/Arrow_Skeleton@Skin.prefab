@@ -339,10 +339,10 @@ GameObject:
   - component: {fileID: 54861869131956814}
   - component: {fileID: 136644223909616868}
   - component: {fileID: 114464193304774796}
-  - component: {fileID: 195294686514853328}
   - component: {fileID: 114634955745877798}
   - component: {fileID: 114844408166561726}
   - component: {fileID: 82170089099446018}
+  - component: {fileID: 195656131640886690}
   m_Layer: 0
   m_Name: Arrow_Skeleton@Skin
   m_TagString: Enermy
@@ -1005,7 +1005,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631785998815890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19.8, y: 2.523, z: 12.164743}
+  m_LocalPosition: {x: 19.8, y: 2.523, z: 0}
   m_LocalScale: {x: 10, y: 10, z: 10}
   m_Children:
   - {fileID: 4568666370461372}
@@ -1659,24 +1659,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.0014118608, y: 0.00002192147, z: 0.040557608}
     m_Extent: {x: 0.012434602, y: 0.006705285, z: 0.05640191}
   m_DirtyAABB: 0
---- !u!195 &195294686514853328
+--- !u!195 &195656131640886690
 NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1631785998815890}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.06
+  m_Radius: 0.04
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
-  m_StoppingDistance: 1
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 0.15
+  m_Height: 0.14
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

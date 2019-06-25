@@ -963,11 +963,11 @@ GameObject:
   - component: {fileID: 137425595881688276}
   - component: {fileID: 136458835169973608}
   - component: {fileID: 114028913284268292}
-  - component: {fileID: 195509920146250870}
   - component: {fileID: 114880437888119722}
   - component: {fileID: 54753786620448976}
   - component: {fileID: 114346283535308780}
   - component: {fileID: 82658869252501798}
+  - component: {fileID: 195491169257927180}
   m_Layer: 10
   m_Name: skeleton_animated (2)
   m_TagString: Player
@@ -2185,7 +2185,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1848344787217646}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 8.55, y: 3.45, z: 0}
   m_LocalScale: {x: 3, y: 3, z: 3}
   m_Children:
   - {fileID: 4345481351766710}
@@ -2520,6 +2520,15 @@ MonoBehaviour:
     defenseType: 0
     movingSpeed: 4
     turningSpeed: 120
+    projectileModel:
+      spherInfluence: 0
+      tartgetEnemryEffect: {fileID: 0}
+      targetPositionEffect: {fileID: 0}
+      movingSpeed: 1
+      riseHeight: 5
+      angle: 30
+      endAngle: 130
+      isArcMotion: 1
     projectile: {fileID: 0}
     restoreHpSpeed: 10
     resotreMpSpeed: 10
@@ -2531,6 +2540,7 @@ MonoBehaviour:
     physicalResistance: 0
     magicalResistance: 0
     dodgeRate: 0
+    defenseRange: 100
     radius: 10
   isDying: 0
   isPrepareUseSkill: 0
@@ -2800,24 +2810,24 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.04756728, y: 0.054604553, z: 0.00291197}
     m_Extent: {x: 0.3621694, y: 0.14799494, z: 0.119140536}
   m_DirtyAABB: 0
---- !u!195 &195509920146250870
+--- !u!195 &195491169257927180
 NavMeshAgent:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1848344787217646}
-  m_Enabled: 1
+  m_Enabled: 0
   m_AgentTypeID: 0
-  m_Radius: 0.2
-  m_Speed: 3.2
+  m_Radius: 0.12
+  m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 360
-  m_StoppingDistance: 0.3
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 0.7
-  m_BaseOffset: 0.2
+  m_BaseOffset: 0.21
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4

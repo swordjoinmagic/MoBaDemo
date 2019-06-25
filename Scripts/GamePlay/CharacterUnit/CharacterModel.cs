@@ -296,6 +296,10 @@ public class CharacterModel : IFOVUnit,IAudioUnit{
             isVisible = value;
         }
     }
+    private Quaternion rotation;
+    public Quaternion Rotation {
+        get;set;
+    }
     #endregion
 
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 using uMVVM;
+using UnityEngine.AI;
 
 /// <summary>
 /// 游戏对象的对象池工厂
@@ -57,7 +58,14 @@ public class GameObjectPool {
             // 如果对象池中找不到要获取的对象,或者要获取的对象全部都在使用中,
             // 那么新创建一个对象(从模板对象处进行创建)
             if (templateObject == null) return null;        // 如果没有模板对象，那么返回null
-            GameObject obj = GameObject.Instantiate(templateObject, position, Quaternion.identity);
+
+            
+            GameObject obj = GameObject.Instantiate(templateObject);
+            NavMeshHit closetsHit;
+            if (NavMesh.SamplePosition(position, out closetsHit, 500, 1)) {
+                obj.transform.position = closetsHit.position;
+                obj.GetComponent<NavMeshAgent>().enabled = true;
+            }
 
             // 如果要创建的对象是CharacterMono,那么监听该CharacterMono的死亡事件
             // 替换掉原本CharacterMono的死亡事件,将该对象死亡时回收对象池

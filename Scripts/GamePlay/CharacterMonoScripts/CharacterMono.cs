@@ -11,7 +11,7 @@ using UnityEngine.AI;
 /// <summary>
 /// 用于管理一个单位在游戏中的逻辑,如播放动画,播放音效,进行攻击等等操作.
 /// </summary>
-[RequireComponent(typeof(Animator), typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
 public class CharacterMono : MonoBehaviour {
     #region 单位的声音模块
     private AudioSource audioSource;     // 声音模块的发声者
@@ -1469,6 +1469,8 @@ public class CharacterMono : MonoBehaviour {
         CharacterOperationFSM characterOperationFSM = GetComponent<CharacterOperationFSM>();
         if (characterOperationFSM != null)
             characterOperationFSM.enabled = false;
+
+        GetComponent<NavMeshAgent>().enabled = false;
 
         // 播放死亡动画
         animator.SetTrigger("died");

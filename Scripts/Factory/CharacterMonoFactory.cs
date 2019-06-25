@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using UnityEngine;
+using UnityEngine.AI;
 
 /// <summary>
 /// 产生CharacterMono的工厂类
@@ -15,7 +16,13 @@ public class CharacterMonoFactory {
     /// <param name="position"></param>
     /// <returns></returns>
     public static CharacterMono AcquireObject(CharacterModel characterModel,GameObject templateObjectt, Vector3 position) {
-        GameObject gameObject = GameObject.Instantiate(templateObjectt,position,Quaternion.identity);
+        GameObject gameObject = GameObject.Instantiate(templateObjectt);
+        NavMeshHit closetsHit;
+        if (NavMesh.SamplePosition(position, out closetsHit, 500, 1)) {
+            gameObject.transform.position = closetsHit.position;
+            gameObject.GetComponent<NavMeshAgent>().enabled = true;
+        }
+
         CharacterMono characterMono = gameObject.GetComponent<CharacterMono>();
         if (characterMono == null)
             characterMono = gameObject.AddComponent<CharacterMono>();
