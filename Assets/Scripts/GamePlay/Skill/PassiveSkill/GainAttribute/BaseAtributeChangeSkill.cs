@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class BaseAtributeChangeSkill : PassiveSkill{
+public class BaseAtributeChangeSkill : PassiveSkill<BaseSkillModel>{
+
+    public BaseAtributeChangeSkill(BaseSkillModel skillModel) : base(skillModel) { }
 
     //==========================================
     // 开放接口
@@ -12,12 +14,6 @@ public class BaseAtributeChangeSkill : PassiveSkill{
     public int value = 0;
     public CharacterAttribute attribute = CharacterAttribute.Attack;
 
-    // 技能描述
-    public override string TargetDescription {
-        get {
-            return base.TargetDescription;
-        }
-    }
     // 设置为属性增益型技能
     public override PassiveSkillTriggerType TiggerType {
         get {

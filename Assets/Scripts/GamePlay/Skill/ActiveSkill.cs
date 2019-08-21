@@ -15,159 +15,65 @@ public delegate void OnSkillCompeleteHandler();
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-public class ActiveSkill : BaseSkill {
-    public int mp;
-    protected int baseDamage;
-    protected int plusDamage;
-    protected KeyCode keyCode;
+public class ActiveSkill<T> : BaseSkill<T> where T:BaseSkillModel {
 
-    // 施法距离，等于0时是原地释放技能
-    protected float spellDistance;
+    public ActiveSkill(T skillModel) : base(skillModel) { }
 
-    // 技能影响范围，是一个以r为半径的圆
-    protected float skillInfluenceRadius;
-
-    // 技能CD时间
-    protected float cooldown;
-
-    // 施法持续时间,为0时表示该技能不会持续释放
-    protected float spellDuration;
-
-    // 表示该技能是否可以被打断,默认所有技能都不能被打断,
-    // 部分持续施法技能可以被单位的操作/其他技能打断
-    protected float canBeInterrupt;
-
-    // 最后一次释放技能的时间
-    protected float finalSpellTime;
-
-    // 施法时，自身产生的特效
-    protected GameObject selfEffect;
-
-    // 施法时，目标产生的特效
-    protected GameObject targetEffect;
-
+    #region 技能基类属性
     public int Mp {
         get {
-            return mp;
-        }
-
-        set {
-            mp = value;
+            return skillModel.Mp;
         }
     }
-
-    public int BaseDamage {
-        get {
-            return baseDamage;
-        }
-
-        set {
-            baseDamage = value;
-        }
-    }
-
-    public int PlusDamage {
-        get {
-            return plusDamage;
-        }
-
-        set {
-            plusDamage = value;
-        }
-    }
-
     public KeyCode KeyCode {
         get {
-            return keyCode;
-        }
-
-        set {
-            keyCode = value;
+            return skillModel.KeyCode;
         }
     }
-
     public float SpellDistance {
         get {
-            return spellDistance;
-        }
-
-        set {
-            spellDistance = value;
+            return skillModel.SpellDistance;
         }
     }
-
     public float CD {
         get {
-            return cooldown;
-        }
-
-        set {
-            cooldown = value;
+            return skillModel.Cooldown;
         }
     }
-
     public float CDRate {
         get {
             return (Time.time - finalSpellTime) / CD;
         }
     }
-
     public float SkillInfluenceRadius {
         get {
-            return skillInfluenceRadius;
-        }
-
-        set {
-            skillInfluenceRadius = value;
+            return skillModel.SkillInfluenceRadius;
         }
     }
-
-    // 判断此技能的释放是否必须指定敌人对象，true为必须指定
-    public virtual bool IsMustDesignation {
-        get {
-            return true;
-        }
-    }
-
     public GameObject SelfEffect {
         get {
-            return selfEffect;
-        }
-
-        set {
-            selfEffect = value;
+            return skillModel.SelfEffect;
         }
     }
-
     public GameObject TargetEffect {
         get {
-            return targetEffect;
-        }
-
-        set {
-            targetEffect = value;
+            return skillModel.TargetEffect;
         }
     }
-
     public float SpellDuration {
         get {
-            return spellDuration;
-        }
-
-        set {
-            spellDuration = value;
+            return skillModel.SpellDuration;
         }
     }
-
     public float CanBeInterrupt {
         get {
-            return canBeInterrupt;
-        }
-
-        set {
-            canBeInterrupt = value;
+            return skillModel.CanBeInterrupt;
         }
     }
+    #endregion
+
+    // 判断此技能的释放是否必须指定敌人对象
+    public virtual bool IsMustDesignation { get { return true; } }
 
     // 当技能释放完毕后，执行的回调函数
     public event OnSkillCompeleteHandler OnCompelte;
@@ -196,7 +102,6 @@ public class ActiveSkill : BaseSkill {
             OnCompelte -= OnCompelte;
         }
     }
-
 
     /// <summary>
     /// 判断当前技能是否处于冷却中
@@ -236,7 +141,7 @@ public class ActiveSkill : BaseSkill {
     public virtual void Execute(CharacterMono speller,CharacterMono target) {
 
         #region 耦合,待重构
-        speller.characterModel.Mp -= this.mp;
+        speller.characterModel.Mp -= this.Mp;
         #endregion
 
         finalSpellTime = Time.time;
@@ -254,7 +159,7 @@ public class ActiveSkill : BaseSkill {
     public virtual void Execute(CharacterMono speller,Vector3 position) {
 
         #region 耦合,待重构
-        speller.characterModel.Mp -= this.mp;
+        speller.characterModel.Mp -= this.Mp;
         #endregion
 
         finalSpellTime = Time.time;

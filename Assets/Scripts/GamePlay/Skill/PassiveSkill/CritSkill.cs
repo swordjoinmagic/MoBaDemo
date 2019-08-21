@@ -10,61 +10,42 @@ using UnityEngine;
 ///     2. 暴击几率
 ///     3. 暴击倍数
 /// </summary>
-public class CritSkill : PassiveSkill{
-    //==============================
-    // 可供外界调整的参数(一律以大写字母开头)
+public class CritSkill : PassiveSkill<CritSkillModel>{
 
-    private GameObject effect;       // 暴击后,敌人身上产生的特效
-    private float critRate;          // 暴击几率(Range(0,1))
-    private float critMultiple;      // 暴击倍数
-
-    public override string TargetDescription {
-        get {
-            return "技能目标:点目标\n暴击几率:"+(critRate*100)+"%\n暴击倍数:"+critMultiple+"倍";
-        }
-    }
+    public CritSkill(CritSkillModel skillModel) : base(skillModel) { }
 
     public GameObject Effect {
         get {
-            return effect;
-        }
-
-        set {
-            effect = value;
+            return skillModel.TargetEffect;
         }
     }
 
     public float CritRate {
         get {
-            return critRate;
-        }
-
-        set {
-            critRate = value;
+            return skillModel.CritRate;
         }
     }
 
     public float CritMultiple {
         get {
-            return critMultiple;
-        }
-
-        set {
-            critMultiple = value;
+            return skillModel.CritMultiple;
         }
     }
 
     public override void Execute(CharacterMono speller,CharacterMono target,ref Damage damage) {
         // 约束暴击几率
-        CritRate = Mathf.Clamp01(CritRate);
-
-        if (Random.Range(0f,1f) <= CritRate) {
+        float critRate = Mathf.Clamp01(CritRate);
+        EffectsLifeCycle tempTargetEffect = null;
+        if (Random.Range(0f,1f) <= critRate) {
 
             // 执行暴击效果,将伤害*倍数对敌人进行计算
             damage *= CritMultiple;
-
+            
             // 产生特效
-            GameObject.Instantiate(Effect, target.transform);
+            if (skillModel.TargetEffect!=null) {
+                tempTargetEffect = TransientGameObjectFactory.AcquireObject(EffectConditonalType.During, templateObject: skillModel.TargetEffect, during: 5f);
+                tempTargetEffect.transform.position = target.transform.position;
+            }
         }
         
     }

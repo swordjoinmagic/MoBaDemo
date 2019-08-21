@@ -8,7 +8,7 @@ using System.Text;
 /// 当此技能释放时,会执行该技能组所有技能的Execute(speller,target)方法
 /// 该类表示对单个目标释放的点目标技能
 /// </summary>
-public class PointingSkillGroup : ActiveSkill{
+public class PointingSkillGroup : ActiveSkill<PointingSkillGroupModel>{
 
     public override bool IsMustDesignation {
         get {
@@ -16,21 +16,29 @@ public class PointingSkillGroup : ActiveSkill{
         }
     }
 
-    //===================================
-    // 此技能开放的接口
-    public ActiveSkill[] activeSkills;  // 技能组所包含的所有主动技能
-    public SkillDelayAttribute[] skillDelayAttributes;  // 技能的延迟属性
+    public PointingSkillGroup(PointingSkillGroupModel skillGroupModel):base(skillGroupModel) {}
+
+    public ActiveSkill<BaseSkillModel>[] ActiveSkills {
+        get {
+            return skillModel.activeSkills;
+        }
+    }
+    public SkillDelayAttribute[] SkillDelayAttributes {
+        get {
+            return skillModel.skillDelayAttributes;
+        }
+    }
 
     public override void Execute(CharacterMono speller, CharacterMono target) {
         base.Execute(speller, target);
 
         //========================================
         // 为延迟技能增加监听事件
-        for (int i=0;i<activeSkills.Count();i++) {
-            var skill = activeSkills[i];
-            var delayAttribute = skillDelayAttributes[i];
+        for (int i=0;i<ActiveSkills.Count();i++) {
+            var skill = ActiveSkills[i];
+            var delayAttribute = SkillDelayAttributes[i];
             if (delayAttribute.isDelay) {
-                var activeSkill = activeSkills[delayAttribute.index];
+                var activeSkill = ActiveSkills[delayAttribute.index];
 
                 OnSkillCompeleteHandler delayExcute = null;
                 delayExcute = () => {
@@ -45,9 +53,9 @@ public class PointingSkillGroup : ActiveSkill{
 
         //=============================================
         // 执行每一个非延迟技能
-        for (int i = 0; i < activeSkills.Count(); i++) {
-            var skill = activeSkills[i];
-            var delayAttribute = skillDelayAttributes[i];
+        for (int i = 0; i < ActiveSkills.Count(); i++) {
+            var skill = ActiveSkills[i];
+            var delayAttribute = SkillDelayAttributes[i];
             if (!delayAttribute.isDelay) {
                 if (skill.IsMustDesignation)
                     skill.Execute(speller, target);

@@ -5,42 +5,18 @@ using System.Text;
 using UnityEngine.UI;
 
 
-public class BaseSkill {
+public class BaseSkill<T> where T:BaseSkillModel{
 
-    // 技能在技能列表的ID号
-    private int skillID;
+    // 享元基类,保存技能对象不变的属性
+    protected T skillModel;
 
-    private string skillName;
-
-    // 图标地址，用地址保存，当要使用时进行加载
-    private string iconPath;
-
-    // 技能长描述
-    private string longDescription;
-    // 技能短描述
-    private string shortDescription;
-    // 技能背景描述
-    private string backgroundDescription;
+    public BaseSkill(T skillModel) {
+        this.skillModel = skillModel;
+    }
 
     // 技能等级
     private int skillLevel;
-
-    // 对于英雄来说,该技能下一级需要的英雄等级
-    private int nextLevelNeedHeroLevel;
-
-    private string skillType;
-
-    public string SkillType {
-        get {
-            return skillType;
-        }
-
-        set {
-            skillType = value;
-        }
-    }
-
-    public virtual int SkillLevel {
+    public int SkillLevel {
         get {
             return skillLevel;
         }
@@ -50,65 +26,8 @@ public class BaseSkill {
         }
     }
 
-    public string LongDescription {
-        get {
-            return longDescription;
-        }
-
-        set {
-            longDescription = value;
-        }
-    }
-
-    public string IconPath {
-        get {
-            return iconPath;
-        }
-
-        set {
-            iconPath = value;
-        }
-    }
-
-    public string SkillName {
-        get {
-            return skillName;
-        }
-
-        set {
-            skillName = value;
-        }
-    }
-
-    public string ShortDescription {
-        get {
-            return shortDescription;
-        }
-
-        set {
-            shortDescription = value;
-        }
-    }
-
-    public string BackgroundDescription {
-        get {
-            return backgroundDescription;
-        }
-
-        set {
-            backgroundDescription = value;
-        }
-    }
-
-    /// <summary>
-    /// 对技能的目标,附加的状态,造成的伤害等进行描述,由子类进行重写
-    /// </summary>
-    public virtual string TargetDescription {
-        get {
-            return "";
-        }
-    }
-
+    // 对于英雄来说,该技能下一级需要的英雄等级
+    private int nextLevelNeedHeroLevel;
     public int NextLevelNeedHeroLevel {
         get {
             return nextLevelNeedHeroLevel;
@@ -119,28 +38,53 @@ public class BaseSkill {
         }
     }
 
+    // 最后一次释放技能的时间
+    protected float finalSpellTime;
+
+    #region 技能基类属性
+    public string SkillType {
+        get {
+            return skillModel.SkillType;
+        }
+    }
+
+    public string LongDescription {
+        get {
+            return skillModel.LongDescription;
+        }
+    }
+
+    public string IconPath {
+        get {
+            return skillModel.IconPath;
+        }
+    }
+
+    public string SkillName {
+        get {
+            return skillModel.SkillName;
+        }
+    }
+
+    public string ShortDescription {
+        get {
+            return skillModel.ShortDescription;
+        }
+    }
+
+    public string BackgroundDescription {
+        get {
+            return skillModel.BackgroundDescription;
+        }
+    }
+
     public UnitType SkillTargetType {
         get {
-            return skillTargetType;
-        }
-
-        set {
-            skillTargetType = value;
+            return skillModel.SkillTargetType;
         }
     }
 
-    public int SkillID {
-        get {
-            return skillID;
-        }
-
-        set {
-            skillID = value;
-        }
-    }
-
-    // 此技能允许释放的目标，是一个多重枚举
-    protected UnitType skillTargetType;
+    #endregion
 
     /// <summary>
     /// 判断此技能的指向目标是否包含某个目标（即targetType）,

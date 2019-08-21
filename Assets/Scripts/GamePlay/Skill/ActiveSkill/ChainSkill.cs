@@ -8,42 +8,31 @@ using UnityEngine;
 /// 在几个单位之间跳转的，带有lineRender技能特效的主动技能
 /// 典型代表：闪电链、治疗波
 /// </summary>
-class ChainSkill : ActiveSkill{
+class ChainSkill : ActiveSkill<ChainSkillModel>{
+
+    private int nowCount;
+
+    public ChainSkill(ChainSkillModel skillModel) : base(skillModel) {
+        nowCount = Count;
+    }
 
     public override bool IsMustDesignation {
         get {
             return true;
         }
     }
-
-    //================================
-    // 此技能开放的接口
-    private int count;       // 闪电链跳转次数
-    private Damage damage;   // 闪电链的伤害
-    public float attenuationFactor; // 闪电链伤害衰减因子
     
     public Damage Damage {
         get {
-            return damage;
-        }
-
-        set {
-            damage = value;
+            return skillModel.Damage;
         }
     }
 
     public int Count {
         get {
-            return count;
-        }
-
-        set {
-            count = value;
-            nowCount = value;
+            return skillModel.Count;
         }
     }
-
-    private int nowCount;
     
     public override void Execute(CharacterMono speller, CharacterMono target) {
         if (nowCount >= 1)

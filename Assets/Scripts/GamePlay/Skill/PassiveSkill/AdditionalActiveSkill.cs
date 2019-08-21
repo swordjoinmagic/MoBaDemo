@@ -7,11 +7,13 @@ using System.Text;
 /// 附加主动技能型的被动技能，
 /// 当满足触发条件时，对目标执行主动技能
 /// </summary>
-public class AdditionalActiveSkill : PassiveSkill{
+public class AdditionalActiveSkill : PassiveSkill<BaseSkillModel>{
 
     //===========================================
     // 此技能开放的接口
-    public ActiveSkill additionalActiveSkill;   // 附加的主动技能
+    public ActiveSkill<AdditionalStateSkillModel> additionalActiveSkill;   // 附加的主动技能
+
+    public AdditionalActiveSkill(BaseSkillModel skillModel) : base(skillModel){}
 
     public override void Execute(CharacterMono speller, CharacterMono target) {
         base.Execute(speller, target);

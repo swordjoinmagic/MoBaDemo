@@ -8,7 +8,9 @@ using UnityEngine;
 /// 简单范围型技能：
 ///     将对一个范围内的敌人造成一定的伤害
 /// </summary>
-public class RangeDamageSkill : ActiveSkill{
+public class RangeDamageSkill : ActiveSkill<RangeDamageSkillModel>{
+
+    public RangeDamageSkill(RangeDamageSkillModel skillModel) : base(skillModel) {  }
 
     public override bool IsMustDesignation {
         get {
@@ -20,11 +22,11 @@ public class RangeDamageSkill : ActiveSkill{
 
         base.Execute(speller,position);
 
-        Collider[] targetList = Physics.OverlapSphere(position,SkillInfluenceRadius - (0.12f*(skillInfluenceRadius/0.5f)));
+        Collider[] targetList = Physics.OverlapSphere(position,SkillInfluenceRadius - (0.12f*(SkillInfluenceRadius/0.5f)));
         foreach (var collider in targetList) {
             CharacterMono characterMono = collider.GetComponent<CharacterMono>();
             if (characterMono != null) {
-                characterMono.characterModel.Damaged(new Damage(0,PlusDamage));
+                characterMono.characterModel.Damaged(skillModel.Damage);
             }
         }
     }

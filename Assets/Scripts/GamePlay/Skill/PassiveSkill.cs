@@ -7,20 +7,7 @@ using UnityEngine;
 /// <summary>
 /// 被动技能基类
 /// </summary>
-public class PassiveSkill : BaseSkill {
-    private float cooldown;     // 技能CD时间
-    private float finalSpellTime; // 最后一次释放技能的时间
-
-    public float CD {
-        get {
-            return cooldown;
-        }
-
-        set {
-            cooldown = value;
-        }
-    }
-
+public class PassiveSkill<T> : BaseSkill<T> where T:BaseSkillModel {
     public float FinalSpellTime {
         get {
             return finalSpellTime;
@@ -31,6 +18,15 @@ public class PassiveSkill : BaseSkill {
         }
     }
 
+    public PassiveSkill(T skillModel) : base(skillModel){
+
+    }
+
+    public float CD {
+        get {
+            return skillModel.Cooldown;
+        }
+    }
     /// <summary>
     /// 判断当前技能是否处于冷却中
     /// </summary>
@@ -39,7 +35,7 @@ public class PassiveSkill : BaseSkill {
         return Time.time - FinalSpellTime <= CD;
     }
 
-    // 被动技能触发类型
+    // 被动技能触发类型(在脚本中指定)
     private PassiveSkillTriggerType triggerType;
 
     public virtual PassiveSkillTriggerType TiggerType {
@@ -66,7 +62,7 @@ public class PassiveSkill : BaseSkill {
         Execute(speller,null);
     }
     /// <summary>
-    /// 执行该被动技能效果,此方法一般用于对传输进来的伤害进行一个倍数或增加操作
+    /// 执行该被动技能效果,此方法一般用于对传输进来的伤害进行一个倍数或加减操作
     /// </summary>
     /// <param name="speller"></param>
     /// <param name="result"></param>

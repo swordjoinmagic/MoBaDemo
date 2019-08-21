@@ -6,7 +6,9 @@ using UnityEngine;
 /// 一种特殊的被动技能,在学习此技能时,会自动在单位身上增加一个光环触发器,
 /// 光环触发器记录了每个进入和离开此光环范围的单位,同时给这些单位附加了光环状态.
 /// </summary>
-public class HaloSkill : PassiveSkill{
+public class HaloSkill : PassiveSkill<BaseSkillModel>{
+
+    public HaloSkill(BaseSkillModel skillModel) : base(skillModel) { }
 
     // 光环触发器
     public HaloTrigger Trigger;
