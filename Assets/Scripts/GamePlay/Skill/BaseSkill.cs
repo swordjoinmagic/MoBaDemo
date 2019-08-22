@@ -5,12 +5,12 @@ using System.Text;
 using UnityEngine.UI;
 
 
-public class BaseSkill<T> where T:BaseSkillModel{
+public class BaseSkill{
 
     // 享元基类,保存技能对象不变的属性
-    protected T skillModel;
+    protected SkillModel skillModel;
 
-    public BaseSkill(T skillModel) {
+    public BaseSkill(SkillModel skillModel) {
         this.skillModel = skillModel;
     }
 

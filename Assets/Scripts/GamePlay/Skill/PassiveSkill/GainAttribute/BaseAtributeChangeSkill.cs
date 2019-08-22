@@ -4,16 +4,7 @@ using System.Linq;
 using System.Text;
 using UnityEngine;
 
-public class BaseAtributeChangeSkill : PassiveSkill<BaseSkillModel>{
-
-    public BaseAtributeChangeSkill(BaseSkillModel skillModel) : base(skillModel) { }
-
-    //==========================================
-    // 开放接口
-    public bool isScale = false;
-    public int value = 0;
-    public CharacterAttribute attribute = CharacterAttribute.Attack;
-
+public class BaseAtributeChangeSkill : PassiveSkill{
     // 设置为属性增益型技能
     public override PassiveSkillTriggerType TiggerType {
         get {
@@ -21,13 +12,33 @@ public class BaseAtributeChangeSkill : PassiveSkill<BaseSkillModel>{
         }
     }
 
+    public BaseAtributeChangeSkill(SkillModel skillModel) : base(skillModel) { }
+
+    //==========================================
+    // 开放接口
+    public bool IsScale {
+        get {
+            return (bool)skillModel.ExtraAttributes["IsScale"];
+        }
+    }
+    public int Value {
+        get {
+            return (int)skillModel.ExtraAttributes["Value"];
+        }
+    }
+    public CharacterAttribute Attribute {
+        get {
+            return (CharacterAttribute)skillModel.ExtraAttributes["Attribute"];
+        }
+    }
+
     public override void Execute(CharacterModel speller, out int result,out CharacterAttribute characterAttribute) {
 
         int attributeValue = 0;
-        characterAttribute = attribute;
+        characterAttribute = Attribute;
 
-        if (isScale) {
-            switch (attribute) {
+        if (IsScale) {
+            switch (Attribute) {
                 case CharacterAttribute.Attack:
                     attributeValue = speller.Attack;
                     break;
@@ -41,19 +52,19 @@ public class BaseAtributeChangeSkill : PassiveSkill<BaseSkillModel>{
                     attributeValue = speller.maxMp;
                     break;
             }
-            result = attributeValue * value;
+            result = attributeValue * Value;
         } else {
-            result = value;
+            result = Value;
         }
     }
 
     public override void Execute(CharacterModel speller, out float result,out CharacterAttribute characterAttribute) {
         
         float attributeValue = 0;
-        characterAttribute = attribute;
+        characterAttribute = Attribute;
 
-        if (isScale) {
-            switch (attribute) {
+        if (IsScale) {
+            switch (Attribute) {
                 case CharacterAttribute.AttackDistance:
                     attributeValue = speller.attackDistance;
                     break;
@@ -73,9 +84,9 @@ public class BaseAtributeChangeSkill : PassiveSkill<BaseSkillModel>{
                     attributeValue = speller.MovingSpeed;
                     break;
             }
-            result = attributeValue * value;
+            result = attributeValue * Value;
         } else {
-            result = value;
+            result = Value;
         }
     }
 }

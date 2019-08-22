@@ -44,7 +44,7 @@ class DataManager {
     /// <summary>
     /// 技能数据集合
     /// </summary>
-    public List<BaseSkill<BaseSkillModel>> baseSkillDataSet = new List<BaseSkill<BaseSkillModel>>();
+    public List<BaseSkill> baseSkillDataSet = new List<BaseSkill>();
     // 技能数据JSON的地址
     private string skillDataPath = "TestData";
 
@@ -109,7 +109,7 @@ class DataManager {
             MethodInfo methodInfo = GenericMethod.MakeGenericMethod(SkillClass);
 
             // 执行该泛型函数
-            BaseSkill<BaseSkillModel> skill = methodInfo.Invoke(null, new object[] { skillData }) as BaseSkill<BaseSkillModel>;
+            BaseSkill skill = methodInfo.Invoke(null, new object[] { skillData }) as BaseSkill;
 
             baseSkillDataSet.Add(skill);
         }
@@ -133,7 +133,7 @@ class DataManager {
             MethodInfo methodInfo = GenericMethod.MakeGenericMethod(SkillClass);
 
             // 执行该泛型函数
-            BaseSkill<BaseSkillModel> skill = methodInfo.Invoke(null, new object[] { skillData }) as BaseSkill<BaseSkillModel>;
+            BaseSkill skill = methodInfo.Invoke(null, new object[] { skillData }) as BaseSkill;
 
             baseSkillDataSet.Add(skill);
         }

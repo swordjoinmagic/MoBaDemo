@@ -7,9 +7,9 @@ using UnityEngine;
 /// <summary>
 /// 位移技能，在N秒内将单位位移至目标地点，时间为0时，表示是闪现技能
 /// </summary>
-public class TransformSkill : ActiveSkill<BaseSkillModel>{
+public class TransformSkill : ActiveSkill{
 
-    public TransformSkill(BaseSkillModel skillModel) : base(skillModel){ }
+    public TransformSkill(SkillModel skillModel) : base(skillModel){ }
 
     public override bool IsMustDesignation {
         get {

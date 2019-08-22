@@ -10,7 +10,7 @@ using UnityEngine;
 /// 也就是在数据编辑器中编辑好的属性,
 /// 在整场游戏中都不会发生太大的变化
 /// </summary>
-public class BaseSkillModel {
+public class SkillModel {
     private string skillName;
     // 图标地址，用地址保存，当要使用时进行加载
     private string iconPath;
@@ -47,6 +47,8 @@ public class BaseSkillModel {
     private GameObject selfEffect;
     // 施法时，目标产生的特效
     private GameObject targetEffect;
+    // 额外属性(子类技能/操作中额外需要的属性,如闪电链技能需要链接次数等等)
+    private Dictionary<string, object> extraAttributes = new Dictionary<string, object>();
 
     public string SkillName {
         get {
@@ -225,6 +227,16 @@ public class BaseSkillModel {
 
         set {
             isMustDesignation = value;
+        }
+    }
+
+    public Dictionary<string, object> ExtraAttributes {
+        get {
+            return extraAttributes;
+        }
+
+        set {
+            extraAttributes = value;
         }
     }
 }

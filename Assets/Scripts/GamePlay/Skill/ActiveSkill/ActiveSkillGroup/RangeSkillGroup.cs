@@ -9,23 +9,23 @@ using UnityEngine;
 /// 当此技能释放时,会执行该技能组所有技能的Execute(speller,target)方法,
 /// 该类表示范围释放的技能组
 /// </summary>
-public class RangeSkillGroup : ActiveSkill<RangeSkillGroupModel>{
+public class RangeSkillGroup : ActiveSkill{
     public override bool IsMustDesignation {
         get {
             return false ;
         }
     }
 
-    public RangeSkillGroup(RangeSkillGroupModel skillGroupModel) : base(skillGroupModel){ }
+    public RangeSkillGroup(SkillModel skillGroupModel) : base(skillGroupModel){ }
 
-    public ActiveSkill<BaseSkillModel>[] ActiveSkills {
+    public ActiveSkill[] ActiveSkills {
         get {
-            return skillModel.ActiveSkills;
+            return (ActiveSkill[])skillModel.ExtraAttributes["ActiveSkills"];
         }
     }
     public SkillDelayAttribute[] SkillDelayAttributes {
         get {
-            return skillModel.SkillDelayAttributes;
+            return (SkillDelayAttribute[])skillModel.ExtraAttributes["SkillDelayAttributes"];
         }
     }
 

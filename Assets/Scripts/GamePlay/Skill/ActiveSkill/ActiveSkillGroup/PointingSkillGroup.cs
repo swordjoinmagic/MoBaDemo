@@ -8,7 +8,7 @@ using System.Text;
 /// 当此技能释放时,会执行该技能组所有技能的Execute(speller,target)方法
 /// 该类表示对单个目标释放的点目标技能
 /// </summary>
-public class PointingSkillGroup : ActiveSkill<PointingSkillGroupModel>{
+public class PointingSkillGroup : ActiveSkill{
 
     public override bool IsMustDesignation {
         get {
@@ -16,16 +16,16 @@ public class PointingSkillGroup : ActiveSkill<PointingSkillGroupModel>{
         }
     }
 
-    public PointingSkillGroup(PointingSkillGroupModel skillGroupModel):base(skillGroupModel) {}
+    public PointingSkillGroup(SkillModel skillGroupModel):base(skillGroupModel) {}
 
-    public ActiveSkill<BaseSkillModel>[] ActiveSkills {
+    public ActiveSkill[] ActiveSkills {
         get {
-            return skillModel.activeSkills;
+            return (ActiveSkill[])skillModel.ExtraAttributes["ActiveSkills"];
         }
     }
     public SkillDelayAttribute[] SkillDelayAttributes {
         get {
-            return skillModel.skillDelayAttributes;
+            return (SkillDelayAttribute[])skillModel.ExtraAttributes["SkillDelayAttributes"];
         }
     }
 

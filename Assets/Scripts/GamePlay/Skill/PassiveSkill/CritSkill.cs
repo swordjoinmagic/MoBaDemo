@@ -10,9 +10,9 @@ using UnityEngine;
 ///     2. 暴击几率
 ///     3. 暴击倍数
 /// </summary>
-public class CritSkill : PassiveSkill<CritSkillModel>{
+public class CritSkill : PassiveSkill{
 
-    public CritSkill(CritSkillModel skillModel) : base(skillModel) { }
+    public CritSkill(SkillModel skillModel) : base(skillModel) { }
 
     public GameObject Effect {
         get {
@@ -22,13 +22,13 @@ public class CritSkill : PassiveSkill<CritSkillModel>{
 
     public float CritRate {
         get {
-            return skillModel.CritRate;
+            return (float)skillModel.ExtraAttributes["CritRate"];
         }
     }
 
     public float CritMultiple {
         get {
-            return skillModel.CritMultiple;
+            return (float)skillModel.ExtraAttributes["CritMultiple"];
         }
     }
 

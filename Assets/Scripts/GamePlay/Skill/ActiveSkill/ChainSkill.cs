@@ -8,11 +8,11 @@ using UnityEngine;
 /// 在几个单位之间跳转的，带有lineRender技能特效的主动技能
 /// 典型代表：闪电链、治疗波
 /// </summary>
-class ChainSkill : ActiveSkill<ChainSkillModel>{
+class ChainSkill : ActiveSkill{
 
     private int nowCount;
 
-    public ChainSkill(ChainSkillModel skillModel) : base(skillModel) {
+    public ChainSkill(SkillModel skillModel) : base(skillModel) {
         nowCount = Count;
     }
 
@@ -24,13 +24,13 @@ class ChainSkill : ActiveSkill<ChainSkillModel>{
     
     public Damage Damage {
         get {
-            return skillModel.Damage;
+            return (Damage)skillModel.ExtraAttributes["Damage"];
         }
     }
 
     public int Count {
         get {
-            return skillModel.Count;
+            return (int)skillModel.ExtraAttributes["Count"];
         }
     }
     

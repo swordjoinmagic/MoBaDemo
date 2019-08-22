@@ -10,13 +10,13 @@ using UnityEngine;
 /// <summary>
 /// 指向伤害技能类,此技能要求单击一个目标进行释放,对目标直接造成伤害
 /// </summary>
-public class PointingSkill : ActiveSkill<PointingSkillModel>{
+public class PointingSkill : ActiveSkill{
 
-    public PointingSkill(PointingSkillModel skillModel):base(skillModel) { }
+    public PointingSkill(SkillModel skillModel):base(skillModel) { }
 
     public Damage Damage {
         get {
-            return skillModel.BaseDamge;
+            return (Damage)skillModel.ExtraAttributes["Damage"];
         }
     }
 

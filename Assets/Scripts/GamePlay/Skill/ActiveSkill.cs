@@ -15,9 +15,9 @@ public delegate void OnSkillCompeleteHandler();
 /// 同时,该技能类有一个通用的用来计算伤害的方法,
 /// 该方法将会产生一个Damage类,用于给Character类计算伤害
 /// </summary>
-public class ActiveSkill<T> : BaseSkill<T> where T:BaseSkillModel {
+public class ActiveSkill : BaseSkill {
 
-    public ActiveSkill(T skillModel) : base(skillModel) { }
+    public ActiveSkill(SkillModel skillModel) : base(skillModel) { }
 
     #region 技能基类属性
     public int Mp {

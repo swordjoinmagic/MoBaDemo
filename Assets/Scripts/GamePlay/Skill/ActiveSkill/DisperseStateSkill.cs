@@ -6,9 +6,9 @@ using System.Text;
 /// <summary>
 /// 简单驱散状态技能，驱散目标单位身上某一状态
 /// </summary>
-public class DisperseStateSkill : ActiveSkill<DisperseStateSkillModel>{
+public class DisperseStateSkill : ActiveSkill{
 
-    public DisperseStateSkill(DisperseStateSkillModel skillModel) : base(skillModel) {
+    public DisperseStateSkill(SkillModel skillModel) : base(skillModel) {
 
     }
 
@@ -20,7 +20,7 @@ public class DisperseStateSkill : ActiveSkill<DisperseStateSkillModel>{
 
     public BattleStateType BattleStateType {
         get {
-            return skillModel.BattleStateType;
+            return (BattleStateType)skillModel.ExtraAttributes["BattleStateType"];
         }
     }
 

@@ -7,26 +7,26 @@ using UnityEngine;
 /// <summary>
 /// 持续施法技能组
 /// </summary>
-public class ContinuousRangeSkillGroup : ActiveSkill<ContinuousRangeSkillGroupModel>{
+public class ContinuousRangeSkillGroup : ActiveSkill{
     public override bool IsMustDesignation {
         get {
             return false;
         }
     }
 
-    public ActiveSkill<BaseSkillModel>[] ActiveSkills {
+    public ActiveSkill[] ActiveSkills {
         get {
-            return skillModel.ActiveSkills;
+            return (ActiveSkill[])skillModel.ExtraAttributes["ActiveSkills"];
         }
     }
     public SkillDelayAttribute[] SkillDelayAttributes {
         get {
-            return skillModel.SkillDelayAttributes;
+            return (SkillDelayAttribute[])skillModel.ExtraAttributes["SkillDelayAttributes"];
         }
     }
 
 
-    public ContinuousRangeSkillGroup(ContinuousRangeSkillGroupModel skillGroupModel) : base(skillGroupModel) {}
+    public ContinuousRangeSkillGroup(SkillModel skillGroupModel) : base(skillGroupModel) {}
 
     // 已经经过的时间
     private float time;

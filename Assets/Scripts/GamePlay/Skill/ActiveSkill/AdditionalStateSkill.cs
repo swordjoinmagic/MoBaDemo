@@ -7,13 +7,13 @@ using UnityEngine;
 /// <summary>
 /// 简单附加状态技能，为目标单位附加一个状态
 /// </summary>
-public class AdditionalStateSkill : ActiveSkill<AdditionalStateSkillModel>{
+public class AdditionalStateSkill : ActiveSkill{
 
-    public AdditionalStateSkill(AdditionalStateSkillModel skillModel) : base(skillModel){ }
+    public AdditionalStateSkill(SkillModel skillModel) : base(skillModel){ }
 
     public BattleState AdditionalState {
         get {
-            return skillModel.AdditionalState;
+            return (BattleState)skillModel.ExtraAttributes["AdditionalState"];
         }
     }
 
