@@ -116,11 +116,12 @@ class StoreLogic {
         ItemGrid itemGrid = new ItemGrid {
             item = new Item {
                 name = "测试物品 价格:"+ price,
-                itemActiveSkill = new PointingSkill {
-                    BaseDamage = 1000,
+                itemActiveSkill = new PointingSkill(new SkillModel(new Tuple<string, object>[] {
+                    new Tuple<string,object>{ First="Damage",Second=new Damage(1000,200) }
+                }) {
                     SpellDistance = 10,
-                    CD = 3
-                },
+                    Cooldown = 3
+                }),
                 itemType = ItemType.Consumed,
                 maxCount = 2,
                 iconPath = "00046",

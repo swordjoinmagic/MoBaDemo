@@ -14,6 +14,12 @@ public class BaseSkill{
         this.skillModel = skillModel;
     }
 
+    public int SkillID {
+        get {
+            return skillModel.SkillID;
+        }
+    }
+
     // 技能等级
     private int skillLevel;
     public int SkillLevel {

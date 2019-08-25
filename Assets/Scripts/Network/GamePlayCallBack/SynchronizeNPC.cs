@@ -40,8 +40,10 @@ public class SynchronizeNPC {
     /// 技能释放同步,监听施法事件(OnSpell)
     /// </summary>
     public void SpellSkillSynchronize(CharacterMono Spller, CharacterMono Target, Vector3 position, ActiveSkill activeSkill) {
+       
         // 获得当前要释放的技能的ID
         int skillID = activeSkill.SkillID;
+
         // 判断该技能是否一定要指定敌人
         string skillTarget = activeSkill.IsMustDesignation ? "Target" : "Position";
 

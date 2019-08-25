@@ -43,7 +43,7 @@ public class SkillPanelViewModel : ViewModelBase{
         imagePath.Value = skill.IconPath;
         longDescription.Value = skill.LongDescription;
         shortDescription.Value = skill.ShortDescription;
-        targetDescription.Value = skill.TargetDescription;
+        targetDescription.Value = "";
         skillLevel.Value = skill.SkillLevel.ToString();
         nextLevel.Value = skill.NextLevelNeedHeroLevel.ToString();
         if (skill is ActiveSkill) {

@@ -14,126 +14,57 @@ public class TestDatabase : MonoBehaviour {
 
     private void Awake() {
 
-        SkillModel additionalStateSkillModel = new SkillModel {
-            SpellDistance = 10,
-            AdditionalState = new PoisoningState {
-                Description = "范围中毒技能",
-                stateHolderEffect = targetEnemryEffect,
-                Duration = 15,
-                IconPath = "0041",
-                Damage = new Damage { PlusDamage = 100 },
-                Name = "中毒",
-                IsStackable = false,
-                statePassiveSkills = new List<PassiveSkill>{
-                                        new BaseAtributeChangeSkill{
-                                            Attribute = CharacterAttribute.Attack,
-                                            Value = 10,
-                                            IsScale = true
-                                        }
-                                    }
-            },
-            SkillTargetType = UnitType.Everything
-        };
-
-        SkillModel rangeSkillGroupModel = new SkillModel() {
-            KeyCode = KeyCode.F,
-            TargetEffect = targetPositionEffect,
-            SpellDistance = 10f,
-            SkillName = "F技能",
-            IconPath = "00041",
-            SkillInfluenceRadius = 6f,
-            SkillTargetType = UnitType.Everything,
-            Mp = 1000
-        };
-
-        rangeSkillGroupModel.ExtraAttributes["ActiveSkills"] = new ActiveSkill[] { };
-        rangeSkillGroupModel.ExtraAttributes["SkillDelayAttributes"] = new SkillDelayAttribute[] {
-                            new SkillDelayAttribute{
-                                isDelay = false,
-                                index = -1,
-                            }
-        };
-
-        activeSkills = new ActiveSkill[]{
-                            new AdditionalStateSkill{
-
-                            }
-                        }
-
-
-        RangeSkillGroup rangeSkillGroup = new RangeSkillGroup(new SkillModel{}) {
-
-        };
-
         baseSkills = new List<BaseSkill>() {
-            //new SwitchBattleStateSkill {
-            //    SkillID = 0,
-            //    BaseDamage = 1000,
-            //    KeyCode = KeyCode.T,
-            //    Mp = 220,
-            //    PlusDamage = 200,
-            //    CD = 5f,
-            //    SpellDistance = 0,
-            //    SkillName = "T技能",
-            //    IconPath = "00041",
-            //    SkillLevel = 6,
-            //    TargetEffect = targetPositionEffect,
-            //    SkillTargetType = UnitType.Everything,
-            //    AdditionalState = new BattleState {
-            //        Description = "anohter",
-            //        stateHolderEffect = targetEnemryEffect,
-            //        Duration = -1,
-            //        IconPath = "0041",
-            //        Name = "anohter",
-            //        IsStackable = false,
-            //        statePassiveSkills = new List<PassiveSkill>{
-            //                    new BaseAtributeChangeSkill{
-            //                        Attribute = CharacterAttribute.Attack,
-            //                        Value = 500,
-            //                    }
-            //                }
-            //    }
-            //},
-            new RangeSkillGroup {
+            new RangeSkillGroup(new SkillModel(new Tuple<string, object>[]{
+                new Tuple<string, object>{
+                    First = "ActiveSkills",
+                    Second = new ActiveSkill[]{
+                            new AdditionalStateSkill(new SkillModel(new Tuple<string, object>[]{
+                                new Tuple<string, object>{
+                                    First = "AdditionalState",
+                                    Second = new PoisoningState{
+                                        Description = "范围中毒技能",
+                                        stateHolderEffect = targetEnemryEffect,
+                                        Duration = 15,
+                                        IconPath = "0041",
+                                        Damage = new Damage{ PlusDamage = 100 },
+                                        Name = "中毒",
+                                        IsStackable = false,
+                                        statePassiveSkills = new List<PassiveSkill>{
+                                            new BaseAtributeChangeSkill(new SkillModel(new Tuple<string, object>[]{
+                                                new Tuple<string, object>{ First = "Attribute",Second=CharacterAttribute.Attack },
+                                                new Tuple<string, object>{ First = "Value",Second = 10 },
+                                                new Tuple<string, object>{ First = "IsScale",Second = true}
+                                            }))
+                                    }
+                                },
+                                }
+                            }){
+                                SpellDistance = 10,
+                                SkillTargetType = UnitType.Everything
+                            })
+                        }
+                },
+                // SkillDelayAttributes
+                new Tuple<string, object>{
+                    First = "SkillDelayAttributes",
+                    Second = new SkillDelayAttribute[] {
+                                new SkillDelayAttribute{
+                                    isDelay = false,
+                                    index = -1,
+                                }
+                            }
+                }
+            }){
                 KeyCode = KeyCode.F,
-                PlusDamage = 200,
                 TargetEffect = targetPositionEffect,
                 SpellDistance = 10f,
                 SkillName = "F技能",
                 IconPath = "00041",
-                SkillLevel = 6,
                 SkillInfluenceRadius = 6f,
-                activeSkills = new ActiveSkill[]{
-                            new AdditionalStateSkill{
-                                SpellDistance = 10,
-                                AdditionalState = new PoisoningState{
-                                    Description = "范围中毒技能",
-                                    stateHolderEffect = targetEnemryEffect,
-                                    Duration = 15,
-                                    IconPath = "0041",
-                                    Damage = new Damage{ PlusDamage = 100 },
-                                    Name = "中毒",
-                                    IsStackable = false,
-                                    statePassiveSkills = new List<PassiveSkill>{
-                                        new BaseAtributeChangeSkill{
-                                            Attribute = CharacterAttribute.Attack,
-                                            Value = 10,
-                                            IsScale = true
-                                        }
-                                    }
-                                },
-                                SkillTargetType = UnitType.Everything
-                            }
-                        },
-                skillDelayAttributes = new SkillDelayAttribute[] {
-                            new SkillDelayAttribute{
-                                isDelay = false,
-                                index = -1,
-                            }
-                        },
                 SkillTargetType = UnitType.Everything,
-                mp = 1000
-            },
+                Mp = 1000
+            }){ SkillLevel = 1},
             new TransformSkill(new SkillModel(){
                 KeyCode = KeyCode.W,
                 SkillTargetType = UnitType.Everything,
@@ -145,116 +76,118 @@ public class TestDatabase : MonoBehaviour {
                 LongDescription = "one skill Description",
                 TargetEffect = targetEnemryEffect,
                 SelfEffect = targetPositionEffect
-            }) {               
-                SkillLevel = 1,
-            },
-            new RangeSkillGroup {
-                SkillID = 3,
-                KeyCode = KeyCode.E,
-                PlusDamage = 200,
-                TargetEffect = targetPositionEffect,
-                SpellDistance = 10f,
-                SkillName = "E技能",
-                IconPath = "00041",
-                SkillLevel = 6,
-                SkillInfluenceRadius = 6f,
-                activeSkills = new ActiveSkill[]{
-                            new DisperseStateSkill{
-                                SpellDistance = 10,
-                                BattleStateType = BattleStateType.PoisoningState,
-                                SkillTargetType = UnitType.Everything
+            }){ SkillLevel = 1},
+            new RangeSkillGroup(new SkillModel(new Tuple<string, object>[]{
+                new Tuple<string, object>{
+                    First = "ActiveSkills",
+                    Second = new ActiveSkill[]{
+                                new DisperseStateSkill(new SkillModel(new Tuple<string, object>[]{
+                                    new Tuple<string, object>{ First="SpellDistance",Second=10 },
+                                    new Tuple<string, object>{ First="BattleStateType",Second=BattleStateType.PoisoningState },
+                                    new Tuple<string, object>{ First="SkillTargetType",Second=UnitType.Everything }
+                                }))
                             }
-                        },
-                skillDelayAttributes = new SkillDelayAttribute[] {
+                },
+                new Tuple<string, object>{
+                    First = "SkillDelayAttributes",
+                    Second = new SkillDelayAttribute[] {
                             new SkillDelayAttribute{
                                 isDelay = false,
                                 index = -1,
                             }
-                        },
+                        }
+                }
+            }){
+                KeyCode = KeyCode.E,
+                TargetEffect = targetPositionEffect,
+                SpellDistance = 10f,
+                SkillName = "E技能",
+                IconPath = "00041",
+                SkillInfluenceRadius = 6f,
                 SkillTargetType = UnitType.Everything,
-            },
-            new AdditionalActiveSkill {
-                SkillID = 4,
-                TiggerType = PassiveSkillTriggerType.WhenAttack,
-                CD = 0.1f,
+            }){ SkillLevel = 1},
+            new AdditionalActiveSkill(new SkillModel(new Tuple<string, object>[]{
+                new Tuple<string, object>{
+                    First ="AdditionalActiveSkill",
+                    Second = new ChainSkill(new SkillModel(new Tuple<string, object>[]{
+                                new Tuple<string, object>{ First="Count",Second=4 },
+                                new Tuple<string, object>{ First="Damage",Second=new Damage { PlusDamage = 500 } }
+                            }){
+                                KeyCode = KeyCode.P,
+                                Mp = 220,
+                                SpellDistance = 4f,
+                                Cooldown = 5f,
+                                SkillName = "W技能",
+                                IconPath = "00041",
+                                LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
+                                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
+                                    "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
+                                TargetEffect = targetEnemryEffect,
+                                SkillTargetType = UnitType.Everything,
+                                SkillInfluenceRadius = 10
+                            })
+                    }
+            }){
+                Cooldown = 0.1f,
                 IconPath = "0041",
                 SkillName = "AdditionActiveSkil",
                 SkillTargetType = UnitType.Everything,
-                SkillLevel = 1,
-                AdditionalActiveSkill = new ChainSkill {
-                    BaseDamage = 1000,
-                    KeyCode = KeyCode.P,
-                    Mp = 220,
-                    PlusDamage = 200,
-                    SpellDistance = 4f,
-                    CD = 5f,
-                    Count = 4,
-                    Damage = new Damage { PlusDamage = 500 },
-                    SkillName = "W技能",
-                    IconPath = "00041",
-                    LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
-                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
-                        "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                    SkillLevel = 6,
-                    TargetEffect = targetEnemryEffect,
-                    SkillTargetType = UnitType.Everything,
-                    SkillInfluenceRadius = 10
-                }
+            }) {
+                TiggerType = PassiveSkillTriggerType.WhenAttack,
+                SkillLevel = 1
             },
-            new ChainSkill {
-                BaseDamage = 1000,
+            new ChainSkill(new SkillModel(new Tuple<string, object>[]{
+                new Tuple<string, object>{ First="Count",Second=4 },
+                new Tuple<string, object>{ First="Damage",Second=new Damage { BaseDamage = -1000, PlusDamage = -1000 } }
+            }){
                 KeyCode = KeyCode.P,
                 Mp = 220,
-                PlusDamage = 200,
                 SpellDistance = 4f,
-                CD = 5f,
-                Count = 4,
-                Damage = new Damage { BaseDamage = -1000, PlusDamage = -1000 },
+                Cooldown = 5f,
                 SkillName = "W技能",
                 IconPath = "00041",
                 LongDescription = "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化," +
                         "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                         "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化" +
                         "用于测试，这是一个技能描述，比较长的测试，用来观察富文本框的长度会产生怎样的变化",
-                SkillLevel = 6,
                 TargetEffect = targetEnemryEffect,
                 SkillTargetType = UnitType.Everything,
                 SkillInfluenceRadius = 10
-            },
-            new ContinuousRangeSkillGroup {
-                SkillID = 3,
-                KeyCode = KeyCode.Y,
-                PlusDamage = 200,
-                TargetEffect = targetPositionEffect,
-                SpellDistance = 10f,
-                SkillName = "E技能",
-                IconPath = "00041",
-                SkillLevel = 6,
-                SkillInfluenceRadius = 6f,
-                activeSkills = new ActiveSkill[]{
-                            new PointingSkill{
-                                PlusDamage = 100
-                            },
-                            new AdditionalStateSkill{
+            }){ SkillLevel = 1},
+            new ContinuousRangeSkillGroup(new SkillModel(new Tuple<string, object>[]{
+                new Tuple<string, object>{
+                    First = "ActiveSkills",
+                    Second = new ActiveSkill[]{
+                            new PointingSkill(new SkillModel(new Tuple<string, object>[]{
+                                new Tuple<string, object>{ First="Damage",Second=new Damage(100,200) }
+                            })),
+                            new AdditionalStateSkill(new SkillModel(new Tuple<string, object>[]{
+                                new Tuple<string, object>{
+                                    First = "AdditionalState",
+                                    Second = new PoisoningState{
+                                                stateHolderEffect = targetEnemryEffect,
+                                                Duration = 15,
+                                                Damage = new Damage{ PlusDamage = 100 },
+                                                IsStackable = false,
+                                                statePassiveSkills = new List<PassiveSkill>{
+                                                    new BaseAtributeChangeSkill(new SkillModel(new Tuple<string, object>[]{
+                                                        new Tuple<string, object>{ First="Attribute",Second=CharacterAttribute.Attack },
+                                                        new Tuple<string, object>{ First="Value",Second=10 },
+                                                        new Tuple<string, object>{ First="IsScale",Second=true }
+                                                    }))
+                                                }
+                                            }
+                                }
+                            }){
                                 SpellDistance = 10,
-                                AdditionalState = new PoisoningState{
-                                    stateHolderEffect = targetEnemryEffect,
-                                    Duration = 15,
-                                    Damage = new Damage{ PlusDamage = 100 },
-                                    IsStackable = false,
-                                    statePassiveSkills = new List<PassiveSkill>{
-                                        new BaseAtributeChangeSkill{
-                                            Attribute = CharacterAttribute.Attack,
-                                            Value = 10,
-                                            IsScale = true
-                                        }
-                                    }
-                                },
                                 SkillTargetType = UnitType.Everything
-                            }
+                            })
                         },
-                skillDelayAttributes = new SkillDelayAttribute[] {
+                },
+                new Tuple<string, object>{
+                    First = "SkillDelayAttributes",
+                    Second = new SkillDelayAttribute[] {
                             new SkillDelayAttribute{
                                 isDelay = false,
                                 index = -1,
@@ -263,23 +196,30 @@ public class TestDatabase : MonoBehaviour {
                                 isDelay = false,
                                 index = -1,
                             }
-                        },
+                        }
+                }
+            }){
+                KeyCode = KeyCode.Y,
+                TargetEffect = targetPositionEffect,
+                SpellDistance = 10f,
+                SkillName = "E技能",
+                IconPath = "00041",
+                SkillInfluenceRadius = 6f,
                 SkillTargetType = UnitType.Everything,
                 SpellDuration = 3,
-            }
+            }){ SkillLevel = 1}
         };
+
         items = new List<Item>() {
             new Item {
                 name = "测试物品",
-                itemActiveSkill = new PointingSkill {
-                    BaseDamage = 1000,
+                itemActiveSkill = new PointingSkill(new SkillModel(){
                     SelfEffect = targetPositionEffect,
                     TargetEffect = targetPositionEffect,
                     SpellDistance = 10,
-                    CD = 3,
+                    Cooldown = 3,
                     SkillTargetType = UnitType.Everything,
-                    SkillLevel = 1,
-                },
+                }),
                 itemType = ItemType.Consumed,
                 maxCount = 10,
                 iconPath = "00046",
@@ -289,6 +229,7 @@ public class TestDatabase : MonoBehaviour {
                 backgroundDescription = "一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品一个用来测试的物品"
             }
         };
+
         characterModels = new List<CharacterModel> {
             new HeroModel {
                 //projectileModel = new ProjectileModel {
@@ -318,7 +259,7 @@ public class TestDatabase : MonoBehaviour {
                 TurningSpeed = 50,
                 AttackAudioPath = "attackAudio",
                 Radius = 20,
-                MovingSpeed = 4,                
+                MovingSpeed = 4,
             }
         };
     }
