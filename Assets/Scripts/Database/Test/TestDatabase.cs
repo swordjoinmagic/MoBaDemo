@@ -73,6 +73,7 @@ public class TestDatabase : MonoBehaviour {
                 Mp = 10,
                 SpellDistance = 15f,
                 Cooldown = 2f,
+                ShortDescription = "闪现技能,可以瞬移到目标点",
                 LongDescription = "one skill Description",
                 TargetEffect = targetEnemryEffect,
                 SelfEffect = targetPositionEffect
@@ -213,7 +214,9 @@ public class TestDatabase : MonoBehaviour {
         items = new List<Item>() {
             new Item {
                 name = "测试物品",
-                itemActiveSkill = new PointingSkill(new SkillModel(){
+                itemActiveSkill = new PointingSkill(new SkillModel(new Tuple<string, object>[]{
+                    new Tuple<string, object>{ First="Damage",Second=new Damage(100,100) }
+                }){
                     SelfEffect = targetPositionEffect,
                     TargetEffect = targetPositionEffect,
                     SpellDistance = 10,

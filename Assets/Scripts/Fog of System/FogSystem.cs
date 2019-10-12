@@ -34,6 +34,13 @@ public class FogSystem : MonoBehaviour {
     private Texture2D texture;
     private Color32[] buffer0;
 
+    // 模糊处理的迭代次数
+    [Range(0, 4)]
+    public int iterations = 3;
+
+    // 混合因子,主要用于平滑过渡上一次的迷雾状态和这一次的迷雾状态
+    private float blendFactor;
+
     #region 待重构~ TODO~
     //// 用于测试的视野单位
     //public List<Transform> players = new List<Transform>();
@@ -58,6 +65,8 @@ public class FogSystem : MonoBehaviour {
 
     // 战争迷雾
     public GameObject fog;
+    // 战争迷雾的Material
+    public Material fogMaterial;
 
     // 线程是否开始
     public bool isthreadStart = false;
@@ -181,34 +190,10 @@ public class FogSystem : MonoBehaviour {
 
     private void Update() {
 
-        #region 待重构~TODO~
-        ///* 
-        // * 更新每个逻辑层物体的坐标
-        // * 同时，每个单位在更新时都可能会被Remove，
-        // * 所以为了保证安全性，多了一个对null的判断
-        //*/
-        //for (int i = 0; i < players.Count();) {
-        //    if (players[i] != null) {
-        //        playersPositions[i] = players[i].position;
-        //        i++;
-        //    } else {
-        //        RemoveListData<Transform>(i, players);
-        //        RemoveListData<Vector3>(i, playersPositions);
-        //    }
-        //}
-        //for (int i = 0; i < characterMonos.Count();) {
-        //    if (characterMonos[i] != null) {
-        //        fOVUnits[i].Position = characterMonos[i].transform.position;
-        //        i++;
-        //    } else {
-        //        RemoveListData<CharacterMono>(i, characterMonos);
-        //        RemoveListData<IFOVUnit>(i, fOVUnits);
-        //    }
+        // 更新混合因子(blendFactor)
+        blendFactor = Mathf.Clamp01(blendFactor+Time.deltaTime);
+        fogMaterial.SetFloat("_BlendFactor", blendFactor);
 
-        //}
-        #endregion
-
-        #region 重构完成
         /* 
              * 更新每个逻辑层物体的坐标
              * 同时，每个单位在更新时都可能会被Remove，
@@ -223,18 +208,19 @@ public class FogSystem : MonoBehaviour {
                 RemoveFOVUnit(i);
             }
         }
-        #endregion
 
         /*
          * 如果线程已经画好了战争迷雾当前帧的贴图，
          * 那么更新贴图，并通知线程继续更新
          */ 
-        if (threadStatus == FogBlendingThreadStatus.Finished) {
+        if (threadStatus == FogBlendingThreadStatus.Finished) {            
             texture.SetPixels32(buffer0);
             texture.Apply();
             minMapTexture.SetPixels32(minMapBuffer);
             minMapTexture.Apply();
             threadStatus = FogBlendingThreadStatus.Update;
+
+            blendFactor = 0;
         }
     }
 
@@ -312,7 +298,6 @@ public class FogSystem : MonoBehaviour {
         Thread.Sleep(1000);
         while (isthreadStart) {
             if (threadStatus == FogBlendingThreadStatus.Update) {
-                //Debug.Log("正在更新战争迷雾");
 
                 // 战争迷雾表示层
                 ClearVisibledRegion();
@@ -329,10 +314,70 @@ public class FogSystem : MonoBehaviour {
                 DrawMinMap();
                 //Debug.Log("更新小地图");
 
+                // 对迷雾贴图进行高斯模糊
+                GaussianBlur();
+
+                // 将当前的迷雾状态保存到贴图的ba通道(分别对应rg通道)
+                SaveCurrentFogState();
+
                 threadStatus = FogBlendingThreadStatus.Finished;
             }
             Thread.Sleep(100);
-            //Debug.Log("战争迷雾休眠中");
+        }
+    }
+
+    private void SaveCurrentFogState() {
+        for (int i=0;i<textureSize;i++) {
+            for (int j=0;j<textureSize;j++) {
+                buffer0[i * textureSize + j].b = buffer0[i * textureSize + j].r;
+                buffer0[i * textureSize + j].a = buffer0[i * textureSize + j].g;
+            }
+        }
+    }
+
+    /// <summary>
+    /// 对迷雾贴图进行模糊操作（只模糊r通道）
+    /// </summary>
+    private void GaussianBlur() {
+        // 进行迭代模糊
+        for (int i=0;i<iterations;i++) {
+
+            
+            for (int x=0;x<textureSize;x++) {
+                for (int y=0;y<textureSize;y++) {
+
+                    // 特殊处理x,y的上下左右边界
+                    int xUp = x - 1 < 0 ? 0 : x-1;int yLeft = y - 1 < 0 ? 0 : y - 1;
+                    int xDown = x + 1 >= textureSize ? textureSize - 1 : x + 1;
+                    int yRight = y + 1 >= textureSize ? textureSize - 1 : y + 1;
+
+                    // 当前像素
+                    int val = buffer0[x* textureSize + y].r;
+                    // 左上
+                    val += buffer0[xUp*textureSize+yLeft].r;
+                    // 上
+                    val += buffer0[xUp * textureSize + y].r;
+                    // 右上
+                    val += buffer0[xUp * textureSize + yRight].r;
+                    // 左
+                    val += buffer0[x * textureSize + yLeft].r;
+                    // 右
+                    val += buffer0[x * textureSize + yRight].r;
+                    // 左下
+                    val += buffer0[xDown * textureSize + yLeft].r;
+                    // 下
+                    val += buffer0[xDown * textureSize + y].r;
+                    // 右下
+                    val += buffer0[xDown * textureSize + yRight].r;
+
+                    // 均值模糊
+                    val /= 9;
+
+                    buffer0[x * textureSize + y].r = (byte)val;
+                }
+            }
+            
+
         }
     }
 

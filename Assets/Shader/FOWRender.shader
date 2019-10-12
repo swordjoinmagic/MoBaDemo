@@ -27,6 +27,7 @@ Shader "HOG/FOWRender"
 
 			#include "UnityCG.cginc" 
 
+			// 表示战争迷雾贴图,其中r通道表示当前区域,g通道表示已通行区域
 			sampler2D _MainTex;
 			uniform half4 _Unexplored;
 			uniform half4 _Explored;
@@ -47,6 +48,8 @@ Shader "HOG/FOWRender"
 			}
 			fixed4 frag(v2f i) : SV_Target
 			{
+				// r通道表示当前区域(即由当前所有单位所揭开的战争迷雾区域),如果某个区域是亮的,则当前r值为1.0
+				// g通道表示已经通过的区域,如果某个通道之前已经通过过,那么该区域g值为1.0
 				half4 data = tex2D(_MainTex, i.uv);
 				half2 fog = lerp(data.rg, data.ba, _BlendFactor);
 				half4 color = lerp(_Unexplored, _Explored, fog.g);
